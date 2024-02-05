@@ -1,7 +1,7 @@
 const RegisterPageDiamond = () => {
     return ( 
         <div>
-            Register page!
+            Register page! 
         </div>
      );
 }
