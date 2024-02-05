@@ -7,6 +7,50 @@ body,
 :root{
   height: 100%;
 }
+
+.cl-formButtonPrimary {
+  font-size: 28px;
+  text-transform: none;
+  color: chocolate;
+  text-decoration-color: aquamarine;
+  background-color: white;
+}
+
+.cl-socialButtonsIconButton
+{
+  font-size: 28px;
+  text-transform: none;
+  background-color: white;
+}
+
+.cl-internal-1mc71o6
+{
+  display: block;
+  width: 100%;
+}
+
+.cl-headerTitle
+{
+  font-size: 28px;
+  text-transform: none;
+  color: chocolate;
+  text-decoration-color: aquamarine;
+  background-color: white;
+}
+
+.cl-formFieldLabel
+{
+  color: chocolate;
+}
+
+.cl-headerSubtitle
+{
+  font-size: 18px;
+  text-transform: none;
+  color: chocolate;
+  text-decoration-color: aquamarine;
+  background-color: white;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
