@@ -36,9 +36,9 @@ model Server {
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade) 
 
-  @@index([userProfileId])
-
   members       Member[]
+
+ @@index([userProfileId])
 }
 
 model Member {
@@ -48,14 +48,18 @@ model Member {
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
 
-  @@index([userProfileId])
-
-
   serverId      String
   server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
 
+  @@index([userProfileId])
   @@index([serverId])
 }
+
+model Channel {
+  id            String @id @default(uuid())
+  name          String
+}
+
 enum OldMemberRole {
   CREATOR
   OWNER
@@ -66,5 +70,13 @@ enum OldMemberRole {
   SPECIALGUEST
 }
 
-
+enum OldChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+  STREAMING
+  BOT
+  NOTIFICATION
+  CONTACT
+}
 
