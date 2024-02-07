@@ -29,3 +29,19 @@
 - Tạo layout riêng trong folder này
   - 1 layout sẽ dùng chung 
 
+# Notes
+
+## Middleware.ts
+
+Only thing that worked, this is way to unneccesarily difficult, the entire point of why it wasnt showing up was because i was creating a mutilingual site whose root is at [lang] so it never really ever finds the favicon at the root cuz its always redirected. and I followed that example directly from the nextjs website
+
+also I just realized how stupid I was and anyone who is going through my same issue do the above or modify the config matchter inside the middleware to exclude the favicon.ico which nextjs automatically detects
+export const config = { matcher: [ // Skip all internal paths (_next) "/((?!api|_next/static|_next/image|favicon.ico).*)", // Optional: only run on root (/) URL // '/' ], };
+
+What I got 
+
+```
+export const config = {
+  matcher: ["/((?!.+\\.[\\w]+$|_next|_next/image|favicon.ico).*)", "/", "/(api|trpc)(.*)"],
+};
+```

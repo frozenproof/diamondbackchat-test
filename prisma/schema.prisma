@@ -22,6 +22,7 @@ model UserProfile {
 
   servers       Server[]
   members       Member[]
+  channels      Channel[]
 }
 
 model Server {
@@ -37,7 +38,8 @@ model Server {
   userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade) 
 
   members       Member[]
-
+  channels      Channel[]
+  
  @@index([userProfileId])
 }
 
@@ -58,6 +60,18 @@ model Member {
 model Channel {
   id            String @id @default(uuid())
   name          String
+  type          OldChannelType @default(TEXT)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
+
+  serverId      String
+  server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+
+  @@index([userProfileId])
+  @@index([serverId])
 }
 
 enum OldMemberRole {
