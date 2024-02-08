@@ -8,6 +8,8 @@ Titled : catnapped
 This project is my graduation project , from being a reckless god to a calmer god .
 I'm still a god , regardless , so I'm just proving to myself I'm more than a god .
 
+# Issue
+- Postgres is required due to changes in pricing model.
 
 ## Deploy on Vercel
 

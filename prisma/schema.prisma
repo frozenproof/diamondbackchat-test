@@ -6,11 +6,11 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
-model UserProfile {
+model Profile {
   id            String @id @default(uuid())
   userId        String @unique
   name          String 
@@ -34,26 +34,26 @@ model Server {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade) 
+  ProfileId String
+  Profile   Profile @relation(fields: [ProfileId],references: [id],onDelete: Cascade) 
 
   members       Member[]
   channels      Channel[]
   
- @@index([userProfileId])
+ @@index([ProfileId])
 }
 
 model Member {
   id            String @id @default(uuid())
   role          OldMemberRole @default(SPECIALGUEST)
 
-  userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
+  ProfileId String
+  Profile   Profile @relation(fields: [ProfileId],references: [id],onDelete: Cascade)
 
   serverId      String
   server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
 
-  @@index([userProfileId])
+  @@index([ProfileId])
   @@index([serverId])
 }
 
@@ -64,13 +64,13 @@ model Channel {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
+  ProfileId String
+  Profile   Profile @relation(fields: [ProfileId],references: [id],onDelete: Cascade)
 
   serverId      String
   server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
 
-  @@index([userProfileId])
+  @@index([ProfileId])
   @@index([serverId])
 }
 
