@@ -1,18 +1,23 @@
 import { db } from "@/lib/db";
-import { initialProfile } from "@/lib/initial-profile";
-import { UserProfile } from "@clerk/nextjs";
+import { initialFirstProfile } from "@/lib/initial-profile";
+import { redirect } from "next/navigation";
 
 const SetupPage = async () => {
-    const newinitialprofile = await initialProfile();
-    const servers = await db.server.findFirst({
+    const newprofile = await initialFirstProfile();
+    const server = await db.server.findFirst({
         where: {
             members:{
                 some:{
-                    UserProfileId: UserProfile.
+                    userProfileId: newprofile.id
                 }
             }
         }
     })
+
+    if(server){
+        return redirect(`/servers/${server.id}`);
+    }
+
     return ( 
         <div>
             Create a server

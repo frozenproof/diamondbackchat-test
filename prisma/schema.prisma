@@ -34,26 +34,26 @@ model Server {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  UserProfileId String
-  UserProfile   UserProfile @relation(fields: [UserProfileId],references: [id],onDelete: Cascade) 
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade) 
 
   members       Member[]
   channels      Channel[]
   
- @@index([UserProfileId])
+ @@index([userProfileId])
 }
 
 model Member {
   id            String @id @default(uuid())
   role          OldMemberRole @default(SPECIALGUEST)
 
-  UserProfileId String
-  UserProfile   UserProfile @relation(fields: [UserProfileId],references: [id],onDelete: Cascade)
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
 
   serverId      String
   server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
 
-  @@index([UserProfileId])
+  @@index([userProfileId])
   @@index([serverId])
 }
 
@@ -64,13 +64,13 @@ model Channel {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  UserProfileId String
-  UserProfile   UserProfile @relation(fields: [UserProfileId],references: [id],onDelete: Cascade)
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
 
   serverId      String
   server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
 
-  @@index([UserProfileId])
+  @@index([userProfileId])
   @@index([serverId])
 }
 
