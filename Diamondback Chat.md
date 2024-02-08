@@ -59,3 +59,74 @@ export const config = {
   if(process.env.NODE_ENV !=="production") 
       globalThis.prisma = db
 ```
+
+# Day 2
+- Created modals folder and fixed the db connection .
+- What is a modal 
+```
+A modal (also called a modal window or lightbox) is a web page element that displays in front of and deactivates all other page content. To return to the main content, the user must engage with the modal by completing an action or by closing it
+```
+
+## Zod
+
+- Default values và formSchema phải cùng tên biến 
+
+
+```
+   const formSchema = z.object({
+        name: z.string().min(1,{
+            message: "Server name is required."
+        }),
+        imageUrl: z.string().min(1, {
+            message: "Server image is required."
+        })
+    })
+    export const InitialModal = () => {
+        const form = useForm({
+            resolver: zodResolver(formSchema),
+            defaultValues:{
+                name: "",
+                imageUrl: "",
+            }
+        }); 
+
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) =>{
+        console.log(values);
+    }
+```
+
+
+```
+    <Form  {...form}>
+        <form onSubmit = {form.handleSubmit(onSubmit)} 
+        className="space-y-8">
+            <div className="space-y-8 px-6">
+
+            </div>
+        </form>
+    </Form>
+```
+
+## Fix hydration error
+```
+    const [isMounted , setIsMounted] = useState(false);
+    
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+    
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues:{
+            name: "",
+            imageUrl: "",
+        }
+    }); 
+```
+
+```
+if(!isMounted){
+    return null;
+}
+```

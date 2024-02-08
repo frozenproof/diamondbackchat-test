@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { viVN } from "@clerk/localizations";
 import { Head } from "next/document";
 import { cn } from "@/lib/utils";
+import { AlignCenter } from "lucide-react";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
