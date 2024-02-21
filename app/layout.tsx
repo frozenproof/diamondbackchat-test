@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { viVN } from "@clerk/localizations";
-import { Head } from "next/document";
+
 import { cn } from "@/lib/utils";
-import { AlignCenter } from "lucide-react";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -37,6 +36,7 @@ export default function RootLayout({
           enableSystem={true}
           storageKey="diamondbacc-theme"
         >
+        <ModalProvider />
        {children}
        </ThemeProvider>
       </body>
