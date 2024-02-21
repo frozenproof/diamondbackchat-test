@@ -1,3 +1,5 @@
+import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
+import { Navigation } from "lucide-react";
 import React from "react";
 
 const MainLayout = async ({
@@ -7,8 +9,14 @@ const MainLayout = async ({
 }) => {
     return ( 
         <div className="h-full">
-            {children}
-        </div>
+            <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0"> 
+             <NavigationSidebar/>
+             
+            </div>
+            <main className="md:pl-[72px] h-full ">
+                {children}
+            </main>
+         </div>
      );
 }
  

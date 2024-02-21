@@ -11,7 +11,7 @@ import { AlignCenter } from "lucide-react";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DiamondBack",
+  title: "DiamondBack 22/2",
   description: "Cattus",
 };
 
@@ -28,7 +28,7 @@ export default function RootLayout({
         <body className={
           cn(
             font.className,
-            "bg-white dark:bg-[#915757]",
+            "bg-white dark:bg-[#000000]",
             "bg-white light:bg-[#48f7f7]"
           )}>
         <ThemeProvider 
