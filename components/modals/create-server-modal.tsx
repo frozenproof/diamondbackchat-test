@@ -57,6 +57,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>) =>{
 
         form.reset();
         router.refresh();
+        onClose();
     }
     catch(error)
     {
@@ -74,7 +75,7 @@ return (
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Customize your server
+                        Create a new server
                     </DialogTitle>
                     <DialogDescription className="text-center">
                         Give your server more details.

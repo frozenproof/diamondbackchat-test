@@ -76,10 +76,10 @@ return (
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Customize your server
+                        Your first server !
                     </DialogTitle>
                     <DialogDescription className="text-center">
-                        Give your server more details.
+                        A server is free ,so give your server more details.
                     </DialogDescription>
                 </DialogHeader>
                 <Form  {...form}>

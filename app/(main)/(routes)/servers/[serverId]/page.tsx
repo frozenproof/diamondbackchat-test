@@ -1,6 +1,6 @@
 const ServerIdPage = () => {
     return (
-        <div>Server ID Page (   ･ω･)☞ Redirected from serverId </div>
+        <div>Server ID Page : Redirected from serverId </div>
         
    
     )

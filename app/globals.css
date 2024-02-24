@@ -15,6 +15,33 @@ body,
   text-decoration-color: aquamarine;
   background-color: white;
 }
+.cl-formButtonPrimary:hover {
+  font-size: 28px;
+  text-transform: none;
+  color: white;
+  text-decoration-color: chocolate;
+  background-color: chocolate;
+}
+.cl-dividerText{
+  font-size: 28px;
+  text-transform: none;
+  color: chocolate;
+  text-decoration-color: aquamarine;
+  background-color: white;
+}
+.cl-internal-b3fm6y{
+  background-color: chocolate;
+}
+.cl-internal-1bnsg8s{
+  background-color: chocolate;
+}
+.cl-footerActionText{
+  text-transform: none;
+  color: chocolate;
+  text-decoration-color: aquamarine;
+  background-color: white;
+
+}
 
 .cl-socialButtonsIconButton
 {
@@ -22,6 +49,9 @@ body,
   text-transform: none;
   background-color: white;
 }
+
+
+
 
 .cl-internal-1mc71o6
 {
