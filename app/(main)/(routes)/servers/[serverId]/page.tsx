@@ -1,6 +1,10 @@
+import { EvervaultCard } from "@/components/effects/EvervaultCard"
+
 const ServerIdPage = () => {
     return (
-        <div>Server ID Page : Redirected from serverId </div>
+        <div>
+            <EvervaultCard text="Server ID Page : Redirected from serverId " />
+        </div>
         
    
     )
