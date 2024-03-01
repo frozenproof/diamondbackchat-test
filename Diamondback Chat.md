@@ -134,3 +134,7 @@ if(!isMounted){
 - Lý do: vì modal có thể chỉ hiển thị trên một client , chúng ta không muốn modal hiển thị trên server khi không dùng . Mặc dù việc render của tất cả component vẫn là server , việc hiển thị có thể gây ra hydration error khi hiển thị không khớp .
 
 
+# Day 3
+## Children
+
+- Để sử dụng react node như một đối tượng parent , cần tạo đầu vào là children

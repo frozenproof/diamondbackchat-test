@@ -4,12 +4,14 @@ import React, { useState, useEffect } from "react";
 import { useMotionTemplate, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-export const EvervaultCard = ({
-  children,
+export const EvervaultCardVer2 = ({
+  text,
   className,
+  children
 }: {
-  children?: React.ReactNode;
+  text?: string;
   className?: string;
+  children?:React.ReactNode;
 }) => {
   let mouseX = useMotionValue(0);
   let mouseY = useMotionValue(0);
@@ -17,7 +19,7 @@ export const EvervaultCard = ({
   const [randomString, setRandomString] = useState("");
 
   useEffect(() => {
-    let str = generateRandomString(8888);
+    let str = generateRandomString(288);
     setRandomString(str);
   }, []);
 
@@ -26,14 +28,14 @@ export const EvervaultCard = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString(8888);
+    const str = generateRandomString(288);
     setRandomString(str);
   }
 
   return (
     <div
       className={cn(
-        "bg-transparent flex items-center justify-center w-full h-full relative border-[8px] border-[#888888]",
+        "bg-transparent flex items-center justify-center h-full relative",
         className
       )}
     >
@@ -47,10 +49,7 @@ export const EvervaultCard = ({
           randomString={randomString}
         />
         <div className="relative z-10 flex items-center justify-center">
-          <div className="relative rounded-full flex items-center justify-center text-white font-bold text-4xl">
-            <div />
-            <span className="dark:text-white text-black z-20">{children}</span>
-          </div>
+            {children}
         </div>
       </div>
     </div>
