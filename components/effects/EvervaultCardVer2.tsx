@@ -19,7 +19,7 @@ export const EvervaultCardVer2 = ({
   const [randomString, setRandomString] = useState("");
 
   useEffect(() => {
-    let str = generateRandomString(288);
+    let str = generateRandomString(88);
     setRandomString(str);
   }, []);
 
@@ -28,20 +28,20 @@ export const EvervaultCardVer2 = ({
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
 
-    const str = generateRandomString(288);
+    const str = generateRandomString(88);
     setRandomString(str);
   }
 
   return (
     <div
       className={cn(
-        "bg-transparent flex items-center justify-center h-full relative",
+        "bg-transparent flex items-center justify-center relative",
         className
       )}
     >
       <div
         onMouseMove={onMouseMove}
-        className="group/card rounded-3xl w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full"
+        className="group/card rounded-3xl w-full relative overflow-hidden bg-transparent flex items-center justify-center h-full "
       >
         <CardPattern
           mouseX={mouseX}

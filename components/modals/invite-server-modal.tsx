@@ -15,10 +15,11 @@ import { Button } from "../ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
+import axios from "axios";
 
 
 export const InviteServerModal = () => {
-    const { isOpen,onClose,type,data } = useModal();
+    const { onOpen, isOpen,onClose,type,data } = useModal();
     const origin = useOrigin();
 
     const isModalOpen = isOpen && type === "InviteServer"
@@ -36,6 +37,21 @@ export const InviteServerModal = () => {
         setTimeout(() => {
             setCopied(false);
         }, 1000);
+    }
+
+    const onNew = async() => {
+        try {
+            setIsLoading(true);
+            const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+
+            onOpen("InviteServer", {server: response.data})
+        }
+        catch(error) {
+            console.log(error);
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
  return ( 
         <Dialog open = {isModalOpen} onOpenChange={onClose}>
@@ -64,8 +80,7 @@ export const InviteServerModal = () => {
                         size="sm"
                         className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"
                     >
-                        {copied ? <Check/> : <Copy                        
-                        />}                    
+                        {copied ? <Check /> : <Copy />}                    
                     </Button>
                      
                     </div>

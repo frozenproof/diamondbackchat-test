@@ -25,13 +25,8 @@ export const NavigationSidebar = async () => {
             <NavigationAction/>
             <Separator
                 className="h-[2px] bg-zinc-300 dark:bg-slate-700 rounded-md w-10 mx-auto"
-            />
-            
-            <EvervaultCardVer2>
-             <NavigationServerScroll />            
-            </EvervaultCardVer2>     
-
-
+            />          
+            <NavigationServerScroll/>
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
                 <ModeToggle />
                 <UserButton 

@@ -10,10 +10,9 @@ const ServerIdPage = () => {
             <GlowingStarsBackgroundCard
             >
                 <EvervaultCard 
-                    className=""
                     >
-                        <p>
-                        (　･ω･)☞	Server ID Page : Redirected from serverId 
+                        <p className="w-full">
+                        (　･ω･)☞	Server ID Page : Redirected from serverId  
                         </p>
                 </EvervaultCard>
             </GlowingStarsBackgroundCard>
