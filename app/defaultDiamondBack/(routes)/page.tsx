@@ -20,11 +20,7 @@ export default function Home() {
     <div className="h-full flex items-center justify-center">
       <ModeToggle />
 
-    </div>
-
-    
-
-    
+    </div>    
     </div>
  );
 }

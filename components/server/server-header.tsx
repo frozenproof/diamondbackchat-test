@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Cat, ChevronDown, Settings, UserPlus, Users, LogOut, PlusSquare, Fingerprint } from "lucide-react";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
-import { useModal } from "@/hooks/use-modal-store";
+import { usePrompt } from "@/hooks/use-prompt-store";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
@@ -17,7 +17,7 @@ export const ServerHeader = ({
     server,
     role
 }:ServerHeaderProps) => {
-    const { onOpen } = useModal();
+    const { onOpen } = usePrompt();
     const isCreator = OldMemberRole.CREATOR;
     const isAdmin = isCreator || role === OldMemberRole.ADMIN;
     const isOwner = isAdmin || role === OldMemberRole.OWNER;
@@ -60,6 +60,7 @@ export const ServerHeader = ({
                     isModerator && (
                         <DropdownMenuItem
                             className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
+                            onClick={() => onOpen("EditServer", {server})}
                         >
                             Server Settings 
                             <Settings className="h-4 w-4 ml-auto"/>

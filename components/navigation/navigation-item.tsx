@@ -36,9 +36,9 @@ export const NavigationItem = ({
                 className="group relative flex items-center"
             >
                 <div className={cn(
-                    "absolute left-0 bg-primary rounded-r-full transition-all w-[4px] bg-[#bd9d59]",
-                    params?.serverId !== id && "group-hover:h-[20px]",
-                    params?.serverId === id ? "h-[36px]" : "h-[8px]"
+                    "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]  h-[36px]",
+                    // params?.serverId !== id && "group-hover:h-[20px]",
+                    params?.serverId === id ? "bg-[#bd9d59]" : "bg-transparent"
                 )} />
                 <div className={cn(
                     "relative group flex mx-3  h-[48px] w-[48px] rounded-[24px] transition-all group-hover:rounded-[16px] overflow-hidden",

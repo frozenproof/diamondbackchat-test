@@ -29,8 +29,7 @@ model Server {
   id            String @id @default(uuid())
   name          String
   imageUrl      String @db.Text
-  inviteCode    String @db.Text
-
+  inviteCode    String @unique
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -45,7 +44,7 @@ model Server {
 
 model Member {
   id            String @id @default(uuid())
-  role          OldMemberRole @default(SPECIALGUEST)
+  role          OldMemberRole @default(LilWitch)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
@@ -81,7 +80,9 @@ enum OldMemberRole {
   MODERATOR
   BOT
   MEMBER
+  GUEST
   SPECIALGUEST
+  LilWitch
 }
 
 enum OldChannelType {

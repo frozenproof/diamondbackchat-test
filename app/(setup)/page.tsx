@@ -1,4 +1,4 @@
-import { InitialModal } from "@/components/modals/initial-modal";
+import { InitialPrompt } from "@/components/Prompts/initial-Prompt";
 import { db } from "@/lib/db";
 import { initialFirstProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";
@@ -20,7 +20,7 @@ const SetupPage = async () => {
     }
 
     return (
-            <InitialModal/>
+            <InitialPrompt/>
     )
 
 }

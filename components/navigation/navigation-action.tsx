@@ -3,10 +3,10 @@
 import { Minus, Plus, PlusCircle } from "lucide-react"
 
 import { ActionTooltip } from "@/components/uihelper/action-tooltip"
-import { useModal } from "@/hooks/use-modal-store"
+import { usePrompt } from "@/hooks/use-prompt-store"
 
 export const NavigationAction = () => {
-    const {onOpen} = useModal();
+    const {onOpen} = usePrompt();
 
     return (
         <div>

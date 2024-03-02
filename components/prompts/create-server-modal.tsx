@@ -3,7 +3,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { useEffect, useState } from "react";
 import axios from "axios"
 import { FileUpload } from "@/components/files/file-upload";
 
@@ -26,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { usePrompt } from "@/hooks/use-prompt-store";
 
 const formSchema = z.object({
     name: z.string().min(1,{
@@ -35,15 +35,12 @@ const formSchema = z.object({
         message: "Server image is required."
     })
 })
-export const InitialModal = () => {
-    const [isMounted , setIsMounted] = useState(false);
-    
+export const CreateServerPrompt = () => {
+    const { isOpen,onClose,type } = usePrompt();
     const router = useRouter();
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-    
+    const isPromptOpen = isOpen && type === "CreateServer"
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
@@ -60,7 +57,7 @@ const onSubmit = async (values: z.infer<typeof formSchema>) =>{
 
         form.reset();
         router.refresh();
-        window.location.reload();
+        onClose();
     }
     catch(error)
     {
@@ -68,18 +65,20 @@ const onSubmit = async (values: z.infer<typeof formSchema>) =>{
     }
 }
 
-if(!isMounted){
-    return null;
+const handleClose = () => {
+    form.reset();
+    onClose();
 }
+
 return ( 
-        <Dialog open = {true}>
+        <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Your first server !
+                        Create a new server
                     </DialogTitle>
                     <DialogDescription className="text-center">
-                        A server is free ,so give your server more details.
+                        Give your server more details.
                     </DialogDescription>
                 </DialogHeader>
                 <Form  {...form}>

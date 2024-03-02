@@ -8,7 +8,7 @@ import {
     DialogTitle
 } from "@/components/ui/dialog"
 
-import { useModal } from "@/hooks/use-modal-store";
+import { usePrompt } from "@/hooks/use-prompt-store";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -18,17 +18,17 @@ import { useState } from "react";
 import axios from "axios";
 
 
-export const InviteServerModal = () => {
-    const { onOpen, isOpen,onClose,type,data } = useModal();
+export const InviteServerPrompt = () => {
+    const { onOpen, isOpen,onClose,type,data } = usePrompt();
     const origin = useOrigin();
 
-    const isModalOpen = isOpen && type === "InviteServer"
+    const isPromptOpen = isOpen && type === "InviteServer"
     const { server } = data;
 
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
+    const inviteUrl = `${origin}/invite-app/${server?.inviteCode}`;
     
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
@@ -42,19 +42,19 @@ export const InviteServerModal = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+            const response = await axios.patch(`/api/servers/${server?.id}/invite-api`);
 
             onOpen("InviteServer", {server: response.data})
         }
         catch(error) {
-            console.log(error);
+            console.log("Very weird bug",error);
         }
         finally {
             setIsLoading(false);
         }
     }
  return ( 
-        <Dialog open = {isModalOpen} onOpenChange={onClose}>
+        <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
@@ -70,12 +70,15 @@ export const InviteServerModal = () => {
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
                         <Input
+                            disabled={isLoading}
                             className="bg-zinc-200/80 border-0 
                             focus-visible:ring-2 text-[#db8bca]
                             focus-visible:ring-offset-0"
                             value={inviteUrl}
+                            readOnly
                         />
                     <Button
+                        disabled={isLoading}
                         onClick={onCopy} 
                         size="sm"
                         className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"
@@ -85,6 +88,8 @@ export const InviteServerModal = () => {
                      
                     </div>
                     <Button 
+                        disabled={isLoading}
+                        onClick={onNew}
                         variant="ghost"
                         className="text-xs mt-4" 
                     >

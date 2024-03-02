@@ -61,10 +61,10 @@ export const config = {
 ```
 
 # Day 2
-- Created modals folder and fixed the db connection .
-- What is a modal 
+- Created Prompts folder and fixed the db connection .
+- What is a Prompt 
 ```
-A modal (also called a modal window or lightbox) is a web page element that displays in front of and deactivates all other page content. To return to the main content, the user must engage with the modal by completing an action or by closing it
+A Prompt (also called a Prompt window or lightbox) is a web page element that displays in front of and deactivates all other page content. To return to the main content, the user must engage with the Prompt by completing an action or by closing it
 ```
 
 ## Zod
@@ -81,7 +81,7 @@ A modal (also called a modal window or lightbox) is a web page element that disp
             message: "Server image is required."
         })
     })
-    export const InitialModal = () => {
+    export const InitialPrompt = () => {
         const form = useForm({
             resolver: zodResolver(formSchema),
             defaultValues:{
@@ -131,10 +131,20 @@ if(!isMounted){
 }
 ```
 
-- Lý do: vì modal có thể chỉ hiển thị trên một client , chúng ta không muốn modal hiển thị trên server khi không dùng . Mặc dù việc render của tất cả component vẫn là server , việc hiển thị có thể gây ra hydration error khi hiển thị không khớp .
+- Lý do: vì Prompt có thể chỉ hiển thị trên một client , chúng ta không muốn Prompt hiển thị trên server khi không dùng . Mặc dù việc render của tất cả component vẫn là server , việc hiển thị có thể gây ra hydration error khi hiển thị không khớp .
 
 
 # Day 3
 ## Children
 
 - Để sử dụng react node như một đối tượng parent , cần tạo đầu vào là children
+- Sua database
+```
+    npx prisma generate
+    npx prisma db push
+```
+
+- Reset database de phong bug
+```
+    npx prisma migrate reset
+```
