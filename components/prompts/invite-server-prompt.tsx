@@ -22,7 +22,7 @@ export const InviteServerPrompt = () => {
     const { onOpen, isOpen,onClose,type,data } = usePrompt();
     const origin = useOrigin();
 
-    const isPromptOpen = isOpen && type === "InviteServer"
+    const isPromptOpen = isOpen && type === "InviteServer";
     const { server } = data;
 
     const [ copied, setCopied ] = useState(false);

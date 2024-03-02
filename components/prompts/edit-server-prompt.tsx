@@ -51,15 +51,12 @@ export const EditServerPrompt = () => {
         }
     }); 
 
-    useEffect(() => {
-        if(server) {
-            form.setValue("name",server.name);
-            form.setValue("imageUrl", server.imageUrl);
-        }
-    },[server,form]);
     
-   
-
+    if(server)  {
+        form.setValue("name",server.name);
+        form.setValue("imageUrl", server.imageUrl);       
+    }
+        
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
@@ -86,10 +83,10 @@ export const EditServerPrompt = () => {
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
-                            Create a new server
+                            Edit your server
                         </DialogTitle>
                         <DialogDescription className="text-center">
-                            Give your server more details.
+                            Cook some or cook a lot . Why kiss your bro when you can kiss your server .
                         </DialogDescription>
                     </DialogHeader>
                     <Form  {...form}>
@@ -102,13 +99,14 @@ export const EditServerPrompt = () => {
                                         control={form.control}
                                         name="imageUrl"
                                         render={({field}) => (
-                                            <FormItem>
+                                            <FormItem
+                                            >
                                                 <FormControl>
                                                     <FileUpload 
                                                         endpoint="serverImage"
                                                         value={field.value}
                                                         onChange={field.onChange}
-                                                    />
+                                                   />
                                                 </FormControl>
                                             </FormItem>
                                         )}
@@ -129,6 +127,7 @@ export const EditServerPrompt = () => {
                                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                                                 placeholder="Enter your server name"
                                                 {...field}
+                                                value = {server?.name}
                                             />
                                         </FormControl>
                                         <FormMessage />

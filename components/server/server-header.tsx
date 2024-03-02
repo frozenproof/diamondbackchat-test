@@ -60,7 +60,7 @@ export const ServerHeader = ({
                     isModerator && (
                         <DropdownMenuItem
                             className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
-                            onClick={() => onOpen("EditServer", {server})}
+                            onClick={() => onOpen("EditServer", {server: server},)}
                         >
                             Server Settings 
                             <Settings className="h-4 w-4 ml-auto"/>

@@ -10,7 +10,7 @@ import { PromptProvider } from "@/components/providers/prompt-provider";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DiamondBack 22/2",
+  title: "DiamondBack 33",
   description: "Cattus",
 };
 
