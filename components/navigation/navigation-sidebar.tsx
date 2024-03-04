@@ -21,10 +21,11 @@ export const NavigationSidebar = async () => {
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full absolute"
             // style={{backgroundColor: '#00000000'}}
         >
-            
-            <NavigationAction/>
+            <div className="mt-[16px] mb-auto">
+                <NavigationAction/>            
+            </div>
             <Separator
-                className="h-[2px] bg-zinc-300 dark:bg-slate-700 rounded-md w-10 mx-auto"
+                className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
             <NavigationServerScroll/>
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">

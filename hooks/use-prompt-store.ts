@@ -1,7 +1,7 @@
 import { Server } from "@prisma/client";
 import { create } from "zustand"
 
-export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "EditServer";
+export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "EditServer" | "ManageMember";
 
 
 

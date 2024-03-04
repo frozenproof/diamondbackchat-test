@@ -36,6 +36,7 @@ export default function RootLayout({
           enableSystem={true}
           storageKey="diamondbacc-theme"
         >
+        <link rel="icon" href="/icon.ico" sizes="any" />
         <PromptProvider />
        {children}
        </ThemeProvider>

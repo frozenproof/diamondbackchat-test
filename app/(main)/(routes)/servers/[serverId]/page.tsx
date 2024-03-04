@@ -8,11 +8,9 @@ const ServerIdPage = () => {
             className="h-full w-full"
         >            
             <GlowingStarsBackgroundCard>
-                            (　･ω･)☞	Server ID 8 Page : Redirected from serverId  <br/>
-                            (　･ω･)☞	Server ID Page : Redirected from serverId  <br/>
-                            (　･ω･)☞	Server ID Page : Redirected from serverId  <br/>
-                            (　･ω･)☞	Server ID Page : Redirected from serverId  <br/>
-                            (　･ω･)☞	Server ID Page : Redirected from serverId  <br/>                
+                <EvervaultCard>
+                            (　･ω･)☞	Server ID Page : Redirected from serverId           
+                </EvervaultCard>
             </GlowingStarsBackgroundCard>                            
          </div>
                
