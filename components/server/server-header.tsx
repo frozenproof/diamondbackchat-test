@@ -70,6 +70,7 @@ export const ServerHeader = ({
                 {
                     isModerator && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("ManageMember", { server: server })}
                             className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
                         >
                             Manage Members 

@@ -7,7 +7,19 @@ body,
 :root{
   height: 100%;
 }
-
+/* Custom hover */
+.manage-member {
+  color: chocolate;
+}
+.manage-member :hover {
+  background-color: chocolate;
+  color: white;
+}
+.dark-manage-member {
+  color: white;
+  background-color: blue;
+}
+/* Clerk */
 .cl-formButtonPrimary {
   font-size: 28px;
   text-transform: none;

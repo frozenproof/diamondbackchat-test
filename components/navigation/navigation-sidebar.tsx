@@ -8,6 +8,7 @@ import { UserButton } from "@clerk/nextjs";
 import { NavigationServerScroll } from "@/components/navigation/navigation-server-scroll";
 import { EvervaultCardVer2 } from "@/components/effects/EvervaultCardVer2";
 import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
+import { UserButtonDiamond } from "../uihelper/user-button-diamond";
 
 export const NavigationSidebar = async () => {
     const profile = await currentUserProfile();
@@ -28,17 +29,22 @@ export const NavigationSidebar = async () => {
                 className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
             <NavigationServerScroll/>
-            <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-                <ModeToggle />
-                <UserButton 
-                    afterSignOutUrl="/"
-                    appearance={{
-                        elements:{
-                            avatarBox: "h-[48px] w-[48px]"
-                        }
-                    }}
-                />
-            </div>
+                <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
+                    <ModeToggle />
+                    {/* <UserButton 
+                        afterSignOutUrl="login-dbc?"
+                        appearance={{
+                            elements:{
+                                avatarBox: "h-[48px] w-[48px]"
+                            }
+                        }}
+                    /> */}
+                    <UserButtonDiamond 
+                        className="h-[48px] w-[48px]"
+                        src={profile.imageUrl}
+                    />
+                    
+                </div>
         </div>
      );
 }
