@@ -10,8 +10,9 @@ import { PromptProvider } from "@/components/providers/prompt-provider";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "DiamondBack 33",
+  title: "Euphoria",
   description: "Cattus",
+  icons: "icon8.ico"
 };
 
 export default function RootLayout({
@@ -38,7 +39,7 @@ export default function RootLayout({
         >
         <link rel="icon" href="/icon.ico" sizes="any" />
         <PromptProvider />
-       {children}
+          {children}
        </ThemeProvider>
       </body>
       </html>

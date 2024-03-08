@@ -15,14 +15,14 @@ export const GlowingStarsBackgroundCard = ({
   return (
     <div
       className={cn(
-        // "bg-[linear-gradient(110deg,#333_0.6%,#222)] p-4 max-w-md max-h-[20rem] h-full w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600",
-        "bg-[#ffffff] h-full w-full rounded-xl border border-[#eaeaea] dark:border-neutral-600",
+        "bg-[#ffffff] rounded-xl border-[#eaeaea] dark:border-neutral-600",
         className
       )}
     >
-      <div className="flex justify-center items-center h-full border-[8px]">
+      <div className="flex h-full w-full">
         <Illustration />
-        <div className="absolute h-full ">{children}</div>
+        
+        <div className="absolute h-full w-full">{children}</div>
       </div>
     </div>
   );
@@ -36,10 +36,8 @@ export const GlowingStarsDescription = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <p className={cn("text-base text-white max-w-[16rem]", className)}>
       {children}
-    </p>
-  );
+);
 };
 
 export const GlowingStarsTitle = ({
@@ -57,7 +55,7 @@ export const GlowingStarsTitle = ({
 };
 
 export const Illustration = () => {
-  const stars = 108;
+  const stars = 8;
   const columns = 18;
 
   const [glowingStars, setGlowingStars] = useState<number[]>([]);
@@ -82,7 +80,7 @@ export const Illustration = () => {
         display: "grid",
         gridTemplateColumns: `repeat(${columns}, 8fr)`,
         gap: `8px`,
-        // height:"100vh"
+        height:"40px"
       }}
       
     >

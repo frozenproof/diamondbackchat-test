@@ -11,10 +11,7 @@ body,
 .manage-member {
   color: chocolate;
 }
-.manage-member :hover {
-  background-color: chocolate;
-  color: white;
-}
+
 .dark-manage-member {
   color: white;
   background-color: blue;

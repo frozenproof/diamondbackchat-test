@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
 import { ServerHeader } from "@/components/server/server-header";
+import { UserButtonDiamond } from "../uihelper/user-button-diamond";
 
 interface ServerSideBarProps {
     serverId: string
@@ -46,7 +47,7 @@ export const ServerSideBar = async({
     }
     const role = server?.members.find((member) => member.userProfileId === profile.id)?.role
     return (
-        <div className="flex flex-col-8 h-full text-primary w-full dark:bg-[#2b2d31] bg-[#d8dcff]">
+        <div className="flex  h-full text-primary w-full dark:bg-[#2b2d31] bg-[#2fffb3]">
             <ServerHeader
                 server={server}
                 role={role}

@@ -39,10 +39,10 @@ export const NavigationSidebar = async () => {
                             }
                         }}
                     /> */}
-                    <UserButtonDiamond 
+                    {/* <UserButtonDiamond 
                         className="h-[48px] w-[48px]"
                         src={profile.imageUrl}
-                    />
+                    /> */}
                     
                 </div>
         </div>

@@ -11,66 +11,99 @@ datasource db {
 }
 
 model UserProfile {
-  id            String @id @default(uuid())
-  userId        String @unique
-  name          String 
-  imageUrl      String @db.Text
-  email         String @db.Text
+  id       String     @id @default(uuid())
+  userId   String     @unique
+  name     String
+  imageUrl String     @db.Text
+  email    String     @db.Text
+  status   UserStatus @default(ONLINE)
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  servers       Server[]
-  members       Member[]
-  channels      Channel[]
+  servers      Server[]
+  members      Member[]
+  channels     Channel[]
+  BannedServer BannedServer[]
+  ServerInvite ServerInvite[]
 }
 
 model Server {
-  id            String @id @default(uuid())
-  name          String
-  imageUrl      String @db.Text
-  inviteCode    String @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id         String   @id @default(uuid())
+  name       String
+  imageUrl   String   @db.Text
+  inviteCode String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade) 
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  members       Member[]
-  channels      Channel[]
-  
- @@index([userProfileId])
+  members      Member[]
+  channels     Channel[]
+  BannedServer BannedServer[]
+  ServerInvite ServerInvite[]
+
+  @@index([userProfileId])
 }
 
 model Member {
-  id            String @id @default(uuid())
-  role          OldMemberRole @default(LilWitch)
+  id   String        @id @default(uuid())
+  role OldMemberRole @default(LilWitch)
 
   userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  serverId      String
-  server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   @@index([userProfileId])
   @@index([serverId])
 }
 
 model Channel {
-  id            String @id @default(uuid())
-  name          String
-  type          OldChannelType @default(TEXT)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String         @id @default(uuid())
+  name      String
+  type      OldChannelType @default(TEXT)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 
   userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId],references: [id],onDelete: Cascade)
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  serverId      String
-  server        Server @relation(fields: [serverId],references: [id],onDelete: Cascade)
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   @@index([userProfileId])
   @@index([serverId])
+}
+
+model BannedServer {
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  description String   @default("Banned because why not ?")
+  assignedAt  DateTime @default(now())
+  assignedBy  String
+
+  @@id([userProfileId, serverId])
+}
+
+model ServerInvite {
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  inviteCode String   @unique
+  assignedAt DateTime @default(now())
+  assignedBy String
+
+  @@id([userProfileId, serverId])
 }
 
 enum OldMemberRole {
@@ -95,3 +128,16 @@ enum OldChannelType {
   CONTACT
 }
 
+enum UserStatus {
+  ONLINE
+  OFFINE
+  INVISIBLE
+  DO_NOT_DISTURB
+  DELETED
+  BANNED
+}
+
+enum ServerStatus {
+  ONLINE
+  DELETED
+}
