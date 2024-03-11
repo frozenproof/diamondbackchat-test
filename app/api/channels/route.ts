@@ -20,10 +20,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        if (name === "general") {
-          return new NextResponse("Name cannot be 'general'", { status: 400 });
-        }
-    
+
         const server = await db.server.update({
           where: {
             id: serverId,
@@ -31,7 +28,7 @@ export async function POST(req: Request){
               some: {
                 userProfileId: profile.id,
                 role: {
-                  in: [OldMemberRole.ADMIN, OldMemberRole.MODERATOR]
+                  in: [OldMemberRole.ADMIN, OldMemberRole.MODERATOR,OldMemberRole.CREATOR,OldMemberRole.LilWitch,OldMemberRole.OWNER]
                 }
               }
             }

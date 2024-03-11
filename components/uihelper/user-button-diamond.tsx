@@ -39,23 +39,20 @@ export const UserButtonDiamond = ({
                         </DiamondAvatar>
                         
                         <div 
-                            className=" gap-x-2 gap-y-1 pl-2 flex flex-col flex-wrap h-auto"
-                            style={{color: "red",fontSize: "10px"}}
+                            className=" gap-x-1 gap-y-1 pl-2 flex flex-col flex-wrap h-auto overflow-hidden mt-auto"
                         >
-                            <div>
+                            <div
+                                style={{color: "red",fontSize: "18px"}}
+                            >
                                 {name}
                             </div>
-                            <div>
+                            <div
+                                style={{color: "green",fontSize: "8px"}}
+                            >
                                 {status}
                             </div>
                         </div>
-                        {/* <Image 
-                            src={src!}
-                            alt="User"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            width={48}
-                            height={48}
-                        /> */}
+                        
                     </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
