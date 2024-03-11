@@ -9,6 +9,7 @@ import { NavigationServerScroll } from "@/components/navigation/navigation-serve
 import { EvervaultCardVer2 } from "@/components/effects/EvervaultCardVer2";
 import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
 import { UserButtonDiamond } from "../uihelper/user-button-diamond";
+import { DiamondBackground } from "../effects/diamond-background";
 
 export const NavigationSidebar = async () => {
     const profile = await currentUserProfile();
@@ -28,8 +29,10 @@ export const NavigationSidebar = async () => {
             <Separator
                 className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
+                    
             <NavigationServerScroll/>
                 <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
+            
                     <ModeToggle />
                     {/* <UserButton 
                         afterSignOutUrl="login-dbc?"

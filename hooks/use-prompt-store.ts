@@ -1,19 +1,21 @@
-import { Server } from "@prisma/client";
+import { Channel, OldChannelType, Server } from "@prisma/client";
 import { create } from "zustand"
 
-export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "EditServer" | "ManageMember";
+export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "CreateChannel" | "ManageMember" | "ManageChannel" | "CreateChannelDiamond";
 
 
 
-interface PromptServerData {
+interface PromptAPIData {
     server?: Server
-}
+    channel?: Channel;
+    oldChannelType?: OldChannelType;
+  }
 
 interface PromptStoredInfo {
     type: PromptType | null;
-    data: PromptServerData;
+    data: PromptAPIData;
     isOpen: boolean;
-    onOpen:(type:PromptType, data?:PromptServerData) => void;
+    onOpen:(type:PromptType, data?:PromptAPIData) => void;
     onClose:() => void;
 }
 

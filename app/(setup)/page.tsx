@@ -1,4 +1,4 @@
-import { InitialPrompt } from "@/components/prompts/initial-prompt";
+import { InitialPrompt } from "@/components/prompts/server/initial-prompt";
 import { db } from "@/lib/db";
 import { initialFirstProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";

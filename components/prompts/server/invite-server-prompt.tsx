@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/dialog"
 
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Label } from "../../ui/label";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";

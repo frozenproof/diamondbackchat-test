@@ -4,9 +4,10 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
 
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "@/components/navigation/navigation-item";
 import { EvervaultCardVer2 } from "../effects/EvervaultCardVer2";
+import { DiamondBackground } from "../effects/diamond-background";
 
 export const NavigationServerScroll = async() => {
     const profile = await currentUserProfile();
@@ -30,6 +31,7 @@ export const NavigationServerScroll = async() => {
                     {servers.map((server) => (
                         <EvervaultCardVer2 className="h-full" key={server.id}>                
                             <div key={server.id} className="mt-[12px] mb-[12px]">
+                            
                                 <NavigationItem 
                                     id={server.id}
                                     name={server.name}

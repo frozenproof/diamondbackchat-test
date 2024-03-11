@@ -44,7 +44,7 @@ const ServerIdPageLayout = async ({
             <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
                 <ServerSideBar serverId={params.serverId}/>
                 
-                <GlowingStarsBackgroundCard
+                <div
                     className="mt-auto pt-1 pb-1 pl-1 flex"
                 >
                     <UserButtonDiamond 
@@ -53,7 +53,7 @@ const ServerIdPageLayout = async ({
                         status={profile.status}
                     />
                    
-                </GlowingStarsBackgroundCard>
+                </div>
             </div>
             <main className="h-full md:pl-48">
                 {children}    

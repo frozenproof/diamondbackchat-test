@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import Image from "next/image";
 import { GlowingStarsBackgroundCard } from "../effects/glowing-stars";
+import { DiamondBackground } from "../effects/diamond-background";
 interface UserProfileAvatarProps {
     src?: string;
     name?: string;

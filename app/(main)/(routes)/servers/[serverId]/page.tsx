@@ -8,12 +8,41 @@ const ServerIdPage = () => {
         <div     
             className="h-full w-full"
         >            
-                    <EvervaultCard>
-                    <BackgroundBeams />
-                                        (　･ω･)☞	Server ID Page : Redirected from serverId           
-                    </EvervaultCard>
-                    
-            
+                    {/* <EvervaultCard>
+                                        (　･ω･)☞	Server ID Page : Redirected from serverId
+                                        <br/>
+                                        Write something here            */}
+                                    {/* <div className="content">
+
+                                    <label className="cuboid">
+                                        <div className="side">AM</div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                    </label>
+                                    <label className="cuboid">
+                                        <div className="side">FM</div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                    </label>
+                                    <label className="cuboid">
+                                        <div className="side">AUX</div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                        <div className="side"></div>
+                                    </label>
+
+                                    <div className="info"></div>
+
+                                    </div> */}
+                    {/* </EvervaultCard> */}
                 {/* </GlowingStarsTitle>
                 
             </GlowingStarsBackgroundCard>                             */}

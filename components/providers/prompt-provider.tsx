@@ -1,10 +1,13 @@
 "use client";
 
-import { CreateServerPrompt } from "@/components/prompts/create-server-prompt";
+import { CreateServerPrompt } from "@/components/prompts/server/create-server-prompt";
 import { useEffect, useState } from "react";
-import { InviteServerPrompt } from "@/components/prompts/invite-server-prompt";
-import { EditServerPrompt } from "@/components/prompts/edit-server-prompt";
-import { ManageMemberPrompt } from "../prompts/manage-member-prompt";
+import { InviteServerPrompt } from "@/components/prompts/server/invite-server-prompt";
+import { EditServerPrompt } from "@/components/prompts/server/edit-server-prompt";
+import { ManageMemberPrompt } from "@/components/prompts/user/manage-member-prompt";
+import { CreateChannelPrompt } from "../prompts/channel/create-channel-prompt";
+import { CreateChannelPromptDiamond } from "../prompts/channel/create-channel-prompt-diamond ";
+
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -23,6 +26,8 @@ export const PromptProvider = () => {
             <InviteServerPrompt />
             <EditServerPrompt />
             <ManageMemberPrompt />
+            <CreateChannelPrompt />
+            <CreateChannelPromptDiamond />
         </>
     )
 }
