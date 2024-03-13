@@ -21,9 +21,10 @@ export const NavigationServerScroll = async() => {
         where: {
             members:{
                 some:{
-                    userProfileId: profile.id
+                    userProfileId: profile.id,
                 }
-            }
+            },
+            deleted: false,
         }
     })
     return (

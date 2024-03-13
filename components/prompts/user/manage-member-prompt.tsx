@@ -38,7 +38,7 @@ const roleIconMap: {[key: string]: React.ReactNode} = {
     "MODERATOR": <ShieldCheckIcon className="h-4 w-4"/>,
     "CREATOR": <Cat className="h-4 w-4"/>,
     "OWNER": <ShieldEllipsis className="h-4 w-4"/>,
-    "LilWitch": <MagnetIcon className="h-4 w-4"/>
+    "LILWITCH": <MagnetIcon className="h-4 w-4"/>
 }
 
 export const ManageMemberPrompt = () => {
@@ -197,13 +197,13 @@ export const ManageMemberPrompt = () => {
                                                                 }
                                                             </DropdownMenuItem>
                                                             <DropdownMenuItem
-                                                                onClick={() => onRoleChange(member.id,"LilWitch")}
+                                                                onClick={() => onRoleChange(member.id,"LILWITCH")}
                                                             >
                                                                 <Book 
                                                                     className="mr-2"
                                                                 />
-                                                                    LilWitch
-                                                                {member.role === "LilWitch" && (
+                                                                    LILWITCH
+                                                                {member.role === "LILWITCH" && (
                                                                     <Check 
                                                                         className="text-[#ff3b3b] ml-auto"
                                                                     />

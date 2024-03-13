@@ -18,7 +18,7 @@ export const ServerHeader = ({
     role
 }:ServerHeaderProps) => {
     const { onOpen } = usePrompt();
-    const isCreator = OldMemberRole.CREATOR;
+    const isCreator = role === OldMemberRole.CREATOR;
     const isAdmin = isCreator || role === OldMemberRole.ADMIN;
     const isOwner = isAdmin || role === OldMemberRole.OWNER;
     const isModerator = isOwner || role === OldMemberRole.MODERATOR;
@@ -101,6 +101,7 @@ export const ServerHeader = ({
                 {
                     isModerator && (
                         <DropdownMenuItem 
+                        onClick={() => onOpen("DeleteServer", {server:server})}
                         className="text-red-600  px-3 py-2 text-sm cursor-pointer"
                     >
                         Delete Server
@@ -110,7 +111,8 @@ export const ServerHeader = ({
                 }
                 {
                     !isOwner && (
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
+                        onClick={()=>onOpen("LeaveServer", {server: server})}
                         className="text-red-600 hover:text-amber-700  px-3 py-2 text-sm cursor-pointer"
                     >
                         Leave Server

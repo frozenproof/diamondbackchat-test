@@ -11,20 +11,22 @@ datasource db {
 }
 
 model UserProfile {
-  id       String     @id @default(uuid())
-  userId   String     @unique
-  name     String
-  imageUrl String     @db.Text
-  email    String     @db.Text
-  status   UserStatus @default(ONLINE)
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  name      String
+  imageUrl  String     @db.Text
+  email     String     @db.Text
+  status    UserStatus @default(ONLINE)
+  deleted   Boolean    @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  deletedAt  DateTime @updatedAt
 
   servers      Server[]
   members      Member[]
   channels     Channel[]
-  BannedServer BannedServer[]
+  BannedServer BannedServerMember[]
   ServerInvite ServerInvite[]
 }
 
@@ -33,15 +35,18 @@ model Server {
   name       String
   imageUrl   String   @db.Text
   inviteCode String   @unique
+
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  deletedAt  DateTime @updatedAt
+  deleted    Boolean  @default(false)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   members      Member[]
   channels     Channel[]
-  BannedServer BannedServer[]
+  BannedServer BannedServerMember[]
   ServerInvite ServerInvite[]
 
   @@index([userProfileId])
@@ -49,7 +54,7 @@ model Server {
 
 model Member {
   id   String        @id @default(uuid())
-  role OldMemberRole @default(LilWitch)
+  role OldMemberRole @default(MEMBER)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
@@ -78,7 +83,7 @@ model Channel {
   @@index([serverId])
 }
 
-model BannedServer {
+model BannedServerMember {
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
@@ -115,7 +120,7 @@ enum OldMemberRole {
   MEMBER
   GUEST
   SPECIALGUEST
-  LilWitch
+  LILWITCH
 }
 
 enum OldChannelType {

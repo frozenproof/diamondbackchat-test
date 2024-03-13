@@ -9,7 +9,9 @@ body,
 }
 
 /* channel */
-
+.lucide-x {
+  display: none
+}
 .content {
 	width: 50vmin;
 	height: 15vmin;

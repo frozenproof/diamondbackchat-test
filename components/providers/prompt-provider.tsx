@@ -7,7 +7,8 @@ import { EditServerPrompt } from "@/components/prompts/server/edit-server-prompt
 import { ManageMemberPrompt } from "@/components/prompts/user/manage-member-prompt";
 import { CreateChannelPrompt } from "../prompts/channel/create-channel-prompt";
 import { CreateChannelPromptDiamond } from "../prompts/channel/create-channel-prompt-diamond ";
-
+import { LeaveServerPrompt } from "../prompts/server/leave-server-prompt";
+import { DeleteServerPrompt } from "../prompts/server/delete-server-prompt";
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -28,6 +29,8 @@ export const PromptProvider = () => {
             <ManageMemberPrompt />
             <CreateChannelPrompt />
             <CreateChannelPromptDiamond />
+            <LeaveServerPrompt />
+            <DeleteServerPrompt />
         </>
     )
 }

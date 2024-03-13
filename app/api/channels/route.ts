@@ -28,7 +28,7 @@ export async function POST(req: Request){
               some: {
                 userProfileId: profile.id,
                 role: {
-                  in: [OldMemberRole.ADMIN, OldMemberRole.MODERATOR,OldMemberRole.CREATOR,OldMemberRole.LilWitch,OldMemberRole.OWNER]
+                  in: [OldMemberRole.ADMIN, OldMemberRole.MODERATOR,OldMemberRole.CREATOR,OldMemberRole.LILWITCH,OldMemberRole.OWNER]
                 }
               }
             }

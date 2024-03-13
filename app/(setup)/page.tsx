@@ -11,7 +11,8 @@ const SetupPage = async () => {
                 some:{
                     userProfileId: newprofile.id
                 }
-            }
+            },
+            deleted: false
         }
     })
 
