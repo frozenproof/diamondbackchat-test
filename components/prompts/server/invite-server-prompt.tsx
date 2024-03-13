@@ -16,6 +16,8 @@ import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
 import axios from "axios";
+import { ServerWithMembersWithProfiles } from "@/type";
+import qs from "query-string";
 
 
 export const InviteServerPrompt = () => {
@@ -23,17 +25,18 @@ export const InviteServerPrompt = () => {
     const origin = useOrigin();
 
     const isPromptOpen = isOpen && type === "InviteServer";
-    const { server } = data;
+    const { serverInvite } = data;
+    const { server } = data as {server: ServerWithMembersWithProfiles}
 
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    const inviteUrl = `${origin}/invite-app/${server?.inviteCode}`;
+    const inviteUrl = `${origin}/invite-app/${server?.id}`;
     
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
         setCopied(true);
-
+        
         setTimeout(() => {
             setCopied(false);
         }, 1000);
@@ -42,9 +45,9 @@ export const InviteServerPrompt = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
+            console.log(`/api/servers/${server?.id}/invite-api`);
             const response = await axios.patch(`/api/servers/${server?.id}/invite-api`);
-
-            onOpen("InviteServer", {server: response.data})
+            onOpen("InviteServer", {serverInvite: response.data});
         }
         catch(error) {
             console.log("Very weird bug",error);

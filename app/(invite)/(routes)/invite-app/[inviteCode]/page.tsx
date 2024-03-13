@@ -23,19 +23,15 @@ const InviteCodePage = async({
         return redirect("/");
     }
 
-    const existingInServer = await db.server.findFirst({
+    const existingInServer = await db.serverInvite.findFirst({
         where: {
             inviteCode: params.inviteCode,
-            members: {
-                some: {
-                    userProfileId: profile?.id,
-                }
-            },
+            deleted: false,
         }
     });
 
     if(existingInServer) {
-        return redirect(`/servers/${existingInServer.id}`);
+        return redirect(`/servers/${existingInServer.serverId}`);
     } 
 
     const server = await db.server.update({
@@ -55,7 +51,7 @@ const InviteCodePage = async({
 
     if(server) {
         return redirect(`/servers/${server.id}`);
-    } else  return null;
+    } else return null;
 }
  
 export default InviteCodePage;

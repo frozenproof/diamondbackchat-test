@@ -11,17 +11,17 @@ datasource db {
 }
 
 model UserProfile {
-  id        String     @id @default(uuid())
-  userId    String     @unique
-  name      String
-  imageUrl  String     @db.Text
-  email     String     @db.Text
-  status    UserStatus @default(ONLINE)
-  deleted   Boolean    @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  deletedAt  DateTime @updatedAt
+  id          String     @id @default(uuid())
+  userId      String     @unique
+  name        String
+  imageUrl    String     @db.Text
+  email       String     @db.Text
+  status      UserStatus @default(ONLINE)
+  deleted     Boolean    @default(false)
+      
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime  @updatedAt
 
   servers      Server[]
   members      Member[]
@@ -31,13 +31,13 @@ model UserProfile {
 }
 
 model Server {
-  id         String   @id @default(uuid())
-  name       String
-  imageUrl   String   @db.Text
-  inviteCode String   @unique
+  id          String   @id @default(uuid())
+  name        String
+  imageUrl    String   @db.Text
+  inviteCode  String   @unique
 
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   deletedAt  DateTime @updatedAt
   deleted    Boolean  @default(false)
 
@@ -53,14 +53,17 @@ model Server {
 }
 
 model Member {
-  id   String        @id @default(uuid())
-  role OldMemberRole @default(MEMBER)
+  id            String        @id @default(uuid())
+  role          OldMemberRole @default(MEMBER)
 
   userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfile   UserProfile   @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  serverId String
-  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId      String
+  server        Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  nickname      String        @default("")
+
 
   @@index([userProfileId])
   @@index([serverId])
@@ -90,6 +93,8 @@ model BannedServerMember {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
+  deleted     Boolean  @default(false)
+  deletedAt   DateTime @updatedAt
   description String   @default("Banned because why not ?")
   assignedAt  DateTime @default(now())
   assignedBy  String
@@ -105,7 +110,9 @@ model ServerInvite {
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   inviteCode String   @unique
-  assignedAt DateTime @default(now()) @updatedAt
+  deleted    Boolean  @default(false)
+  deletedAt  DateTime @updatedAt
+  assignedAt DateTime @updatedAt
   assignedBy String   @default("User")
 
   @@id(name: "inviteId",[userProfileId, serverId])
