@@ -94,7 +94,7 @@ model BannedServerMember {
   assignedAt  DateTime @default(now())
   assignedBy  String
 
-  @@id([userProfileId, serverId])
+  @@id(name: "banId",[userProfileId, serverId])
 }
 
 model ServerInvite {
@@ -105,10 +105,10 @@ model ServerInvite {
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
   inviteCode String   @unique
-  assignedAt DateTime @default(now())
-  assignedBy String
+  assignedAt DateTime @default(now()) @updatedAt
+  assignedBy String   @default("User")
 
-  @@id([userProfileId, serverId])
+  @@id(name: "inviteId",[userProfileId, serverId])
 }
 
 enum OldMemberRole {

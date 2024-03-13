@@ -12,7 +12,7 @@ export async function POST(req: Request){
             return new NextResponse("Unauthorized", {status: 401})
         }
 
-        const server = await db.server.create({
+        const server2 = await db.server.create({
             data:{
                 userProfileId: profile.id,
                 name,
@@ -37,7 +37,26 @@ export async function POST(req: Request){
             }
         })
         
-        return NextResponse.json(server);
+        const inviteServer = await db.serverInvite.upsert({
+            where: {
+              inviteId: {
+                userProfileId: profile.id,
+                serverId: server2.id,
+              },
+            },
+            update: {
+              inviteCode: server2.inviteCode,
+            },
+            create: {
+              inviteCode:server2.inviteCode,
+              userProfileId: profile.id,
+              serverId: server2.id,
+              assignedBy: profile.userId
+            },
+          })
+
+        
+        return NextResponse.json(server2);
     }
     catch(error){
         console.log("[SERVERS_POST]", error);

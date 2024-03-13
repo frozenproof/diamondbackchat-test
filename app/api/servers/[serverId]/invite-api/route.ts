@@ -29,6 +29,19 @@ export async function PATCH(
             },
         });
 
+        const inviteServer = await db.serverInvite.update({
+            where: {
+                inviteId:{
+                    serverId: params.serverId,
+                    userProfileId: profile.id,
+                }
+             },
+            data: {
+                inviteCode: uuidv4(),
+            },
+        });
+
+         NextResponse.json(inviteServer);
         return NextResponse.json(server);
     }
     catch(error) {
