@@ -20,22 +20,18 @@ export async function PATCH(
         }
 
         console.log(params.inviteCode);
-
-        const inviteServer = await db.serverInvite.update({
+        const server = await db.server.update({
             where: {
-                inviteId:{
-                    serverId: params.inviteCode,
-                    userProfileId: profile.id,
-                }
-             },
+                id: params.inviteCode,
+                userProfileId: profile.id,
+            },
             data: {
                 inviteCode: uuidv4(),
             },
         });
 
-        //  NextResponse.json(inviteServer);
-        // return NextResponse.json(server);
-        return NextResponse.json(inviteServer);
+        console.log((server));
+        return NextResponse.json(server);
     }
     catch(error) {
         console.log("[SERVERID_API_INVITE]",error);

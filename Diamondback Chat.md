@@ -148,3 +148,13 @@ if(!isMounted){
 ```
     npx prisma migrate reset
 ```
+
+# Day 4
+## Invite
+
+- Cuc ki kho 
+
+- Server co invite code default , khi tao ra server. Khi nguoi dung bat invite len , chac chan nguoi dung nay da co inviteCode trong ServerInvite .
+    - Can query duoc invite code tu trong server invite
+
+    
