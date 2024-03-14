@@ -23,12 +23,29 @@ export async function PATCH(
         const server = await db.server.update({
             where: {
                 id: params.inviteCode,
-                userProfileId: profile.id,
+                // userProfileId: profile.id,
             },
             data: {
                 inviteCode: uuidv4(),
             },
         });
+
+        const inviteServer = await db.serverInvite.upsert({
+            where: {
+              inviteId: {
+                userProfileId: profile.id,
+                serverId: server.id,
+              },
+            },
+            update: {
+                inviteCode: uuidv4(),
+            },
+            create: {
+                userProfileId: profile.id,
+                serverId: server.id,
+                inviteCode: uuidv4(),
+            },
+          })
 
         console.log((server));
         return NextResponse.json(server);

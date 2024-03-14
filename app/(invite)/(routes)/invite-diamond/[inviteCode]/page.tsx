@@ -3,6 +3,8 @@ import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
+import { v4 as uuidv4 } from "uuid";
+
 
 interface InviteCodeProps {
     params: {
@@ -10,12 +12,11 @@ interface InviteCodeProps {
     };
 };
 
-const InviteCodePage = async({
+const InviteCodePageDiamond = async({
     params
 } : InviteCodeProps   
 ) => {
-    try
-    {
+    try{
         const profile = await currentUserProfile();
 
         if(!profile) {
@@ -57,15 +58,37 @@ const InviteCodePage = async({
         })
     
         if(server) {
-            return redirect(`/servers/${server.id}`);
-        } else  return null;
-    }
-    catch (error)
-    {
-        console.log("INVITEAPP_ERROR",error);
-        return new NextResponse("Internal Error",{ status: 500});
 
+            const inviteServer = await db.serverInvite.upsert({
+                where: {
+                  inviteId: {
+                    userProfileId: profile.id,
+                    serverId: server.id,
+                  },
+                },
+                update: {
+                    inviteCode: uuidv4(),
+                },
+                create: {
+                    userProfileId: profile.id,
+                    serverId: server.id,
+                    inviteCode: uuidv4(),
+                    assignedBy: profile.name
+                },
+              })
+    
+            return redirect(`/servers/${server.id}`);
+        } 
+            
+        
+        return null;
+     
     }
+   catch (error)
+   {
+    console.log(error);
+    return new NextResponse("Internal Error",{ status: 500});
+   }
 }
  
-export default InviteCodePage;
+export default InviteCodePageDiamond;

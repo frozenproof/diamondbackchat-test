@@ -36,7 +36,7 @@ const ServerIdPageLayout = async ({
 
     if(!server)
     {
-        return redirect("/defaultDiamondBack");
+        return redirect("/");
     }
 
     return ( 
