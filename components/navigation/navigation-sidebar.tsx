@@ -10,6 +10,10 @@ import { EvervaultCardVer2 } from "@/components/effects/EvervaultCardVer2";
 import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
 import { UserButtonDiamond } from "../uihelper/user-button-diamond";
 import { DiamondBackground } from "../effects/diamond-background";
+import { ScrollArea } from "../ui/scroll-area";
+
+import { db } from "@/lib/db"
+import { NavigationItem } from "./navigation-item";
 
 export const NavigationSidebar = async () => {
     const profile = await currentUserProfile();
@@ -18,6 +22,17 @@ export const NavigationSidebar = async () => {
     {
         return redirect("/");
     }
+
+    const servers = await db.server.findMany({
+        where: {
+            members:{
+                some:{
+                    userProfileId: profile.id,
+                }
+            },
+            deleted: false,
+        }
+    })
 
     return ( 
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full absolute"
@@ -29,25 +44,26 @@ export const NavigationSidebar = async () => {
             <Separator
                 className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
-                    
-            <NavigationServerScroll/>
-                <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
+
             
-                    <ModeToggle />
-                    {/* <UserButton 
-                        afterSignOutUrl="login-dbc?"
-                        appearance={{
-                            elements:{
-                                avatarBox: "h-[48px] w-[48px]"
-                            }
-                        }}
-                    /> */}
-                    {/* <UserButtonDiamond 
-                        className="h-[48px] w-[48px]"
-                        src={profile.imageUrl}
-                    /> */}
-                    
-                </div>
+            <NavigationServerScroll/>
+            <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
+        
+                <ModeToggle />
+                {/* <UserButton 
+                    afterSignOutUrl="login-dbc?"
+                    appearance={{
+                        elements:{
+                            avatarBox: "h-[48px] w-[48px]"
+                        }
+                    }}
+                /> */}
+                {/* <UserButtonDiamond 
+                    className="h-[48px] w-[48px]"
+                    src={profile.imageUrl}
+                /> */}
+                
+            </div>
         </div>
      );
 }

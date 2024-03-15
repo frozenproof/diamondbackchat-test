@@ -1,94 +1,90 @@
-import { currentUserProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 
+import { db } from "@/lib/db";
+import { currentUserProfile } from "@/lib/current-profile";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
-interface InviteCodeProps {
-    params: {
-        inviteCode: string;
-    };
+interface InviteCodePagePropsDiamond {
+  params: {
+    inviteCode: string;
+  };
 };
 
-const InviteCodePageDiamond = async({
-    params
-} : InviteCodeProps   
-) => {
-    try{
-        const profile = await currentUserProfile();
+const InviteCodePageDiamond = async ({
+  params
+}: InviteCodePagePropsDiamond) => {
+  try {
+    const profile = await currentUserProfile();
 
-        if(!profile) {
-            return redirectToSignIn();
-        }
-    
-        if(!params.inviteCode) {
-            return redirect("/");
-        }
-    
-        const existingInServer = await db.server.findFirst({
-            where: {
-                inviteCode: params.inviteCode,
-                members: {
-                    some: {
-                        userProfileId: profile?.id,
-                    }
-                },
-            }
-        });
-    
-        if(existingInServer) {
-            return redirect(`/servers/${existingInServer.id}`);
-        } 
-    
-        const server = await db.server.update({
-            where: {
-                inviteCode: params.inviteCode,
-            },
-            data: {
-                members: {
-                    create: [
-                        {
-                            userProfileId: profile.id,
-                        }
-                    ]
-                }
-            }
-        })
-    
-        if(server) {
-
-            const inviteServer = await db.serverInvite.upsert({
-                where: {
-                  inviteId: {
-                    userProfileId: profile.id,
-                    serverId: server.id,
-                  },
-                },
-                update: {
-                    inviteCode: uuidv4(),
-                },
-                create: {
-                    userProfileId: profile.id,
-                    serverId: server.id,
-                    inviteCode: uuidv4(),
-                    assignedBy: profile.name
-                },
-              })
-    
-            return redirect(`/servers/${server.id}`);
-        } 
-            
-        
-        return null;
-     
+    if (!profile) {
+      return redirectToSignIn();
     }
-   catch (error)
-   {
-    console.log(error);
-    return new NextResponse("Internal Error",{ status: 500});
-   }
+  
+    if (!params.inviteCode) {
+      return redirect("/");
+    }
+  
+    const serverFind = await db.serverInvite.findFirst(
+      {
+        where: {
+          inviteCode: params.inviteCode,
+        }
+      }
+    )
+
+    if (!serverFind) {
+      return redirect("/");
+    }
+
+    const existingServer = await db.server.findFirst({
+      where: {
+        id: serverFind.serverId,
+        members: {
+          some: {
+            userProfileId: profile.id
+          }
+        }
+      }
+    });
+  
+    if (existingServer) {
+      return redirect(`/servers/${existingServer.id}`);
+    }
+  
+    const server = await db.server.update({
+      where: {
+        inviteCode: params.inviteCode,
+      },
+      data: {
+        members: {
+          create: [
+            {
+              userProfileId: profile.id,
+            }
+          ]
+        }
+      }
+    });
+  
+    if (server) {
+      // const inviteServer = await db.serverInvite.upsert(
+      //   {
+
+      //   }
+      // )
+      return redirect(`/servers/${server.id}`);
+    }
+    
+    return null;
+  }
+  catch (error)
+  {
+    if (isRedirectError(error)) {
+      throw error;
+    }    
+    console.log("Unknown error",error);
+  }
 }
  
 export default InviteCodePageDiamond;

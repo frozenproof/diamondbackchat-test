@@ -1,5 +1,6 @@
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function PATCH
@@ -37,6 +38,7 @@ export async function PATCH
                 }
             })
 
+            revalidatePath("/");
             return NextResponse.json(server);
         }
         catch(error)

@@ -16,6 +16,7 @@ import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
 import axios from "axios";
+import { currentServerInvite } from "@/lib/current-server-invite";
 
 
 export const InviteServerDiamond = () => {
@@ -28,7 +29,7 @@ export const InviteServerDiamond = () => {
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    const inviteUrl = `${origin}/invite-app/${server?.inviteCode}`;
+    const inviteUrl = `${origin}/invite-diamond/${server?.inviteCode}`;
     
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
@@ -42,7 +43,7 @@ export const InviteServerDiamond = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`/api/servers/${server?.id}/invite-api`);
+            const response = await axios.patch(`/api/serverInvites/${server?.id}/invite-api`);
 
             onOpen("InviteServer", {server: response.data})
         }
@@ -53,7 +54,12 @@ export const InviteServerDiamond = () => {
             setIsLoading(false);
         }
     }
- return ( 
+
+    const realInviteServer = async() => {
+        const realInvite = await currentServerInvite();
+    } 
+
+    return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
