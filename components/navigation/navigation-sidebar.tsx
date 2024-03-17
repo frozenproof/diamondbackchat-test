@@ -9,7 +9,7 @@ import { NavigationServerScroll } from "@/components/navigation/navigation-serve
 import { EvervaultCardVer2 } from "@/components/effects/EvervaultCardVer2";
 import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
 import { UserButtonDiamond } from "../uihelper/user-button-diamond";
-import { DiamondBackground } from "../effects/diamond-background";
+
 import { ScrollArea } from "../ui/scroll-area";
 
 import { db } from "@/lib/db"

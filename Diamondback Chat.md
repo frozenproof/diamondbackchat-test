@@ -175,4 +175,21 @@ Viec api tim kiem server can tim la rat don gian , nhung generate link moi thi k
     - bổ sung người dùng cho server
     - bảng invite server tự tạo record cho mỗi người dùng join server
     
+# Day 5
+## User 
+User cần hoàn thiện việc sử dụng
+
+Nếu sử dụng id người dùng chat trực tiếp tương đương id channel cho server, với server id là id người dùng 
+vì vậy , mỗi người dùng là một server
+
+
+User cần được giải quyết hai vấn đề cài đặt chính 
+- Cách thiết kế cơ sở dữ liệu 
+- Cách thiết kế api
+
+ 
+Một channel có array của người dùng , cho phép tạo group chat.
+    
+
+
     
