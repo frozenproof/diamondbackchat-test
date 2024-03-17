@@ -5,6 +5,7 @@ import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
 import { ServerHeader } from "@/components/server/server-header";
 import { UserButtonDiamond } from "../uihelper/user-button-diamond";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ServerSideBarProps {
     serverId: string
@@ -52,6 +53,15 @@ export const ServerSideBar = async({
                 server={server}
                 role={role}
             />
+            <ScrollArea
+                className="flex-1 px-3"            
+            >
+                <div
+                    className="mt-2"
+                >
+
+                </div>
+            </ScrollArea>
         </div>
     )
 }

@@ -158,3 +158,10 @@ if(!isMounted){
     - Can query duoc invite code tu trong server invite
 
     
+- Client khong the su dung cau lenh sql
+- Client gui thong tin server di , 
+
+API nhan id server , id nguoi dung -> tim ra server , client invite 
+
+
+Viec api tim kiem server can tim la rat don gian , nhung generate link moi thi khac

@@ -27,6 +27,7 @@ export const NavigationServerScroll = async() => {
             deleted: false,
         }
     })
+    
     return (
             <ScrollArea className="h-full w-full ">
                     {servers.map((server) => (

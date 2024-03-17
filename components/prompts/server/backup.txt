@@ -16,25 +16,25 @@ import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
 import axios from "axios";
-import { currentServerInvite } from "@/lib/current-server-invite";
 
 
-export const InviteServerDiamond = () => {
+export const InviteServerPrompt = () => {
     const { onOpen, isOpen,onClose,type,data } = usePrompt();
     const origin = useOrigin();
 
     const isPromptOpen = isOpen && type === "InviteServer";
     const { server } = data;
+    // const { server } = data as {server: ServerWithMembersWithProfiles}
 
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
 
-    const inviteUrl = `${origin}/invite-diamond/${server?.inviteCode}`;
+    const inviteUrl = `${origin}/invite-app/${server?.inviteCode}`;
     
     const onCopy = () => {
         navigator.clipboard.writeText(inviteUrl);
         setCopied(true);
-
+        
         setTimeout(() => {
             setCopied(false);
         }, 1000);
@@ -43,9 +43,9 @@ export const InviteServerDiamond = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`/api/serverInvites/${server?.id}/invite-api`);
-
-            onOpen("InviteServer", {server: response.data})
+            const response = await axios.patch(`/api/servers/${server?.id}/invite-api`);
+            
+            onOpen("InviteServer", {server: response.data});
         }
         catch(error) {
             console.log("Very weird bug",error);
@@ -54,17 +54,12 @@ export const InviteServerDiamond = () => {
             setIsLoading(false);
         }
     }
-
-    const realInviteServer = async() => {
-        const realInvite = await currentServerInvite();
-    } 
-
-    return ( 
+ return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Invite anyone Diamond Ver
+                        Invite anyone 
                     </DialogTitle>
                     <DialogDescription className="text-center">
                         Games are more fun with friends !

@@ -30,7 +30,8 @@ const InviteCodePage = async ({
         some: {
           userProfileId: profile.id
         }
-      }
+      },
+      deleted: false
     }
   });
 
