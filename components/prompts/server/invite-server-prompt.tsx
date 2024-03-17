@@ -49,7 +49,7 @@ export const InviteServerPrompt = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            // const response = await axios.patch(`/api/servers/${server?.id}/invite-api`);
+            const temp = await axios.patch(`/api/invite/inviteServerGenerate/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-diamond/`+response.data.inviteCode));
             
             // onOpen("InviteServer", {server: response.data});
         }
@@ -57,7 +57,7 @@ export const InviteServerPrompt = () => {
             console.log("Very weird bug",error);
         }
         finally {
-            // setIsLoading(false);
+            setIsLoading(false);
         }
     }
 
@@ -131,14 +131,14 @@ export const InviteServerPrompt = () => {
                     </Button>
                      
                     </div>
-                    <Input
+                    {/* <Input
                             disabled={isLoading}
                             className="mt-2 bg-zinc-200/80 border-0 
                             focus-visible:ring-2 text-[#db8bca]
                             focus-visible:ring-offset-0"
                             value={server?.inviteCode}
                             readOnly
-                        />
+                        /> */}
                     <Button 
                         disabled={isLoading}
                         onClick={onNew}

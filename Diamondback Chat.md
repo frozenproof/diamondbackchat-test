@@ -170,5 +170,9 @@ Viec api tim kiem server can tim la rat don gian , nhung generate link moi thi k
     - api tìm kiếm server trong bảng invite
     - api tạo invite mới
 - Thay đổi api invite mới thành accept invite theo cơ chế:
-    - 
+    - người dùng tìm invite code từ bảng invite server
+    - api tìm kiếm server có invite code 
+    - bổ sung người dùng cho server
+    - bảng invite server tự tạo record cho mỗi người dùng join server
+    
     

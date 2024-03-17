@@ -33,7 +33,7 @@ export const EvervaultCard = ({
   return (
     <div
       className={cn(
-        "bg-transparent flex items-center justify-center w-full h-full relative border-[8px] border-[#888888]",
+        "bg-transparent flex items-center justify-center h-full relative border-[8px] border-[#888888]",
         className
       )}
     >
@@ -48,7 +48,6 @@ export const EvervaultCard = ({
         />
         <div className="relative z-10 flex items-center justify-center">
           <div className="relative rounded-full flex items-center justify-center text-white font-bold text-4xl">
-            <div />
             <span className="dark:text-white text-black z-20">{children}</span>
           </div>
         </div>

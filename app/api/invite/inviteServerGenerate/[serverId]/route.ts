@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH( 
     req: Request, 
-    {params}:{params:{inviteCode: string}},
+    {params}:{params:{serverId: string}},
 ){
     try {
         const profile = await currentUserProfile();
@@ -15,21 +15,23 @@ export async function PATCH(
             throw new Error("Unauthorized personel detected.");    
         }
         
-        if(!params.inviteCode){
+        if(!params.serverId){
             throw new Error(">:3 no server detected.");
         }
 
-        const server = await db.server.update({
+        const serverInvite = await db.serverInvite.update({
             where: {
-                id: params.inviteCode,
-                userProfileId: profile.id,
+                inviteId: {
+                    serverId: params.serverId,
+                    userProfileId: profile.id,
+                }
             },
             data: {
                 inviteCode: uuidv4(),
             },
         });
 
-        return NextResponse.json(server);
+        return NextResponse.json(serverInvite);
     }
     catch(error) {
         console.log("[INVITECODE_API_INVITE]",error);
