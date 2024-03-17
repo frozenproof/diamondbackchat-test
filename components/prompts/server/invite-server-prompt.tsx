@@ -16,6 +16,7 @@ import { Check, Copy, Plus, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useEffect, useState, Suspense } from "react";
 import axios from "axios";
+import { Loading } from "@/components/uihelper/loading-wait";
 
 
 export const InviteServerPrompt = () => {
@@ -31,6 +32,7 @@ export const InviteServerPrompt = () => {
 
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
+    const [ isUrlLoading, setIsUrlLoading ] = useState(false);
     const [ realUrl, setRealUrl ] = useState("Click plus to get invite link!");
 
     // const inviteUrl = `${origin}/invite-diamond/${server?.inviteCode}`;
@@ -61,14 +63,20 @@ export const InviteServerPrompt = () => {
 
     
     const fetchRealUrl = async() => {
-    try {
-        await axios.patch(`/api/invite/inviteServerSearch/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-diamond/`+response.data.inviteCode));
+        try {
+            console.log(server?.id);
+            setIsUrlLoading(true);
+            const temp = await axios.patch(`/api/invite/inviteServerSearch/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-diamond/`+response.data.inviteCode));
 
-        // console.log("Information is here");
+            console.log("Information is here",temp);
 
-     } catch (error) {
-        console.error('Error:', error);
-    }
+        } 
+        catch (error) {
+            console.error('Error:', error);
+        }
+        finally {
+            setIsUrlLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -90,14 +98,18 @@ export const InviteServerPrompt = () => {
                     Server invite link
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
-                        <Input
-                            disabled={isLoading}
-                            className="bg-zinc-200/80 border-0 
-                            focus-visible:ring-2 text-[#db8bca]
-                            focus-visible:ring-offset-0"
-                            value={realUrl}
-                            readOnly
-                        />
+                        <Suspense
+                            fallback={<Loading />}
+                        >
+                            <Input
+                                disabled={isLoading}
+                                className="bg-zinc-200/80 border-0 
+                                focus-visible:ring-2 text-[#db8bca]
+                                focus-visible:ring-offset-0"
+                                value={realUrl}
+                                readOnly
+                            />
+                        </Suspense>
                         <Suspense>
 
                         </Suspense>
@@ -110,15 +122,23 @@ export const InviteServerPrompt = () => {
                         {copied ? <Check /> : <Copy />}                    
                     </Button>
                     <Button
-                        disabled={isLoading}
+                        disabled={isUrlLoading}
                         onClick={fetchRealUrl} 
                         size="sm"
                         className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"
                     >
-                        {copied ? <Check /> : <Plus />}                    
+                        {isUrlLoading ? <Check /> : <Plus />}                    
                     </Button>
                      
                     </div>
+                    <Input
+                            disabled={isLoading}
+                            className="mt-2 bg-zinc-200/80 border-0 
+                            focus-visible:ring-2 text-[#db8bca]
+                            focus-visible:ring-offset-0"
+                            value={server?.inviteCode}
+                            readOnly
+                        />
                     <Button 
                         disabled={isLoading}
                         onClick={onNew}

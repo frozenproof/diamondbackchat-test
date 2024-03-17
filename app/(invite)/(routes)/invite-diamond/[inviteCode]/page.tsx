@@ -25,7 +25,7 @@ const InviteCodePageDiamond = async ({
       return redirect("/");
     }
   
-    const serverFindInvite = await db.serverInvite.findFirst(
+    const findServerId = await db.serverInvite.findFirst(
       {
         where: {
           inviteCode: params.inviteCode,
@@ -33,13 +33,13 @@ const InviteCodePageDiamond = async ({
       }
     )
 
-    if (!serverFindInvite) {
+    if (!findServerId) {
       return redirect("/");
     }
 
     const alreadyJoinedServer = await db.server.findFirst({
       where: {
-        id: serverFindInvite.serverId,
+        id: findServerId.serverId,
         members: {
           some: {
             userProfileId: profile.id
@@ -55,7 +55,7 @@ const InviteCodePageDiamond = async ({
   
     const server2 = await db.server.update({
       where: {
-        inviteCode: params.inviteCode,
+        id: findServerId.serverId,
       },
       data: {
         members: {
