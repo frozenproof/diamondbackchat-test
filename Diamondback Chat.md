@@ -165,3 +165,10 @@ API nhan id server , id nguoi dung -> tim ra server , client invite
 
 
 Viec api tim kiem server can tim la rat don gian , nhung generate link moi thi khac
+
+- Cần sử dụng thêm 2 api :
+    - api tìm kiếm server trong bảng invite
+    - api tạo invite mới
+- Thay đổi api invite mới thành accept invite theo cơ chế:
+    - 
+    
