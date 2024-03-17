@@ -25,7 +25,7 @@ const InviteCodePageDiamond = async ({
       return redirect("/");
     }
   
-    const serverFind = await db.serverInvite.findFirst(
+    const serverFindInvite = await db.serverInvite.findFirst(
       {
         where: {
           inviteCode: params.inviteCode,
@@ -33,26 +33,27 @@ const InviteCodePageDiamond = async ({
       }
     )
 
-    if (!serverFind) {
+    if (!serverFindInvite) {
       return redirect("/");
     }
 
-    const existingServer = await db.server.findFirst({
+    const alreadyJoinedServer = await db.server.findFirst({
       where: {
-        id: serverFind.serverId,
+        id: serverFindInvite.serverId,
         members: {
           some: {
             userProfileId: profile.id
           }
-        }
+        },
+        deleted: false
       }
     });
   
-    if (existingServer) {
-      return redirect(`/servers/${existingServer.id}`);
+    if (alreadyJoinedServer) {
+      return redirect(`/servers/${alreadyJoinedServer.id}`);
     }
   
-    const server = await db.server.update({
+    const server2 = await db.server.update({
       where: {
         inviteCode: params.inviteCode,
       },
@@ -66,14 +67,28 @@ const InviteCodePageDiamond = async ({
         }
       }
     });
-  
-    if (server) {
-      // const inviteServer = await db.serverInvite.upsert(
-      //   {
+    
+    const inviteServer = await db.serverInvite.upsert({
+      where: {
+        inviteId: {
+          userProfileId: profile.id,
+          serverId: server2.id,
+        },
+      },
+      update: {
+        inviteCode: server2.inviteCode,
+      },
+      create: {
+        inviteCode:server2.inviteCode,
+        userProfileId: profile.id,
+        serverId: server2.id,
+        assignedBy: profile.userId
+      },
+    })
 
-      //   }
-      // )
-      return redirect(`/servers/${server.id}`);
+    if (server2) {
+      
+      return redirect(`/servers/${server2.id}`);
     }
     
     return null;

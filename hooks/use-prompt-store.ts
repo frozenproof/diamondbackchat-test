@@ -12,7 +12,7 @@ interface PromptAPIData {
 
 interface PromptStoredInfo {
     type: PromptType | null;
-    data: PromptAPIData;
+    propData: PromptAPIData;
     isOpen: boolean;
     onOpen:(type:PromptType, data?:PromptAPIData) => void;
     onClose:() => void;
@@ -20,8 +20,8 @@ interface PromptStoredInfo {
 
 export const usePrompt = create<PromptStoredInfo>((set)=>({
     type: null,
-    data: {},
+    propData: {},
     isOpen: false,
-    onOpen:(type, data = {}) => set({isOpen: true,type,data}),
+    onOpen:(type, propData = {}) => set({isOpen: true,type,propData}),
     onClose:() => set({isOpen: false,type: null})
 }))

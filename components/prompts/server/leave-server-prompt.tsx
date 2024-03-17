@@ -18,11 +18,11 @@ import { useRouter } from "next/navigation";
 
 
 export const LeaveServerPrompt = () => {
-    const { onOpen, isOpen,onClose,type,data } = usePrompt();
+    const { onOpen, isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "LeaveServer";
-    const { server } = data;
+    const { server } = propData;
 
     const [ isLoading, setIsLoading ] = useState(false);
 

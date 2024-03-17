@@ -36,11 +36,11 @@ const formSchema = z.object({
     })
 })
 export const EditServerPrompt = () => {
-    const { isOpen,onClose,type,data } = usePrompt();
+    const { isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "EditServer";
-    const { server }  = data;
+    const { server }  = propData;
 
     const form = useForm({
         resolver: zodResolver(formSchema),

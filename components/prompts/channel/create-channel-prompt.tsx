@@ -36,12 +36,12 @@ const formSchema = z.object({
     type: z.nativeEnum(OldChannelType)
 });
 export const CreateChannelPrompt = () => {
-    const { isOpen,onClose,type,data } = usePrompt();
+    const { isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
     const params = useParams();
 
     const isPromptOpen = isOpen && type === "CreateChannel";
-    const { oldChannelType } = data;
+    const { oldChannelType } = propData;
 
     const form = useForm({
         resolver: zodResolver(formSchema),

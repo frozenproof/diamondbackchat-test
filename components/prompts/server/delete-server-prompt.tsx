@@ -18,11 +18,11 @@ import { useRouter } from "next/navigation";
 
 
 export const DeleteServerPrompt = () => {
-    const { onOpen, isOpen,onClose,type,data } = usePrompt();
+    const { onOpen, isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "DeleteServer";
-    const { server } = data;
+    const { server } = propData;
 
     const [ isLoading, setIsLoading ] = useState(false);
 

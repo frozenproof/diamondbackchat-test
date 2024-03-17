@@ -42,11 +42,11 @@ const roleIconMap: {[key: string]: React.ReactNode} = {
 }
 
 export const ManageMemberPrompt = () => {
-    const { onOpen, isOpen,onClose,type,data } = usePrompt();
+    const { onOpen, isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "ManageMember";
-    const { server } = data as {server: ServerWithMembersWithProfiles};
+    const { server } = propData as {server: ServerWithMembersWithProfiles};
 
     const [targetMemberId , setTargetMemberId] = useState("");
     
