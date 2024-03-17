@@ -14,7 +14,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Check, Copy, Plus, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef } from "react";
 import axios from "axios";
 import { Loading } from "@/components/uihelper/loading-wait";
 
@@ -33,10 +33,9 @@ export const InviteServerPrompt = () => {
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isUrlLoading, setIsUrlLoading ] = useState(false);
+    const [ dummy, setDummy ] = useState(Object);
     const [ realUrl, setRealUrl ] = useState("Click plus to get invite link!");
 
-    // const inviteUrl = `${origin}/invite-diamond/${server?.inviteCode}`;
-    
     const onCopy = () => {
         navigator.clipboard.writeText(realUrl);
         setCopied(true);
@@ -80,7 +79,13 @@ export const InviteServerPrompt = () => {
     }
 
     useEffect(() => {
-        fetchRealUrl();
+        const getUsers = async () => {
+            const dummy = await fetchRealUrl();
+            setDummy(dummy);
+          };
+          return () => {
+            // this now gets called when the component unmounts
+          };
     }, []);
     return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
@@ -122,10 +127,12 @@ export const InviteServerPrompt = () => {
                         {copied ? <Check /> : <Copy />}                    
                     </Button>
                     <Button
+                        name="inviteUrlLoad"
                         disabled={isUrlLoading}
                         onClick={fetchRealUrl} 
                         size="sm"
                         className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"
+                        
                     >
                         {isUrlLoading ? <Check /> : <Plus />}                    
                     </Button>

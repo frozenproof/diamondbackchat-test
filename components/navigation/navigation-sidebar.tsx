@@ -14,6 +14,7 @@ import { ScrollArea } from "../ui/scroll-area";
 
 import { db } from "@/lib/db"
 import { NavigationItem } from "./navigation-item";
+import { NavigationSelf } from "./navigation-self";
 
 export const NavigationSidebar = async () => {
     const profile = await currentUserProfile();
@@ -38,6 +39,10 @@ export const NavigationSidebar = async () => {
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full absolute"
             // style={{backgroundColor: '#00000000'}}
         >
+            <div>
+                <NavigationSelf 
+                />
+            </div>
             <div className="mt-[16px] mb-auto">
                 <NavigationAction/>            
             </div>
