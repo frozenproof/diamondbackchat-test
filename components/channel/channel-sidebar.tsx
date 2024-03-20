@@ -1,4 +1,4 @@
-import { OldChannelType, OldMemberRole, Server } from "@prisma/client";
+import { Channel, OldChannelType, OldMemberRole, Server } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
@@ -26,25 +26,29 @@ const iconMap :{[key: string]: React.ReactNode}= {
   }
   
 interface ServerSideBarProps {
-    serverProp: ({server: ServerWithMembersWithProfiles})
+    serverProp: Server,
+    channelProp: Channel[],
+    roleProp: OldMemberRole | undefined
 }
 
-export const ServerSideBar = async({
-    serverProp
+export const ChannelSideBar = async({
+    serverProp,
+    channelProp,
+    roleProp
 }:ServerSideBarProps) => {
     const profile = await currentUserProfile();
     if(!profile){
         redirect("/");
     }
 
-    const textChannels = serverProp?.channels.filter((channel) => channel.type === OldChannelType.TEXT)
-    const audioChannels = serverProp?.channels.filter((channel) => channel.type === OldChannelType.AUDIO)
-    const videoChannels = serverProp?.channels.filter((channel) => channel.type === OldChannelType.VIDEO)
-    if(!server)
+    const textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
+    const audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
+    const videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
+    if(!serverProp)
     {
         return redirect("/");
     }
-    const role = server?.members.find((member) => member.userProfileId === profile.id)?.role
+    const role = roleProp;
     return (
 
             <ScrollArea
@@ -64,7 +68,7 @@ export const ServerSideBar = async({
                       key={channel.id}
                       channel={channel}
                       role={role}
-                      server={server}
+                      server={serverProp}
                     />
                   ))}
                 </div>
@@ -84,7 +88,7 @@ export const ServerSideBar = async({
                       key={channel.id}
                       channel={channel}
                       role={role}
-                      server={server}
+                      server={serverProp}
                     />
                   ))}
                 </div>
@@ -104,7 +108,7 @@ export const ServerSideBar = async({
                       key={channel.id}
                       channel={channel}
                       role={role}
-                      server={server}
+                      server={serverProp}
                     />
                   ))}
                 </div>

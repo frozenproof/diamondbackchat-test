@@ -11,6 +11,8 @@ import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react
 import { ServerNavigation } from "./server-navigation";
 import { ServerChannel } from "../channel/channel-item";
 import { MemberItem } from "../member/member-item";
+import { ChannelSideBar } from "../channel/channel-sidebar";
+import { MemberSideBar } from "../member/member-sidebar";
 
 const iconMap :{[key: string]: React.ReactNode}= {
     [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,
@@ -39,11 +41,15 @@ export const ServerSideBar = async({
     const server = await db.server.findUnique({
         where:{
             id:serverId,
+            deleted: false
         },
         include:{
             channels:{
                 orderBy:{
                     createdAt: "asc"
+                },
+                where:{
+                  // deleted: false
                 }
             },
             members:{
@@ -118,91 +124,15 @@ export const ServerSideBar = async({
             <ScrollArea
                     className="flex-1 px-1"            
                 >
-            {!!textChannels?.length && (
-              <div className="mb-2">
-                <ServerNavigation
-                  sectionType="channels"
-                  oldChannelType={OldChannelType.TEXT}
-                  role={role}
-                  label="Text Channels"
-                />
-                <div className="space-y-[2px]">
-                  {textChannels.map((channel) => (
-                    <ServerChannel
-                      key={channel.id}
-                      channel={channel}
-                      role={role}
-                      server={server}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {!!audioChannels?.length && (
-              <div className="mb-2">
-                <ServerNavigation
-                  sectionType="channels"
-                  oldChannelType={OldChannelType.AUDIO}
-                  role={role}
-                  label="Voice Channels"
-                />
-                <div className="space-y-[2px]">
-                  {audioChannels.map((channel) => (
-                    <ServerChannel
-                      key={channel.id}
-                      channel={channel}
-                      role={role}
-                      server={server}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-            {!!videoChannels?.length && (
-              <div className="mb-2">
-                <ServerNavigation
-                  sectionType="channels"
-                  oldChannelType={OldChannelType.VIDEO}
-                  role={role}
-                  label="Video Channels"
-                />
-                <div className="space-y-[2px]">
-                  {videoChannels.map((channel) => (
-                    <ServerChannel
-                      key={channel.id}
-                      channel={channel}
-                      role={role}
-                      server={server}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-        {!!members?.length && (
-          <div className="mb-2">
-            <ServerNavigation
-              sectionType="members"
-              role={role}
-              label="Members"
-              server={server}
-            />
-            <div className="space-y-[2px]">
-              {members.map((member) => (
-                <MemberItem
-                  key={member.id}
-                  member={member}
-                  // role={member.role}
-                  // user={member.userProfile}
-                />
-                // <div
-                //   key={member.id}
-                // >
-                //   {member.userProfile.name}
-                //   </div>
-              ))}
-            </div>
-          </div>
-        )}            
+                  <ChannelSideBar 
+                    serverProp={server}
+                    channelProp={server.channels}
+                    roleProp={role}
+                  />
+                  <MemberSideBar 
+                    serverProp={server}
+                      roleProp={role}
+                  />
         </ScrollArea>
         </div>
     )

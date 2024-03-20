@@ -9,10 +9,7 @@ export type ServerWithMembersWithProfiles =
                                             })[];
                                         }
 
-export type ServerWithChannelsWithMembers = 
-                                    Server & {
-                                        members:(
-                                            Member & {
-                                                userProfile:UserProfile
-                                            })[];
-                                        }
+export type MemberWithProfile = (
+                                    Member & {
+                                        userProfile:UserProfile
+                                    });
