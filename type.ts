@@ -8,3 +8,11 @@ export type ServerWithMembersWithProfiles =
                                                 userProfile:UserProfile
                                             })[];
                                         }
+
+export type ServerWithChannelsWithMembers = 
+                                    Server & {
+                                        members:(
+                                            Member & {
+                                                userProfile:UserProfile
+                                            })[];
+                                        }

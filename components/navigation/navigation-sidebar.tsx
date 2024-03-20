@@ -4,16 +4,11 @@ import { redirect } from "next/navigation";
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/uihelper/mode-toggle";
-import { UserButton } from "@clerk/nextjs";
-import { NavigationServerScroll } from "@/components/navigation/navigation-server-scroll";
-import { EvervaultCardVer2 } from "@/components/effects/EvervaultCardVer2";
-import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
-import { UserButtonDiamond } from "../uihelper/user-button-diamond";
 
-import { ScrollArea } from "../ui/scroll-area";
+import { NavigationServerScroll } from "@/components/navigation/navigation-server-scroll";
 
 import { db } from "@/lib/db"
-import { NavigationItem } from "./navigation-item";
+
 import { NavigationSelf } from "./navigation-self";
 
 export const NavigationSidebar = async () => {
