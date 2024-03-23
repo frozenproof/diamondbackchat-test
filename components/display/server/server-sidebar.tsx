@@ -38,20 +38,12 @@ export const ServerSideBar = async({
     if(!profile){
         redirect("/");
     }
-    const server = await db.server.findUnique({
+    const server2 = await db.server.findUnique({
         where:{
             id:serverId,
             deleted: false
         },
         include:{
-            channels:{
-                orderBy:{
-                    createdAt: "asc"
-                },
-                where:{
-                  // deleted: false
-                }
-            },
             members:{
                 include:{
                     userProfile:true
@@ -62,19 +54,37 @@ export const ServerSideBar = async({
             }
         }
     })
-    const textChannels = server?.channels.filter((channel) => channel.type === OldChannelType.TEXT)
-    const audioChannels = server?.channels.filter((channel) => channel.type === OldChannelType.AUDIO)
-    const videoChannels = server?.channels.filter((channel) => channel.type === OldChannelType.VIDEO)
-    const members = server?.members.filter((member) => member.userProfileId !== profile.id)
-    if(!server)
+
+    if(!server2)
     {
         return redirect("/");
     }
-    const role = server?.members.find((member) => member.userProfileId === profile.id)?.role
+    const serverChannels = await db.serverChannel.findMany({
+        where: {
+            serverId: server2?.id
+        },
+        select: {
+            channelId: true
+        }
+    })
+
+    const channelsListId = serverChannels.map((x) => x.channelId)
+    const realChannels = await db.channel.findMany({
+        where: {
+            id: {
+                in: channelsListId
+            }
+        }
+    })
+    const textChannels = realChannels.filter((channel) => channel.type === OldChannelType.TEXT)
+    const audioChannels = realChannels.filter((channel) => channel.type === OldChannelType.AUDIO)
+    const videoChannels = realChannels.filter((channel) => channel.type === OldChannelType.VIDEO)
+    const members = server2?.members.filter((member) => member.userProfileId !== profile.id)
+    const role = server2?.members.find((member) => member.userProfileId === profile.id)?.role
     return (
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#2fffb3]">
             <ServerHeader
-                server={server}
+                server={server2}
                 role={role}
             />
         <div
@@ -125,12 +135,12 @@ export const ServerSideBar = async({
                     className="flex-1 px-1"            
                 >
                   <ChannelSideBar 
-                    serverProp={server}
-                    channelProp={server.channels}
+                    serverProp={server2}
+                    channelProp={realChannels}
                     roleProp={role}
                   />
                   <MemberSideBar 
-                    serverProp={server}
+                    serverProp={server2}
                       roleProp={role}
                   />
         </ScrollArea>

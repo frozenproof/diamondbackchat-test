@@ -11,83 +11,97 @@ datasource db {
 }
 
 model UserProfile {
-  id          String     @id @default(uuid())
-  userId      String     @unique
-  name        String
-  imageUrl    String     @db.Text
-  email       String     @db.Text
-  status      UserStatus @default(ONLINE)
-  deleted     Boolean    @default(false)
-      
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime  @updatedAt
+  id       String     @id @default(uuid())
+  userId   String     @unique
+  name     String
+  imageUrl String     @db.Text
+  email    String     @db.Text
+  status   UserStatus @default(ONLINE)
+  deleted  Boolean    @default(false)
 
-  servers       Server[]
-  members       Member[]
-  channels      Channel[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime @updatedAt
+
   messages      Message[]
-  BannedServer  BannedServerMember[]
-  ServerInvite  ServerInvite[]
+  bannedServers BannedServerMember[]
+  serverInvites ServerInvite[]
+  UserChannel   UserChannel[]
+
+  Member  Member[]
+
+  Server  Server[]
 }
 
 model Server {
-  id          String   @id @default(uuid())
-  name        String
-  imageUrl    String   @db.Text
-  inviteCode  String   @unique
+  id       String @id @default(uuid())
+  name     String
+  imageUrl String @db.Text
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  deletedAt  DateTime @updatedAt
-  deleted    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
 
   userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: NoAction)
 
-  members      Member[]
-  channels     Channel[]
-  BannedServer BannedServerMember[]
-  ServerInvite ServerInvite[]
+  members       Member[]
+  bannedMembers BannedServerMember[]
+  serverInvites ServerInvite[]
+  ServerChannel ServerChannel[]
 
   @@index([userProfileId])
 }
 
 model Member {
-  id            String        @id @default(uuid())
-  role          OldMemberRole @default(MEMBER)
-
-  userProfileId String
-  userProfile   UserProfile   @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
-
-  serverId      String
-  server        Server        @relation(fields: [serverId], references: [id], onDelete: Cascade)
-
-  nickname      String        @default("")
-
-
-  @@index([userProfileId])
-  @@index([serverId])
-}
-
-model Channel {
-  id            String          @id @default(uuid())
-  name          String
-  type          OldChannelType  @default(TEXT)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id   String        @id @default(uuid())
+  role OldMemberRole @default(MEMBER)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  serverId      String
-  server        Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  deleted       Boolean @default(false)
-  messages      Message[]
+  nickname String @default("")
 
-  @@index([userProfileId])
-  @@index([serverId])
+  @@unique([userProfileId, serverId])
+}
+
+model Channel {
+  id        String         @id @default(uuid())
+  name      String
+  type      OldChannelType @default(TEXT)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  deleted Boolean @default(false)
+
+  ServerChannel ServerChannel[]
+  UserChannel   UserChannel[]
+  Message       Message[]
+
+}
+
+model ServerChannel {
+  id        String  @id @default(uuid())
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  serverId  String
+  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@unique([serverId, channelId])
+}
+
+model UserChannel {
+  id            String      @id @default(uuid())
+  channelId     String
+  channel       Channel     @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  userProfileId String      
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: NoAction)
+
+  @@unique([userProfileId, channelId])
 }
 
 model BannedServerMember {
@@ -103,7 +117,7 @@ model BannedServerMember {
   assignedAt  DateTime @default(now())
   assignedBy  String
 
-  @@id(name: "banId",[userProfileId, serverId])
+  @@id(name: "banId", [userProfileId, serverId])
 }
 
 model ServerInvite {
@@ -119,20 +133,20 @@ model ServerInvite {
   assignedAt DateTime @updatedAt
   assignedBy String   @default("User")
 
-  @@id(name: "inviteId",[userProfileId, serverId])
+  @@id(name: "inviteId", [userProfileId, serverId])
 }
 
 model Message {
-  id String @id @default(uuid())
+  id      String @id @default(uuid())
   content String @db.Text
 
   fileUrl String? @db.Text
 
   userProfileId String
-  userProfile UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   channelId String
-  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   deleted Boolean @default(false)
 
@@ -164,8 +178,6 @@ enum OldChannelType {
   BOT
   NOTIFICATION
 }
-
-
 
 enum UserStatus {
   ONLINE

@@ -22,7 +22,6 @@ export async function DELETE(
       const channel = await db.channel.updateMany({
         where: {
           id: params.channelId,
-          userProfileId: profile.id,
         },
         data: {
           // deleted: true

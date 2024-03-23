@@ -2,7 +2,7 @@ import { currentUserProfile } from "@/lib/current-profile";
 import { v4 as uuidv4 } from "uuid"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server";
-import { OldMemberRole } from "@prisma/client";
+import { OldChannelType, OldMemberRole } from "@prisma/client";
 
 export async function POST(req: Request){
     try{
@@ -21,7 +21,7 @@ export async function POST(req: Request){
         }
     
 
-        const server = await db.server.update({
+        const server = await db.server.findFirstOrThrow({
           where: {
             id: serverId,
             members: {
@@ -32,19 +32,24 @@ export async function POST(req: Request){
                 }
               }
             }
-          },
-          data: {
-            channels: {
-              create: {
-                userProfileId: profile.id,
-                name,
-                type,
-              }
-            }
           }
         });
     
-        return NextResponse.json(server);
+        const defaultChannel = await db.channel.create({
+          data: {
+              name: name,
+              type: type,
+          }
+        })
+
+        const defaultChannelServer = await db.serverChannel.create({
+            data: {
+                serverId: server.id,
+                channelId: defaultChannel.id
+            }
+        })
+
+        return NextResponse.json(defaultChannelServer);
       } catch (error) {
         console.log("CHANNELS_POST", error);
         return new NextResponse("Internal Error", { status: 500 });

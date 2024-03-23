@@ -8,6 +8,8 @@
 
 # testing
 /coverage
+.diamond-bacc-dev.md
+
 
 # next.js
 /.next/

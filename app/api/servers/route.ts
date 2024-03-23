@@ -2,7 +2,7 @@ import { currentUserProfile } from "@/lib/current-profile";
 import { v4 as uuidv4 } from "uuid"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server";
-import { OldMemberRole } from "@prisma/client";
+import { OldChannelType, OldMemberRole } from "@prisma/client";
 
 export async function POST(req: Request){
     try{
@@ -17,15 +17,6 @@ export async function POST(req: Request){
                 userProfileId: profile.id,
                 name,
                 imageUrl,
-                inviteCode: uuidv4(),
-                channels:{
-                    create:[
-                    {
-                        name: "general cattus",
-                        userProfileId: profile.id
-                    }
-                ]
-                },
                 members:{
                     create:[
                     {
@@ -37,6 +28,20 @@ export async function POST(req: Request){
             }
         })
         
+        const defaultChannel = await db.channel.create({
+            data: {
+                name: "general",
+                type: OldChannelType.TEXT
+            }
+        })
+
+        const defaultChannelServer = await db.serverChannel.create({
+            data: {
+                serverId: server2.id,
+                channelId: defaultChannel.id
+            }
+        })
+        
         const inviteServer = await db.serverInvite.upsert({
             where: {
               inviteId: {
@@ -45,10 +50,10 @@ export async function POST(req: Request){
               },
             },
             update: {
-              inviteCode: server2.inviteCode,
+              inviteCode: uuidv4(),
             },
             create: {
-              inviteCode:server2.inviteCode,
+              inviteCode:uuidv4(),
               userProfileId: profile.id,
               serverId: server2.id,
               assignedBy: profile.userId

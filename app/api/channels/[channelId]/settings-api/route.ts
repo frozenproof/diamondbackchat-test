@@ -10,20 +10,33 @@ export async function PATCH(
     try {
         const profile = await currentUserProfile();
         const { name, type } = await req.json();
+        const { searchParams } = new URL(req.url);
+    
+        const serverIdParam = searchParams.get("serverId");
 
         if(!profile) {
             throw new Error("Unauthorized ");
         }
 
-        const channelEdited = await db.channel.findFirstOrThrow({
+        if(!serverIdParam)  {
+          throw new Error("Unauthorized ");
+        }
+
+
+        const serverChannels = await db.serverChannel.findFirstOrThrow({
             where: {
-                id: params.channelId
+                serverId: serverIdParam,
+                channelId: params.channelId
             }
         })
         
-        const server = await db.server.update({
+        if(!serverIdParam)  {
+          throw new Error("Unauthorized ");
+        }
+
+        const serverCheckAuth = await db.server.findFirstOrThrow({
             where: {
-              id: channelEdited.serverId,
+              id: serverChannels.serverId,
               members: {
                 some: {
                   userProfileId: profile.id,
@@ -32,25 +45,27 @@ export async function PATCH(
                   }
                 }
               }
+            }
+        })
+
+        if(!serverCheckAuth)
+        {
+          throw new Error("Unauthorized ");
+        }
+        
+        const channel = await db.channel.update({
+            where: {
+              id: params.channelId
             },
             data: {
-              channels: {
-                update: {
-                  where: {
-                    id: params.channelId,
-                  },
-                  data: {
-                    name,
-                    type,
-                  }
-                }
-              }
-            }
+              name,
+              type,
+            },
           });
       
-          return NextResponse.json(server);
+          return NextResponse.json(channel);
         } catch (error) {
-          console.log("[CHANNEL_ID_PATCH]", error);
+          console.log("[CHANNEL_ID_EDIT_PATCH]", error);
           return new NextResponse("Internal Error", { status: 500 });
         }
 }

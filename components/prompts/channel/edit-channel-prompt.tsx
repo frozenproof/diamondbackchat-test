@@ -155,7 +155,7 @@ export const EditChannelPrompt = () => {
                             <div className="text-center justify-center items-center bg-gray-100 px-6 py-4">
                                 <DialogFooter>
                                         <Button className="flex" disabled={isLoading} variant={"primary"}>
-                                            Create
+                                            Save changes
                                         </Button>
                                 </DialogFooter>
                             </div>
