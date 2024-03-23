@@ -5,7 +5,7 @@ import { ShieldAlert, ShieldCheck } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
 interface MemberItemProps {
   member: (

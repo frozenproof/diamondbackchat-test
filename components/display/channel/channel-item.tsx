@@ -11,7 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { PromptType, usePrompt } from "@/hooks/use-prompt-store";
-import { ActionTooltip } from "../uihelper/action-tooltip";
+import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 
 interface ServerChannelProps {
   channel: Channel;

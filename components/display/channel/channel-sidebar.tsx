@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
 
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { ServerNavigation } from "../server/server-navigation";

@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { InviteServerPrompt } from "@/components/prompts/server/invite-server-prompt";
 import { EditServerPrompt } from "@/components/prompts/server/edit-server-prompt";
 import { ManageMemberPrompt } from "@/components/prompts/user/manage-member-prompt";
-import { CreateChannelPrompt } from "../prompts/channel/create-channel-prompt";
-import { CreateChannelPromptDiamond } from "../prompts/channel/create-channel-prompt-diamond ";
-import { LeaveServerPrompt } from "../prompts/server/leave-server-prompt";
-import { DeleteServerPrompt } from "../prompts/server/delete-server-prompt";
+import { CreateChannelPrompt } from "@/components/prompts/channel/create-channel-prompt";
+import { CreateChannelPromptDiamond } from "@/components/prompts/channel/create-channel-prompt-diamond ";
+import { LeaveServerPrompt } from "@/components/prompts/server/leave-server-prompt";
+import { DeleteServerPrompt } from "@/components/prompts/server/delete-server-prompt";
+import { DeleteChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -31,6 +32,7 @@ export const PromptProvider = () => {
             <CreateChannelPromptDiamond />
             <LeaveServerPrompt />
             <DeleteServerPrompt />
+            <DeleteChannelPrompt />
         </>
     )
 }

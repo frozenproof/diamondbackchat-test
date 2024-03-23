@@ -2,7 +2,7 @@
 
 import { ServerWithMembersWithProfiles } from "@/type";
 import { OldChannelType, OldMemberRole } from "@prisma/client";
-import { ActionTooltip } from "../uihelper/action-tooltip";
+import { ActionTooltip } from "../../uihelper/action-tooltip";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Plus, Settings } from "lucide-react";
 
