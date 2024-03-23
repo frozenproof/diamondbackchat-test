@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { serverId: string } }
+    { params }: { params: { channelId: string } }
   ) {
     try {
       const profile = await currentUserProfile();
@@ -19,17 +19,17 @@ export async function DELETE(
       //     userProfileId: profile.id,
       //   }
       // });
-      const server = await db.server.updateMany({
+      const channel = await db.channel.updateMany({
         where: {
-          id: params.serverId,
+          id: params.channelId,
           userProfileId: profile.id,
         },
         data: {
-          deleted: true
+          // deleted: true
         }
       });
   
-      return NextResponse.json(server);
+      return NextResponse.json(channel);
     } catch (error) {
       console.log("[SERVER_ID_DELETE]", error);
       return new NextResponse("Internal Error", { status: 500 });

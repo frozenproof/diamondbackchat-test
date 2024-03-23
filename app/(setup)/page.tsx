@@ -21,7 +21,8 @@ const SetupPage = async () => {
     }
 
     return (
-            <InitialPrompt/>
+        redirect(`/meself`)
+            // <InitialPrompt/>
     )
 
 }

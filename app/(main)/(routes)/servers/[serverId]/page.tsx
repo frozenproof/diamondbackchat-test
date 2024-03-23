@@ -5,10 +5,11 @@ import { WavyBackground } from "@/components/effects/wavy-background"
 
 const ServerIdPage = () => {
     return (
-                <EvervaultCard>
-                    (　･ω･)☞	You are now loading
-                    <br/>
-                    
+                <EvervaultCard
+                    className="text-center"
+                >
+                    (　･ω･)☞	Create a channel and something productive !
+                                        
                 </EvervaultCard>
                 
     )

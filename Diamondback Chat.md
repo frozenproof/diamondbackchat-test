@@ -190,6 +190,6 @@ User cần được giải quyết hai vấn đề cài đặt chính
  
 Một channel có array của người dùng , cho phép tạo group chat.
     
-
+# Day 6 
 
     

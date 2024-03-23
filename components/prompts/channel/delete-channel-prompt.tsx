@@ -15,6 +15,7 @@ import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { channel } from "diagnostics_channel";
 
 
 export const DeleteChannelPrompt = () => {
@@ -22,7 +23,7 @@ export const DeleteChannelPrompt = () => {
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "DeleteChannel";
-    const { server } = propData;
+    const { channel } = propData;
 
     const [ isLoading, setIsLoading ] = useState(false);
 
@@ -30,7 +31,7 @@ export const DeleteChannelPrompt = () => {
         try {
             setIsLoading(true);
             
-            await axios.delete(`/api/channels/${server?.id}/delete-api`);
+            await axios.delete(`/api/channels/${channel?.id}/delete-api`);
             onClose();
             router.refresh();
             router.push("/");
@@ -46,10 +47,10 @@ export const DeleteChannelPrompt = () => {
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Deleting the server ? 
+                        Deleting the channel ? 
                     </DialogTitle>
                     <DialogDescription className="text-center">
-                        Taking a break from {server?.name} ?
+                        This action is irreversible !
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter

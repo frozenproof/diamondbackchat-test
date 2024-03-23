@@ -10,6 +10,7 @@ import { CreateChannelPromptDiamond } from "@/components/prompts/channel/create-
 import { LeaveServerPrompt } from "@/components/prompts/server/leave-server-prompt";
 import { DeleteServerPrompt } from "@/components/prompts/server/delete-server-prompt";
 import { DeleteChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
+import { EditChannelPrompt } from "../prompts/channel/edit-channel-prompt";
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -33,6 +34,7 @@ export const PromptProvider = () => {
             <LeaveServerPrompt />
             <DeleteServerPrompt />
             <DeleteChannelPrompt />
+            <EditChannelPrompt />
         </>
     )
 }

@@ -23,11 +23,12 @@ model UserProfile {
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime  @updatedAt
 
-  servers      Server[]
-  members      Member[]
-  channels     Channel[]
-  BannedServer BannedServerMember[]
-  ServerInvite ServerInvite[]
+  servers       Server[]
+  members       Member[]
+  channels      Channel[]
+  messages      Message[]
+  BannedServer  BannedServerMember[]
+  ServerInvite  ServerInvite[]
 }
 
 model Server {
@@ -70,17 +71,20 @@ model Member {
 }
 
 model Channel {
-  id        String         @id @default(uuid())
-  name      String
-  type      OldChannelType @default(TEXT)
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id            String          @id @default(uuid())
+  name          String
+  type          OldChannelType  @default(TEXT)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  serverId String
-  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId      String
+  server        Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  deleted       Boolean @default(false)
+  messages      Message[]
 
   @@index([userProfileId])
   @@index([serverId])
@@ -118,6 +122,27 @@ model ServerInvite {
   @@id(name: "inviteId",[userProfileId, serverId])
 }
 
+model Message {
+  id String @id @default(uuid())
+  content String @db.Text
+
+  fileUrl String? @db.Text
+
+  userProfileId String
+  userProfile UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([userProfileId])
+}
+
 enum OldMemberRole {
   CREATOR
   OWNER
@@ -132,13 +157,15 @@ enum OldMemberRole {
 
 enum OldChannelType {
   TEXT
+  DIRECT
   AUDIO
   VIDEO
   STREAMING
   BOT
   NOTIFICATION
-  CONTACT
 }
+
+
 
 enum UserStatus {
   ONLINE

@@ -6,9 +6,10 @@ export const Loading = ({
 }) => {
     return (
         <GlowingStarsBackgroundCard>
-                <EvervaultCard>
-                    (　･ω･)☞	You are now loading
-                    <br/>
+                <EvervaultCard
+                    className="text-center"
+                >
+                    (　･ω･)☞	You are now loading into Euphoria
                     
                 </EvervaultCard>
         </GlowingStarsBackgroundCard>                             

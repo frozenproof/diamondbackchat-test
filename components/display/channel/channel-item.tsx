@@ -20,7 +20,7 @@ interface ServerChannelProps {
 }
 
 const iconMap : {[key: string]: React.ReactNode}= {
-  [OldChannelType.TEXT] : <Hash     className="h-4 w-4"/>,
+  [OldChannelType.TEXT] : <Hash     className="h-8 w-8"/>,
   [OldChannelType.AUDIO]: <Mic      className="h-4 w-4"/>,
   [OldChannelType.VIDEO]: <Video    className="h-4 w-4"/>,
 }
@@ -56,10 +56,10 @@ export const ServerChannel = ({
       { Icon }
       <div className={cn(
         "font-semibold  text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition mr-auto",
-        params?.channelId === channel.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white flex flex-row"
+        params?.channelId === channel.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white "
       )}>
         <div
-            className="overflow-hidden line-clamp-1 relative"
+            className="overflow-hidden relative"
         >
             {channel.name}
         </div>
