@@ -8,9 +8,7 @@ import { UserButtonDiamond } from "../../uihelper/user-button-diamond";
 import { ScrollArea } from "../../ui/scroll-area";
 import { ServerSearchBar } from "./server-search";
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-import { ServerNavigation } from "./server-navigation";
-import { ServerChannel } from "../channel/channel-item";
-import { MemberItem } from "../member/member-item";
+
 import { ChannelSideBar } from "../channel/channel-sidebar";
 import { MemberSideBar } from "../member/member-sidebar";
 

@@ -6,7 +6,7 @@ import { WavyBackground } from "@/components/effects/wavy-background"
 const ServerIdPage = () => {
     return (
                 <EvervaultCard
-                    className="text-center"
+                    className="text-center border-[8px] "
                 >
                     (　･ω･)☞	Create a channel and something productive !
                                         

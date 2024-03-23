@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { PromptType, usePrompt } from "@/hooks/use-prompt-store";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 
-interface ChannelItemProps {
+interface ServerChannelProps {
   channel: Channel;
   server: Server;
   role?: OldMemberRole;
@@ -25,11 +25,11 @@ const iconMap : {[key: string]: React.ReactNode}= {
   [OldChannelType.VIDEO]: <Video    className="h-4 w-4"/>,
 }
 
-export const ChannelItem = ({
+export const ServerChannel = ({
   channel,
   server,
   role
-}: ChannelItemProps) => {
+}: ServerChannelProps) => {
   const { onOpen } = usePrompt();
   const params = useParams();
   const router = useRouter();

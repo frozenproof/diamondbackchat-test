@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { ServerNavigation } from "../server/server-navigation";
-import { ServerChannel } from "../channel/channel-item";
+import { ChannelItem } from "../channel/channel-item";
 import { MemberItem } from "../member/member-item";
 import { ServerWithMembersWithProfiles } from "@/type";
 
@@ -25,7 +25,7 @@ const iconMap :{[key: string]: React.ReactNode}= {
     [OldMemberRole.ADMIN]       : <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
   }
   
-interface ServerSideBarProps {
+interface ChannelSideBarProps {
     serverProp: Server,
     channelProp: Channel[],
     roleProp: OldMemberRole | undefined
@@ -35,7 +35,7 @@ export const ChannelSideBar = async({
     serverProp,
     channelProp,
     roleProp
-}:ServerSideBarProps) => {
+}:ChannelSideBarProps) => {
     const profile = await currentUserProfile();
     if(!profile){
         redirect("/");
@@ -64,7 +64,7 @@ export const ChannelSideBar = async({
                 />
                 <div className="space-y-[2px]">
                   {textChannels.map((channel) => (
-                    <ServerChannel
+                    <ChannelItem
                       key={channel.id}
                       channel={channel}
                       role={role}
@@ -84,7 +84,7 @@ export const ChannelSideBar = async({
                 />
                 <div className="space-y-[2px]">
                   {audioChannels.map((channel) => (
-                    <ServerChannel
+                    <ChannelItem
                       key={channel.id}
                       channel={channel}
                       role={role}
@@ -104,7 +104,7 @@ export const ChannelSideBar = async({
                 />
                 <div className="space-y-[2px]">
                   {videoChannels.map((channel) => (
-                    <ServerChannel
+                    <ChannelItem
                       key={channel.id}
                       channel={channel}
                       role={role}

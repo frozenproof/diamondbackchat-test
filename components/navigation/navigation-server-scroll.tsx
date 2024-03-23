@@ -27,6 +27,10 @@ export const NavigationServerScroll = async() => {
         }
     })
     
+    if(!servers)
+    {
+        return redirect("/meself");
+    }
     return (
             <ScrollArea className="h-full w-full ">
                     {servers.map((server) => (

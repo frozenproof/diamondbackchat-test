@@ -119,7 +119,6 @@ export const EditChannelPrompt = () => {
                                                 key={type}
                                                 value={type}
                                                 className="capitalize"
-                                                defaultValue={channel?.type}
                                             >
                                                 {type.toLowerCase()}
                                             </SelectItem>
@@ -143,7 +142,6 @@ export const EditChannelPrompt = () => {
                                                 disabled={isLoading}
                                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                                                 placeholder="general"
-                                                defaultValue={channel?.name}
                                                 {...field}
                                             />
                                         </FormControl>

@@ -19,26 +19,31 @@ export const NavigationSidebar = async () => {
         return redirect("/");
     }
 
-    const servers = await db.server.findMany({
-        where: {
-            members:{
-                some:{
-                    userProfileId: profile.id,
-                }
-            },
-            deleted: false,
-        }
-    })
+    // const servers = await db.server.findMany({
+    //     where: {
+    //         members:{
+    //             some:{
+    //                 userProfileId: profile.id,
+    //             }
+    //         },
+    //         deleted: false,
+    //     }
+    // })
 
     return ( 
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full absolute"
             // style={{backgroundColor: '#00000000'}}
         >
-            <div>
+            <div
+                className="mt-[8px]"
+            >
                 <NavigationSelf 
                 />
-            </div>
-            <div className="mt-[16px] mb-auto">
+                <div
+                    className=""
+                >
+                    
+                </div>
                 <NavigationAction/>            
             </div>
             <Separator
