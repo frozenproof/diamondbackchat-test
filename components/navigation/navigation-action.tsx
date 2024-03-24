@@ -1,6 +1,6 @@
 "use client"
 
-import { Minus, Plus, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
 
 import { ActionTooltip } from "@/components/uihelper/action-tooltip"
 import { usePrompt } from "@/hooks/use-prompt-store"

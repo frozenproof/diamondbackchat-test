@@ -1,29 +1,17 @@
 "use client";
 
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+
 import { useEffect, useState } from "react";
-import axios from "axios"
 
 import { redirect, useRouter } from "next/navigation";
-import { PinContainer, PinPerspective } from "@/components/effects/3d-pin";
-
-import { AnimatePresence, motion } from "framer-motion";
+import { PinPerspective } from "@/components/effects/3d-pin";
 
 import { HomePageHeader } from "./homepage-header";
 import { HomePageAuth } from "./homepage-auth";
 import { AppReviews } from "../document/app-review";
 import { AppHistory } from "../document/app-history";
 
-const formSchema = z.object({
-    name: z.string().min(1,{
-        message: "Server name is required."
-    }),
-    imageUrl: z.string().min(1, {
-        message: "Server image is required."
-    })
-})
 export const InitialPage = ({
     isLoggedin   
 }:{
@@ -41,9 +29,6 @@ export const InitialPage = ({
         return null;
     }
 
-    const enterSelfPage = () => {
-        return redirect(`${origin}/meself`);
-    }
     
 return ( 
         <div

@@ -1,11 +1,10 @@
 "use client"
 
-import { Home, Minus, Plus, PlusCircle } from "lucide-react"
+import { Home } from "lucide-react"
 
 import { ActionTooltip } from "@/components/uihelper/action-tooltip"
-import { usePrompt } from "@/hooks/use-prompt-store"
-import { useParams, useRouter } from "next/navigation"
-import { cn } from "@/lib/utils"
+
+import { useRouter } from "next/navigation"
 
 
 export const NavigationSelf = ({

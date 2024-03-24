@@ -2,15 +2,12 @@ import { Channel, OldChannelType, OldMemberRole, Server } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
-import { db } from "@/lib/db";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { ServerNavigation } from "../server/server-navigation";
 import { ChannelItem } from "../channel/channel-item";
-import { MemberItem } from "../member/member-item";
-import { ServerWithMembersWithProfiles } from "@/type";
 
 const iconMap :{[key: string]: React.ReactNode}= {
     [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,

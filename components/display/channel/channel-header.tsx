@@ -3,7 +3,6 @@
 import { Hash } from "lucide-react";
 
 import { MobileToggle } from "@/components/uihelper/mobile-toggle";
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
 interface ChannelHeaderProps {
   serverId: string;
