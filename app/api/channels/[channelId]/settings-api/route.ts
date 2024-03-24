@@ -30,7 +30,7 @@ export async function PATCH(
             }
         })
         
-        if(!serverIdParam)  {
+        if(!serverChannels)  {
           throw new Error("Unauthorized ");
         }
 

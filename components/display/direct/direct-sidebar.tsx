@@ -1,3 +1,4 @@
+
 import { Channel, OldChannelType, OldMemberRole, Server } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -36,7 +37,9 @@ export const DirectSideBar = async({
     return (
       <div>
         <div>
-          <DirectHeader />
+          <DirectHeader 
+            imageUrl = {profile.imageUrl}
+          />
         </div>
         <ScrollArea
                 className="flex-1 px-1"            

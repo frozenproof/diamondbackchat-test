@@ -28,9 +28,9 @@ model UserProfile {
   serverInvites ServerInvite[]
   UserChannel   UserChannel[]
 
-  Member  Member[]
+  Member Member[]
 
-  Server  Server[]
+  Server Server[]
 }
 
 model Server {
@@ -46,10 +46,10 @@ model Server {
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: NoAction)
 
-  members       Member[]
-  bannedMembers BannedServerMember[]
-  serverInvites ServerInvite[]
-  ServerChannel ServerChannel[]
+  Member             Member[]
+  ServerChannel      ServerChannel[]
+  BannedServerMember BannedServerMember[]
+  ServerInvite       ServerInvite[]
 
   @@index([userProfileId])
 }
@@ -81,7 +81,7 @@ model Channel {
   ServerChannel ServerChannel[]
   UserChannel   UserChannel[]
   Message       Message[]
-
+  Attachment    Attachment[]
 }
 
 model ServerChannel {
@@ -98,7 +98,7 @@ model UserChannel {
   id            String      @id @default(uuid())
   channelId     String
   channel       Channel     @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  userProfileId String      
+  userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: NoAction)
 
   @@unique([userProfileId, channelId])
@@ -140,21 +140,36 @@ model Message {
   id      String @id @default(uuid())
   content String @db.Text
 
-  fileUrl String? @db.Text
-
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   channelId String
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
-  deleted Boolean @default(false)
+  attachment Boolean @default(false)
+  deleted    Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  
+  Attachment Attachment[]
 
   @@index([channelId])
   @@index([userProfileId])
+}
+
+model Attachment {
+  id        String  @id @default(uuid())
+  fileUrl   String  @db.Text
+
+  messageId String
+  message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  channelId String
+  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@index([channelId])
+  @@index([messageId])
 }
 
 enum OldMemberRole {

@@ -11,7 +11,7 @@ import { db } from "@/lib/db"
 
 import { NavigationSelf } from "./navigation-self";
 
-export const NavigationSidebar = async () => {
+export const NavigationSideBar = async () => {
     const profile = await currentUserProfile();
 
     if(!profile)

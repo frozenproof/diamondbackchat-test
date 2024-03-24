@@ -6,8 +6,11 @@ import { WavyBackground } from "@/components/effects/wavy-background"
 const MePage = () => {
     return (
                 <EvervaultCard>
-                    (　･ω･)☞	You are now loading
+                    (　･ω･)☞	You are now in your own place
                     <br/>
+                    <div>
+                        
+                    </div>
                 </EvervaultCard>
                 
     )

@@ -1,4 +1,4 @@
-import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
+import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 import { Loading } from "@/components/uihelper/loading-wait";
 import React, { Suspense } from "react";
 
@@ -13,7 +13,7 @@ const MainLayout = async ({
         >
             <div className="h-full">
                 <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0"> 
-                <NavigationSidebar/>             
+                <NavigationSideBar/>             
                 </div>
                 <main className="md:pl-[72px] h-full ">
                     {children}
