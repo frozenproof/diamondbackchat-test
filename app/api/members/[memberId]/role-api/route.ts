@@ -32,7 +32,7 @@ export async function PATCH(
                 userProfileId:profile.id,
             },
             data: {
-                members: {
+                Member: {
                     update: {
                         where: {
                           id: params.memberId,
@@ -47,7 +47,7 @@ export async function PATCH(
                 }
             },
             include: {
-                members: {
+                Member: {
                     include: {
                         userProfile: true,
                     },

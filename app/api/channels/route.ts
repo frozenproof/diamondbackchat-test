@@ -24,7 +24,7 @@ export async function POST(req: Request){
         const server = await db.server.findFirstOrThrow({
           where: {
             id: serverId,
-            members: {
+            Member: {
               some: {
                 userProfileId: profile.id,
                 role: {

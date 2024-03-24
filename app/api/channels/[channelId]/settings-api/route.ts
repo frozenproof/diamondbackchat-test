@@ -37,7 +37,7 @@ export async function PATCH(
         const serverCheckAuth = await db.server.findFirstOrThrow({
             where: {
               id: serverChannels.serverId,
-              members: {
+              Member: {
                 some: {
                   userProfileId: profile.id,
                   role: {

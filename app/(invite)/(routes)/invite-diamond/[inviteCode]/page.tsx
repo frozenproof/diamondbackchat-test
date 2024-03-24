@@ -40,7 +40,7 @@ const InviteCodePageDiamond = async ({
     const alreadyJoinedServer = await db.server.findFirst({
       where: {
         id: findServerId.serverId,
-        members: {
+        Member: {
           some: {
             userProfileId: profile.id
           }
@@ -58,7 +58,7 @@ const InviteCodePageDiamond = async ({
         id: findServerId.serverId,
       },
       data: {
-        members: {
+        Member: {
           create: [
             {
               userProfileId: profile.id,

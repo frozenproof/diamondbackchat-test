@@ -54,7 +54,7 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberId}/delete-api`,
+                url: `/api/Member/${memberId}/delete-api`,
                 query: {
                     serverId: server?.id,
                 },
@@ -79,7 +79,7 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberId}/role-api`,
+                url: `/api/Member/${memberId}/role-api`,
                 query: {
                     serverId: server?.id,
                     memberId,
@@ -109,7 +109,7 @@ export const ManageMemberPrompt = () => {
                         className="text-center text-2xl font-bold uppercase items-center"
                         style={{color: "chocolate"}}
                     >
-                            Manage members
+                            Manage Member
                     </DialogTitle>
                     <DialogDescription 
                         className="text-center"
@@ -118,7 +118,7 @@ export const ManageMemberPrompt = () => {
                         <div
                             style={{fontSize: 28,color: "pink"}}
                         >
-                            {server?.members?.length} 
+                            {server?.Member?.length} 
                         </div>
                          Members
                     </DialogDescription>
@@ -126,7 +126,7 @@ export const ManageMemberPrompt = () => {
                 <ScrollArea
                     className="mt-8 max-h-[420px] border items-center manage-member "
                 >
-                    {server?.members?.map((member) => (
+                    {server?.Member?.map((member) => (
                         <div key={member.id}
                             className="flex items-center gap-x-2 mt-2 mb-2  "                            
                         >

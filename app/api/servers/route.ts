@@ -17,7 +17,7 @@ export async function POST(req: Request){
                 userProfileId: profile.id,
                 name,
                 imageUrl,
-                members:{
+                Member:{
                     create:[
                     {
                         userProfileId: profile.id,

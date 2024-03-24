@@ -10,7 +10,7 @@ import { Plus, Settings } from "lucide-react";
 interface ServerNavigationProps {
     label: string;
     role?: OldMemberRole;
-    sectionType: "channels" | "members";
+    sectionType: "channels" | "Member";
     oldChannelType?: OldChannelType;
     server?: ServerWithMembersWithProfiles;
   };
@@ -39,7 +39,7 @@ export const ServerNavigation = ({
             </button>
           </ActionTooltip>
         )}
-        {role === OldMemberRole.ADMIN && sectionType === "members" && (
+        {role === OldMemberRole.ADMIN && sectionType === "Member" && (
           <ActionTooltip label="Manage Members" side="top">
             <button
               onClick={() => onOpen("ManageMember", { server })}

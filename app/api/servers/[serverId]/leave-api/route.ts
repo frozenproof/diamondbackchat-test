@@ -30,7 +30,7 @@ export async function PATCH
                     }
                 },
                 data: {
-                    members: {
+                    Member: {
                         deleteMany: {
                             userProfileId: profile.id
                         }

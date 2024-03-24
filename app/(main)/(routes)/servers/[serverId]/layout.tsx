@@ -5,8 +5,29 @@ import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
-import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
 
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+    params: { serverId: string }
+  }
+   
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+  ): Promise<Metadata> {
+    
+    const server = await db.server.findUnique
+    ({
+        where:{
+            id: params.serverId,
+        }
+    })
+
+    return {
+      title: `Euphoria || `+server?.name,
+    }
+}
 
 const ServerIdPageLayout = async ({
     children,

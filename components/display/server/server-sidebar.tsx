@@ -42,7 +42,7 @@ export const ServerSideBar = async({
             deleted: false
         },
         include:{
-            members:{
+            Member:{
                 include:{
                     userProfile:true
                 },
@@ -77,8 +77,8 @@ export const ServerSideBar = async({
     const textChannels = realChannels.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = realChannels.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = realChannels.filter((channel) => channel.type === OldChannelType.VIDEO)
-    const members = server2?.members.filter((member) => member.userProfileId !== profile.id)
-    const role = server2?.members.find((member) => member.userProfileId === profile.id)?.role
+    const Member = server2?.Member.filter((member) => member.userProfileId !== profile.id)
+    const role = server2?.Member.find((member) => member.userProfileId === profile.id)?.role
     return (
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#2fffb3]">
             <ServerHeader
@@ -120,7 +120,7 @@ export const ServerSideBar = async({
                 {
                 label: "Members",
                 type: "member",
-                data: members?.map((member) => ({
+                data: Member?.map((member) => ({
                     id: member.id,
                     name: member.userProfile.name,
                     icon: roleIconMap[member.role],

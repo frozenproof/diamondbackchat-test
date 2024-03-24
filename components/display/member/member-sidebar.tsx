@@ -49,16 +49,16 @@ export const MemberSideBar = async({
             <ScrollArea
                     className="flex-1 px-1"            
                 >
-                {!!serverProp?.members.length && (
+                {!!serverProp?.Member.length && (
                 <div className="mb-2">
                     <ServerNavigation
-                    sectionType="members"
+                    sectionType="Member"
                     role={role}
                     label="Members"
                     server={serverProp}
                     />
                     <div className="space-y-[2px]">
-                    {serverProp?.members.map((member) => (
+                    {serverProp?.Member.map((member) => (
                         <MemberItem
                         key={member.id}
                         member={member}
