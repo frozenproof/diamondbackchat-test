@@ -1,15 +1,15 @@
 import { EvervaultCard } from "@/components/effects/EvervaultCard"
 import { BackgroundBeams } from "@/components/effects/background-beams"
-import { GlowingStarsBackgroundCard, GlowingStarsDescription, GlowingStarsTitle } from "@/components/effects/glowing-stars"
+
 
 const ServerIdPage = () => {
     return (
-                <EvervaultCard
-                    className="text-center border-[8px] "
-                >
-                    (　･ω･)☞	Create a channel and something productive !
-                                        
-                </EvervaultCard>
+        <EvervaultCard
+            className="text-center border-[8px] "
+        >
+            (　･ω･)☞	Create a channel and something productive !
+                                
+        </EvervaultCard>
                 
     )
 }

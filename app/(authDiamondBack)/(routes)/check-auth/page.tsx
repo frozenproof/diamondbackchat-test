@@ -2,16 +2,12 @@ import { EvervaultCard } from "@/components/effects/EvervaultCard"
 import { BackgroundBeams } from "@/components/effects/background-beams"
 import { GlowingStarsBackgroundCard, GlowingStarsDescription, GlowingStarsTitle } from "@/components/effects/glowing-stars"
 
-const MePage = () => {
+const CheckAuthPage = () => {
     return (
-                <EvervaultCard>
+                <div>
                     (　･ω･)☞	You are now in your own place
-                    <div>
-                        
-                    </div>
-                </EvervaultCard>
-                
+                </div>
     )
 }
 
-export default MePage
+export default CheckAuthPage

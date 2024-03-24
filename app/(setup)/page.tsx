@@ -1,13 +1,21 @@
 import { InitialPage } from "@/components/extra/homepage/initial-page";
+import { NavigationAction } from "@/components/navigation/navigation-action";
+import { Loading } from "@/components/uihelper/loading-wait";
 import { db } from "@/lib/db";
 import { initialFirstProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 const SetupPage = async () => {
-    // const newprofile = await initialFirstProfile();
+    const newprofile = await initialFirstProfile();
+    var checkExist = false;
+
+    if(newprofile)
+        checkExist=true
+    // if(newprofile)
     // const server = await db.server.findFirst({
     //     where: {
-    //         members:{
+    //         Member:{
     //             some:{
     //                 userProfileId: newprofile.id
     //             }
@@ -17,12 +25,18 @@ const SetupPage = async () => {
     // })
 
     // if(server){
-    //     // return redirect(`/servers/${server.id}`);
-    //     return redirect(`/meself`)
+    //     return redirect(`/servers/${server.id}`);
+    //     // return redirect(`/meself`)
     // }
 
     return (
-        <InitialPage />
+        <Suspense 
+            fallback={<Loading />}
+        >
+            <InitialPage 
+                isLoggedin={checkExist}
+            />
+        </Suspense>
     )
 
 }

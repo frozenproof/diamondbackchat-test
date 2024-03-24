@@ -13,7 +13,7 @@ const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Euphoria",
-  description: "Cattus",
+  description: "Everything you need , by Cattus",
   icons: "icon8.ico"
 };
 

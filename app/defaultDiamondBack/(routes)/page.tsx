@@ -12,7 +12,7 @@ export default function Home() {
       <div className="h-full flex items-center justify-center">
       <UserButton 
         showName
-        afterSignOutUrl="/login-dbc"
+        afterSignOutUrl="/check-auth/login-dbc"
       />
 
     </div>

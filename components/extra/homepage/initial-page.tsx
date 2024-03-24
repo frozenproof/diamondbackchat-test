@@ -5,30 +5,18 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react";
 import axios from "axios"
-import { FileUpload } from "@/components/files/file-upload";
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle
-} from "@/components/ui/dialog"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { redirect, useRouter } from "next/navigation";
 import { PinContainer, PinPerspective } from "@/components/effects/3d-pin";
 
 import { EvervaultCardVer3 } from "@/components/effects/EvervaultCardVer3";
+import { ModeToggle } from "@/components/uihelper/mode-toggle";
+
+import { AnimatePresence, motion } from "framer-motion";
+
+import { Card } from "@/components/effects/special-card";
+import { CardBody, CardContainer, CardItem } from "@/components/effects/3d-card";
+import Link from "next/link";
 
 const formSchema = z.object({
     name: z.string().min(1,{
@@ -38,7 +26,11 @@ const formSchema = z.object({
         message: "Server image is required."
     })
 })
-export const InitialPage = () => {
+export const InitialPage = ({
+    isLoggedin   
+}:{
+    isLoggedin: Boolean
+}) => {
     const [isMounted , setIsMounted] = useState(false);
     
     const router = useRouter();
@@ -47,66 +39,105 @@ export const InitialPage = () => {
         setIsMounted(true);
     }, []);
     
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues:{
-            name: "",
-            imageUrl: "",
-        }
-    }); 
-
-const isLoading = form.formState.isSubmitting;
-
-const onSubmit = async (values: z.infer<typeof formSchema>) =>{
-    try{
-        await axios.post("/api/servers",values);
-
-        form.reset();
-        router.refresh();
-        window.location.reload();
+    if(!isMounted){
+        return null;
     }
-    catch(error)
-    {
-        console.log(values);
+
+    const enterSelfPage = () => {
+        return redirect(`${origin}/meself`);
     }
-}
-
-if(!isMounted){
-    return null;
-}
-
-const enterSelfPage = () => {
-    return redirect(`${origin}/meself`);
-}
-
+    
 return ( 
         <div
-            className="flex items-center flex-col w-full h-full"
+            className="flex items-center flex-col w-full h-full relative"
         >
             
-            <EvervaultCardVer3
-                className="h-[88px] w-full"
-            >
-                <div className="flex basis-full flex-col p-4 tracking-tight h-full ">
-                <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base ">
-                    Euphoria 
-                </h3>
-                <div className="text-base !m-0 !p-0 font-normal">
-                    <span className="text-slate-500 ">
-                        Fast and simple chat, just like ole days
-                    </span>
-                </div>
-                    <div className="flex flex-1 w-full rounded-lg mt-4 bg-gradient-to-br from-violet-500 via-purple-500 to-blue-500" />
-                </div>
-            </EvervaultCardVer3>
             <div
-                className="items-center text-center"
+                className="h-[88px] w-full flex"
             >
-                <div>
-                    This is cat
+                <div className="flex basis-full flex-col p-4 tracking-tight h-full
+                items-center ">
+                    <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-center">
+                        Euphoria 
+                    </h3>
+                    <div className="text-base !m-0 !p-0 font-normal">
+                        <span className="text-slate-500 ">
+                            Fast and simple chat, and beautiful
+                        </span>
+                    </div>
+                </div>                
+                <div className="flex basis-full flex-col p-4 tracking-tight h-full
+                items-center ">
+                    <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-center">
+                        Euphoria 
+                    </h3>
+                    <div className="text-base !m-0 !p-0 font-normal">
+                        <span className="text-slate-500 ">
+                            Free and available, for everyone
+                        </span>
+                    </div>
                 </div>
             </div>
+            <div
+                className="w-full bg-transparent h-full flex flex-col justify-center"
+            >
+                <div
+                    className="w-full bg-transparent h-full flex flex-row justify-center"
+                >
+                    <CardContainer className="inter-var">
+                        <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border  ">
+                            {!isLoggedin&&(<CardItem
+                            translateZ={20}
+                            as={Link}
+                            href={`/check-auth`}
+                            className="text-xl font-bold text-neutral-600 dark:text-white"
+                            >
+                                Sign up today and use animated avatars
+                            </CardItem>)}
+                            {isLoggedin&&(<CardItem
+                            translateZ={20}
+                            as={Link}
+                            href={`/check-auth`}
+                            className="text-xl font-bold text-neutral-600 dark:text-white"
+                            >
+                                Login now 
+                            </CardItem>)}
+                            <CardItem
+                            as="p"
+                            translateZ="60"
+                            className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                            >
+                            *where you actually do something instead of just watching
+                            </CardItem>
+                            <div className="flex justify-between items-center mt-[8px]">
+                            </div>
+                        </CardBody>
+                    </CardContainer>
+                </div>
+            </div>
+            <div
+                className="h-[88px] w-full flex items-center text-center"
+            >
+                <div
+                    className="text-center w-full"
+                >
+                    Where it started
+                </div>
+            </div>
+            <div
+                className="w-full bg-transparent h-full flex flex-col justify-center"
+            >
+                <div
+                    className="w-full bg-transparent h-full flex flex-row justify-center"
+                >
+                    
+                </div>
+            </div>
+            
+            
             <PinPerspective />
+                
         </div>
     )
 }
+

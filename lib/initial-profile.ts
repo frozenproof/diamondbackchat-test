@@ -6,26 +6,31 @@ export const initialFirstProfile = async () => {
 
     const user = await currentUser();
     if(!user) {
-        return redirectToSignIn();
-    };
-
-    const profileInitial = await db.userProfile.findUnique({
-        where:{
-            userId: user.id
-        }
-    })
-
-    if(profileInitial)
-        return profileInitial;
+        return ;
+    }
+        else
+    {
+        const profileInitial = await db.userProfile.findUnique({
+            where:{
+                userId: user.id
+            }
+        })
     
-    const newProfileInitial = await db.userProfile.create({
-        data:{
-            userId: user.id,
-            name: `${user.firstName} ${user.lastName}`,
-            imageUrl: user.imageUrl,
-            email: user.emailAddresses[0].emailAddress
-        }
-    }) ;
+        if(profileInitial)
+            return profileInitial;
+        else
+        {
+            const newProfileInitial = await db.userProfile.create({
+                data:{
+                    userId: user.id,
+                    name: `${user.firstName} ${user.lastName}`,
+                    imageUrl: user.imageUrl,
+                    email: user.emailAddresses[0].emailAddress
+                }
+            }) ;
+        
+            return newProfileInitial;
+        }   
+    }
 
-    return newProfileInitial;
 }

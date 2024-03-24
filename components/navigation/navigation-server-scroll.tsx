@@ -18,7 +18,7 @@ export const NavigationServerScroll = async() => {
 
     const servers = await db.server.findMany({
         where: {
-            members:{
+            Member:{
                 some:{
                     userProfileId: profile.id,
                 }
