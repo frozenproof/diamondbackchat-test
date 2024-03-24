@@ -21,7 +21,7 @@ export const HomePageHeader = () => {
             </h3>
             <div className="text-base !m-0 !p-0 font-normal">
                 <span className="text-slate-500 ">
-                    Free and available, for everyone
+                    Free and powerful, for everyone
                 </span>
             </div>
         </div>

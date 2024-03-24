@@ -73,7 +73,7 @@ export const PinPerspective = ({
             // perspective: "888px",
             transform: "rotateX(70deg) translateZ(0)",
           }}
-          className="absolute left-1/2 top-0 ml-[0.09375rem] mt-4 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-8 ml-[0.09375rem] mt-4 -translate-x-1/2 -translate-y-1/2"
         >
           <>
             <motion.div
