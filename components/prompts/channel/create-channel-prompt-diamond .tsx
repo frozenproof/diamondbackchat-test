@@ -121,7 +121,9 @@ return (
                         </div>
                         <div className="text-center justify-center items-center bg-gray-100 px-6 py-4">
                             <DialogFooter>
-                                    <Button className="flex" disabled={isLoading} variant={"primary"}>
+                                    <Button 
+                                        className="flex" disabled={isLoading} variant={"primary"}
+                                    >
                                         Create
                                     </Button>
                             </DialogFooter>

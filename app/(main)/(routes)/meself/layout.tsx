@@ -22,8 +22,6 @@ const MePageLayout = async ({
         return redirectToSignIn();
     }
 
-
-
     return ( 
         <div className="h-full">
             <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">

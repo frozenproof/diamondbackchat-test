@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 export const NavigationSelf = ({
    
 }) => {
-    const params = useParams()
+
     const router = useRouter();
 
     
