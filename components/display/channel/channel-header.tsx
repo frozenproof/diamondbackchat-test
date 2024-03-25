@@ -1,26 +1,43 @@
-"use client"
-
 import { Hash } from "lucide-react";
 
-import { MobileToggle } from "@/components/uihelper/mobile-toggle";
+import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
+import { UserStatus } from "@prisma/client";
+import { RightChannelToggle } from "@/components/uihelper/right-channel-toggle";
+import { MemberWithProfile } from "@/type";
 
 interface ChannelHeaderProps {
   serverId: string;
   name: string;
   imageUrl?: string;
+  userAvatar: string;
+  userName: string;
+  userStatusProp: UserStatus;
+  membersList: MemberWithProfile[];
 }
 
 export const ChannelHeader = ({
   serverId,
   name,
-  imageUrl
+  imageUrl,
+  userAvatar,
+  userName,
+  userStatusProp,
+  membersList
 }: ChannelHeaderProps) => {
   return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
-      <MobileToggle serverId={serverId} />
+      <MobileNavigationLeftToggle 
+        serverId={serverId} 
+        userAvatar={userAvatar}
+        userName={userName}
+        userStatus={userStatusProp}
+        />
       <p className="font-semibold text-md text-black dark:text-white">
         {name}
       </p>
+      <RightChannelToggle 
+        anotherMemberProp={membersList}
+      />
     </div>
   )
 }

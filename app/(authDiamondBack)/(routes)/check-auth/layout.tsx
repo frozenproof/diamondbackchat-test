@@ -11,13 +11,7 @@ export const metadata: Metadata = {
     title: "Authorization",
 };
 
-const CheckAuthPageLayout = async ({
-    children,
-    params}:
-    {
-        children: React.ReactNode;
-        params: {serverId: string}
-    }
+const CheckAuthPageLayout = async (
 ) => {
     const profile = await currentUserProfile();
 
@@ -26,9 +20,12 @@ const CheckAuthPageLayout = async ({
         return redirect(`/login-dbc`);
     }   
     else
-    return ( 
-        redirect(`/meself`)
-    );
+    {
+        console.log(profile);
+        return ( 
+            redirect(`/meself`)
+        );
+    }
 }
  
 export default CheckAuthPageLayout;

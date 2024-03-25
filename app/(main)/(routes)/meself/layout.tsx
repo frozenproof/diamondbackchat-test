@@ -1,11 +1,10 @@
-import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { ServerSideBar } from "@/components/display/server/server-sidebar";
+
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
-import { GlowingStarsBackgroundCard } from "@/components/effects/glowing-stars";
+
 import { DirectSideBar } from "@/components/display/direct/direct-sidebar";
 
 
@@ -19,7 +18,7 @@ const MePageLayout = async ({
     const profile = await currentUserProfile();
 
     if(!profile){
-        return redirect(`/check-auth/login-dbc`);
+        return redirect(`/check-auth`);
     }   
     else
     {

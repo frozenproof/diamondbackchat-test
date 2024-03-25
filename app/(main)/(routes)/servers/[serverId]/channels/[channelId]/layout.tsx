@@ -8,6 +8,8 @@ import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { Metadata, ResolvingMetadata } from "next";
 import { ChannelHeader } from "@/components/display/channel/channel-header";
+import ChannelIdPage from "./page";
+import { Suspense } from "react";
 
 type Props = {
     params: { channelId: string }
@@ -57,6 +59,11 @@ const ChannelIdPageLayout = async ({
         }
     })
 
+    if(!server)
+    {
+        return redirect("/meself");
+    }
+    
     const channel = await db.channel.findFirstOrThrow({
         where: {
             id: params.channelId,
@@ -64,19 +71,42 @@ const ChannelIdPageLayout = async ({
         }
     })
 
-    if(!server)
+    const members = await db.member.findMany({
+        where:{
+            serverId: 
+                params.serverId,
+            userProfileId: profile.id
+        },
+        include: {
+            userProfile: true
+        }
+    })
+
+    if(!members || !channel)
     {
-        return redirect("/");
+        return redirect("/meself");
     }
+    console.log("What is this async?",channel)
+
 
     return ( 
         <div className="h-full w-full flex flex-col">
             <ChannelHeader 
                     serverId={params.serverId}
                     name={channel.name}
+                    userAvatar={profile.imageUrl}
+                    userName={profile.name}
+                    userStatusProp={profile.status}
+                    membersList={members}
             />
             <div className="h-full border">
-                {children}    
+                <Suspense>
+                {/* {children}     */}
+                <ChannelIdPage 
+                    channelProp={channel}
+                    serverIdProp={server.id}
+                />
+                </Suspense>
             </div>
         </div>
      );

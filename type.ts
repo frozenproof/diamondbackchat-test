@@ -9,7 +9,6 @@ export type ServerWithMembersWithProfiles =
                                             })[];
                                         }
 
-export type MemberWithProfile = (
-                                    Member & {
+export type MemberWithProfile = Member & {
                                         userProfile:UserProfile
-                                    });
+                                    };

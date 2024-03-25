@@ -10,7 +10,6 @@ import { ServerSearchBar } from "./server-search";
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { ChannelSideBar } from "../channel/channel-sidebar";
-import { MemberSideBar } from "../member/member-sidebar";
 
 const iconMap :{[key: string]: React.ReactNode}= {
     [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,
@@ -80,7 +79,7 @@ export const ServerSideBar = async({
     const Member = server2?.Member.filter((member) => member.userProfileId !== profile.id)
     const role = server2?.Member.find((member) => member.userProfileId === profile.id)?.role
     return (
-        <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#2fffb3]">
+        <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#ffdbed]">
             <ServerHeader
                 server={server2}
                 role={role}
@@ -136,10 +135,6 @@ export const ServerSideBar = async({
                     serverProp={server2}
                     channelProp={realChannels}
                     roleProp={role}
-                  />
-                  <MemberSideBar 
-                    serverProp={server2}
-                      roleProp={role}
                   />
         </ScrollArea>
         </div>

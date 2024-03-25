@@ -6,12 +6,14 @@ import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
+import { MemberWithProfile } from "@/type";
 
 interface MemberItemProps {
-  member: (
-    Member & {
-        userProfile:UserProfile
-    })
+  // member: (
+  //   Member & {
+  //       userProfile:UserProfile
+  //   })
+  member: MemberWithProfile
   // user:  UserProfile ;
   // role: OldMemberRole ;
 }

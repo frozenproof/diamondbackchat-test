@@ -1,49 +1,53 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { OldChannelType } from "@prisma/client";
-
-import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db";
+import { currentUserProfile } from "@/lib/current-profile";
+import { isRedirectError } from "next/dist/client/components/redirect";
+import { v4 as uuidv4 } from "uuid";
 
 interface DirectChatHandlerProps {
   params: {
-    serverId: string;
-    channelId: string;
-  }
-}
+    inviteCode: string;
+  };
+};
 
 const DirectChatHandler = async ({
   params
 }: DirectChatHandlerProps) => {
-  const profile = await currentUserProfile();
+  try {
+    const profile = await currentUserProfile();
 
-  if (!profile) {
-    return redirectToSignIn();
-  }
-
-  const channel = await db.channel.findUnique({
-    where: {
-      id: params.channelId,
-    },
-  });
-
-  const member = await db.member.findFirst({
-    where: {
-      serverId: params.serverId,
-      userProfileId: profile.id,
+    if (!profile) {
+      return redirectToSignIn();
     }
-  });
+  
+    if (!params.inviteCode) {
+      return redirect("/");
+    }
+  
+    const findServerId = await db.serverInvite.findFirst(
+      {
+        where: {
+          inviteCode: params.inviteCode,
+        }
+      }
+    )
 
-  if (!channel || !member) {
-    redirect("/meself");
+    if (!findServerId) {
+      return redirect("/");
+    }
+
+    
+    return null;
   }
-
-  return ( 
-    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
-        This is channel page test
-    </div>
-   );
+  catch (error)
+  {
+    if (isRedirectError(error)) {
+      throw error;
+    }    
+    console.log("Unknown error",error);
+  }
 }
  
 export default DirectChatHandler;

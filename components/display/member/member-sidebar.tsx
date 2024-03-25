@@ -10,14 +10,9 @@ import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react
 import { ServerNavigation } from "../server/server-navigation";
 
 import { MemberItem } from "../member/member-item";
-import { ServerWithMembersWithProfiles } from "@/type";
+import { MemberWithProfile, ServerWithMembersWithProfiles } from "@/type";
 
-const iconMap :{[key: string]: React.ReactNode}= {
-    [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,
-    [OldChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
-    [OldChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />
-  };
-  
+ 
   const roleIconMap :{[key: string]: React.ReactNode}= {
     [OldMemberRole.GUEST]       : null,
     [OldMemberRole.MEMBER]      : <Magnet className="mr-2"/>,
@@ -26,39 +21,29 @@ const iconMap :{[key: string]: React.ReactNode}= {
   }
   
 interface MemberSideBarProps {
-    serverProp: ServerWithMembersWithProfiles,
-    roleProp: OldMemberRole | undefined
+    memberProp:MemberWithProfile[]
 }
 
 export const MemberSideBar = async({
-    serverProp,
-    roleProp
+    memberProp
 }:MemberSideBarProps) => {
     const profile = await currentUserProfile();
     if(!profile){
         return redirect("/");
     }
 
-    if(!serverProp)
-    {
-        return redirect("/");
-    }
-    const role = roleProp;
     return (
 
             <ScrollArea
                     className="flex-1 px-1"            
                 >
-                {!!serverProp?.Member.length && (
+                {!!memberProp.length && (
                 <div className="mb-2">
-                    <ServerNavigation
-                    sectionType="Member"
-                    role={role}
-                    label="Members"
-                    server={serverProp}
-                    />
+                    <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
+                        members
+                    </p>
                     <div className="space-y-[2px]">
-                    {serverProp?.Member.map((member) => (
+                    {memberProp.map((member) => (
                         <MemberItem
                         key={member.id}
                         member={member}

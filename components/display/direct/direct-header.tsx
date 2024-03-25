@@ -2,7 +2,7 @@
 
 import { Hash } from "lucide-react";
 
-import { MobileToggle } from "@/components/uihelper/mobile-toggle";
+import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
 import { redirect } from "next/navigation";
