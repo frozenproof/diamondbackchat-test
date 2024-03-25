@@ -62,7 +62,7 @@ export const StickyScroll = ({
         <div className="max-w-2xl left-0 h-full">
           {content.map((item, index) => (
             <div key={item.title + index} className="my-20 h-full">
-              <motion.h2
+              <motion.div
                 initial={{
                   opacity: 0,
                 }}
@@ -72,8 +72,8 @@ export const StickyScroll = ({
                 className="text-2xl font-bold text-[#dd8080]"
               >
                 {item.title}
-              </motion.h2>
-              <motion.p
+              </motion.div>
+              <motion.div
                 initial={{
                   opacity: 0,
                 }}
@@ -83,7 +83,7 @@ export const StickyScroll = ({
                 className="text-kg text-[#dd8080] max-w-sm mt-10"
               >
                 {item.description}
-              </motion.p>
+              </motion.div>
             </div>
           ))}
           

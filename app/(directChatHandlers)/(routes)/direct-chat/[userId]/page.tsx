@@ -6,16 +6,16 @@ import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db";
 
-interface ChannelIdPageProps {
+interface DirectChatHandlerProps {
   params: {
     serverId: string;
     channelId: string;
   }
 }
 
-const ChannelIdPage = async ({
+const DirectChatHandler = async ({
   params
-}: ChannelIdPageProps) => {
+}: DirectChatHandlerProps) => {
   const profile = await currentUserProfile();
 
   if (!profile) {
@@ -46,4 +46,4 @@ const ChannelIdPage = async ({
    );
 }
  
-export default ChannelIdPage;
+export default DirectChatHandler;

@@ -8,7 +8,6 @@ const ServerIdPage = () => {
             className="text-center border-[8px] "
         >
             (　･ω･)☞	Create a channel and something productive !
-                                
         </EvervaultCard>
                 
     )

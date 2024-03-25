@@ -40,8 +40,8 @@ export const ChannelItem = ({
     router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
   }
 
-  const onAction = (e: React.MouseEvent, action: PromptType) => {
-    e.stopPropagation();
+  const onAction = (MouseEvent: React.MouseEvent, action: PromptType) => {
+    MouseEvent.stopPropagation();
     onOpen(action, { channel, server });
   }
 
@@ -67,13 +67,13 @@ export const ChannelItem = ({
         <div className="flex gap-x-2 relative">
           <ActionTooltip label="Edit">
             <Edit
-              onClick={(e) => onAction(e, "EditChannel")}
+              onClick={(MouseEvent) => onAction(MouseEvent, "EditChannel")}
               className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>
           <ActionTooltip label="Delete">
             <Trash
-              onClick={(e) => onAction(e, "DeleteChannel")}
+              onClick={(MouseEvent) => onAction(MouseEvent, "DeleteChannel")}
               className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>

@@ -56,7 +56,6 @@ export async function POST(req: Request){
               inviteCode:uuidv4(),
               userProfileId: profile.id,
               serverId: server2.id,
-              assignedBy: profile.userId
             },
           })
 

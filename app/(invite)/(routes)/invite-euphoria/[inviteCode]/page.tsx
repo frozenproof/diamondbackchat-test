@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { currentUserProfile } from "@/lib/current-profile";
 import { isRedirectError } from "next/dist/client/components/redirect";
+import { v4 as uuidv4 } from "uuid";
 
 interface InviteCodePagePropsDiamond {
   params: {
@@ -76,18 +77,16 @@ const InviteCodePageDiamond = async ({
         },
       },
       update: {
-        inviteCode: server2.inviteCode,
+        inviteCode: uuidv4(),
       },
       create: {
-        inviteCode:server2.inviteCode,
+        inviteCode:uuidv4(),
         userProfileId: profile.id,
         serverId: server2.id,
-        assignedBy: profile.userId
       },
     })
 
     if (server2) {
-      
       return redirect(`/servers/${server2.id}`);
     }
     

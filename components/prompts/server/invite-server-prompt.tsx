@@ -48,7 +48,7 @@ export const InviteServerPrompt = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            const temp = await axios.patch(`/api/invite/inviteServerGenerate/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-diamond/`+response.data.inviteCode));
+            const temp = await axios.patch(`/api/invite/inviteServerGenerate/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
             
             // onOpen("InviteServer", {server: response.data});
         }
@@ -65,7 +65,7 @@ export const InviteServerPrompt = () => {
         try {
             console.log(server?.id);
             setIsUrlLoading(true);
-            const temp = await axios.patch(`/api/invite/inviteServerSearch/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-diamond/`+response.data.inviteCode));
+            const temp = await axios.patch(`/api/invite/inviteServerSearch/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
 
             console.log("Information is here",temp);
 

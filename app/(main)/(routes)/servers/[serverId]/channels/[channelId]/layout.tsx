@@ -7,9 +7,10 @@ import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { Metadata, ResolvingMetadata } from "next";
+import { ChannelHeader } from "@/components/display/channel/channel-header";
 
 type Props = {
-    params: { serverId: string }
+    params: { channelId: string }
   }
    
 export async function generateMetadata(
@@ -17,24 +18,24 @@ export async function generateMetadata(
     parent: ResolvingMetadata
   ): Promise<Metadata> {
     
-    const server = await db.server.findUnique
+    const channel = await db.channel.findUnique
     ({
         where:{
-            id: params.serverId,
+            id: params.channelId,
         }
     })
 
     return {
-      title: `Euphoria || `+server?.name,
+      title: `Euphoria || `+channel?.name,
     }
 }
 
-const ServerIdPageLayout = async ({
+const ChannelIdPageLayout = async ({
     children,
     params}:
     {
         children: React.ReactNode;
-        params: {serverId: string}
+        params: {serverId: string,channelId: string}
     }
 ) => {
     const profile = await currentUserProfile();
@@ -56,32 +57,29 @@ const ServerIdPageLayout = async ({
         }
     })
 
+    const channel = await db.channel.findFirstOrThrow({
+        where: {
+            id: params.channelId,
+            deleted: false
+        }
+    })
+
     if(!server)
     {
-        return redirect("/meself");
+        return redirect("/");
     }
 
     return ( 
-        <div className="h-full">
-            <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
-                <ServerSideBar serverId={params.serverId}/>
-                
-                <div
-                    className="mt-auto pt-1 pb-1 pl-1 flex"
-                >
-                    <UserButtonDiamond 
-                        src={profile.imageUrl}
-                        name={profile.name}
-                        status={profile.status}
-                    />
-                   
-                </div>
-            </div>
-            <main className="h-full md:pl-48">
+        <div className="h-full w-full flex flex-col">
+            <ChannelHeader 
+                    serverId={params.serverId}
+                    name={channel.name}
+            />
+            <div className="h-full border">
                 {children}    
-            </main>
+            </div>
         </div>
      );
 }
  
-export default ServerIdPageLayout;
+export default ChannelIdPageLayout;

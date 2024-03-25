@@ -33,7 +33,7 @@ export const DeleteServerPrompt = () => {
             await axios.delete(`/api/servers/${server?.id}/delete-api`);
             onClose();
             router.refresh();
-            router.push("/");
+            router.push("/meself");
         }
         catch(error)
         {
