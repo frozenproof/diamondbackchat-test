@@ -12,7 +12,7 @@ import ChannelIdPage from "./page";
 import { Suspense } from "react";
 
 type Props = {
-    params: { channelId: string }
+    params: { serverId: string ,channelId: string }
   }
    
 export async function generateMetadata(
@@ -28,9 +28,10 @@ export async function generateMetadata(
     })
 
     return {
-      title: `Euphoria || `+channel?.name,
+      title: `Euphoria | `+channel?.name,
     }
 }
+
 
 const ChannelIdPageLayout = async ({
     children,
@@ -86,8 +87,6 @@ const ChannelIdPageLayout = async ({
     {
         return redirect("/meself");
     }
-    console.log("What is this async?",channel)
-
 
     return ( 
         <div className="h-full w-full flex flex-col">
@@ -102,10 +101,10 @@ const ChannelIdPageLayout = async ({
             <div className="h-full border">
                 <Suspense>
                 {/* {children}     */}
-                <ChannelIdPage 
-                    channelProp={channel}
-                    serverIdProp={server.id}
-                />
+                    <ChannelIdPage 
+                        channelProp={channel}
+                        serverIdProp={server.id}
+                    />
                 </Suspense>
             </div>
         </div>

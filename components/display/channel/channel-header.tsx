@@ -4,6 +4,7 @@ import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-to
 import { UserStatus } from "@prisma/client";
 import { RightChannelToggle } from "@/components/uihelper/right-channel-toggle";
 import { MemberWithProfile } from "@/type";
+import { ChannelSearchBar } from "./channel-search";
 
 interface ChannelHeaderProps {
   serverId: string;
@@ -35,6 +36,9 @@ export const ChannelHeader = ({
       <p className="font-semibold text-md text-black dark:text-white">
         {name}
       </p>
+      <ChannelSearchBar 
+      
+      />
       <RightChannelToggle 
         anotherMemberProp={membersList}
       />

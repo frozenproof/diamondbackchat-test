@@ -4,7 +4,7 @@ import {  AvatarImage, DiamondAvatar } from "@/components/ui/diamondavatar";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Clock10 } from "lucide-react";
+import { Clock10, Settings, Settings2 } from "lucide-react";
 
 interface UserProfileAvatarProps {
     src?: string;
@@ -53,7 +53,9 @@ export const UserButtonDiamond = ({
                     className="focus:outline-none ml-auto align-middle h-full"
                     asChild                
             >
-                    <Clock10 />
+                    <Settings2 
+                        className="h-8 w-8 pr-[8px]"
+                    />
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 side="top"

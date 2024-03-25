@@ -18,7 +18,7 @@ export const RightChannelToggle = ({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden ml-auto">
+        <Button variant="ghost" size="icon" className="ml-auto">
           <User />
         </Button>
       </SheetTrigger>

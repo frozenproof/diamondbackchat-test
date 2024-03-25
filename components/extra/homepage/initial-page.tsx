@@ -32,7 +32,7 @@ export const InitialPage = ({
     
 return ( 
         <div
-            className="flex items-center flex-col w-full h-full relative"
+            className="flex items-center flex-col w-full h-full relative "
         >
             <HomePageHeader />
             <HomePageAuth 

@@ -6,6 +6,7 @@ import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
+import { Suspense } from "react";
 
 interface ChannelIdPageProps {
   // params: {
@@ -27,31 +28,32 @@ const ChannelIdPage = async ({
     return redirectToSignIn();
   }
 
-  // const channel = await db.channel.findUnique({
-  //   where: {
-  //     id: params.channelId,
-  //   },
-  // });
+  if(!channelProp)
+  {
+    return null
+  }
+  const messages = await db.message.findMany({
+    where: {
+      channelId: channelProp.id,
+    },
+  });
 
   
-  // if (!channel || !member) {
-  //   redirect("/meself");
-  // }
-
-  console.log("What is this api?",channelProp)
-
-  return ( 
+  if(channelProp)
+  {
+    return ( 
+    <Suspense>
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
         {channelProp.type === OldChannelType.TEXT && (
         <>
           <div
             className="h-full"
           >
-            
+            {messages.toString()}
           </div>
           <MessageInput
             name={channelProp.name}
-            type="channel"
+            type="direct"
             apiUrl="/api/socket/messages"
             query={{
               // channelId: channel.id,
@@ -63,7 +65,10 @@ const ChannelIdPage = async ({
         </>
       )}
     </div>
+    </Suspense>
    );
+  }
+  
 }
  
 export default ChannelIdPage;
