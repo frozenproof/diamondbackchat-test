@@ -40,7 +40,7 @@ const content = [
           Discord is where I first met with such a simple yet easy to use design , and a small group where I can meet friends without distinctions . An user name that I'm sure I can be proud of , Viet Nam.
         </div>
         <div
-          className="text-[#41d3f8] "
+          className="text-[#41d3f8] text-xl"
         >
           Shoutout to LilWitch for actually putting up with me.
         </div>

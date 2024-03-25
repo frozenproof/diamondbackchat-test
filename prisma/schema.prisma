@@ -30,6 +30,7 @@ model UserProfile {
   Member        Member[]
 
   Server        Server[]
+  Friend        Friend[]
 }
 
 model Server {
@@ -162,6 +163,17 @@ model Attachment {
 
   @@index([channelId])
   @@index([messageId])
+}
+
+model Friend  {
+  id          String  @id @default(uuid())
+  blocked     Boolean @default(false)
+
+  updatedAt   DateTime @updatedAt
+
+  userProfile UserProfile[]
+  
+  @@index([id])
 }
 
 enum OldMemberRole {
