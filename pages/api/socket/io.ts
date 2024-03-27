@@ -10,7 +10,7 @@ export const config = {
   },
 };
 
-const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
+const ioHandler = (_req: NextApiRequest, res: NextApiResponseServerIo) => {
   if(res.socket.server.io)
   {
     console.log(res.socket.server.io);

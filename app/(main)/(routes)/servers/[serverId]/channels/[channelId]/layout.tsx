@@ -84,6 +84,11 @@ const ChannelIdPageLayout = async ({
         }
     })
 
+    const member = await db.member.findFirstOrThrow({
+        where: {
+            userProfileId: profile.id
+        }
+    })
     if(!members || !channel)
     {
         return redirect("/meself");
@@ -105,6 +110,7 @@ const ChannelIdPageLayout = async ({
                 >
                 {/* {children}     */}
                     <ChannelIdPage 
+                        memberProp={member}
                         channelProp={channel}
                         serverIdProp={server.id}
                     />

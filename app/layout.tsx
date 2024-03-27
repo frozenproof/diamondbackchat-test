@@ -9,6 +9,7 @@ import { PromptProvider } from "@/components/providers/prompt-provider";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { Suspense } from "react";
 import { SocketProvider } from "@/components/providers/socket-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -50,7 +51,9 @@ export default function RootLayout({
                 <link rel="icon" href="/icon.ico" sizes="any" />
                 <SocketProvider>
                   <PromptProvider />
-                    {children}
+                    <QueryProvider>
+                      {children}
+                    </QueryProvider>
                 </SocketProvider>
                 </ThemeProvider>
             </Suspense>

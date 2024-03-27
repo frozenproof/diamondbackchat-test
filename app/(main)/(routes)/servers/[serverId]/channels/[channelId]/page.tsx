@@ -1,12 +1,14 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { Channel, OldChannelType } from "@prisma/client";
+import { Channel, Member, OldChannelType } from "@prisma/client";
 
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
-import { Suspense } from "react";
+import { Fragment, Suspense } from "react";
+import { MessageWithMemberWithProfile } from "@/type";
+import { ChatMessages } from "@/components/display/message/message-item";
 
 interface ChannelIdPageProps {
   // params: {
@@ -15,12 +17,14 @@ interface ChannelIdPageProps {
   // };
   serverIdProp: string;
   channelProp: Channel;
+  memberProp: Member;
 }
 
 const ChannelIdPage = async ({
   // params,
   serverIdProp,
-  channelProp
+  channelProp,
+  memberProp
 }: ChannelIdPageProps) => {
   const profile = await currentUserProfile();
 
@@ -49,7 +53,30 @@ const ChannelIdPage = async ({
           <div
             className="h-full"
           >
-            {messages.toString()}
+            Is this running?
+            <ChatMessages
+                member={memberProp}
+                name={channelProp.name}
+                chatId={channelProp.id}
+                type="channel"
+                apiUrl="/api/messages"
+                socketUrl="/api/socket/messages"
+                socketQuery={{
+                  channelId: channelProp.id,
+                  serverId: serverIdProp,
+                }}
+                paramKey="channelId"
+                paramValue={channelProp.id}
+            />
+            {/* {messages.map((group, i) => (
+              <Fragment key={i}>
+                {messages.map((message: MessageWithMemberWithProfile) => (
+                  <div key={message.id}>
+                    {message.content}
+                  </div>
+                ))}
+              </Fragment>
+            ))} */}
           </div>
           <MessageInput
             name={channelProp.name}

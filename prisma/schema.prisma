@@ -143,6 +143,7 @@ model Message {
   attachment Boolean @default(false)
   deleted    Boolean @default(false)
 
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   Attachment Attachment[]

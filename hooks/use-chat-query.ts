@@ -31,26 +31,24 @@ export const useChatQuery = ({
     return res.json();
   };
 
-//   const {
-//     data,
-//     fetchNextPage,
-//     hasNextPage,
-//     isFetchingNextPage,
-//     status,
-//   } = []
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: [queryKey],
+    queryFn: fetchMessages,
+    getNextPageParam: (lastPage) => lastPage?.nextCursor,
+    refetchInterval: isConnected ? false : 1000,
+  });
 
-    // useInfiniteQuery({
-    //     queryKey: [queryKey],
-    //     queryFn: fetchMessages,
-    //     getNextPageParam: (lastPage) => lastPage?.nextCursor,
-    //     refetchInterval: isConnected ? false : 1000,
-//   });
-
-//   return {
-//     data,
-//     fetchNextPage,
-//     hasNextPage,
-//     isFetchingNextPage,
-//     status,
-//   };
+  return {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  };
 }
