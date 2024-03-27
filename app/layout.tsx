@@ -12,6 +12,8 @@ import { SocketProvider } from "@/components/providers/socket-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
+export const dynamicParams = true 
+export const maxDuration = 5
 export const metadata: Metadata = {
   title: "Euphoria",
   description: "Everything you need , by Cattus",

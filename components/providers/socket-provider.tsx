@@ -36,17 +36,22 @@ export const SocketProvider = ({
       addTrailingSlash: false,
     });
 
-    socketInstance.on("connect", () => {
+    const testingConnect = () => {
       setIsConnected(true);
-    });
+    };
 
-    socketInstance.on("disconnect", () => {
+    const testingDisconnect = () => {
       setIsConnected(false);
-    });
+    };
+
+    socketInstance.on("connect", testingConnect );
+    socketInstance.on("disconnect", testingDisconnect);
 
     setSocket(socketInstance);
 
     return () => {
+      socketInstance.off("connect",testingConnect);
+      socketInstance.off("disconnect",testingDisconnect);
       socketInstance.disconnect();
     }
   }, []);

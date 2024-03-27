@@ -39,6 +39,7 @@ export async function POST(req: Request){
           data: {
               name: name,
               type: type,
+              categories: ""
           }
         })
 

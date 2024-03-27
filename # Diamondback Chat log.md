@@ -193,3 +193,6 @@ Một channel có array của người dùng , cho phép tạo group chat.
 # Day 6 
 
 - Thông tin trong file này chỉ mang tính chất kĩ thuật
+
+NEXT_PUBLIC_SITE_URL: Deployment url
+Socket provider: Make sure its deployed .

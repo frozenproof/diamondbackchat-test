@@ -10,6 +10,7 @@ import { NavigationServerScroll } from "@/components/navigation/navigation-serve
 import { db } from "@/lib/db"
 
 import { NavigationSelf } from "./navigation-self";
+import { SocketStatusDisplay } from "../socket/socket-status-display";
 
 export const NavigationSideBar = async () => {
     const profile = await currentUserProfile();
@@ -53,7 +54,7 @@ export const NavigationSideBar = async () => {
             
             <NavigationServerScroll/>
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-        
+            <SocketStatusDisplay />
                 <ModeToggle />
                 {/* <UserButton 
                     afterSignOutUrl="login-dbc?"

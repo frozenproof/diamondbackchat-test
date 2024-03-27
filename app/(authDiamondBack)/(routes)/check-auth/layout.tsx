@@ -21,7 +21,7 @@ const CheckAuthPageLayout = async (
     }   
     else
     {
-        console.log(profile);
+        // console.log(profile);
         return ( 
             redirect(`/meself`)
         );

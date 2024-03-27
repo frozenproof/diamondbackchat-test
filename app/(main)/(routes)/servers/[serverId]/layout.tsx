@@ -29,7 +29,7 @@ export async function generateMetadata(
     }
 }
 
-const ServerIdPageLayout = async ({
+const ServerIdPageLayout = async({
     children,
     params}:
     {

@@ -11,7 +11,9 @@ const nextConfig = {
                 hostname: 'img.clerk.com',
             },
         ]
-    }
+    },
+    reactStrictMode: false,
+    trailingSlash: false
 };
 
 export default nextConfig;

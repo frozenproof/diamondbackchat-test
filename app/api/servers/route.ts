@@ -31,7 +31,8 @@ export async function POST(req: Request){
         const defaultChannel = await db.channel.create({
             data: {
                 name: "general",
-                type: OldChannelType.TEXT
+                type: OldChannelType.TEXT,
+                categories: ""
             }
         })
 
@@ -59,7 +60,6 @@ export async function POST(req: Request){
             },
           })
 
-        
         return NextResponse.json(server2);
     }
     catch(error){

@@ -5,6 +5,7 @@ import { UserStatus } from "@prisma/client";
 import { RightChannelToggle } from "@/components/uihelper/right-channel-toggle";
 import { MemberWithProfile } from "@/type";
 import { ChannelSearchBar } from "./channel-search";
+import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 
 interface ChannelHeaderProps {
   serverId: string;
@@ -36,8 +37,12 @@ export const ChannelHeader = ({
       <p className="font-semibold text-md text-black dark:text-white">
         {name}
       </p>
+      <div
+        className="flex ml-auto w-full"
+      >
+        
+      </div>
       <ChannelSearchBar 
-      
       />
       <RightChannelToggle 
         anotherMemberProp={membersList}
