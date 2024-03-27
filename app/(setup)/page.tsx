@@ -1,6 +1,6 @@
 import { InitialPage } from "@/components/extra/homepage/initial-page";
 import { NavigationAction } from "@/components/navigation/navigation-action";
-import { Loading } from "@/components/uihelper/loading-wait";
+import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { db } from "@/lib/db";
 import { initialFirstProfile } from "@/lib/initial-profile";
 import { redirect } from "next/navigation";
@@ -31,7 +31,7 @@ const SetupPage = async () => {
 
     return (
         <Suspense 
-            fallback={<Loading />}
+            fallback={<LoadingMainPage />}
         >
             <InitialPage 
                 isLoggedin={checkExist}

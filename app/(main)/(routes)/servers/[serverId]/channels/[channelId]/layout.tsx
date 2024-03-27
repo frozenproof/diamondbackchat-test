@@ -10,6 +10,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import ChannelIdPage from "./page";
 import { Suspense } from "react";
+import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 
 type Props = {
     params: { serverId: string ,channelId: string }
@@ -99,7 +100,9 @@ const ChannelIdPageLayout = async ({
                     membersList={members}
             />
             <div className="h-full border">
-                <Suspense>
+                <Suspense
+                    fallback={<LoadingMainPage />}
+                >
                 {/* {children}     */}
                     <ChannelIdPage 
                         channelProp={channel}

@@ -16,10 +16,11 @@ export type MemberWithProfile = Member & {
                                         userProfile:UserProfile
                                     };
 
-export type NextApiResponseServerIo = NextApiResponse & {
-    socket: Socket & {
-        server: NetServer & {
-        io: SocketIOServer;
+export type NextApiResponseServerIo = 
+    NextApiResponse & {
+        socket: Socket & {
+            server: NetServer & {
+            io: SocketIOServer;
+            };
         };
-    };
     };

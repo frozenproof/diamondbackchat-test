@@ -68,12 +68,13 @@ model Member {
 }
 
 model Channel {
-  id            String         @id @default(uuid())
+  id            String          @id @default(uuid())
   name          String
-  type          OldChannelType @default(TEXT)
-  updatedAt     DateTime       @updatedAt
+  type          OldChannelType  @default(TEXT)
+  updatedAt     DateTime        @updatedAt
 
-  deleted       Boolean        @default(false)
+  categories    String          
+  deleted       Boolean         @default(false)
 
   ServerChannel ServerChannel[]
   UserChannel   UserChannel[]

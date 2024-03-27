@@ -6,8 +6,9 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PromptProvider } from "@/components/providers/prompt-provider";
-import { Loading } from "@/components/uihelper/loading-wait";
+import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { Suspense } from "react";
+import { SocketProvider } from "@/components/providers/socket-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -35,7 +36,7 @@ export default function RootLayout({
           )}>
             <Suspense
               fallback={
-                <Loading />
+                <LoadingMainPage />
               }
             >
               <ThemeProvider 
@@ -45,8 +46,10 @@ export default function RootLayout({
                 storageKey="diamondbacc-theme"
               >
                 <link rel="icon" href="/icon.ico" sizes="any" />
-                <PromptProvider />
-                  {children}
+                <SocketProvider>
+                  <PromptProvider />
+                    {children}
+                </SocketProvider>
                 </ThemeProvider>
             </Suspense>
       </body>

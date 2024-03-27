@@ -1,5 +1,5 @@
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
-import { Loading } from "@/components/uihelper/loading-wait";
+import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import React, { Suspense } from "react";
 
 const MainLayout = async ({
@@ -9,7 +9,7 @@ const MainLayout = async ({
 }) => {
     return ( 
         <Suspense
-            fallback={<Loading />}
+            fallback={<LoadingMainPage />}
         >
             <div className="h-full">
                 <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0"> 

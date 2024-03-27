@@ -2,7 +2,7 @@ import { EvervaultCard } from "../effects/EvervaultCard"
 
 import { GlowingStarsBackgroundCard } from "../effects/glowing-stars"
 
-export const Loading = ({
+export const LoadingMainPage = ({
 }) => {
     return (
         <EvervaultCard

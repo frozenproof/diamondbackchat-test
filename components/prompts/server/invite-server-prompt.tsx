@@ -16,7 +16,7 @@ import { Check, Copy, Plus, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
 import { useEffect, useState, Suspense, useRef } from "react";
 import axios from "axios";
-import { Loading } from "@/components/uihelper/loading-wait";
+import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 
 
 export const InviteServerPrompt = () => {
@@ -104,7 +104,7 @@ export const InviteServerPrompt = () => {
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
                         <Suspense
-                            fallback={<Loading />}
+                            fallback={<LoadingMainPage />}
                         >
                             <Input
                                 disabled={isLoading}
