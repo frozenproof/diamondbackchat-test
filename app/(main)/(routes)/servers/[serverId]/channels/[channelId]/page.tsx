@@ -1,6 +1,6 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { Channel, Member, OldChannelType } from "@prisma/client";
+import { Channel, Member, Message, OldChannelType } from "@prisma/client";
 
 import { currentUserProfile } from "@/lib/current-profile";
 
@@ -8,7 +8,8 @@ import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
 import { MessageWithMemberWithProfile } from "@/type";
-import { ChatMessages } from "@/components/display/message/message-item";
+import { ChatMessages } from "@/components/display/message/message-list";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
 interface ChannelIdPageProps {
   // params: {
@@ -53,13 +54,13 @@ const ChannelIdPage = async ({
           <div
             className="h-full"
           >
-            Is this running?
+            {/* Is this running? */}
             <ChatMessages
                 member={memberProp}
                 name={channelProp.name}
                 chatId={channelProp.id}
                 type="channel"
-                apiUrl="/api/messages"
+                apiUrl="/api/messages/get-api"
                 socketUrl="/api/socket/messages"
                 socketQuery={{
                   channelId: channelProp.id,
@@ -70,9 +71,12 @@ const ChannelIdPage = async ({
             />
             {/* {messages.map((group, i) => (
               <Fragment key={i}>
-                {messages.map((message: MessageWithMemberWithProfile) => (
+                {messages.map((message: Message) => (
                   <div key={message.id}>
-                    {message.content}
+                    <UserProfileAvatar 
+                      src={message.userProfileId}
+                    />
+                    {message.content} + {i}
                   </div>
                 ))}
               </Fragment>
@@ -81,7 +85,8 @@ const ChannelIdPage = async ({
           <MessageInput
             name={channelProp.name}
             type="direct"
-            apiUrl="/api/socket/messages"
+            // apiUrl="/api/socket/messages"
+            apiUrl="/api/messagePost"
             query={{
               // channelId: channel.id,
               channelId: channelProp.id,

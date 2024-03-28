@@ -3,7 +3,7 @@
 import {
   QueryClient,
   QueryClientProvider
-} from "@tanstack/react-query";
+} from "react-query";
 import { useState } from "react";
 
 export const QueryProvider = ({

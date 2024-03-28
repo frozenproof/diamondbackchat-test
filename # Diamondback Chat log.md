@@ -196,3 +196,13 @@ Một channel có array của người dùng , cho phép tạo group chat.
 
 NEXT_PUBLIC_SITE_URL: Deployment url
 Socket provider: Make sure its deployed .
+
+
+- Để thực hiện việc handle messages :
+    - API find messages
+    - Display messages
+
+
+
+
+
