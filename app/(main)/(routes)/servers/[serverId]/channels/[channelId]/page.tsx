@@ -89,7 +89,7 @@ const ChannelIdPage = async ({
             name={channelProp.name}
             type="direct"
             // apiUrl="/api/socket/messages"
-            apiUrl="/api/messagePost"
+            apiUrl="/api/messages/channel-send"
             query={{
               // channelId: channel.id,
               channelId: channelProp.id,

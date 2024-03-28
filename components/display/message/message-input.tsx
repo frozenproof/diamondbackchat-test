@@ -54,8 +54,9 @@ export const MessageInput = ({
         query,
       });
 
-      await axios.post(url, values);
+      const testSend = await axios.post(url, values);
 
+      console.log("Input log",testSend);
       form.reset();
       router.refresh();
     } catch (error) {

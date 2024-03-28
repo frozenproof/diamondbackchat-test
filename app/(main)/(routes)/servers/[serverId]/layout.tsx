@@ -40,7 +40,7 @@ const ServerIdPageLayout = async({
     const profile = await currentUserProfile();
 
     if(!profile){
-        return redirectToSignIn();
+        return redirect("/");
     }
 
     const server = await db.server.findUnique
@@ -58,14 +58,13 @@ const ServerIdPageLayout = async({
 
     if(!server)
     {
-        return redirect("/meself");
+        return redirect("/");
     }
 
     return ( 
         <div className="h-full">
             <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
                 <ServerSideBar serverId={params.serverId}/>
-                
                 <div
                     className="mt-auto pt-1 pb-1 pl-1 flex"
                 >
