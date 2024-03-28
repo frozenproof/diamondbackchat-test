@@ -36,6 +36,9 @@ export async function GET(
         where: {
           channelId,
         },
+        include: {
+          userProfile: true
+        },
         orderBy: {
           createdAt: "desc",
         }
@@ -46,12 +49,16 @@ export async function GET(
         where: {
           channelId,
         },
+        include: {
+          userProfile: true
+        },
         orderBy: {
           createdAt: "desc",
         }
       });
     }
 
+    console.log(messages);
     let nextCursor = null;
 
     if (messages.length === MESSAGES_BATCH) {
@@ -62,6 +69,7 @@ export async function GET(
       items: messages,
       nextCursor
     });
+    
   } catch (error) {
     console.log("[MESSAGES_GET]", error);
     return new NextResponse("Internal Error", { status: 500 });

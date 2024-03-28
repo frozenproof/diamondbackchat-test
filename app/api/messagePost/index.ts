@@ -1,8 +1,7 @@
-import { NextApiRequest } from "next";
-
-import { NextApiResponseServerIo } from "@/type";
 import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
+import { NextApiResponseServerIo } from "@/type";
+import { NextApiRequest } from "next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,56 +32,58 @@ export default async function handler(
       return res.status(400).json({ error: "Content missing" });
     }
 
-    const server = await db.server.findFirst({
-      where: {
-        id: serverId as string,
-        Member: {
-          some: {
-            userProfileId: profile.id
-          }
-        }
-      },
-      include: {
-        Member: true,
-      }
-    });
-
-    if (!server) {
-      return res.status(404).json({ message: "Server not found" });
-    }
-
-    const channel = await db.channel.findFirst({
-      where: {
-        id: channelId as string,
-      }
-    });
-
-    if (!channel) {
-      return res.status(404).json({ message: "Channel not found" });
-    }
-
-    const member = server.Member.find((member) => member.userProfileId === profile.id);
-
-    if (!member) {
-      return res.status(404).json({ message: "Member not found" });
-    }
-
-    const message = await db.message.create({
-      data: {
-        content,
-        attachment: false,
-        channelId: channelId as string,
-        userProfileId: profile.id,
-      },
+    // const server = await db.server.findFirst({
+    //   where: {
+    //     id: serverId as string,
+    //     members: {
+    //       some: {
+    //         profileId: profile.id
+    //       }
+    //     }
+    //   },
     //   include: {
-    //     userProfile: {
+    //     members: true,
+    //   }
+    // });
+
+    // if (!server) {
+    //   return res.status(404).json({ message: "Server not found" });
+    // }
+
+    // const channel = await db.channel.findFirst({
+    //   where: {
+    //     id: channelId as string,
+    //     serverId: serverId as string,
+    //   }
+    // });
+
+    // if (!channel) {
+    //   return res.status(404).json({ message: "Channel not found" });
+    // }
+
+    // const member = server.members.find((member) => member.profileId === profile.id);
+
+    // if (!member) {
+    //   return res.status(404).json({ message: "Member not found" });
+    // }
+
+    // const message = await db.message.create({
+    //   data: {
+    //     content,
+    //     fileUrl,
+    //     channelId: channelId as string,
+    //     memberId: member.id,
+    //   },
+    //   include: {
+    //     member: {
     //       include: {
     //         profile: true,
     //       }
     //     }
     //   }
-    });
+    // });
 
+    const message = "";
     const channelKey = `chat:${channelId}:messages`;
 
     res?.socket?.server?.io?.emit(channelKey, message);

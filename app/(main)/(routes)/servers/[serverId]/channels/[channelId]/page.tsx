@@ -37,12 +37,15 @@ const ChannelIdPage = async ({
   {
     return null
   }
-  const messages = await db.message.findMany({
-    where: {
-      channelId: channelProp.id,
-    },
-  });
-
+  // const messages = await db.message.findMany({
+  //   where: {
+  //     channelId: channelProp.id,
+  //   },
+  // });
+  // if(memberProp)
+  // {
+  //   console.log("Member prop", memberProp)
+  // }
   
   if(channelProp)
   {
@@ -58,7 +61,7 @@ const ChannelIdPage = async ({
             <ChatMessages
                 member={memberProp}
                 name={channelProp.name}
-                chatId={channelProp.id}
+                channelChatId={channelProp.id}
                 type="channel"
                 apiUrl="/api/messages/get-api"
                 socketUrl="/api/socket/messages"
@@ -85,8 +88,8 @@ const ChannelIdPage = async ({
           <MessageInput
             name={channelProp.name}
             type="direct"
-            // apiUrl="/api/socket/messages"
-            apiUrl="/api/messagePost"
+            apiUrl="/api/socket/messages"
+            // apiUrl="/api/messagePost"
             query={{
               // channelId: channel.id,
               channelId: channelProp.id,

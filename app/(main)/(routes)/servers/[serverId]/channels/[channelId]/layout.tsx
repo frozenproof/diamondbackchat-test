@@ -89,10 +89,14 @@ const ChannelIdPageLayout = async ({
             userProfileId: profile.id
         }
     })
-    if(!members || !channel)
+    if(!members || !channel || !member)
     {
         return redirect("/meself");
     }
+    // if(member)
+    // {
+    //     console.log("ChannelIdPageLayout",member)
+    // }
 
     return ( 
         <div className="h-full w-full flex flex-col">

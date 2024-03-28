@@ -30,3 +30,7 @@ export type MessageWithMemberWithProfile = Message & {
           profile: UserProfile
         }
       }
+
+export type MessageWithProfile = Message & {
+        userProfile: UserProfile
+    }     
