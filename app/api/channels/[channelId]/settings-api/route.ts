@@ -23,20 +23,9 @@ export async function PATCH(
         }
 
 
-        const serverChannels = await db.serverChannel.findFirstOrThrow({
+         const serverCheckAuth = await db.server.findFirstOrThrow({
             where: {
-                serverId: serverIdParam,
-                channelId: params.channelId
-            }
-        })
-        
-        if(!serverChannels)  {
-          throw new Error("Unauthorized ");
-        }
-
-        const serverCheckAuth = await db.server.findFirstOrThrow({
-            where: {
-              id: serverChannels.serverId,
+              id: serverIdParam,
               Member: {
                 some: {
                   userProfileId: profile.id,

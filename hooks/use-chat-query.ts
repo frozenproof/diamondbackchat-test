@@ -28,7 +28,7 @@ export const useChatQuery = ({
     }, { skipNull: true });
 
     const res = await fetch(url);
-    // console.log(res);
+    // console.log("is this res",res.body);
     return res.json();
   };
 

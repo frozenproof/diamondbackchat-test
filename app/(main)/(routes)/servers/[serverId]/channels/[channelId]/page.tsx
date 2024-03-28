@@ -88,8 +88,8 @@ const ChannelIdPage = async ({
           <MessageInput
             name={channelProp.name}
             type="direct"
-            apiUrl="/api/socket/messages"
-            // apiUrl="/api/messagePost"
+            // apiUrl="/api/socket/messages"
+            apiUrl="/api/messagePost"
             query={{
               // channelId: channel.id,
               channelId: channelProp.id,

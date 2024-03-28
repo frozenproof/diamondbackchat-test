@@ -37,7 +37,12 @@ export async function GET(
           channelId,
         },
         include: {
-          userProfile: true
+          // userProfile: true,
+          member:  {
+            include: {
+              userProfile: true
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",
@@ -50,7 +55,12 @@ export async function GET(
           channelId,
         },
         include: {
-          userProfile: true
+          // userProfile: true,
+          member: {
+            include: {
+              userProfile: true
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",
@@ -58,7 +68,7 @@ export async function GET(
       });
     }
 
-    console.log(messages);
+    // console.log("Route is running",messages);
     let nextCursor = null;
 
     if (messages.length === MESSAGES_BATCH) {

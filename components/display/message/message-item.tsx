@@ -27,10 +27,10 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 interface ChatItemProps {
   id: string;
   content: string;
-  // memberProp: Member & {
-  //   profile: UserProfile;
-  // };
-  userProp: UserProfile;
+  memberProp: Member & {
+    userProfile: UserProfile;
+  };
+  // userProp: UserProfile;
   timestamp: string;
   fileUrl: string | null;
   deleted: boolean;
@@ -54,8 +54,8 @@ const formSchema = z.object({
 export const ChatItem = ({
   id,
   content,
- 
-  userProp,
+  memberProp,
+  // userProp,
   timestamp,
   fileUrl,
   deleted,
@@ -69,21 +69,20 @@ export const ChatItem = ({
   const params = useParams();
   const router = useRouter();
 
-  console.log(userProp);
-  // if(!memberProp)
+  // console.log("Chat item props",userProp);
+  // if(!memberProp || !userProp)
   // {
   //   return null;
   // }
-  const onMemberClick = () => {
-    if (userProp.id === currentMember.id) {
-      return;
-    }  
   // const onMemberClick = () => {
-  //   if (memberProp.id === currentMember.id) {
+  //   if (userProp.id === currentMember.id) {
   //     return;
-  //   }
-
-    router.push(`/servers/${params?.serverId}/conversations/${userProp.id}`);
+  //   }  
+  const onMemberClick = () => {
+    if (memberProp.id === currentMember.id) {
+      return;
+    }
+    router.push(`/servers/${params?.serverId}/conversations/${memberProp.id}`);
   }
 
   useEffect(() => {
@@ -131,29 +130,30 @@ export const ChatItem = ({
 
   const fileType = fileUrl?.split(".").pop();
 
-  // const isAdmin = currentMember.role === OldMemberRole.ADMIN;
-  // const isModerator = currentMember.role === OldMemberRole.MODERATOR;
-  // const isOwner = currentMember.id === memberProp.id;
-  // const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
-  // const canEditMessage = !deleted && isOwner && !fileUrl;
+  const isAdmin = currentMember.role === OldMemberRole.ADMIN;
+  const isModerator = currentMember.role === OldMemberRole.MODERATOR;
+  const isOwner = currentMember.id === memberProp.id;
+  const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
+  const canEditMessage = !deleted && isOwner && !fileUrl;
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
 
-  // if(memberProp)
+  
   {
     return (
     <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
       <div className="group flex gap-x-2 items-start w-full">
         <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
-          <UserProfileAvatar src={userProp.imageUrl} />
-          {/* <UserProfileAvatar src={memberProp.profile.imageUrl} /> */}
+          {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
+          <UserProfileAvatar src={memberProp.userProfile.imageUrl} />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
-                {userProp.name}
+                {/* {userProp.name} */}
                 {/* {memberProp.profile.name} */}
+                {memberProp.nickname}
               </p>
               {/* <ActionTooltip label={memberProp.role}>
                 {roleIconMap[memberProp.role]}
@@ -268,3 +268,4 @@ export const ChatItem = ({
   // }
   
 }
+// }

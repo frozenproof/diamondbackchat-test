@@ -48,6 +48,11 @@ export const ServerSideBar = async({
                 orderBy:{
                     role: "asc"
                 }
+            },
+            Channel: {
+                orderBy: {
+                    updatedAt: "desc"
+                }
             }
         }
     })
@@ -56,23 +61,21 @@ export const ServerSideBar = async({
     {
         return redirect("/");
     }
-    const serverChannels = await db.serverChannel.findMany({
-        where: {
-            serverId: server2?.id
-        },
-        select: {
-            channelId: true
-        }
-    })
+    // const serverChannels = await db.serverChannel.findMany({
+    //     where: {
+    //         serverId: server2?.id
+    //     }
+    // })
 
-    const channelsListId = serverChannels.map((x) => x.channelId)
-    const realChannels = await db.channel.findMany({
-        where: {
-            id: {
-                in: channelsListId
-            }
-        }
-    })
+    // const channelsListId = serverChannels.map((random) => random.channelId)
+    // const realChannels = await db.channel.findMany({
+    //     where: {
+    //         id: {
+    //             in: channelsListId
+    //         }
+    //     }
+    // })
+    const realChannels = server2.Channel;
     const textChannels = realChannels.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = realChannels.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = realChannels.filter((channel) => channel.type === OldChannelType.VIDEO)

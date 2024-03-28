@@ -13,7 +13,7 @@ export const config = {
 const ioHandler = (_req: NextApiRequest, res: NextApiResponseServerIo) => {
   if(res.socket.server.io)
   {
-    console.log(res.socket.server.io);
+    console.log("IO server check",res.socket.server.io);
   }
   else {
     const path = "/api/socket/io";

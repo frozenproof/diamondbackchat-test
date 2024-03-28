@@ -21,7 +21,8 @@ export async function POST(req: Request){
                     create:[
                     {
                         userProfileId: profile.id,
-                        role: OldMemberRole.OWNER
+                        role: OldMemberRole.OWNER,
+                        nickname: profile.name + " member "
                     }
                 ]
                 }
@@ -32,16 +33,17 @@ export async function POST(req: Request){
             data: {
                 name: "general",
                 type: OldChannelType.TEXT,
-                categories: ""
+                categories: "",
+                serverId: server2.id
             }
         })
 
-        const defaultChannelServer = await db.serverChannel.create({
-            data: {
-                serverId: server2.id,
-                channelId: defaultChannel.id
-            }
-        })
+        // const defaultChannelServer = await db.serverChannel.create({
+        //     data: {
+        //         serverId: server2.id,
+        //         channelId: defaultChannel.id
+        //     }
+        // })
         
         const inviteServer = await db.serverInvite.upsert({
             where: {

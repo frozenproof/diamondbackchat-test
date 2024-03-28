@@ -7,7 +7,7 @@ import { Loader2, ServerCrash } from "lucide-react";
 import { useChatQuery } from "@/hooks/use-chat-query";
 
 import { ChatWelcome } from "../channel-welcome";
-import { MessageWithMemberWithProfile, MessageWithProfile } from "@/type";
+import { MessageWithMemberWithProfile, MessageWithMemberWithProfileEU, MessageWithProfile } from "@/type";
 import { ChatItem } from "./message-item";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
@@ -65,6 +65,8 @@ export const ChatMessages = ({
   })
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
   
+  // console.log("Testing message list",data?.pages);
+
   if (status === "loading") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
@@ -113,21 +115,24 @@ export const ChatMessages = ({
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
-            {group.items.map((message: MessageWithProfile) => (
+            {group.items.map((message: MessageWithMemberWithProfile) => (
+              
               <ChatItem
                 key={message.id}
                 id={message.id}
                 currentMember={member}
-                // member={message.member}
-                userProp={message.userProfile}
+                memberProp={message.member}
+                // userProp={message.member.userProfile}
                 content={message.content}
                 fileUrl=""
                 deleted={message.deleted}
                 timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                isUpdated={message.updatedAt !== message.createdAt}
+                isUpdated={message.edited}
+                // isUpdated={message.updatedAt !== message.createdAt}
                 socketUrl={socketUrl}
                 socketQuery={socketQuery}
               />
+              // </div>
             ))}
           </Fragment>
         ))}

@@ -13,23 +13,23 @@ datasource db {
 model UserProfile {
   id       String     @id @default(uuid())
   userId   String     @unique
-  name     String     @default("Cattus")
+  name     String     @default("Deleted")
   imageUrl String     @db.Text
   email    String     @db.Text
   status   UserStatus @default(ONLINE)
   deleted  Boolean    @default(false)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
-  messages      Message[]
   bannedServers BannedServerMember[]
   serverInvites ServerInvite[]
-  UserChannel   UserChannel[]
 
   Member Member[]
 
-  Server Server[]
+  Server            Server[]
+  DirectMessage     DirectMessage[]
+  DirectChannelSend DirectChannel[] @relation("UserOne")
+  DirectChannelRepl DirectChannel[] @relation("UserTwo")
 }
 
 model Server {
@@ -43,10 +43,11 @@ model Server {
   userProfileId String      @default("Deleted")
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: SetDefault)
 
-  Member             Member[]
-  ServerChannel      ServerChannel[]
+  Member Member[]
+
   BannedServerMember BannedServerMember[]
   ServerInvite       ServerInvite[]
+  Channel            Channel[]
 
   @@index([userProfileId])
 }
@@ -61,7 +62,8 @@ model Member {
   serverId String
   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
 
-  nickname String @default("")
+  nickname String    @default("")
+  Message  Message[]
 
   @@unique([userProfileId, serverId])
 }
@@ -75,30 +77,29 @@ model Channel {
   categories String
   deleted    Boolean @default(false)
 
-  ServerChannel ServerChannel[]
-  UserChannel   UserChannel[]
-  Message       Message[]
-  Attachment    Attachment[]
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  Message    Message[]
+  Attachment AttachmentChannel[]
 }
 
-model ServerChannel {
-  id        String  @id @default(uuid())
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  serverId  String
-  server    Server  @relation(fields: [serverId], references: [id], onDelete: Cascade)
+model DirectChannel {
+  id String @id @default(uuid())
 
-  @@unique([serverId, channelId])
-}
+  deleted Boolean @default(false)
 
-model UserChannel {
-  id        String  @id @default(uuid())
-  channelId String
-  channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  memberOneId String
+  memberOne   UserProfile @relation("UserOne", fields: [memberOneId], references: [id], onDelete: Cascade)
 
-  userProfile UserProfile[]
+  memberTwoId String
+  memberTwo   UserProfile @relation("UserTwo", fields: [memberTwoId], references: [id], onDelete: Cascade)
 
-  @@unique([channelId])
+  DirectMessage DirectMessage[]
+
+  AttachmentDirect AttachmentDirect[]
+
+  @@unique([memberOneId, memberTwoId])
 }
 
 model BannedServerMember {
@@ -134,8 +135,8 @@ model Message {
   id      String @id @default(uuid())
   content String @db.Text
 
-  userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   channelId String
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
@@ -143,16 +144,39 @@ model Message {
   attachment Boolean @default(false)
   deleted    Boolean @default(false)
 
+  edited    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Attachment Attachment[]
+  Attachment AttachmentChannel[]
 
   @@index([channelId])
+  @@index([memberId])
+}
+
+model DirectMessage {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  attachment Boolean @default(false)
+  deleted    Boolean @default(false)
+
+  edited    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Attachment      AttachmentDirect[]
+  DirectChannel   DirectChannel?     @relation(fields: [directChannelId], references: [id])
+  directChannelId String?
+
+  @@index([directChannelId])
   @@index([userProfileId])
 }
 
-model Attachment {
+model AttachmentChannel {
   id      String @id @default(uuid())
   fileUrl String @db.Text
 
@@ -164,6 +188,20 @@ model Attachment {
 
   @@index([channelId])
   @@index([messageId])
+}
+
+model AttachmentDirect {
+  id      String @id @default(uuid())
+  fileUrl String @db.Text
+
+  directMessageId String
+  directMessage   DirectMessage @relation(fields: [directMessageId], references: [id], onDelete: Cascade)
+
+  directChannelId String
+  directChannel   DirectChannel @relation(fields: [directChannelId], references: [id], onDelete: Cascade)
+
+  @@index([directChannelId])
+  @@index([directMessageId])
 }
 
 model Friend {

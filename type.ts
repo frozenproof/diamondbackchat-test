@@ -27,10 +27,16 @@ export type NextApiResponseServerIo =
 
 export type MessageWithMemberWithProfile = Message & {
         member: Member & {
-          profile: UserProfile
+          userProfile: UserProfile
         }
-      }
+      };
+
+      
+export type MessageWithMemberWithProfileEU = Message & {
+    member: Member  
+    userProfile: UserProfile
+  };
 
 export type MessageWithProfile = Message & {
         userProfile: UserProfile
-    }     
+    };     

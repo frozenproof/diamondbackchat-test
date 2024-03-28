@@ -34,23 +34,22 @@ export async function POST(req: Request){
             }
           }
         });
+
+        if(!server)
+        {
+          return new NextResponse("Unauthorized", { status: 500 });
+        }
     
         const defaultChannel = await db.channel.create({
           data: {
               name: name,
               type: type,
-              categories: ""
+              categories: "",
+              serverId: serverId
           }
         })
 
-        const defaultChannelServer = await db.serverChannel.create({
-            data: {
-                serverId: server.id,
-                channelId: defaultChannel.id
-            }
-        })
-
-        return NextResponse.json(defaultChannelServer);
+        return NextResponse.json(defaultChannel);
       } catch (error) {
         console.log("CHANNELS_POST", error);
         return new NextResponse("Internal Error", { status: 500 });
