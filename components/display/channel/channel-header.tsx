@@ -1,4 +1,4 @@
-import { Hash } from "lucide-react";
+import { Hash, Pin } from "lucide-react";
 
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserStatus } from "@prisma/client";
@@ -27,7 +27,7 @@ export const ChannelHeader = ({
   membersList
 }: ChannelHeaderProps) => {
   return (
-    <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
+    <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 w-full">
       <MobileNavigationLeftToggle 
         serverId={serverId} 
         userAvatar={userAvatar}
@@ -37,11 +37,7 @@ export const ChannelHeader = ({
       <p className="font-semibold text-md text-black dark:text-white">
         {name}
       </p>
-      <div
-        className="flex ml-auto w-full"
-      >
-        
-      </div>
+      {/* <Pin /> */}
       <ChannelSearchBar 
       />
       <RightChannelToggle 

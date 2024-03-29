@@ -25,7 +25,7 @@ export async function generateMetadata(
     })
 
     return {
-      title: `Euphoria || `+server?.name,
+      title: server?.name,
     }
 }
 
@@ -73,7 +73,6 @@ const ServerIdPageLayout = async({
                         name={profile.name}
                         status={profile.status}
                     />
-                   
                 </div>
             </div>
             <main className="h-full md:pl-48">

@@ -10,6 +10,7 @@ import { Fragment, Suspense } from "react";
 import { MessageWithMemberWithProfile } from "@/type";
 import { ChatMessages } from "@/components/display/message/message-list";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 interface ChannelIdPageProps {
   // params: {
@@ -51,12 +52,12 @@ const ChannelIdPage = async ({
   {
     return ( 
     <Suspense>
-    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+    <div className="bg-white dark:bg-[#313338] flex flex-col ">
         {channelProp.type === OldChannelType.TEXT && (
         <>
-          <div
-            className="h-full"
-          >
+          
+            {/* <ScrollArea> */}
+
             {/* Is this running? */}
             <ChatMessages
                 member={memberProp}
@@ -64,7 +65,8 @@ const ChannelIdPage = async ({
                 channelChatId={channelProp.id}
                 type="channel"
                 apiUrl="/api/messages/get-api"
-                socketUrl="/api/socket/messages"
+                socketUrl="/api/messages/channel-send"
+                // socketUrl="/api/socket/messages"
                 socketQuery={{
                   channelId: channelProp.id,
                   serverId: serverIdProp,
@@ -72,6 +74,18 @@ const ChannelIdPage = async ({
                 paramKey="channelId"
                 paramValue={channelProp.id}
             />
+            <MessageInput
+            name={channelProp.name}
+            type="direct"
+            // apiUrl="/api/socket/messages"
+            apiUrl="/api/messages/channel-send"
+            query={{
+              // channelId: channel.id,
+              channelId: channelProp.id,
+              // serverId: params.serverId,
+              serverId: serverIdProp,
+            }}
+          />
             {/* {messages.map((group, i) => (
               <Fragment key={i}>
                 {messages.map((message: Message) => (
@@ -84,19 +98,8 @@ const ChannelIdPage = async ({
                 ))}
               </Fragment>
             ))} */}
-          </div>
-          <MessageInput
-            name={channelProp.name}
-            type="direct"
-            // apiUrl="/api/socket/messages"
-            apiUrl="/api/messages/channel-send"
-            query={{
-              // channelId: channel.id,
-              channelId: channelProp.id,
-              // serverId: params.serverId,
-              serverId: serverIdProp,
-            }}
-          />
+            {/* </ScrollArea> */}
+          
         </>
       )}
     </div>

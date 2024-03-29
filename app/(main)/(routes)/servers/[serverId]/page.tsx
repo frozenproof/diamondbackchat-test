@@ -4,6 +4,7 @@ import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { currentUserProfile } from "@/lib/current-profile";
 import { redirect } from "next/navigation";
+import * as ScrollArea from '@radix-ui/react-scroll-area';
 
 interface ChannelIdPageProps {
     params: {

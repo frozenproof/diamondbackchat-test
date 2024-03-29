@@ -32,6 +32,7 @@ interface ChatItemProps {
   };
   // userProp: UserProfile;
   timestamp: string;
+  attachment: boolean;
   fileUrl: string | null;
   deleted: boolean;
   currentMember: Member;
@@ -51,11 +52,11 @@ const formSchema = z.object({
   content: z.string().min(1),
 });
 
-export const ChatItem = ({
+export const MessageItem = ({
   id,
   content,
   memberProp,
-  // userProp,
+  attachment,
   timestamp,
   fileUrl,
   deleted,
@@ -69,15 +70,6 @@ export const ChatItem = ({
   const params = useParams();
   const router = useRouter();
 
-  // console.log("Chat item props",userProp);
-  // if(!memberProp || !userProp)
-  // {
-  //   return null;
-  // }
-  // const onMemberClick = () => {
-  //   if (userProp.id === currentMember.id) {
-  //     return;
-  //   }  
   const onMemberClick = () => {
     if (memberProp.id === currentMember.id) {
       return;
@@ -238,7 +230,7 @@ export const ChatItem = ({
           )}
         </div>
       </div>
-      {/* {canDeleteMessage && (
+      {canDeleteMessage && (
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
           {canEditMessage && (
             <ActionTooltip label="Edit">
@@ -258,7 +250,7 @@ export const ChatItem = ({
             />
           </ActionTooltip>
         </div>
-      )} */}
+      )}
     </div>
   )
   }

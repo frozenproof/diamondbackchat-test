@@ -11,6 +11,8 @@ import { ChannelHeader } from "@/components/display/channel/channel-header";
 import ChannelIdPage from "./page";
 import { Suspense } from "react";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
+import { MessageInput } from "@/components/display/message/message-input";
+import { ChatMessages } from "@/components/display/message/message-list";
 
 type Props = {
     params: { serverId: string ,channelId: string }
@@ -99,27 +101,56 @@ const ChannelIdPageLayout = async ({
     // }
 
     return ( 
-        <div className="h-full w-full flex flex-col">
-            <ChannelHeader 
+        <div className="channelidpagelayout flex flex-col h-full">
+            <div
+                className="w-full "
+            >
+                <ChannelHeader 
                     serverId={params.serverId}
                     name={channel.name}
                     userAvatar={profile.imageUrl}
                     userName={profile.name}
                     userStatusProp={profile.status}
                     membersList={members}
-            />
-            <div className="h-full border">
-                <Suspense
-                    fallback={<LoadingMainPage />}
-                >
-                {/* {children}     */}
-                    <ChannelIdPage 
-                        memberProp={member}
-                        channelProp={channel}
-                        serverIdProp={server.id}
-                    />
-                </Suspense>
+                />
             </div>
+            <div
+                className="w-full "
+            >
+                <ChannelIdPage 
+                    memberProp={member}
+                    channelProp={channel}
+                    serverIdProp={server.id}
+                />
+            </div>
+            
+            {/* <ChatMessages
+                member={member}
+                name={channel.name}
+                channelChatId={channel.id}
+                type="channel"
+                apiUrl="/api/messages/get-api"
+                socketUrl="/api/messages/channel-send"
+                // socketUrl="/api/socket/messages"
+                socketQuery={{
+                  channelId: channel.id,
+                  serverId: server.id,
+                }}
+                paramKey="channelId"
+                paramValue={channel.id}
+            />
+            <MessageInput
+            name={channel.name}
+            type="direct"
+            // apiUrl="/api/socket/messages"
+            apiUrl="/api/messages/channel-send"
+            query={{
+              // channelId: channel.id,
+              channelId: channel.id,
+              // serverId: params.serverId,
+              serverId: server.id,
+            }}
+          /> */}
         </div>
      );
 }

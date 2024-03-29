@@ -11,6 +11,9 @@ import { db } from "@/lib/db"
 
 import { NavigationSelf } from "./navigation-self";
 import { SocketStatusDisplay } from "../socket/socket-status-display";
+import { ScrollArea } from "../ui/scroll-area";
+import { EvervaultCardVer2 } from "../effects/EvervaultCardVer2";
+import { NavigationItem } from "./navigation-item";
 
 export const NavigationSideBar = async () => {
     const profile = await currentUserProfile();
@@ -19,17 +22,6 @@ export const NavigationSideBar = async () => {
     {
         return redirect("/");
     }
-
-    // const servers = await db.server.findMany({
-    //     where: {
-    //         Member:{
-    //             some:{
-    //                 userProfileId: profile.id,
-    //             }
-    //         },
-    //         deleted: false,
-    //     }
-    // })
 
     return ( 
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full "
@@ -40,11 +32,6 @@ export const NavigationSideBar = async () => {
             >
                 <NavigationSelf 
                 />
-                <div
-                    className=""
-                >
-                    
-                </div>
                 <NavigationAction/>            
             </div>
             <Separator
@@ -68,7 +55,6 @@ export const NavigationSideBar = async () => {
                     className="h-[48px] w-[48px]"
                     src={profile.imageUrl}
                 /> */}
-                
             </div>
         </div>
      );

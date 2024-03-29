@@ -20,7 +20,7 @@ interface ChannelItemProps {
 }
 
 const iconMap : {[key: string]: React.ReactNode}= {
-  [OldChannelType.TEXT] : <Hash     className="h-8 w-8"/>,
+  [OldChannelType.TEXT] : <Hash     className="h-4 w-4"/>,
   [OldChannelType.AUDIO]: <Mic      className="h-4 w-4"/>,
   [OldChannelType.VIDEO]: <Video    className="h-4 w-4"/>,
 }

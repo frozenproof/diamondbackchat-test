@@ -33,20 +33,20 @@ export const NavigationServerScroll = async() => {
     }
     
     return (
-            <ScrollArea className="h-full w-full ">
-                    {servers.map((server) => (
-                        <EvervaultCardVer2 className="h-full" key={server.id}>                
-                            <div key={server.id} className="mt-[12px] mb-[12px]">
-                            
-                                <NavigationItem 
-                                    id={server.id}
-                                    name={server.name}
-                                    imageUrl={server.imageUrl}
-                                />
-                            </div>
-                        </EvervaultCardVer2>
-                    ))}
-                {/* <ScrollBar orientation="vertical" />        */}
-            </ScrollArea>
+            // <ScrollArea className="w-3/5 flex flex-col gap-y-4 overflow-y-auto">
+            <div className="flex flex-col gap-y-4 overflow-y-auto serverscroll">
+                {servers.map((server) => (
+                            <EvervaultCardVer2 className="h-full" key={server.id}>                
+                                <div key={server.id} className="mt-[12px] mb-[12px]">
+                                
+                                    <NavigationItem 
+                                        id={server.id}
+                                        name={server.name}
+                                        imageUrl={server.imageUrl}
+                                    />
+                                </div>
+                            </EvervaultCardVer2>
+                        ))}
+            </div>
     )
 }

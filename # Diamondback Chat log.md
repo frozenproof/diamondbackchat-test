@@ -208,3 +208,7 @@ Socket provider: Make sure its deployed .
 Một message phải do một user hoặc một member , nên có hai đối tượng chung cấp truy cập nhưng phụ thuộc độc lập của một đối tượng message .
 
 Vậy thì tốt nhất là xây hai đối tượng độc lập để ngăn chặn việc tạo đối tượng tự do
+
+Nhớ phải query cả đối tượng khi select để gửi đi api
+
+message list -> usechatquery -> useinfinitequery

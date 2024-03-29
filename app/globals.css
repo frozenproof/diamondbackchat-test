@@ -6,6 +6,7 @@ html,
 body,
 :root{
   height: 100%;
+  scrollbar-width: thin;
 }
 
 /* channel */
@@ -62,7 +63,9 @@ body,
 	color: #5a6c91;
 }
 
-
+.serverscroll {
+  scrollbar-width: none;
+}
 /* Custom hover */
 .manage-member {
   color: chocolate;
