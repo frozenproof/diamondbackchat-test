@@ -62,6 +62,7 @@ export const MessageFilePrompt = () => {
       await axios.post(url, {
         ...values,
         content: values.fileUrl,
+        checkFile : true
       });
 
       form.reset();

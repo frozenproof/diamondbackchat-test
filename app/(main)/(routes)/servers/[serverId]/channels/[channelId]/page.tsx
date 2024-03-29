@@ -1,38 +1,42 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { Channel, Member, Message, OldChannelType } from "@prisma/client";
+import { Channel, Member, Message, OldChannelType, UserProfile } from "@prisma/client";
 
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
-import { MessageWithMemberWithProfile } from "@/type";
+import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
 import { ChatMessages } from "@/components/display/message/message-list";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { ChannelHeader } from "@/components/display/channel/channel-header";
 
 interface ChannelIdPageProps {
   // params: {
   //   serverId: string;
   //   channelId: string;
   // };
+  membersListProp: MemberWithProfile[];
   serverIdProp: string;
   channelProp: Channel;
-  memberProp: Member;
+  memberProp: MemberWithProfile;
 }
 
 const ChannelIdPage = async ({
   // params,
+
+  membersListProp,
   serverIdProp,
   channelProp,
   memberProp
 }: ChannelIdPageProps) => {
-  const profile = await currentUserProfile();
+  // const profile = await currentUserProfile();
 
-  if (!profile) {
-    return redirectToSignIn();
-  }
+  // if (!profile) {
+  //   return redirectToSignIn();
+  // }
 
   if(!channelProp)
   {
@@ -52,57 +56,52 @@ const ChannelIdPage = async ({
   {
     return ( 
     <Suspense>
-    <div className="bg-white dark:bg-[#313338] flex flex-col ">
-        {channelProp.type === OldChannelType.TEXT && (
-        <>
-          
-            {/* <ScrollArea> */}
-
-            {/* Is this running? */}
-            <ChatMessages
-                member={memberProp}
+            <div
+              className="w-full inset-y-0"
+            >
+                <ChannelHeader 
+                    serverId={serverIdProp}
+                    name={channelProp.name}
+                    userAvatar={memberProp.userProfile.imageUrl}
+                    userName={memberProp.userProfile.name}
+                    userStatusProp={memberProp.userProfile.status}
+                    membersList={membersListProp}
+                />
+            </div>
+        
+            {channelProp.type === OldChannelType.TEXT && (
+            <>
+              
+                <ChatMessages
+                    member={memberProp}
+                    name={channelProp.name}
+                    channelChatId={channelProp.id}
+                    type="channel"
+                    apiUrl="/api/messages/get-api"
+                    socketUrl="/api/messages/channel-send"
+                    // socketUrl="/api/socket/messages"
+                    socketQuery={{
+                      channelId: channelProp.id,
+                      serverId: serverIdProp,
+                    }}
+                    paramKey="channelId"
+                    paramValue={channelProp.id}
+                />
+                <MessageInput
                 name={channelProp.name}
-                channelChatId={channelProp.id}
-                type="channel"
-                apiUrl="/api/messages/get-api"
-                socketUrl="/api/messages/channel-send"
-                // socketUrl="/api/socket/messages"
-                socketQuery={{
+                type="direct"
+                // apiUrl="/api/socket/messages"
+                apiUrl="/api/messages/channel-send"
+                query={{
+                  // channelId: channel.id,
                   channelId: channelProp.id,
+                  // serverId: params.serverId,
                   serverId: serverIdProp,
                 }}
-                paramKey="channelId"
-                paramValue={channelProp.id}
-            />
-            <MessageInput
-            name={channelProp.name}
-            type="direct"
-            // apiUrl="/api/socket/messages"
-            apiUrl="/api/messages/channel-send"
-            query={{
-              // channelId: channel.id,
-              channelId: channelProp.id,
-              // serverId: params.serverId,
-              serverId: serverIdProp,
-            }}
-          />
-            {/* {messages.map((group, i) => (
-              <Fragment key={i}>
-                {messages.map((message: Message) => (
-                  <div key={message.id}>
-                    <UserProfileAvatar 
-                      src={message.userProfileId}
-                    />
-                    {message.content} + {i}
-                  </div>
-                ))}
-              </Fragment>
-            ))} */}
-            {/* </ScrollArea> */}
-          
-        </>
-      )}
-    </div>
+              />
+            </>
+          )}
+       
     </Suspense>
    );
   }

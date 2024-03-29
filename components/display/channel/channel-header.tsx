@@ -10,7 +10,6 @@ import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 interface ChannelHeaderProps {
   serverId: string;
   name: string;
-  imageUrl?: string;
   userAvatar: string;
   userName: string;
   userStatusProp: UserStatus;
@@ -20,7 +19,6 @@ interface ChannelHeaderProps {
 export const ChannelHeader = ({
   serverId,
   name,
-  imageUrl,
   userAvatar,
   userName,
   userStatusProp,

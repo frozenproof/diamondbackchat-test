@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { MessageInput } from "@/components/display/message/message-input";
 import { ChatMessages } from "@/components/display/message/message-list";
+import { OldChannelType } from "@prisma/client";
 
 type Props = {
     params: { serverId: string ,channelId: string }
@@ -89,6 +90,9 @@ const ChannelIdPageLayout = async ({
     const member = await db.member.findFirstOrThrow({
         where: {
             userProfileId: profile.id
+        },
+        include: {
+            userProfile: true
         }
     })
     if(!members || !channel || !member)
@@ -102,8 +106,8 @@ const ChannelIdPageLayout = async ({
 
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
-            <div
-                className="w-full "
+            {/* <div
+                className="w-full inset-y-0"
             >
                 <ChannelHeader 
                     serverId={params.serverId}
@@ -113,17 +117,18 @@ const ChannelIdPageLayout = async ({
                     userStatusProp={profile.status}
                     membersList={members}
                 />
-            </div>
-            <div
-                className="w-full "
-            >
+            </div> */}
+            {/* <div
+                className="w-full"
+            > */}
                 <ChannelIdPage 
+                    membersListProp={members}
                     memberProp={member}
                     channelProp={channel}
                     serverIdProp={server.id}
                 />
-            </div>
-            
+            {/* </div> */}
+            {/* {(channel.type==OldChannelType.TEXT) &&} */}
             {/* <ChatMessages
                 member={member}
                 name={channel.name}

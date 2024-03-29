@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request){
     try{
         const profile = await currentUserProfile();
-        const { content } = await req.json();
+        const { content,checkFile } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const serverIdProp = searchParams.get("serverId");
@@ -20,6 +20,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
+        console.log("This is check file",checkFile);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,

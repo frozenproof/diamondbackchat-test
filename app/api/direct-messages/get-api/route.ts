@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Message } from "@prisma/client";
+import { DirectMessage } from "@prisma/client";
 
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -14,63 +14,50 @@ export async function GET(
     const { searchParams } = new URL(req.url);
 
     const cursor = searchParams.get("cursor");
-    const channelId = searchParams.get("channelId");
+    const directChannelId = searchParams.get("directChannelId");
 
-    if (!profile) {
+    if (!directChannelId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-
-    if (!channelId) {
-      return new NextResponse("Channel ID missing", { status: 400 });
+  
+    if (!directChannelId) {
+      return new NextResponse("Conversation ID missing", { status: 400 });
     }
 
-    let messages: Message[] = [];
+    let messages: DirectMessage[] = [];
 
     if (cursor) {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         skip: 1,
         cursor: {
           id: cursor,
         },
         where: {
-          channelId,
+          directChannelId,
         },
         include: {
-          // userProfile: true,
-          member:  {
-            include: {
-              userProfile: true
-            }
-          },
-          Attachment: true
+            userProfile: true,
         },
         orderBy: {
           createdAt: "desc",
         }
       })
     } else {
-      messages = await db.message.findMany({
+      messages = await db.directMessage.findMany({
         take: MESSAGES_BATCH,
         where: {
-          channelId,
+          directChannelId,
         },
         include: {
-          // userProfile: true,
-          member: {
-            include: {
-              userProfile: true
-            }
-          },
-          Attachment: true
+          userProfile: true,
         },
         orderBy: {
-          createdAt: "desc",
-        }
+              createdAt: "desc",
+            }
       });
     }
 
-    // console.log("Route is running",messages);
     let nextCursor = null;
 
     if (messages.length === MESSAGES_BATCH) {
@@ -81,9 +68,8 @@ export async function GET(
       items: messages,
       nextCursor
     });
-    
   } catch (error) {
-    console.log("[MESSAGES_GET]", error);
+    console.log("[DIRECT_MESSAGES_GET]", error);
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

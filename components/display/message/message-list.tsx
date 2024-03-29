@@ -94,7 +94,7 @@ export const ChatMessages = ({
   }
 
   return (
-    <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
+    <div ref={chatRef} className="flex-1 flex flex-col overflow-y-auto">
       {!hasNextPage && <div className="flex-1" />}
       {!hasNextPage && (
         <ChatWelcome
@@ -130,13 +130,13 @@ export const ChatMessages = ({
               <div
                 key={message.id+1}
               >
+                {/* This is member id + {message.memberId}
                 This is member id + {message.memberId}
                 This is member id + {message.memberId}
                 This is member id + {message.memberId}
                 This is member id + {message.memberId}
                 This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId}
+                This is member id + {message.memberId} */}
               <MessageItem
                 key={message.id}
                 id={message.id}

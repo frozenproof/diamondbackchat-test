@@ -38,8 +38,11 @@ export const NavigationSideBar = async () => {
                 className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
 
-            
-            <NavigationServerScroll/>
+            <div
+                className="h-full"
+            >
+                <NavigationServerScroll/>
+            </div>
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
             <SocketStatusDisplay />
                 <ModeToggle />
