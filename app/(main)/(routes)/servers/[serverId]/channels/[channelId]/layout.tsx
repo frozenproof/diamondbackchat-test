@@ -127,35 +127,7 @@ const ChannelIdPageLayout = async ({
                     channelProp={channel}
                     serverIdProp={server.id}
                 />
-            {/* </div> */}
-            {/* {(channel.type==OldChannelType.TEXT) &&} */}
-            {/* <ChatMessages
-                member={member}
-                name={channel.name}
-                channelChatId={channel.id}
-                type="channel"
-                apiUrl="/api/messages/get-api"
-                socketUrl="/api/messages/channel-send"
-                // socketUrl="/api/socket/messages"
-                socketQuery={{
-                  channelId: channel.id,
-                  serverId: server.id,
-                }}
-                paramKey="channelId"
-                paramValue={channel.id}
-            />
-            <MessageInput
-            name={channel.name}
-            type="direct"
-            // apiUrl="/api/socket/messages"
-            apiUrl="/api/messages/channel-send"
-            query={{
-              // channelId: channel.id,
-              channelId: channel.id,
-              // serverId: params.serverId,
-              serverId: server.id,
-            }}
-          /> */}
+
         </div>
      );
 }

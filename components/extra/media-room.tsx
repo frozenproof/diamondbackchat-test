@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { LiveKitRoom, VideoConference } from "@livekit/components-react";
 import "@livekit/components-styles";
-import { Channel } from "@prisma/client";
+
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 
@@ -44,7 +44,7 @@ export const MediaRoom = ({
           className="h-7 w-7 text-zinc-500 animate-spin my-4"
         />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Loading...
+          What ?...
         </p>
       </div>
     )

@@ -12,6 +12,7 @@ import { ChatMessages } from "@/components/display/message/message-list";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { ChannelHeader } from "@/components/display/channel/channel-header";
+import { MediaRoom } from "@/components/extra/media-room";
 
 interface ChannelIdPageProps {
   // params: {
@@ -101,8 +102,20 @@ const ChannelIdPage = async ({
               />
             </>
           )}
-       
-    </Suspense>
+          {channelProp.type === OldChannelType.AUDIO && (
+            <MediaRoom
+              chatId={channelProp.id}
+              video={false}
+              audio={true}
+            />
+          )}
+          {channelProp.type === OldChannelType.VIDEO && (
+            <MediaRoom
+              chatId={channelProp.id}
+              video={true}
+              audio={true}
+            />
+          )}    </Suspense>
    );
   }
   
