@@ -9,8 +9,7 @@ import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
 import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
 import { ChatMessages } from "@/components/display/message/message-list";
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import { MediaRoom } from "@/components/extra/media-room";
 

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 
 export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId: string) => {
+  console.log("Kiem_tra_direct_GETCREATE",memberTwoId)
   let conversation = await findDirectChannel(memberOneId, memberTwoId) || await findDirectChannel(memberTwoId, memberOneId);
 
   if (!conversation) {
@@ -12,7 +13,7 @@ export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId:
 
 const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   try {
-    return await db.directChannel.findFirst({
+    const temp = await db.directChannel.findFirst({
       where: {
         AND: [
           { memberOneId: memberOneId },
@@ -24,6 +25,7 @@ const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
         memberTwo: true
       }
     });
+    return temp;
   } catch {
     return null;
   }

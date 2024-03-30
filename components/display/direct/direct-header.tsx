@@ -12,24 +12,28 @@ import { Shop } from "@/components/extra/app-shop";
 interface DirectHeaderProps {
 
     imageUrl?: string;
+    name?: string;
+
   }
 
 export const DirectHeader = ({
     imageUrl,
+    name
 }:DirectHeaderProps) => {
 
 
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
         {/* <MobileToggle serverId={serverId} /> */}
-
         
         <UserProfileAvatar 
             src={imageUrl}
             className="h-8 w-8 md:h-8 md:w-8 mr-2"
         />
         
-        <Shop />
+        <div>
+            {name}
+        </div>
     </div>
     )
 }

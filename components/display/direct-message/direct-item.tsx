@@ -27,15 +27,13 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 interface ChatItemProps {
   id: string;
   content: string;
-  memberProp: Member & {
-    userProfile: UserProfile;
-  };
+  memberProp: UserProfile;
   // userProp: UserProfile;
   timestamp: string;
   attachment: boolean;
   fileUrl: string | null;
   deleted: boolean;
-  currentMember: Member;
+  currentMember: UserProfile;
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
@@ -55,7 +53,7 @@ const formSchema = z.object({
   content: z.string().min(1),
 });
 
-export const MessageItem = ({
+export const DirectMessageItem = ({
   id,
   content,
   memberProp,
@@ -81,7 +79,6 @@ export const MessageItem = ({
     if (memberProp.id === currentMember.id) {
       return;
     }
-    console.log(`/servers/${params?.serverId}/directs/${memberProp.id}`);
     router.push(`/servers/${params?.serverId}/directs/${memberProp.id}`);
   }
 
@@ -130,32 +127,30 @@ export const MessageItem = ({
 
   const fileType = fileUrl?.split(".").pop();
 
-  const isAdmin = currentMember.role === OldMemberRole.ADMIN;
-  const isModerator = currentMember.role === OldMemberRole.MODERATOR;
-  const isOwner = currentMember.id === memberProp.id;
-  const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
-  const canEditMessage = !deleted && isOwner && !fileUrl;
+  const isSender = currentMember.id === memberProp.id;
+  const canDeleteMessage = !deleted && (isSender);
+  const canEditMessage = !deleted && isSender && !fileUrl;
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
 
   
   {
     return (
-    <div className={`relative group flex items-center w-full`}>
+    <div className={`${!isContinious ? "p-[4px]" : ""} relative group flex items-center hover:bg-black/5 transition w-full`}>
       
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
          
         <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
           {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
-          <UserProfileAvatar src={memberProp.userProfile.imageUrl} />
+          <UserProfileAvatar src={memberProp.imageUrl} />
         </div>
         
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
-                {memberProp.nickname}
+                {memberProp.name}
               </p>
               {/* <ActionTooltip label={memberProp.role}>
                 {roleIconMap[memberProp.role]}

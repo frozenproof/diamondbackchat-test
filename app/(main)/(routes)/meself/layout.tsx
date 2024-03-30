@@ -27,7 +27,6 @@ const MePageLayout = async ({
             <div className="h-full">
                 <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
                     <DirectSideBar />
-                    
                     <div
                         className="mt-auto pt-1 pb-1 pl-1 flex"
                     >
