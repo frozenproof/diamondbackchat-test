@@ -4,16 +4,13 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { getOrCreateDirectChannel } from "@/lib/direct-search";
 import { currentUserProfile } from "@/lib/current-profile";
-import { DirectHeader } from "@/components/display/direct/direct-header";
+import { DirectChannelHeader } from "@/components/display/direct/direct-header";
 import { DirectChatMessages } from "@/components/display/direct-message/direct-list";
 import { MediaRoom } from "@/components/extra/media-room";
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
 
 interface MemberIdPageProps {
-  params: { serverId: string ,memberDICKId: string }
-  // searchParams: {
-  //   video?: boolean;
-  // }
+  params: { serverId: string ,memberId: string, },
 };
 
 const MemberIdPage = async ({
@@ -26,32 +23,32 @@ const MemberIdPage = async ({
     return redirectToSignIn();
   }
 
-  if(!params.memberDICKId || !params.serverId)
+  if(!params.memberId || !params.serverId)
   {
-    return null
+    return redirect(`/meself`);
   }
 
-  console.log("MemberID",params.memberDICKId);
   const requestedMember = await db.member.findFirstOrThrow({
     where: {
       serverId: params.serverId,
-      userProfileId: params.memberDICKId,
+      id: params.memberId,
     },
   });
 
+  console.log("Default respond");
+  console.log("WUT");
+  console.log("The Id",profile.id)
+  console.log("Target Id",requestedMember.userProfileId)
+  console.log("MemberId",params.memberId)
+  console.log("ServerId",params.serverId)
   if (!requestedMember) {
     return redirect("/");
   }
 
-  if(!params)
-  {
-    console.log("WUT");
-    return redirect(`/meself`);
-  }
   if(params)
   {
-    console.log(profile.id,"", requestedMember.userProfileId);
     const direct = await getOrCreateDirectChannel(profile.id, requestedMember.userProfileId);
+    console.log(direct?.id)
     if (!direct) {
       return redirect(`/servers`);
     }

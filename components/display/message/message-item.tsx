@@ -78,12 +78,16 @@ export const MessageItem = ({
   const router = useRouter();
 
   const onMemberClick = () => {
-    console.log(`memberPROP2/${memberProp.id}`);
-    console.log(`currentMember2/${currentMember.id}`);
+    console.log(`memberPROP2/${memberProp.id == currentMember.id ? `Giong nhau + ${currentMember.id}` : `Khac nhau + ${memberProp.id}`} `);
     if (memberProp.id === currentMember.id) {
       return;
     }
-    router.push(`/servers/${params?.serverId}/directChannels/${memberProp.id}`);
+    if (memberProp.id !== currentMember.id)
+    {
+      const query = { param1: 'foo', param2: 'bar' }
+
+      router.push(`/servers/${params?.serverId}/directChatChannels/${memberProp.id}/`);
+    }
   }
 
   useEffect(() => {

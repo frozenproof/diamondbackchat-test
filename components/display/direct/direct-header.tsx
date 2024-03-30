@@ -16,7 +16,7 @@ interface DirectHeaderProps {
 
   }
 
-export const DirectHeader = ({
+export const DirectChannelHeader = ({
     imageUrl,
     name
 }:DirectHeaderProps) => {

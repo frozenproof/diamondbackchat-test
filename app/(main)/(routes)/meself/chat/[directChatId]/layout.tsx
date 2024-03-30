@@ -6,7 +6,7 @@ import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { Metadata, ResolvingMetadata } from "next";
-import DirectMemberIdPage from "./page";
+import DirectChatMemberIdPage from "./page";
 // import MemberIdPage from "./page";
 
 type Props = {
@@ -59,7 +59,7 @@ const DirectChannelIdPageLayout = async ({
 
     return ( 
         <div className="flex flex-col h-full">
-                <DirectMemberIdPage 
+                <DirectChatMemberIdPage 
                     params={{directId: params.directChatId}}
                 />
         </div>

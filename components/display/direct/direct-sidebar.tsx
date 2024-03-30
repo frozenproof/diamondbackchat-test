@@ -12,7 +12,8 @@ import { ServerNavigation } from "../server/server-navigation";
 
 import { MemberItem } from "../member/member-item";
 import { ServerWithMembersWithProfiles } from "@/type";
-import { DirectHeader } from "./direct-header";
+import { DirectChannelHeader } from "./direct-header";
+import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 
 const iconMap :{[key: string]: React.ReactNode}= {
     [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,
@@ -36,11 +37,9 @@ export const DirectSideBar = async({
 
     return (
       <div>
-        <div>
-          <DirectHeader 
-            imageUrl = {profile.imageUrl}
-          />
-        </div>
+        <DirectSideBarHeader 
+
+        />
         <ScrollArea
                 className="flex-1 px-1"            
             >
