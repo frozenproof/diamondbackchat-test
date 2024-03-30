@@ -15,7 +15,7 @@ interface MemberIdPageProps {
   },
 }
 
-const MemberIdPage = async ({
+const DirectMemberIdPage = async ({
   params,
 }: MemberIdPageProps) => {
   const profile = await currentUserProfile();
@@ -23,7 +23,6 @@ const MemberIdPage = async ({
   if (!profile) {
     return redirectToSignIn();
   }
-
 
   const direct = await db.directChannel.findFirstOrThrow({
     where: {
@@ -39,7 +38,10 @@ const MemberIdPage = async ({
     return redirect(`/meself`);
   }
 
-  const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
+  // console.log("currentUSERID",profile.id)
+  // console.log("memberone",direct.memberOne.id);
+  // console.log("membertwo",direct.memberTwo.id);
+  const otherMember = direct.memberOneId === profile.id ? direct.memberOne : direct.memberTwo;
 
   return ( 
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
@@ -82,4 +84,4 @@ const MemberIdPage = async ({
    );
 }
  
-export default MemberIdPage;
+export default DirectMemberIdPage;

@@ -35,7 +35,7 @@ interface ChatItemProps {
   attachment: boolean;
   fileUrl: string | null;
   deleted: boolean;
-  currentMember: Member;
+  currentUserMember: Member;
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
@@ -63,7 +63,7 @@ export const MessageItem = ({
   timestamp,
   fileUrl,
   deleted,
-  currentMember,
+  currentUserMember: currentMember,
   isUpdated,
   socketUrl,
   socketQuery,
@@ -78,11 +78,12 @@ export const MessageItem = ({
   const router = useRouter();
 
   const onMemberClick = () => {
+    console.log(`memberPROP2/${memberProp.id}`);
+    console.log(`currentMember2/${currentMember.id}`);
     if (memberProp.id === currentMember.id) {
       return;
     }
-    console.log(`/servers/${params?.serverId}/directs/${memberProp.id}`);
-    router.push(`/servers/${params?.serverId}/directs/${memberProp.id}`);
+    router.push(`/servers/${params?.serverId}/directChannels/${memberProp.id}`);
   }
 
   useEffect(() => {

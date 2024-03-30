@@ -6,11 +6,11 @@ import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { Metadata, ResolvingMetadata } from "next";
-import ChannelIdPage from "./page";
-import MemberIdPage from "./page";
+import DirectMemberIdPage from "./page";
+// import MemberIdPage from "./page";
 
 type Props = {
-    params: { directId: string }
+    params: { directChatId: string }
   }
    
 export async function generateMetadata(
@@ -21,7 +21,7 @@ export async function generateMetadata(
     const channel = await db.directChannel.findUnique
     ({
         where:{
-            id: params.directId,
+            id: params.directChatId,
         }
     })
 
@@ -36,7 +36,7 @@ const DirectChannelIdPageLayout = async ({
     params}:
     {
         children: React.ReactNode;
-        params: { directId: string}
+        params: { directChatId: string}
     }
 ) => {
     const profile = await currentUserProfile();
@@ -47,7 +47,7 @@ const DirectChannelIdPageLayout = async ({
 
     const channel = await db.directChannel.findFirstOrThrow({
         where: {
-            id: params.directId,
+            id: params.directChatId,
             deleted: false
         }
     })
@@ -59,8 +59,8 @@ const DirectChannelIdPageLayout = async ({
 
     return ( 
         <div className="flex flex-col h-full">
-                <MemberIdPage 
-                    params={{directId: params.directId}}
+                <DirectMemberIdPage 
+                    params={{directId: params.directChatId}}
                 />
         </div>
      );

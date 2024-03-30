@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 
 export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId: string) => {
-  console.log("Kiem_tra_direct_GETCREATE",memberTwoId)
+  console.log("Kiem_tra_direct_GETCREATE",memberOneId,"\n",memberTwoId)
   let conversation = await findDirectChannel(memberOneId, memberTwoId) || await findDirectChannel(memberTwoId, memberOneId);
 
   if (!conversation) {

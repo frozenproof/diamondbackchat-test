@@ -10,7 +10,7 @@ import { MediaRoom } from "@/components/extra/media-room";
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
 
 interface MemberIdPageProps {
-  params: { serverId: string ,memberId: string }
+  params: { serverId: string ,memberDICKId: string }
   // searchParams: {
   //   video?: boolean;
   // }
@@ -26,35 +26,37 @@ const MemberIdPage = async ({
     return redirectToSignIn();
   }
 
-  const currentMember = await db.member.findFirst({
+  if(!params.memberDICKId || !params.serverId)
+  {
+    return null
+  }
+
+  console.log("MemberID",params.memberDICKId);
+  const requestedMember = await db.member.findFirstOrThrow({
     where: {
       serverId: params.serverId,
-      userProfileId: profile.id,
-    },
-    include: {
-      userProfile: true,
+      userProfileId: params.memberDICKId,
     },
   });
 
-  if (!currentMember) {
+  if (!requestedMember) {
     return redirect("/");
   }
 
   if(!params)
   {
     console.log("WUT");
-    return null;
+    return redirect(`/meself`);
   }
   if(params)
   {
-    // console.log("currentMember",currentMember.userProfileId)
-    // console.log("memberDIRECTID",params.memberId);
-    const direct = await getOrCreateDirectChannel(currentMember.userProfileId, currentMember.userProfileId);
-  
+    console.log(profile.id,"", requestedMember.userProfileId);
+    const direct = await getOrCreateDirectChannel(profile.id, requestedMember.userProfileId);
     if (!direct) {
-      return redirect(`/servers/${params.serverId}/`);
+      return redirect(`/servers`);
     }
-    return  redirect(`/meself/chat/${direct.id}`);  }   
+    return redirect(`/meself/chat/${direct.id}`);  
+  }   
 }
  
 export default MemberIdPage;

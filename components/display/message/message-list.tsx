@@ -17,7 +17,7 @@ import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 interface ChatMessagesProps {
   name: string;
-  member: Member;
+  memberProp: Member;
   channelChatId?: string;
   apiUrl: string;
   socketUrl: string;
@@ -29,7 +29,7 @@ interface ChatMessagesProps {
 
 export const ChatMessages = ({
   name,
-  member,
+  memberProp,
   channelChatId,
   apiUrl,
   socketUrl,
@@ -141,14 +141,15 @@ export const ChatMessages = ({
               return (
               <div
                 key={message.id}
-                className={"flex"}
+                className={`flex pl-[8px] ${ (activeId === message.id) ? `bg-black/5` : `` }`}
                 onMouseEnter={() => setActiveElementOnHover(message.id)}
                 onMouseLeave={resetActiveElementOnLeave}
                 >
                   <div
                     style={
                         {
-                          width: isContiniousCock ? "52px" : "0px"
+                          width: isContiniousCock ? "52px" : "0px",
+                          textAlign: "justify"
                         }
                       }
                   >
@@ -164,7 +165,7 @@ export const ChatMessages = ({
               <MessageItem
                 key={message.id}
                 id={message.id}
-                currentMember={member}
+                currentUserMember={memberProp}
                 memberProp={message.member}
                 // userProp={message.member.userProfile}
                 content={message.content}

@@ -71,8 +71,8 @@ export async function GET(
     }
 
 
-    console.log("Whatever_this_is",messages[messages.length-1].content)
-    // console.log("Route is running",messages);
+    // console.log("Whatever_this_is",messages[messages.length-1].content)
+
     let nextCursor = null;
 
     if (messages.length === MESSAGES_BATCH_MAX) {

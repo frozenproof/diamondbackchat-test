@@ -79,7 +79,7 @@ export const DirectMessageItem = ({
     if (memberProp.id === currentMember.id) {
       return;
     }
-    router.push(`/servers/${params?.serverId}/directs/${memberProp.id}`);
+    router.push(`/servers/${params?.serverId}/direct/${memberProp.id}`);
   }
 
   useEffect(() => {
