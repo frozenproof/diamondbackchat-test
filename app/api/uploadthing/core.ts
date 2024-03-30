@@ -14,14 +14,23 @@ const handleAuth = () => {
 }
  
 // FileRouter for your app, can contain multiple FileRoutes
-export const ourFileRouter = {
+export const ourUniqueFileRouter = {
     serverImage: f({ image: {maxFileSize: "8MB",maxFileCount: 1}})
     .middleware(() => handleAuth())
     .onUploadComplete(() => {}),
 
-    messageFile: f(["image","pdf","video/mp4","video/webm","image/gif","image/webp"])
+} satisfies FileRouter;
+ 
+export const multiFileRouter = {
+    messageFile: f(
+        {
+            image:{maxFileCount:8},
+            pdf:{maxFileCount:8},
+            video:{maxFileCount:8}
+        })
     .middleware(() => handleAuth())
     .onUploadComplete(() => {})
 } satisfies FileRouter;
  
-export type OurFileRouter = typeof ourFileRouter;
+export type OurFileRouter = typeof ourUniqueFileRouter;
+export type MultiFileRouter = typeof multiFileRouter;

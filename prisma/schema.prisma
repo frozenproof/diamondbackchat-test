@@ -30,6 +30,8 @@ model UserProfile {
   DirectMessage     DirectMessage[]
   DirectChannelSend DirectChannel[] @relation("UserOne")
   DirectChannelRepl DirectChannel[] @relation("UserTwo")
+  FriendOne         Friend[]        @relation("UserOne")
+  friendTwo         Friend[]        @relation("UserTwo")
 }
 
 model Server {
@@ -164,9 +166,9 @@ model DirectMessage {
 
   attachment Boolean @default(false)
   deleted    Boolean @default(false)
-  
-  isReply             Boolean
-  repliedMessageid    String @default("")
+
+  isReply          Boolean
+  repliedMessageid String  @default("")
 
   pinned    Boolean  @default(false)
   edited    Boolean  @default(false)
@@ -215,8 +217,13 @@ model Friend {
 
   updatedAt DateTime @updatedAt
 
-  userProfileId String[]
+  friendOneId String      @map("friendOneId")
+  friendOne   UserProfile @relation("UserOne", fields: [friendOneId], references: [id], onDelete: Cascade)
 
+  friendTwoId String      @map("friendTwoId")
+  friendTwo   UserProfile @relation("UserTwo", fields: [friendTwoId], references: [id], onDelete: Cascade)
+
+  @@unique([friendOneId, friendTwoId])
   @@index([id])
 }
 

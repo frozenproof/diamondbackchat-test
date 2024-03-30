@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/files/file-upload";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
+import { MultiFileUpload } from "@/components/files/multi-file-upload";
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -91,13 +92,10 @@ export const MessageFilePrompt = () => {
                 <FormField
                   control={form.control}
                   name="fileUrl"
-                  render={({ field }) => (
+                  render={() => (
                     <FormItem>
                       <FormControl>
-                        <FileUpload
-                          endpoint="messageFile"
-                          value={field.value}
-                          onChange={field.onChange}
+                        <MultiFileUpload
                         />
                       </FormControl>
                     </FormItem>

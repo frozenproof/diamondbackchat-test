@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+// import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -11,7 +11,7 @@ import { Suspense } from "react";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 
-const font = Open_Sans({ subsets: ["latin"] });
+// const font = Open_Sans({ subsets: ["latin"],display: "swap", });
 
 export const dynamicParams = true 
 export const maxDuration = 5
@@ -33,7 +33,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={
           cn(
-            font.className,
+            // font.className,
             "bg-white dark:bg-[#000000]",
             "bg-white light:bg-[#48f7f7]"
           )}>

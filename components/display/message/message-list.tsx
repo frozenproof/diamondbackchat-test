@@ -139,6 +139,12 @@ export const ChatMessages = ({
             {
               var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
               return (
+                <div>
+                  <div
+                  className={`${ (!isContiniousCock) ? `h-[8px]` : `hidden` }`}
+                  >
+                    
+                  </div>
               <div
                 key={message.id}
                 className={`flex pl-[8px] ${ (activeId === message.id) ? `bg-black/5` : `` }`}
@@ -182,6 +188,7 @@ export const ChatMessages = ({
                 isContinious={isContiniousCock}
               />
               </div>
+             </div>
             )}
             )}
           </Fragment>

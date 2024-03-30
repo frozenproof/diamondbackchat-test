@@ -50,7 +50,7 @@ const MemberIdPage = async ({
     const direct = await getOrCreateDirectChannel(profile.id, requestedMember.userProfileId);
     console.log(direct?.id)
     if (!direct) {
-      return redirect(`/servers`);
+      return redirect(`/meself`);
     }
     return redirect(`/meself/chat/${direct.id}`);  
   }   

@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { DirectSideBar } from "@/components/display/direct/direct-sidebar";
+import { getAllDirectChannel} from "@/lib/direct-search";
 
 
 const MePageLayout = async ({
@@ -20,13 +21,23 @@ const MePageLayout = async ({
     if(!profile){
         return redirect(`/check-auth`);
     }   
+
+    const direct = await getAllDirectChannel(profile.id);
+    // console.log(direct?[0].id)
+    console.log(`Channel arrays`,direct);
+    if (!direct) {
+      return redirect(`/servers`);
+    }
+    
     else
     {
         // console.log(profile);
         return ( 
             <div className="h-full">
                 <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
-                    <DirectSideBar />
+                    <DirectSideBar 
+                        directChannelProp={direct}
+                    />
                     <div
                         className="mt-auto pt-1 pb-1 pl-1 flex"
                     >

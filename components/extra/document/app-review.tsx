@@ -1,10 +1,6 @@
 import { CardBody, CardContainer, CardItem } from "@/components/effects/3d-card";
 import { CardStack } from "@/components/effects/card-stack";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-
-
-
 export const AppReviews = (
 ) => {
     return (

@@ -20,7 +20,7 @@ interface ChannelItemProps {
 }
 
 const iconMap : {[key: string]: React.ReactNode}= {
-  [OldChannelType.TEXT] : <Hash     className="h-4 w-4"/>,
+  [OldChannelType.TEXT] : <Hash     className="h-[18px] w-[18px]"/>,
   [OldChannelType.AUDIO]: <Mic      className="h-4 w-4"/>,
   [OldChannelType.VIDEO]: <Video    className="h-4 w-4"/>,
 }
@@ -49,19 +49,20 @@ export const ChannelItem = ({
     <button
       onClick={onClick}
       className={cn(
-        "ml-auto group px-2 py-2 rounded-md flex  gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
+        "ml-auto group px-2 py-2 rounded-md flex flex-row gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
         params?.channelId === channel.id && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
     >
       { Icon }
       <div className={cn(
-        "font-semibold  text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition mr-auto",
+        "font-semibold  text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition mr-auto align-top",
         params?.channelId === channel.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white "
       )}>
         <div
-            className="overflow-hidden relative"
+            className="overflow-hidden relative align-top text-center "
+            style={{fontSize: 14}}
         >
-            {channel.name}
+            {channel.name} 
         </div>
         {role !== OldMemberRole.GUEST && (
         <div className="flex gap-x-2 relative">
