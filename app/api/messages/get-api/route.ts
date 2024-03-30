@@ -4,7 +4,7 @@ import { Message } from "@prisma/client";
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-const MESSAGES_BATCH = 10;
+const MESSAGES_BATCH_MAX = 4;
 
 export async function GET(
   req: Request
@@ -28,7 +28,7 @@ export async function GET(
 
     if (cursor) {
       messages = await db.message.findMany({
-        take: MESSAGES_BATCH,
+        take: MESSAGES_BATCH_MAX,
         skip: 1,
         cursor: {
           id: cursor,
@@ -51,7 +51,7 @@ export async function GET(
       })
     } else {
       messages = await db.message.findMany({
-        take: MESSAGES_BATCH,
+        take: MESSAGES_BATCH_MAX,
         where: {
           channelId,
         },
@@ -70,11 +70,13 @@ export async function GET(
       });
     }
 
+
+    console.log("Whatever_this_is",messages[messages.length-1].content)
     // console.log("Route is running",messages);
     let nextCursor = null;
 
-    if (messages.length === MESSAGES_BATCH) {
-      nextCursor = messages[MESSAGES_BATCH - 1].id;
+    if (messages.length === MESSAGES_BATCH_MAX) {
+      nextCursor = messages[MESSAGES_BATCH_MAX - 1].id;
     }
 
     return NextResponse.json({

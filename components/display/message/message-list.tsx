@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, Fragment, useRef } from "react";
+import { ElementRef, Fragment, useEffect, useRef, useState } from "react";
 import { Member, Message, UserProfile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 
@@ -38,6 +38,7 @@ export const ChatMessages = ({
   paramValue,
   type,
 }: ChatMessagesProps) => {
+  const [activeId, setActiveId] = useState("tis but")
   const queryKey = `chat:${channelChatId}`;
   const addKey = `chat:${channelChatId}:messages`;
   const updateKey = `chat:${channelChatId}:messages:update` 
@@ -65,9 +66,20 @@ export const ChatMessages = ({
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
+  const DATE_FORMAT_CONTINIOUS = "HH:mm";
   
-  var currentMemberId = "";
-  const testdata = data?.pages.map((group, i) => {group.items; console.log(i+"Test data",group.items)})
+  const setActiveElementOnHover = (id: string) => {
+    setActiveId(id);
+  };
+
+  const resetActiveElementOnLeave = () => {
+    setActiveId("");
+  };
+
+  useEffect(() => {
+    console.log("somthing changed",data)
+  },[data,fetchNextPage])
+  // const testdata = data?.pages.map((group, i) => {group.items; console.log(i+"Test data",group.items)})
   // if(data)
   // console.log("Is this data",testdata);
 
@@ -123,20 +135,32 @@ export const ChatMessages = ({
           //group la du lieu that
           
           <Fragment key={i}>
-            {group.items.map((message: MessageWithMemberWithProfileWithFile) => {
-              console.log("current member id",message.memberId);
-              
+            {group.items.map((message: MessageWithMemberWithProfileWithFile,index: number,array: any) => 
+            {
+              var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
               return (
               <div
-                key={message.id+1}
-              >
-                {/* This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId}
-                This is member id + {message.memberId} */}
+                key={message.id}
+                className={"flex"}
+                onMouseEnter={() => setActiveElementOnHover(message.id)}
+                onMouseLeave={resetActiveElementOnLeave}
+                >
+                  <div
+                    style={
+                        {
+                          width: isContiniousCock ? "52px" : "0px"
+                        }
+                      }
+                  >
+                    {(activeId === message.id) && isContiniousCock && (
+                          <div
+                            className="continiouschat"
+                          >
+                            {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
+                          </div>
+                    )
+                    }
+                  </div>
               <MessageItem
                 key={message.id}
                 id={message.id}
@@ -152,6 +176,9 @@ export const ChatMessages = ({
                 // isUpdated={message.updatedAt !== message.createdAt}
                 socketUrl={socketUrl}
                 socketQuery={socketQuery}
+                isReply={false}
+                replyId=""
+                isContinious={isContiniousCock}
               />
               </div>
             )}

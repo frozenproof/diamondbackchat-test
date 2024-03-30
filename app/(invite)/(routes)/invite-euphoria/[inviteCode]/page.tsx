@@ -63,6 +63,7 @@ const InviteCodePageDiamond = async ({
           create: [
             {
               userProfileId: profile.id,
+              nickname: profile.name 
             }
           ]
         }

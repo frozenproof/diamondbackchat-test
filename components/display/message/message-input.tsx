@@ -59,6 +59,7 @@ export const MessageInput = ({
       // console.log("Input log",testSend);
       form.reset();
       router.refresh();
+      
     } catch (error) {
       console.log(error);
     }

@@ -1,9 +1,10 @@
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db"
+import { NextApiResponseServerIo } from "@/type";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request){
+export async function POST(req: Request,res: NextApiResponseServerIo){
     try{
         const profile = await currentUserProfile();
         const { content,checkFile } = await req.json();
@@ -68,6 +69,10 @@ export async function POST(req: Request){
             }
         });
 
+        const channelKey = `chat:${channelIdProp}:messages`;
+        
+        res?.socket?.server?.io?.emit(channelKey, message);
+        console.log("this is res",res);
         return NextResponse.json(message);
       } catch (error) {
         console.log("CHANNELS_POST", error);

@@ -164,6 +164,9 @@ model DirectMessage {
 
   attachment Boolean @default(false)
   deleted    Boolean @default(false)
+  
+  isReply             Boolean
+  repliedMessageid    String @default("")
 
   pinned    Boolean  @default(false)
   edited    Boolean  @default(false)
