@@ -22,6 +22,8 @@ export const SocketStatusDisplay = () => {
       variant="outline" 
       className="bg-emerald-600 text-white border-none ml-auto"
     >
+      Lmao
+      {isConnected}
       Online
     </Badge>
   )

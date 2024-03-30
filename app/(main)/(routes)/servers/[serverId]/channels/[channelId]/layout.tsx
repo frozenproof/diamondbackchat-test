@@ -12,7 +12,7 @@ import ChannelIdPage from "./page";
 import { Suspense } from "react";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { MessageInput } from "@/components/display/message/message-input";
-import { ChatMessages } from "@/components/display/message/message-list";
+import { ChatMessagesList } from "@/components/display/message/message-list";
 import { OldChannelType } from "@prisma/client";
 
 type Props = {

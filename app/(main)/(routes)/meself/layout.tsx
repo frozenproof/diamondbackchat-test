@@ -23,8 +23,7 @@ const MePageLayout = async ({
     }   
 
     const direct = await getAllDirectChannel(profile.id);
-    // console.log(direct?[0].id)
-    console.log(`Channel arrays`,direct);
+    // console.log(`Channel arrays`,direct);
     if (!direct) {
       return redirect(`/servers`);
     }

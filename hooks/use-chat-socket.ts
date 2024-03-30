@@ -25,6 +25,7 @@ export const useChatSocket = ({
   const queryClient = useQueryClient();
 
   useEffect(() => {
+    console.log("useChatSocket is here","\n",addKey,"\n",updateKey,"\n",queryKey);
     if (!socket) {
       return;
     }
@@ -55,6 +56,7 @@ export const useChatSocket = ({
     });
 
     socket.on(addKey, (message: MessageWithMemberWithProfile) => {
+      console.log("add key",addKey)
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {

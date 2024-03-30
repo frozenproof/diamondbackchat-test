@@ -27,7 +27,7 @@ interface ChatMessagesProps {
   type: "channel" | "conversation";
 }
 
-export const ChatMessages = ({
+export const ChatMessagesList = ({
   name,
   memberProp,
   channelChatId,
@@ -139,14 +139,15 @@ export const ChatMessages = ({
             {
               var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
               return (
-                <div>
+                <div
+                  key={message.id}
+                >
                   <div
                   className={`${ (!isContiniousCock) ? `h-[8px]` : `hidden` }`}
                   >
                     
                   </div>
               <div
-                key={message.id}
                 className={`flex pl-[8px] ${ (activeId === message.id) ? `bg-black/5` : `` }`}
                 onMouseEnter={() => setActiveElementOnHover(message.id)}
                 onMouseLeave={resetActiveElementOnLeave}
@@ -154,7 +155,7 @@ export const ChatMessages = ({
                   <div
                     style={
                         {
-                          width: isContiniousCock ? "52px" : "0px",
+                          width: isContiniousCock ? "50px" : "0px",
                           textAlign: "justify"
                         }
                       }

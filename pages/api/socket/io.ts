@@ -10,7 +10,7 @@ export const config = {
   },
 };
 
-const ioHandler = (_req: NextApiRequest, res: NextApiResponseServerIo) => {
+const ioHandler = (_req: Request, res: NextApiResponseServerIo) => {
   if(res.socket.server.io)
   {
     console.log("IO server check",res.socket.server.io);
@@ -22,6 +22,12 @@ const ioHandler = (_req: NextApiRequest, res: NextApiResponseServerIo) => {
       path: path,
       // @ts-ignore,
       addTrailingSlash: false,
+      connectionStateRecovery: {
+        // the backup duration of the sessions and the packets
+        maxDisconnectionDuration: 2 * 60 * 1000,
+        // whether to skip middlewares upon successful recovery
+        skipMiddlewares: true,
+      }
     });
     res.socket.server.io = io;
   }

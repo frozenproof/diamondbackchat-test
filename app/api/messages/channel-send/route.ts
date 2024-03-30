@@ -1,3 +1,4 @@
+import { useSocket } from "@/components/providers/socket-provider";
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db"
@@ -70,9 +71,9 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
         });
 
         const channelKey = `chat:${channelIdProp}:messages`;
-        
-        res?.socket?.server?.io?.emit(channelKey, message);
-        console.log("this is res",res);
+        console.log("this is channel key",channelKey);
+        // socket?.server?.emit(channelKey, message);
+
         return NextResponse.json(message);
       } catch (error) {
         console.log("CHANNELS_POST", error);

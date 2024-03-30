@@ -41,7 +41,7 @@ export const DirectSideBar = async({
         redirect("/");
     }
 
-    console.log("This is main direct",directChannelProp)
+    // console.log("This is main direct",directChannelProp)
     return (
       <div>
         <DirectSideBarHeader 

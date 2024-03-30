@@ -8,7 +8,7 @@ import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
 import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
-import { ChatMessages } from "@/components/display/message/message-list";
+import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import { MediaRoom } from "@/components/extra/media-room";
@@ -71,7 +71,7 @@ const ChannelIdPage = async ({
             {channelProp.type === OldChannelType.TEXT && (
             <>
               
-                <ChatMessages
+                <ChatMessagesList
                     memberProp={memberProp}
                     name={channelProp.name}
                     channelChatId={channelProp.id}
