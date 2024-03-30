@@ -54,7 +54,6 @@ export const DirectMessageInput = ({
 
       const testSend = await axios.post(url, {...values,checkFile: false});
       
-      // console.log("Input log",testSend);
       form.reset();
       router.refresh();
       

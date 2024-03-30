@@ -9,40 +9,21 @@ export async function POST(req: Request){
         const { content,checkFile } = await req.json();
         const { searchParams } = new URL(req.url);
     
-        const serverIdProp = searchParams.get("serverId");
-        const channelIdProp = searchParams.get("channelId");
+        const directChatIdProp = searchParams.get("directChatId");
 
         if (!profile) {
           return new NextResponse("Unauthorized", { status: 401 });
         }
     
-        if (!serverIdProp || !channelIdProp) {
+        if (!directChatIdProp) {
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
         console.log("This is check file",checkFile);
-        const serverAPI = await db.server.findFirst({
-          where: {
-            id: serverIdProp as string,
-            Member: {
-              some: {
-                userProfileId: profile.id
-              }
-            }
-          },
-          include: {
-            Member: true,
-          }
-        });
-    
-        if(!serverAPI)
-        {
-          return null
-        }
 
-        const channel = await db.channel.findFirst({
+        const channel = await db.directChannel.findFirst({
           where: {
-            id: channelIdProp as string,
+            id: directChatIdProp as string,
           }
         });
     
@@ -50,21 +31,16 @@ export async function POST(req: Request){
           return null
         }
     
-        const member = serverAPI.Member.find((member) => member.userProfileId === profile.id);
     
-        if (!member) {
-          return null
-        }
-    
-        const message = await db.message.create({
+        const message = await db.directMessage.create({
           data: {
             content,
             attachment: false,
-            channelId: channelIdProp as string,
-            memberId: member.id
+            directChannelId: directChatIdProp as string,
+            userProfileId: profile.id
           },
           include: {
-            member: true
+            userProfile: true
             }
         });
 
