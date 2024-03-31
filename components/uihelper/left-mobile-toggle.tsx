@@ -15,12 +15,14 @@ export const MobileNavigationLeftToggle = ({
   serverId,
   userName,
   userAvatar,
-  userStatus
+  userStatus,
+  isDirectProp
 }: {
-  serverId: string;
+  serverId?: string;
   userName: string;
   userAvatar: string;
   userStatus: UserStatus;
+  isDirectProp?: boolean
 }) => {
   return (
     <Sheet>
@@ -36,7 +38,9 @@ export const MobileNavigationLeftToggle = ({
         <div
           className="flex flex-col w-full"
         >
-          <ServerSideBar serverId={serverId} />
+          {(serverId) && 
+            <ServerSideBar serverId={serverId} />
+          }
           <UserButtonDiamond 
             name={userName}
             src={userAvatar}

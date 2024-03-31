@@ -38,19 +38,10 @@ const ChannelIdPage = async ({
   //   return redirectToSignIn();
   // }
 
-  if(!channelProp)
+  if(!channelProp || !memberProp)
   {
     return null
   }
-  // const messages = await db.message.findMany({
-  //   where: {
-  //     channelId: channelProp.id,
-  //   },
-  // });
-  // if(memberProp)
-  // {
-  //   console.log("Member prop", memberProp)
-  // }
   
   if(channelProp)
   {

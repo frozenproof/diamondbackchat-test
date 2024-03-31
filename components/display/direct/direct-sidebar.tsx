@@ -46,7 +46,6 @@ export const DirectSideBar = async({
       <div>
         <DirectSideBarHeader 
         />
-        LMAO
         {!!directChannelProp?.length && (
               <div className="mb-2">
                 <div className="space-y-[2px]">
