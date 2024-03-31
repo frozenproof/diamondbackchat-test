@@ -12,7 +12,7 @@ import { db } from "@/lib/db"
 import { NavigationSelf } from "./navigation-self";
 import { SocketStatusDisplay } from "../socket/socket-status-display";
 import { ScrollArea } from "../ui/scroll-area";
-import { EvervaultCardVer2 } from "../effects/EvervaultCardVer2";
+import { EvervaultCardVer2 } from "../effects/evervault/EvervaultCardVer2";
 import { NavigationItem } from "./navigation-item";
 
 export const NavigationSideBar = async () => {

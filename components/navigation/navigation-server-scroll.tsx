@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "@/components/navigation/navigation-item";
-import { EvervaultCardVer2 } from "../effects/EvervaultCardVer2";
+import { EvervaultCardVer2 } from "../effects/evervault/EvervaultCardVer2";
 
 export const NavigationServerScroll = async() => {
     const profile = await currentUserProfile();

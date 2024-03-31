@@ -1,4 +1,4 @@
-import { EvervaultCard } from "@/components/effects/EvervaultCard";
+import { EvervaultCard } from "@/components/effects/evervault/EvervaultCard";
 
 export default function CustomUnauth() {
 

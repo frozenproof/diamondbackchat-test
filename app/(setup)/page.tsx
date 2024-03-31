@@ -1,3 +1,5 @@
+import { FollowerPointerCard } from "@/components/effects/pagi/following-pointer";
+import { Meteors } from "@/components/effects/pagi/meteors";
 import { InitialPage } from "@/components/extra/homepage/initial-page";
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
@@ -20,6 +22,7 @@ const SetupPage = async () => {
             <InitialPage 
                 isLoggedin={checkExist}
             />
+            <Meteors number={20} />
         </Suspense>
     )
 
