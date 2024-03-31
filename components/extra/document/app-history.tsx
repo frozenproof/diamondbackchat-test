@@ -98,12 +98,24 @@ const content = [
     ),
   },
   {
-    title: "Running out of content",
+    title: "What more to say ?",
     description:
-      "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+      <div
+        className=""
+      >
+        One day I would die, and forget everything . 
+        So , before it all over , I will let out a secret .
+        I know the very person in this secret will never even think about it , but oh well , I can totally
+        <div>
+          see
+        </div>
+        <div>
+          why
+        </div>
+      </div>,
     content: (
       <div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center ">
-        Running out of content
+        What does that even mean ?
       </div>
     ),
   },

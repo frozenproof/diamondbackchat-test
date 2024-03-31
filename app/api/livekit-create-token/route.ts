@@ -11,6 +11,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing "username" query parameter' }, { status: 400 });
   }
 
+  console.log(room)
+  console.log(username)
   const apiKey = process.env.LIVEKIT_API_KEY;
   const apiSecret = process.env.LIVEKIT_API_SECRET;
   const wsUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL;

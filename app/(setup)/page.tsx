@@ -7,28 +7,12 @@ import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 const SetupPage = async () => {
-    const newprofile = await initialFirstProfile();
+    // const newprofile = await initialFirstProfile();
     var checkExist = false;
 
-    if(newprofile)
-        checkExist=true
     // if(newprofile)
-    // const server = await db.server.findFirst({
-    //     where: {
-    //         Member:{
-    //             some:{
-    //                 userProfileId: newprofile.id
-    //             }
-    //         },
-    //         deleted: false
-    //     }
-    // })
-
-    // if(server){
-    //     return redirect(`/servers/${server.id}`);
-    //     // return redirect(`/meself`)
-    // }
-
+    //     checkExist=true
+    
     return (
         <Suspense 
             fallback={<LoadingMainPage />}

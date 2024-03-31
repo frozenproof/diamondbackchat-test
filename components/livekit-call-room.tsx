@@ -6,6 +6,7 @@ import "@livekit/components-styles";
 import { Channel } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
+import { currentUserProfile } from "@/lib/current-profile";
 
 interface MediaRoomProps {
   chatId: string;
@@ -18,24 +19,25 @@ export const MediaRoom = ({
   video,
   audio
 }: MediaRoomProps) => {
-  const { user } = useUser();
+  const profile = useUser();
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    if (!user?.firstName || !user?.lastName) return;
+    if (!profile) return;
 
-    const name = `${user.firstName} ${user.lastName}`;
+    const nameUser = `+888`;
 
     (async () => {
       try {
-        const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`);
+        const resp = await fetch(`/api/livekit-create-token?room=${chatId}&username=${nameUser}`);
         const data = await resp.json();
+        console.log("token is ",data)
         setToken(data.token);
       } catch (e) {
         console.log(e);
       }
     })()
-  }, [user?.firstName, user?.lastName, chatId]);
+  }, []);
 
   if (token === "") {
     return (

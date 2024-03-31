@@ -10,7 +10,8 @@ export const initialFirstProfile = async () => {
     }
         else
     {
-        const profileInitial = await db.userProfile.findUnique({
+        
+        {const profileInitial = await db.userProfile.findUnique({
             where:{
                 userId: user.id
             }
@@ -30,7 +31,7 @@ export const initialFirstProfile = async () => {
             }) ;
         
             return newProfileInitial;
-        }   
+        }   }
     }
 
 }

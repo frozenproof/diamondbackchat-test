@@ -1,16 +1,26 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export const FriendButton = () => {
+    const  router  = useRouter();
+
+    const onAction = (MouseEvent: React.MouseEvent, url: string) => {
+        MouseEvent.stopPropagation();
+        router.push(url);
+      }
+
     return ( 
-        <div>
+        <button
+            onClick={(MouseEvent) => {onAction(MouseEvent,`/meself/friend`)}}
+        >
             <Button 
-                
+                className="h-full w-full"
             >
-                Click me
+                Friends
             </Button>
-        </div>
+        </button>
      );
 }
  
