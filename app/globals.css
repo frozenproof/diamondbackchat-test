@@ -11,6 +11,10 @@ body,
 .continiouschat {
   font-size: 8px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 48px */
 }
 
 /* .hover:continious-chat {

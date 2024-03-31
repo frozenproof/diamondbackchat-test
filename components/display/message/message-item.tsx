@@ -146,8 +146,8 @@ export const MessageItem = ({
   
   {
     return (
-    <div className={`relative group flex items-center w-full`}>
-      
+    <div className={`relative group flex items-center w-full `}>
+      {/* ${ (isContinious) ? `pl-[48px]` : `` } */}
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
          

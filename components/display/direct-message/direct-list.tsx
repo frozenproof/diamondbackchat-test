@@ -138,49 +138,64 @@ export const DirectChatMessages = ({
             {group.items.map((message: MessageWithProfileWithFile,index: number,array: any) => 
             {
               var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
+              var isActiveItem = (activeId === message.id)
               return (
-              <div
-                key={message.id}
-                className={"flex"}
-                onMouseEnter={() => setActiveElementOnHover(message.id)}
-                onMouseLeave={resetActiveElementOnLeave}
-                >
-                  <div
-                    style={
-                        {
-                          width: isContiniousCock ? "52px" : "0px"
-                        }
-                      }
+                <div
+                    key={message.id}
                   >
-                    {(activeId === message.id) && isContiniousCock && (
-                          <div
-                            className="continiouschat"
-                          >
-                            {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
-                          </div>
-                    )
-                    }
-                  </div>
-              <DirectMessageItem
-                key={message.id}
-                id={message.id}
-                currentMember={currentMemberProp}
-                memberProp={message.userProfile}
-                // userProp={message.member.userProfile}
-                content={message.content}
-                attachment={message.attachment}
-                fileUrl=""
-                deleted={message.deleted}
-                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                isUpdated={message.edited}
-                // isUpdated={message.updatedAt !== message.createdAt}
-                socketUrl={socketUrl}
-                socketQuery={socketQuery}
-                isReply={false}
-                replyId=""
-                isContinious={isContiniousCock}
-              />
-              </div>
+                    <div
+                    className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
+                    >
+                      
+                    </div>
+                  <div
+                    key={message.id}
+                    className={"flex"}
+                    onMouseEnter={() => setActiveElementOnHover(message.id)}
+                    onMouseLeave={resetActiveElementOnLeave}
+                    >
+                      {isContiniousCock && (
+                            <div
+                              className={`continiouschat ${ (isContiniousCock) ? `w-[58px]` : `` }`}
+                            >
+                              {isActiveItem && (
+                                <div
+                                  className=""
+                                >
+                                  {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
+                                </div>
+                                )
+                              }
+                            </div>
+                      )
+                      }
+                      {!isContiniousCock && (
+                      <div
+                        className="pl-[8px] "
+                      >
+                        </div>
+                    )}
+                    <DirectMessageItem
+                        key={message.id}
+                        id={message.id}
+                        currentMember={currentMemberProp}
+                        memberProp={message.userProfile}
+                        // userProp={message.member.userProfile}
+                        content={message.content}
+                        attachment={message.attachment}
+                        fileUrl=""
+                        deleted={message.deleted}
+                        timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                        isUpdated={message.edited}
+                        // isUpdated={message.updatedAt !== message.createdAt}
+                        socketUrl={socketUrl}
+                        socketQuery={socketQuery}
+                        isReply={false}
+                        replyId=""
+                        isContinious={isContiniousCock}
+                      />
+                      </div>
+                 </div>
             )}
             )}
           </Fragment>

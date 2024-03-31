@@ -11,7 +11,7 @@ import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
 import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
-import { MediaRoom } from "@/components/extra/media-room";
+import { MediaRoom } from "@/components/livekit-call-room";
 
 interface ChannelIdPageProps {
   // params: {

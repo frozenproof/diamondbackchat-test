@@ -6,7 +6,7 @@ import { getOrCreateDirectChannel } from "@/lib/direct-search";
 import { currentUserProfile } from "@/lib/current-profile";
 import { DirectChannelHeader } from "@/components/display/direct/direct-header";
 import { DirectChatMessages } from "@/components/display/direct-message/direct-list";
-import { MediaRoom } from "@/components/extra/media-room";
+import { MediaRoom } from "@/components/livekit-call-room";
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
 
 interface MemberIdPageProps {
