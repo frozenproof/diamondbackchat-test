@@ -33,7 +33,9 @@ const MePageLayout = async ({
         // console.log(profile);
         return ( 
             <div className="h-full">
-                <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0">
+                <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0
+                    bg-[#F2F3F5]
+                ">
                     <DirectSideBar 
                         directChannelProp={direct}
                     />

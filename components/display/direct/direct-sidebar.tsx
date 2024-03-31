@@ -3,18 +3,11 @@ import { Channel, DirectChannel, OldChannelType, OldMemberRole, Server } from "@
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
-import { db } from "@/lib/db";
-
-import { ScrollArea } from "@/components/ui/scroll-area";
-
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-import { ServerNavigation } from "../server/server-navigation";
 
-import { MemberItem } from "../member/member-item";
-import { ServerWithMembersWithProfiles } from "@/type";
-import { DirectChannelHeader } from "./direct-header";
 import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 import { DirectChannelItem } from "./direct-item";
+import { useEffect } from "react";
 
 const iconMap :{[key: string]: React.ReactNode}= {
     [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,

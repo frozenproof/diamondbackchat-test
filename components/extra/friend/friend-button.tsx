@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
+import { Trees } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export const FriendButton = () => {
@@ -13,13 +14,17 @@ export const FriendButton = () => {
 
     return ( 
         <button
+            className="w-full hover:bg-[#88828814] dark:bg-primary  dark:hover:bg-[#282828]/90 h-[48px] p-[8x] "
             onClick={(MouseEvent) => {onAction(MouseEvent,`/meself/friend`)}}
         >
-            <Button 
-                className="h-full w-full"
+            <div 
+                className="h-full flex items-center justify-center"
             >
-                Friends
-            </Button>
+                <Trees />
+                <div>
+                    Friends
+                    </div>
+            </div>
         </button>
      );
 }

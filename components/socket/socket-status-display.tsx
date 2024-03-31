@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 export const SocketStatusDisplay = () => {
   const { isConnected } = useSocket();
 
+  // console.log("SocketStatusDisplay",isConnected);
   if (!isConnected) {
     return (
       <Badge 
@@ -22,8 +23,7 @@ export const SocketStatusDisplay = () => {
       variant="outline" 
       className="bg-emerald-600 text-white border-none ml-auto"
     >
-      Lmao
-      {isConnected}
+    {isConnected}
       Online
     </Badge>
   )

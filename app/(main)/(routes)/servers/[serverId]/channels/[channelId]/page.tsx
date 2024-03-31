@@ -12,6 +12,7 @@ import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import { MediaRoom } from "@/components/livekit-call-room";
+import { MediaRoomOriginalVersion } from "@/components/media-room-orig";
 
 interface ChannelIdPageProps {
   // params: {
@@ -91,20 +92,23 @@ const ChannelIdPage = async ({
               />
             </>
           )}
-          {channelProp.type === OldChannelType.AUDIO && (
+          {channelProp.type === OldChannelType.VIDEO && (
             <MediaRoom
               chatId={channelProp.id}
               video={false}
               audio={true}
+              userIdProp={memberProp.id}
             />
           )}
-          {channelProp.type === OldChannelType.VIDEO && (
+          {/* {channelProp.type === OldChannelType.VIDEO && (
             <MediaRoom
               chatId={channelProp.id}
               video={true}
               audio={true}
+              userIdProp={memberProp.id}
             />
-          )}    </Suspense>
+          )}     */}
+          </Suspense>
    );
   }
   

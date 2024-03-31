@@ -1,9 +1,7 @@
+import { redirect } from "next/navigation";
+
 const MeSelfPage = () => {
-    return ( 
-        <div>
-            This is a page
-        </div>
-     );
+    return redirect(`/meself/friend`)
 }
  
 export default MeSelfPage;
