@@ -43,7 +43,7 @@ export const useChatQuery = ({
     queryFn: fetchMessages,
     getNextPageParam: (lastPage) => lastPage?.nextCursor,
     refetchInterval:  480 ,
-    // refetchInterval: isConnected ? 480 : 480,
+    // refetchInterval: isConnected ? false : 480,
   });
 
   return {

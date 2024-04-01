@@ -37,7 +37,6 @@ export const MessageFilePrompt = () => {
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "MessageFile";
-  const { apiUrl, query } = propData;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -53,22 +52,12 @@ export const MessageFilePrompt = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async () => {
     try {
-      const url = qs.stringifyUrl({
-        url: apiUrl || "",
-        query,
-      });
-
-      await axios.post(url, {
-        ...values,
-        content: values.fileUrl,
-        checkFile : true
-      });
-
-      form.reset();
+      alert("received")
       router.refresh();
-      handleClose();
+      onClose();
+      // handleClose();
     } catch (error) {
       console.log(error);
     }
@@ -79,10 +68,10 @@ export const MessageFilePrompt = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Add an attachment
+            Send files 
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            I hope you die in a fire you fucking API
+            This is a fire and I don't know how 
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -104,8 +93,10 @@ export const MessageFilePrompt = () => {
               </div>
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button variant="primary" disabled={isLoading}>
-                Send
+              <Button variant="primary" disabled={isLoading}
+              onClick={onClose}
+              >
+                Done
               </Button>
             </DialogFooter>
           </form>

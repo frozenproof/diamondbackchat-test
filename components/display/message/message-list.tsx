@@ -76,13 +76,6 @@ export const ChatMessagesList = ({
     setActiveId("");
   };
 
-  // useEffect(() => {
-  //   console.log("somthing changed",data)
-  // },[data,fetchNextPage])
-  // const testdata = data?.pages.map((group, i) => {group.items; console.log(i+"Test data",group.items)})
-  // if(data)
-  // console.log("Is this data",testdata);
-
   if (status === "loading") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">

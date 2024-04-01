@@ -1,16 +1,22 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
-import { auth } from "@clerk/nextjs";
+import { UTFiles } from "uploadthing/server";
+import { auth  } from "@clerk/nextjs";
+import { currentUserProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
 
 const f = createUploadthing();
- 
-const handleAuth = () => {
+
+
+const handleAuth = async() => {
     //de phong userId la object
-    const {userId} = auth();
-    if(!userId){
+    const {userId,sessionClaims} = auth();
+    const realId = await currentUserProfile();
+    if(!userId || !sessionClaims){
         throw new Error("Unauthorized");
     }
-    return {userId:userId};
+
+    return {userId:userId,EupPropId:realId?.id};
+    // return {userId:userId,EupPropId:sessionClaims.eupId};
 }
  
 // FileRouter for your app, can contain multiple FileRoutes
@@ -28,8 +34,22 @@ export const multiFileRouter = {
             pdf:{maxFileCount:8},
             video:{maxFileCount:8}
         })
-    .middleware(() => handleAuth())
-    .onUploadComplete(() => {})
+    .middleware(async ({ req, files }) => {
+        const fileOverrides = files.map((file) => {
+            const newName = (file.name) ;
+            return { ...file, name: newName};
+        });
+        // handleAuth();
+        const authorie = await handleAuth();
+        return { authorie, [UTFiles]: fileOverrides };
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+        // console.log("Upload complete for userId:", metadata.authorie.userId);
+        console.log("Upload complete for userId:", metadata.authorie.EupPropId);
+        console.log("file url", file);
+        
+        // const temp = await db.();
+    })
 } satisfies FileRouter;
  
 export type OurFileRouter = typeof ourUniqueFileRouter;

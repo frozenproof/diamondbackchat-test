@@ -19,7 +19,9 @@ import { Trees, User } from "lucide-react"
 
 const FriendsPage = () => {
   return (
-    <Tabs className="w-full h-full">
+    <Tabs 
+      defaultValue="Online"
+      className="w-full h-full">
       <TabsList className="grid w-full grid-cols-5">
         <div
           className="flex"

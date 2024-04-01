@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className
         )}
         autoComplete="off"
-        ref={ref}
+        ref={input => input && input.focus()}
         {...props}
       />
     )
