@@ -9,21 +9,27 @@ import { Button } from "@/components/ui/button";
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { UserButtonDiamond } from "./user-button-diamond";
-import { UserStatus } from "@prisma/client";
+import { DirectChannel, UserProfile, UserStatus } from "@prisma/client";
+import { DirectSideBar } from "../display/direct/direct-sidebar";
 
 export const MobileNavigationLeftToggle = ({
   serverId,
   userName,
   userAvatar,
   userStatus,
-  isDirectProp
+  directChannelProp,
 }: {
   serverId?: string;
   userName: string;
   userAvatar: string;
   userStatus: UserStatus;
-  isDirectProp?: boolean
+  directChannelProp?: (DirectChannel & {
+    memberOne: UserProfile,
+    memberTwo: UserProfile
+  })[]
 }) => {
+
+  console.log("wutmobile");
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -40,6 +46,16 @@ export const MobileNavigationLeftToggle = ({
         >
           {(serverId) && 
             <ServerSideBar serverId={serverId} />
+          }
+          {(!serverId) && (
+            <div
+              className="h-full"
+            >
+              <DirectSideBar 
+                directChannelProp={directChannelProp}
+              />
+              </div>
+            )
           }
           <UserButtonDiamond 
             name={userName}

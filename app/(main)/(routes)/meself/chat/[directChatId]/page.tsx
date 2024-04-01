@@ -35,7 +35,7 @@ const DirectChatMemberIdPage = async ({
   });
 
   if (!direct) {
-    return redirect(`/meself`);
+    return redirect(`/meself/friend`);
   }
 
   // console.log("currentUSERID",profile.id)

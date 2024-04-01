@@ -17,6 +17,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle"
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar"
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
@@ -34,6 +35,23 @@ const FriendsPage = async({
   {
     return redirect(`/`);
   }
+  const direct = await db.directChannel.findMany({
+    where: {
+      OR: [
+        {memberOneId: profile.id},
+        {memberTwoId: profile.id}
+      ]
+    },
+    include: {
+      memberOne: true,
+      memberTwo: true
+    }
+  });
+
+  if (!direct) {
+    return redirect(`/meself/friend`);
+  }
+
   console.log(profile.id)
   const friends = await db.friend.findMany(
     {
@@ -57,9 +75,20 @@ const FriendsPage = async({
     <Tabs 
       defaultValue="Online"
       className="w-full ">
-      <TabsList className="grid w-full grid-cols-5">
+      <TabsList className="grid w-full grid-cols-6">
+        <MobileNavigationLeftToggle 
+          userAvatar={profile.imageUrl}
+          userName={profile.name}
+          userStatus={profile.status}
+          directChannelProp={direct}
+        />
         <div
           className="flex"
+          style={
+            {
+              overflowWrap: "break-word"
+            }
+          }
         >
             <Trees />
             Friends 
@@ -94,13 +123,13 @@ const FriendsPage = async({
                           src={whichFriend.imageUrl}
                           className="h-8 w-8 md:h-8 md:w-8"
                         />
-                        <p
+                        <div
                           className={cn(
-                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle"
+                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
                           )}
                         >
                           {whichFriend.name}
-                        </p>
+                        </div>
                 </div>
               )
             }

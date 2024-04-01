@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { FilesDisplay } from "../files-display-message";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 interface ChatItemProps {
   id: string;
@@ -144,12 +145,18 @@ export const MessageItem = ({
   const canEditMessage = !deleted && isOwner ;
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
-
+  const { height, width } = useWindowDimensions();
+  
   if(id)
   {
     // console.log("Message Id",id);
     return (
-    <div className={`relative group flex items-center w-full `}>
+    <div className={`relative group flex items-center w-full `}
+      style={{
+        overflowWrap: "break-word"
+      }}
+    >
+      
       {/* ${ (isContinious) ? `pl-[48px]` : `` } */}
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
@@ -174,17 +181,23 @@ export const MessageItem = ({
           <FilesDisplay
           />
           {!isEditing && (
-            <p className={cn(
-              "text-sm text-zinc-600 dark:text-zinc-300",
-              deleted && "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
-            )}>
+            <div 
+            className={              
+              `text-sm text-zinc-600 dark:text-zinc-300 ` 
+          }
+          style={{
+            overflowWrap: "break-word",
+            width: (width<769) ? `${width-80}px` : `${width-320}px`
+          }}
+
+            >
               {content}
               {isUpdated && !deleted && (
                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
                   (edited)
                 </span>
               )}
-            </p>
+            </div>
           )}
           {!fileUrl && isEditing && (
             <Form {...form}>
@@ -225,18 +238,23 @@ export const MessageItem = ({
         <div
           className="w-full"
         >
-         {!fileUrl && !isEditing && (
-            <p className={cn(
-              "text-sm text-zinc-600 dark:text-zinc-300 ",
-              deleted && "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
-            )}>
+         {!isEditing && (
+            <div className={
+              `text-sm text-zinc-600 dark:text-zinc-300 ` 
+            }
+            style={{
+              overflowWrap: "break-word",
+              width: (width<769) ? `${width-80}px` : `${width-320}px`
+            }}
+
+            >
               {content}
               {isUpdated && !deleted && (
                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
                   (edited)
                 </span>
               )}
-            </p>
+            </div>
           )}
           {isEditing && (
             <Form {...form}>

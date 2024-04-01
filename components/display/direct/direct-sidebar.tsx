@@ -10,21 +10,9 @@ import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 import { DirectChannelItem } from "./direct-item";
 import { useEffect } from "react";
 
-const iconMap :{[key: string]: React.ReactNode}= {
-    [OldChannelType.TEXT ]: <Hash className="mr-2 h-4 w-4" />,
-    [OldChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
-    [OldChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />
-  };
-  
-  const roleIconMap :{[key: string]: React.ReactNode}= {
-    [OldMemberRole.GUEST]       : null,
-    [OldMemberRole.MEMBER]      : <Magnet className="mr-2"/>,
-    [OldMemberRole.MODERATOR]   : <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />,
-    [OldMemberRole.ADMIN]       : <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
-  }
-  
-  interface DirectSideBarProps {
-    directChannelProp: (DirectChannel & {
+
+interface DirectSideBarProps {
+    directChannelProp?: (DirectChannel & {
       memberOne: UserProfile,
       memberTwo: UserProfile
     })[],
@@ -38,7 +26,7 @@ export const DirectSideBar = async({
         redirect("/");
     }
 
-
+    if(directChannelProp)
     return (
       <div>
         <DirectSideBarHeader 

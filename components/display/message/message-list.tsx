@@ -11,6 +11,7 @@ import { MessageWithMemberWithProfile, MessageWithMemberWithProfileEU, MessageWi
 import { MessageItem } from "./message-item";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 import { format } from "date-fns"
 
@@ -41,6 +42,7 @@ export const ChatMessagesList = ({
   const queryKey = `chat:${channelChatId}`;
   const addKey = `chat:${channelChatId}:messages`;
   const updateKey = `chat:${channelChatId}:messages:update` 
+  const { height, width } = useWindowDimensions();
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -147,7 +149,11 @@ export const ChatMessagesList = ({
                     >
                     {isContiniousCock && (
                           <div
-                            className={`continiouschat ${ (isContiniousCock) ? `w-[60px]` : `` }`}
+                            className={`continiouschat `}
+                            style={{
+                              minWidth: (width<769) ? `${44}px` : `${56}px`,
+                              maxWidth: (width<769) ? `${44}px` : `${56}px`
+                            }}
                           >
                             {isActiveItem && (
                               <div

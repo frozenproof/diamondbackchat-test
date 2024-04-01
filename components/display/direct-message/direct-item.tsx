@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 interface ChatItemProps {
   id: string;
@@ -98,9 +99,9 @@ export const DirectMessageItem = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: content
-    }
+    },
   });
-
+ 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -122,8 +123,8 @@ export const DirectMessageItem = ({
       console.log(error);
     }
   }
-
   useEffect(() => {
+
     form.reset({
       content: content,
     })
@@ -137,7 +138,9 @@ export const DirectMessageItem = ({
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
 
-  
+  const { height, width } = useWindowDimensions();
+ 
+  if(id)
   {
     return (
     <div className={`${!isContinious ? "p-[4px]" : ""} relative group flex items-center hover:bg-black/5 transition w-full`}>
@@ -164,34 +167,6 @@ export const DirectMessageItem = ({
               {timestamp}
             </span>
           </div>
-          {isImage && (
-            <a 
-              href={fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
-            >
-              <Image
-                src={fileUrl}
-                alt={content}
-                fill
-                className="object-cover"
-              />
-            </a>
-          )}
-          {isPDF && (
-            <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
-              <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
-              <a 
-                href={fileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
-              >
-                PDF File
-              </a>
-            </div>
-          )}
           {!fileUrl && !isEditing && (
             <p className={cn(
               "text-sm text-zinc-600 dark:text-zinc-300",
@@ -242,20 +217,25 @@ export const DirectMessageItem = ({
       )}
       {(isContinious) && (
         <div
-          className="w-full"
+          className="w-full bg-green-800"
         >
-         {!fileUrl && !isEditing && (
-            <p className={cn(
-              "text-sm text-zinc-600 dark:text-zinc-300 ",
-              deleted && "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
-            )}>
+          {!isEditing && (
+            <div 
+            className={              
+              `text-sm text-zinc-600 dark:text-zinc-300 ` 
+          }
+          style={{
+            overflowWrap: "break-word",
+            width: (width<769) ? `${width-80}px` : `${width-320}px`
+          }}
+          >
               {content}
               {isUpdated && !deleted && (
                 <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
                   (edited)
                 </span>
               )}
-            </p>
+            </div>
           )}
           {!fileUrl && isEditing && (
             <Form {...form}>

@@ -13,7 +13,7 @@ import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"
-import { ScrollArea } from "@radix-ui/react-scroll-area";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 interface ChatMessagesProps {
   name: string;
@@ -42,6 +42,7 @@ export const DirectChatMessages = ({
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
   const updateKey = `chat:${directChatId}:messages:update` 
+  const { height, width } = useWindowDimensions();
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -75,13 +76,6 @@ export const DirectChatMessages = ({
   const resetActiveElementOnLeave = () => {
     setActiveId("");
   };
-
-  useEffect(() => {
-    console.log("somthing changed",data)
-  },[data,fetchNextPage])
-  // const testdata = data?.pages.map((group, i) => {group.items; console.log(i+"Test data",group.items)})
-  // if(data)
-  // console.log("Is this data",testdata);
 
   if (status === "loading") {
     return (
@@ -141,34 +135,38 @@ export const DirectChatMessages = ({
               var isActiveItem = (activeId === message.id)
               return (
                 <div
-                    key={message.id}
+                  key={message.id}
+                >
+                  <div
+                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
                   >
-                    <div
-                    className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
-                    >
-                      
-                    </div>
+                    
+                  </div>
                   <div
                     key={message.id}
-                    className={"flex"}
+                    className={`flex ${ (isActiveItem) ? `bg-black/5` : `` }`}
                     onMouseEnter={() => setActiveElementOnHover(message.id)}
                     onMouseLeave={resetActiveElementOnLeave}
                     >
-                      {isContiniousCock && (
-                            <div
-                              className={`continiouschat ${ (isContiniousCock) ? `w-[64px]` : `` }`}
-                            >
-                              {isActiveItem && (
-                                <div
-                                  className=""
-                                >
-                                  {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
-                                </div>
-                                )
-                              }
-                            </div>
-                      )
-                      }
+                    {isContiniousCock && (
+                          <div
+                            className={`continiouschat `}
+                            style={{
+                              minWidth: (width<769) ? `${44}px` : `${56}px`,
+                              maxWidth: (width<769) ? `${44}px` : `${56}px`
+                            }}
+                          >
+                            {isActiveItem && (
+                              <div
+                                className=""
+                              >
+                                {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
+                              </div>
+                              )
+                            }
+                          </div>
+                    )
+                    }
                       {!isContiniousCock && (
                       <div
                         className="pl-[8px] "
