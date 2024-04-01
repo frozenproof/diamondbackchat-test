@@ -45,10 +45,9 @@ export const multiFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
         // console.log("Upload complete for userId:", metadata.authorie.userId);
-        console.log("Upload complete for userId:", metadata.authorie.EupPropId);
-        console.log("file url", file);
-        
-        // const temp = await db.();
+        // console.log("Upload complete for userId:", metadata.authorie.EupPropId);
+        // console.log("file url", file.url);
+        return
     })
 } satisfies FileRouter;
  

@@ -1,10 +1,7 @@
-import { redirectToSignIn } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+"use server"
+
 import { Channel, Member, Message, OldChannelType, UserProfile } from "@prisma/client";
 
-import { currentUserProfile } from "@/lib/current-profile";
-
-import { db } from "@/lib/db";
 import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
 import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
@@ -79,12 +76,11 @@ const ChannelIdPage = async ({
                     paramValue={channelProp.id}
                 />
                 <MessageInput
-                name={channelProp.name}
-                type="direct"
                 // apiUrl="/api/socket/messages"
                 apiUrl="/api/messages/channel-send"
+                channelName={channelProp.name}
+                memberIdProp={memberProp.id}
                 query={{
-                  // channelId: channel.id,
                   channelId: channelProp.id,
                   // serverId: params.serverId,
                   serverId: serverIdProp,

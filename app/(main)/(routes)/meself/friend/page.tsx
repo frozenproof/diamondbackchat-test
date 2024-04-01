@@ -1,3 +1,5 @@
+"use server"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,9 +17,15 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { currentUserProfile } from "@/lib/current-profile"
 import { Trees, User } from "lucide-react"
 
-const FriendsPage = () => {
+const FriendsPage = async({
+  
+}) => {
+  const profile = await currentUserProfile();
+  
+  // var friendList=;
   return (
     <Tabs 
       defaultValue="Online"

@@ -41,6 +41,7 @@ export const ChannelSideBar = async({
     const textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
+
     if(!serverProp)
     {
         return redirect("/");
@@ -53,12 +54,12 @@ export const ChannelSideBar = async({
                 >
             {!!textChannels?.length && (
               <div className="mb-2">
-                <ServerNavigation
+                {/* <ServerNavigation
                   sectionType="channels"
                   oldChannelType={OldChannelType.TEXT}
                   role={role}
                   label="Text Channels"
-                />
+                /> */}
                 <div className="space-y-[2px]">
                   {textChannels.map((channel) => (
                     <ChannelItem

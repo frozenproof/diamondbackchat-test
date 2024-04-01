@@ -88,7 +88,7 @@ export const ServerSideBar = async({
                 role={role}
             />
         <div
-            className="mt-2 ml-1 mr-1 bg-[#f8eeee]"
+            className="mt-2 ml-1 mr-1 bg-[#f8eeee] "
         >
             <ServerSearchBar 
             data={[
@@ -130,6 +130,11 @@ export const ServerSideBar = async({
                 },
             ]}
             />
+            </div>
+            <div
+                className="h-[8px]"
+            >
+                
             </div>
             <ScrollArea
                     className="flex-1 px-1"            

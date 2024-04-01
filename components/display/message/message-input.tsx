@@ -17,12 +17,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { EmojiPicker } from "@/components/uihelper/emoji-picker";
+import { Channel } from "@prisma/client";
 
 interface MessageInputProps {
   apiUrl: string;
   query: Record<string, any>;
-  name: string;
-  type: "direct" | "channel";
+  channelName: string;
+  memberIdProp: string
 }
 
 const formSchema = z.object({
@@ -32,8 +33,8 @@ const formSchema = z.object({
 export const MessageInput = ({
   apiUrl,
   query,
-  name,
-  type,
+  channelName,
+  memberIdProp
 }: MessageInputProps) => {
   const { onOpen } = usePrompt();
   const router = useRouter();
@@ -46,7 +47,8 @@ export const MessageInput = ({
   });
 
   const isLoading = form.formState.isSubmitting;
-
+  const channelId = query.channelId;
+  // console.log("Channel id is",channelId);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
@@ -78,7 +80,7 @@ export const MessageInput = ({
                 <div className="relative p-4 pb-6">
                   <button
                     type="button"
-                    onClick={() => onOpen("MessageFile", { apiUrl, query })}
+                    onClick={() => onOpen("MessageFile", { channelIdPropAPI: channelId,memberIdPropAPI:memberIdProp,typeSend: "sentMem" })}
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                   >
                     <Plus className="text-white dark:text-[#313338]" />
@@ -87,7 +89,7 @@ export const MessageInput = ({
                     id="input"
                     disabled={isLoading}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                    placeholder={`Message ${type === "direct" ? name : "#" + name}`}
+                    placeholder={`Message ${"#" + channelName}`}
                     {...field}
                   />
                   <div className="absolute top-7 right-8">

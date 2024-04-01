@@ -25,6 +25,7 @@ import { FileUpload } from "@/components/files/file-upload";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { MultiFileUpload } from "@/components/files/multi-file-upload";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -37,6 +38,7 @@ export const MessageFilePrompt = () => {
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "MessageFile";
+  const { channelIdPropAPI,memberIdPropAPI } = propData;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -62,16 +64,20 @@ export const MessageFilePrompt = () => {
       console.log(error);
     }
   }
-
+  if(!channelIdPropAPI || !memberIdPropAPI)
+  {
+    console.log("No channel detected");
+    return null;
+  }
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Send files 
+            Send files {channelIdPropAPI} here
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            This is a fire and I don't know how 
+            This is a fire and I don't know how {memberIdPropAPI}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -85,6 +91,9 @@ export const MessageFilePrompt = () => {
                     <FormItem>
                       <FormControl>
                         <MultiFileUpload
+                          channelIdProp={channelIdPropAPI}
+                          memberIdProp={memberIdPropAPI}
+                          type="sentMem"
                         />
                       </FormControl>
                     </FormItem>

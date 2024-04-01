@@ -186,6 +186,7 @@ model DirectMessage {
 model AttachmentChannel {
   id      String @id @default(uuid())
   fileUrl String @db.Text
+  type    String
 
   messageId String
   message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
@@ -200,6 +201,7 @@ model AttachmentChannel {
 model AttachmentDirect {
   id      String @id @default(uuid())
   fileUrl String @db.Text
+  type    String
 
   directMessageId String
   directMessage   DirectMessage @relation(fields: [directMessageId], references: [id], onDelete: Cascade)

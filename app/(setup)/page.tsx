@@ -1,3 +1,4 @@
+"use server"
 
 import { Meteors } from "@/components/effects/pagi/meteors";
 import { InitialPage } from "@/components/extra/homepage/initial-page";

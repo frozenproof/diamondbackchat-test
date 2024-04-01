@@ -1,3 +1,5 @@
+"use server"
+
 import { db } from "@/lib/db";
 
 export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId: string) => {

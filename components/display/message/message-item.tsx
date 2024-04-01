@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
+import { FilesDisplay } from "../files-display-message";
 
 interface ChatItemProps {
   id: string;
@@ -162,42 +163,14 @@ export const MessageItem = ({
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
                 {memberProp.nickname}
               </p>
-              {/* <ActionTooltip label={memberProp.role}>
-                {roleIconMap[memberProp.role]}
-              </ActionTooltip> */}
+
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}
             </span>
           </div>
-          {isImage && (
-            <a 
-              href={fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
-            >
-              <Image
-                src={fileUrl}
-                alt={content}
-                fill
-                className="object-cover"
-              />
-            </a>
-          )}
-          {isPDF && (
-            <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
-              <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
-              <a 
-                href={fileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
-              >
-                PDF File
-              </a>
-            </div>
-          )}
+          <FilesDisplay
+          />
           {!fileUrl && !isEditing && (
             <p className={cn(
               "text-sm text-zinc-600 dark:text-zinc-300",

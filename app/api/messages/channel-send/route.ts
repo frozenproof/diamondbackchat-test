@@ -22,7 +22,7 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        console.log("This is check file",checkFile);
+        // console.log("This is check file",checkFile);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,

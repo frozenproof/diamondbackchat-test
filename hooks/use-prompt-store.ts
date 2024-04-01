@@ -11,6 +11,10 @@ interface PromptAPIData {
     serverInvite?: ServerInvite;
     apiUrl?: string;
     query?: Record<string, any>;
+    channelIdPropAPI?: string;
+    memberIdPropAPI?: string;
+    typeSend?: "sentMem" | "direct";
+
   }
 
 interface PromptStoredInfo {
