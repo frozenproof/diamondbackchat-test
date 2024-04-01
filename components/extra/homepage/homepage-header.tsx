@@ -6,7 +6,7 @@ export const HomePageHeader = () => {
         <div className="flex basis-full flex-col p-4 tracking-tight h-full
         items-center ">
             <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-center">
-                Euphoria 
+                LilTrees 
             </h3>
             <div className="text-base !m-0 !p-0 font-normal">
                 <span className="text-slate-500 ">
@@ -17,7 +17,7 @@ export const HomePageHeader = () => {
         <div className="flex basis-full flex-col p-4 tracking-tight h-full
         items-center ">
             <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-base text-center">
-                Euphoria 
+                LilTrees 
             </h3>
             <div className="text-base !m-0 !p-0 font-normal">
                 <span className="text-slate-500 ">

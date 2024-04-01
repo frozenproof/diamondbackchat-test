@@ -57,13 +57,13 @@ const DirectChatMemberIdPage = async ({
             currentMemberProp={profile}
             name={otherMember.name}
             directChatId={direct.id}
-            type="conversation"
+            type="direct"
             apiUrl="/api/messages/direct-get-api"
             paramKey="directChannelId"
             paramValue={direct.id}
-            socketUrl="/api/socket/direct-messages"
+            socketUrl="/api/messages"
             socketQuery={{
-              conversationId: direct.id,
+              channelId: direct.id,
             }}
           />
           <DirectMessageInput

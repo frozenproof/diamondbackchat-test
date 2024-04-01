@@ -17,7 +17,7 @@ export const EvervaultCardVer3 = ({
   const [randomString, setRandomString] = useState("");
 
   useEffect(() => {
-    let str = "Euphoria";
+    let str = "LilTrees";
     setRandomString(str);
   }, []);
 

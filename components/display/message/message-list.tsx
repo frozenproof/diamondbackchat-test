@@ -23,7 +23,7 @@ interface ChatMessagesProps {
   socketQuery: Record<string, string>;
   paramKey: "channelId" | "directChannelId";
   paramValue: string;
-  type: "channel" | "conversation";
+  type: "channel" | "direct";
 }
 
 export const ChatMessagesList = ({

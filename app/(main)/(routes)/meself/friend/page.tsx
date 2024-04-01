@@ -42,16 +42,24 @@ const FriendsPage = async({
         <TabsTrigger value="Pending">Pending</TabsTrigger>
         <TabsTrigger value="Blocked">Blocked</TabsTrigger>
       </TabsList>
-      <TabsContent value="Online">
-        <Card>
+      <TabsContent value="Online" 
+        className="h-full"
+      >
+        <Card
+          className="h-full bg-green-800"
+        >
           <CardHeader>
             <CardTitle>Friends who are online</CardTitle>
             <CardDescription>
               Anyone who is your friend and is online is displayed here
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="space-y-2  bg-red-800">
+            <div
+            >
+              testing w full
 
+            </div>
           </CardContent>
         </Card>
       </TabsContent>
@@ -66,25 +74,21 @@ const FriendsPage = async({
           <CardContent className="space-y-2">
 
           </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
+
         </Card>
       </TabsContent>
       <TabsContent value="Pending">
         <Card>
           <CardHeader>
-            <CardTitle>Account</CardTitle>
+            <CardTitle>Pending</CardTitle>
             <CardDescription>
-              Make changes to your account here. Click save when you're done.
+              People are busy , so be patient ! A friend is forever and ever .
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
 
           </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
+
         </Card>
       </TabsContent>
       <TabsContent value="Blocked">
@@ -98,9 +102,7 @@ const FriendsPage = async({
           <CardContent className="space-y-2">
 
           </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
+
         </Card>
       </TabsContent>
     </Tabs>

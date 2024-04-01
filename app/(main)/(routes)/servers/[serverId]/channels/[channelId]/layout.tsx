@@ -34,7 +34,7 @@ export async function generateMetadata(
     })
 
     return {
-      title: `Euphoria | `+channel?.name,
+      title: `LilTrees | `+channel?.name,
     }
 }
 

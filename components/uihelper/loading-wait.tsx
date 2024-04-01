@@ -6,7 +6,7 @@ export const LoadingMainPage = ({
         <div
             className="text-center"
         >
-            (　･ω･)☞	You are now loading into Euphoria
+            (　･ω･)☞	You are now loading into LilTrees
             
         </div>                          
     )

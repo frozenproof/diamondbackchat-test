@@ -24,7 +24,7 @@ interface ChatMessagesProps {
   socketQuery: Record<string, string>;
   paramKey: "channelId" | "directChannelId";
   paramValue: string;
-  type: "channel" | "conversation";
+  type: "channel" | "direct";
 }
 
 export const DirectChatMessages = ({
@@ -156,7 +156,7 @@ export const DirectChatMessages = ({
                     >
                       {isContiniousCock && (
                             <div
-                              className={`continiouschat ${ (isContiniousCock) ? `w-[58px]` : `` }`}
+                              className={`continiouschat ${ (isContiniousCock) ? `w-[64px]` : `` }`}
                             >
                               {isActiveItem && (
                                 <div

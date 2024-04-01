@@ -26,7 +26,7 @@ export async function generateMetadata(
     })
 
     return {
-      title: `Euphoria | Direct chat`,
+      title: `LilTrees | Direct chat`,
     }
 }
 

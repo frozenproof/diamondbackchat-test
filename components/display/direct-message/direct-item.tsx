@@ -106,11 +106,15 @@ export const DirectMessageItem = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: `${socketUrl}/${id}`,
+        url: `${socketUrl}/direct-channel-edit`,
         query: socketQuery,
       });
 
-      await axios.patch(url, values);
+      const contents = {
+        content: (values.content),
+        id: id
+      };
+      await axios.patch(url, contents);
 
       form.reset();
       setIsEditing(false);
@@ -201,7 +205,7 @@ export const DirectMessageItem = ({
               )}
             </p>
           )}
-          {!fileUrl && isEditing && (
+          {isEditing && (
             <Form {...form}>
               <form 
                 className="flex items-center w-full gap-x-2 pt-2"
@@ -238,6 +242,7 @@ export const DirectMessageItem = ({
       )}
       {(isContinious) && (
         <div
+          className="w-full"
         >
          {!fileUrl && !isEditing && (
             <p className={cn(
@@ -299,8 +304,9 @@ export const DirectMessageItem = ({
           <ActionTooltip label="Delete">
             <Trash
               onClick={() => onOpen("DeleteMessage", { 
-                apiUrl: `${socketUrl}/${id}`,
+                apiUrl: `${socketUrl}/direct-channel-delete`,
                 query: socketQuery,
+                messageId: id
                })}
               className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
             />

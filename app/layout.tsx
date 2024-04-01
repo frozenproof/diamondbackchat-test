@@ -16,7 +16,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 export const dynamicParams = true 
 export const maxDuration = 5
 export const metadata: Metadata = {
-  title: "Euphoria",
+  title: "LilTrees",
   description: "Everything you need , by Cattus",
   icons: "icon8.ico"
 };
