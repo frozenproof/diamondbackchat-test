@@ -17,19 +17,46 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar"
 import { currentUserProfile } from "@/lib/current-profile"
+import { db } from "@/lib/db"
+import { findFriendsDefault } from "@/lib/friend-lib"
+import { cn } from "@/lib/utils"
 import { Trees, User } from "lucide-react"
+import { redirect } from "next/navigation"
+import { array } from "zod"
 
 const FriendsPage = async({
   
 }) => {
   const profile = await currentUserProfile();
-  
-  // var friendList=;
+  if(!profile)
+  {
+    return redirect(`/`);
+  }
+  console.log(profile.id)
+  const friends = await db.friend.findMany(
+    {
+      where: {
+        OR: [
+          {friendOneId: profile.id},
+          {friendTwoId: profile.id}
+        ],
+        pending: false
+      },
+      include: {
+        friendOne: true,
+        friendTwo: true
+      }
+    }
+  )
+
+  // console.log("Friends",friends);
+
   return (
     <Tabs 
       defaultValue="Online"
-      className="w-full h-full">
+      className="w-full ">
       <TabsList className="grid w-full grid-cols-5">
         <div
           className="flex"
@@ -46,7 +73,7 @@ const FriendsPage = async({
         className="h-full"
       >
         <Card
-          className="h-full bg-green-800"
+          className="h-full"
         >
           <CardHeader>
             <CardTitle>Friends who are online</CardTitle>
@@ -54,12 +81,30 @@ const FriendsPage = async({
               Anyone who is your friend and is online is displayed here
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2  bg-red-800">
-            <div
-            >
-              testing w full
-
-            </div>
+          <CardContent className="space-y-2 h-full overflow-y-scroll ">
+          {friends.map((friendMember) => 
+            {
+              const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
+              return(
+                <div
+                  key={whichFriend.id}
+                  className="flex align-middle h-full"
+                >
+                        <UserProfileAvatar 
+                          src={whichFriend.imageUrl}
+                          className="h-8 w-8 md:h-8 md:w-8"
+                        />
+                        <p
+                          className={cn(
+                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle"
+                          )}
+                        >
+                          {whichFriend.name}
+                        </p>
+                </div>
+              )
+            }
+            )}
           </CardContent>
         </Card>
       </TabsContent>

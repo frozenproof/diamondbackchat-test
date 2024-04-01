@@ -4,13 +4,13 @@ import { db } from "@/lib/db";
 
 export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   console.log("Kiem_tra_direct_GETCREATE : \n",memberOneId,"\n",memberTwoId)
-  let conversation = await findDirectChannel(memberOneId, memberTwoId) || await findDirectChannel(memberTwoId, memberOneId);
+  let directConversation = await findDirectChannel(memberOneId, memberTwoId) || await findDirectChannel(memberTwoId, memberOneId);
 
-  if (!conversation) {
-    conversation = await createNewDirectChannel(memberOneId, memberTwoId);
+  if (!directConversation) {
+    directConversation = await createNewDirectChannel(memberOneId, memberTwoId);
   }
 
-  return conversation;
+  return directConversation;
 }
 export const getAllDirectChannel = async (memberOneId: string) => {
   console.log("Kiem_tra_direct_GET : \n",memberOneId,"\n")

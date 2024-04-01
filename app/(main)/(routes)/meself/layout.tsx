@@ -20,13 +20,12 @@ const MePageLayout = async ({
 
     if(!profile){
         return redirect(`/check-auth`);
-    }   
-
+    } 
     const direct = await getAllDirectChannel(profile.id);
     // console.log(`Channel arrays`,direct);
     if (!direct) {
-      return redirect(`/servers`);
-    }
+      return redirect(`/meself/friend`);
+    }   
     
     else
     {
