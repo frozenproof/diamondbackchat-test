@@ -85,8 +85,6 @@ export const MessageItem = ({
     }
     if (memberProp.id !== currentMember.id)
     {
-      const query = { param1: 'foo', param2: 'bar' }
-
       router.push(`/servers/${params?.serverId}/directChatChannels/${memberProp.id}/`);
     }
   }
@@ -106,8 +104,8 @@ export const MessageItem = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: content
-    }
+      content: content,
+    },
   });
 
   const isLoading = form.formState.isSubmitting;
@@ -115,11 +113,14 @@ export const MessageItem = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
-        url: `${socketUrl}/${id}`,
+        url: `${socketUrl}/channel-edit`,
         query: socketQuery,
       });
-
-      await axios.patch(url, values);
+      const contents = {
+        content: (values.content),
+        id: id
+      };
+      await axios.patch(url, contents);
 
       form.reset();
       setIsEditing(false);
@@ -140,12 +141,13 @@ export const MessageItem = ({
   const isModerator = currentMember.role === OldMemberRole.MODERATOR;
   const isOwner = currentMember.id === memberProp.id;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
-  const canEditMessage = !deleted && isOwner && !fileUrl;
+  const canEditMessage = !deleted && isOwner ;
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
 
-  
+  if(id)
   {
+    // console.log("Message Id",id);
     return (
     <div className={`relative group flex items-center w-full `}>
       {/* ${ (isContinious) ? `pl-[48px]` : `` } */}
@@ -171,7 +173,7 @@ export const MessageItem = ({
           </div>
           <FilesDisplay
           />
-          {!fileUrl && !isEditing && (
+          {!isEditing && (
             <p className={cn(
               "text-sm text-zinc-600 dark:text-zinc-300",
               deleted && "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
@@ -221,6 +223,7 @@ export const MessageItem = ({
       )}
       {(isContinious) && (
         <div
+          className="w-full"
         >
          {!fileUrl && !isEditing && (
             <p className={cn(
@@ -235,7 +238,7 @@ export const MessageItem = ({
               )}
             </p>
           )}
-          {!fileUrl && isEditing && (
+          {isEditing && (
             <Form {...form}>
               <form 
                 className="flex items-center w-full gap-x-2 pt-2"
@@ -244,12 +247,12 @@ export const MessageItem = ({
                     control={form.control}
                     name="content"
                     render={({ field }) => (
-                      <FormItem className="flex-1">
+                      <FormItem className="flex-1 w-full">
                         <FormControl>
                           <div className="relative w-full">
                             <Input
                               disabled={isLoading}
-                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full"
                               placeholder="Edited message"
                               {...field}
                             />
@@ -282,8 +285,9 @@ export const MessageItem = ({
           <ActionTooltip label="Delete">
             <Trash
               onClick={() => onOpen("DeleteMessage", { 
-                apiUrl: `${socketUrl}/${id}`,
+                apiUrl: `${socketUrl}/channel-delete`,
                 query: socketQuery,
+                messageId: id
                })}
               className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
             />

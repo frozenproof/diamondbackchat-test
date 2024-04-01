@@ -27,14 +27,14 @@ export const DeleteChannelPrompt = () => {
 
     const [ isLoading, setIsLoading ] = useState(false);
 
-    const onLeave = async() => {
+    const onDelete = async() => {
         try {
             setIsLoading(true);
-            
+            const serverId = channel?.serverId;
             await axios.delete(`/api/channels/${channel?.id}/delete-api`);
             onClose();
             router.refresh();
-            router.push("/");
+            router.push(`/server/${serverId}`);
         }
         catch(error)
         {
@@ -68,7 +68,7 @@ export const DeleteChannelPrompt = () => {
                         </Button>
                         <Button
                             disabled={isLoading}
-                            onClick={() => onLeave()}
+                            onClick={() => onDelete()}
                             variant="redprimary"
                         >
                             Yes 

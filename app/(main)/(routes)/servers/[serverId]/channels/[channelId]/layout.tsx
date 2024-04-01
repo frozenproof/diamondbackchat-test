@@ -104,21 +104,7 @@ const ChannelIdPageLayout = async ({
     // if(member)
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
-            {/* <div
-                className="w-full inset-y-0"
-            >
-                <ChannelHeader 
-                    serverId={params.serverId}
-                    name={channel.name}
-                    userAvatar={profile.imageUrl}
-                    userName={profile.name}
-                    userStatusProp={profile.status}
-                    membersList={members}
-                />
-            </div> */}
-            {/* <div
-                className="w-full"
-            > */}
+
                 <ChannelIdPage 
                     membersListProp={members}
                     memberProp={member}

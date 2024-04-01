@@ -14,7 +14,7 @@ interface PromptAPIData {
     channelIdPropAPI?: string;
     memberIdPropAPI?: string;
     typeSend?: "sentMem" | "direct";
-
+    messageId?: string;
   }
 
 interface PromptStoredInfo {

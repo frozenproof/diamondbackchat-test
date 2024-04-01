@@ -4,46 +4,33 @@ import { db } from "@/lib/db"
 import { NextApiResponseServerIo } from "@/type";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request,res: NextApiResponseServerIo){
+export async function PATCH(req: Request,res: NextApiResponseServerIo){
     try{
         const profile = await currentUserProfile();
-        const { content,checkFile } = await req.json();
+        const { content,id } = await req.json();
         const { searchParams } = new URL(req.url);
     
-        const serverIdProp = searchParams.get("serverId");
         const channelIdProp = searchParams.get("channelId");
 
         if (!profile) {
           return new NextResponse("Unauthorized", { status: 401 });
         }
     
-        if (!serverIdProp || !channelIdProp) {
+        if (!channelIdProp) {
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        // console.log("This is check file",checkFile);
-        const serverAPI = await db.server.findFirst({
-          where: {
-            id: serverIdProp as string,
-            Member: {
-              some: {
-                userProfileId: profile.id
-              }
-            }
-          },
-          include: {
-            Member: true,
-          }
-        });
-    
-        if(!serverAPI)
-        {
-          return null
-        }
+        console.log("This is check content",content);
+        console.log("This is check file",id);
 
-        const channel = await db.channel.findFirst({
+
+        const channel = await db.directChannel.findFirst({
           where: {
             id: channelIdProp as string,
+            OR: [
+              {memberOneId: profile.id},
+              {memberTwoId: profile.id}
+            ]
           }
         });
     
@@ -51,27 +38,30 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return null
         }
     
-        const member = serverAPI.Member.find((member) => member.userProfileId === profile.id);
-    
-        if (!member) {
-          return null
-        }
-    
-        const message = await db.message.create({
-          data: {
-            content,
+   
+        const message = await db.directMessage.upsert({
+          where:{
+            id:id,
+            directChannelId: channel.id
+          },
+          create: {
+            content: content,
             attachment: false,
-            channelId: channelIdProp as string,
-            memberId: member.id,
+            directChannelId: channelIdProp as string,
+            userProfileId: profile.id,
             isReply: false
           },
+          update: {
+            content: content,
+            edited: true
+          },
           include: {
-            member: true
+            userProfile: true
             }
         });
 
         const channelKey = `chat:${channelIdProp}:messages`;
-        console.log("this is channel key",channelKey);
+        console.log("this is direct channel edit",channelKey);
         // socket?.server?.emit(channelKey, message);
 
         return NextResponse.json(message);

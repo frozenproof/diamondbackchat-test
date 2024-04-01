@@ -24,7 +24,7 @@ export async function DELETE(
           id: params.channelId,
         },
         data: {
-          // deleted: true
+          deleted: true
         }
       });
   

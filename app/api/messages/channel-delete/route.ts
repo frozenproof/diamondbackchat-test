@@ -1,15 +1,18 @@
+"use server"
+
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db"
 import { NextApiResponseServerIo } from "@/type";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request,res: NextApiResponseServerIo){
+export async function PATCH(req: Request,res: NextApiResponseServerIo){
     try{
         const profile = await currentUserProfile();
-        const { content,checkFile } = await req.json();
+        const { messageId } = await req.json();
         const { searchParams } = new URL(req.url);
     
+        console.log("searchParams",req.url);
         const serverIdProp = searchParams.get("serverId");
         const channelIdProp = searchParams.get("channelId");
 
@@ -21,7 +24,11 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        // console.log("This is check file",checkFile);
+        if (!messageId)
+        {
+          return new NextResponse("Message ID missing", { status: 400 });
+        }
+        console.log("This is check file",messageId);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,
@@ -57,26 +64,28 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return null
         }
     
-        const message = await db.message.create({
-          data: {
-            content,
-            attachment: false,
-            channelId: channelIdProp as string,
-            memberId: member.id,
-            isReply: false
-          },
-          include: {
-            member: true
-            }
+        const message = await db.message.delete({
+          where:{
+            id:messageId
+          }
         });
 
+        // const message = await db.message.update({
+        //   where:{
+        //     id:messageId
+        //   },
+        //   data: {
+        //     edited: true,
+        //     deleted: true
+        //   },
+        // });
         const channelKey = `chat:${channelIdProp}:messages`;
-        console.log("this is channel key",channelKey);
+        console.log("this is channel delete",channelKey);
         // socket?.server?.emit(channelKey, message);
 
         return NextResponse.json(message);
       } catch (error) {
-        console.log("CHANNELS_POST", error);
+        console.log("MESSAGE_DELETE", error);
         return new NextResponse("Internal Error", { status: 500 });
       }
 }

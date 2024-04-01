@@ -13,7 +13,6 @@ import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 interface ChatMessagesProps {
   name: string;
@@ -148,7 +147,7 @@ export const ChatMessagesList = ({
                     >
                     {isContiniousCock && (
                           <div
-                            className={`continiouschat ${ (isContiniousCock) ? `w-[58px]` : `` }`}
+                            className={`continiouschat ${ (isContiniousCock) ? `w-[60px]` : `` }`}
                           >
                             {isActiveItem && (
                               <div

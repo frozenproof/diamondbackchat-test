@@ -4,10 +4,10 @@ import { db } from "@/lib/db"
 import { NextApiResponseServerIo } from "@/type";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request,res: NextApiResponseServerIo){
+export async function PATCH(req: Request,res: NextApiResponseServerIo){
     try{
         const profile = await currentUserProfile();
-        const { content,checkFile } = await req.json();
+        const { content,id } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const serverIdProp = searchParams.get("serverId");
@@ -21,7 +21,8 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        // console.log("This is check file",checkFile);
+        console.log("This is check content",content);
+        console.log("This is check file",id);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,
@@ -57,13 +58,20 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
           return null
         }
     
-        const message = await db.message.create({
-          data: {
-            content,
+        const message = await db.message.upsert({
+          where:{
+            id:id
+          },
+          create: {
+            content: content,
             attachment: false,
             channelId: channelIdProp as string,
             memberId: member.id,
             isReply: false
+          },
+          update: {
+            content: content,
+            edited: true
           },
           include: {
             member: true
@@ -71,7 +79,7 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
         });
 
         const channelKey = `chat:${channelIdProp}:messages`;
-        console.log("this is channel key",channelKey);
+        console.log("this is channel edit",channelKey);
         // socket?.server?.emit(channelKey, message);
 
         return NextResponse.json(message);

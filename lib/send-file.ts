@@ -44,6 +44,7 @@ export const sendFileExtra = async({
           attachment: true,
           channelId: channelIdFile as string,
           memberId: userIdFile as string,
+          isReply: false
         },
       });
     

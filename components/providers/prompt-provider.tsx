@@ -12,6 +12,7 @@ import { DeleteServerPrompt } from "@/components/prompts/server/delete-server-pr
 import { DeleteChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
 import { EditChannelPrompt } from "../prompts/channel/edit-channel-prompt";
 import { MessageFilePrompt } from "../prompts/file/message-file-modal";
+import { DeleteMessageModal } from "../prompts/message/delete-message-prompt";
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -37,6 +38,7 @@ export const PromptProvider = () => {
             <DeleteChannelPrompt />
             <EditChannelPrompt />
             <MessageFilePrompt />
+            <DeleteMessageModal />
         </>
     )
 }

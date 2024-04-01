@@ -54,7 +54,7 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/Member/${memberId}/delete-api`,
+                url: `/api/members/${memberId}/delete-api`,
                 query: {
                     serverId: server?.id,
                 },
@@ -79,7 +79,7 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/Member/${memberId}/role-api`,
+                url: `/api/members/${memberId}/role-api`,
                 query: {
                     serverId: server?.id,
                     memberId,

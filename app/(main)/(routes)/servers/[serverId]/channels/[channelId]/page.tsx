@@ -9,7 +9,6 @@ import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import { MediaRoom } from "@/components/livekit-call-room";
-import { MediaRoomOriginalVersion } from "@/components/media-room-orig";
 
 interface ChannelIdPageProps {
   // params: {
@@ -66,7 +65,7 @@ const ChannelIdPage = async ({
                     channelChatId={channelProp.id}
                     type="channel"
                     apiUrl="/api/messages/get-api"
-                    socketUrl="/api/messages/channel-send"
+                    socketUrl="/api/messages"
                     // socketUrl="/api/socket/messages"
                     socketQuery={{
                       channelId: channelProp.id,

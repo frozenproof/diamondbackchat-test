@@ -5,7 +5,6 @@ import { UserStatus } from "@prisma/client";
 import { RightChannelToggle } from "@/components/uihelper/right-channel-toggle";
 import { MemberWithProfile } from "@/type";
 import { ChannelSearchBar } from "./channel-search";
-import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 
 interface ChannelHeaderProps {
   serverId: string;
@@ -32,7 +31,7 @@ export const ChannelHeader = ({
         userName={userName}
         userStatus={userStatusProp}
         />
-      <p className="font-semibold text-md text-black dark:text-white">
+      <p className="font-semibold text-md text-black dark:text-white w-full">
         {name}
       </p>
       {/* <Pin /> */}
