@@ -63,7 +63,7 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
             content,
             attachment: false,
             channelId: channelIdProp as string,
-            memberId: member.id
+            memberId: member.id,
           },
           include: {
             member: true

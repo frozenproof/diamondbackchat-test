@@ -16,7 +16,13 @@ body,
   justify-content: center;
   /* width: 48px */
 }
-
+.avatar {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 48px */
+}
 /* .hover:continious-chat {
   display: block
 } */

@@ -1,5 +1,4 @@
-import { FileIcon } from "lucide-react"
-
+"use client"
 export const FilesDisplay = ({
     
 }) => {

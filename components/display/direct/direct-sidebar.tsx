@@ -1,5 +1,6 @@
+// "use server"
 
-import { Channel, DirectChannel, OldChannelType, OldMemberRole, Server } from "@prisma/client";
+import { Channel, DirectChannel, OldChannelType, OldMemberRole, Server, UserProfile } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
@@ -23,7 +24,10 @@ const iconMap :{[key: string]: React.ReactNode}= {
   }
   
   interface DirectSideBarProps {
-    directChannelProp: DirectChannel[],
+    directChannelProp: (DirectChannel & {
+      memberOne: UserProfile,
+      memberTwo: UserProfile
+    })[],
   }
 
 export const DirectSideBar = async({
@@ -34,7 +38,7 @@ export const DirectSideBar = async({
         redirect("/");
     }
 
-    // console.log("This is main direct",directChannelProp)
+
     return (
       <div>
         <DirectSideBarHeader 
@@ -44,12 +48,13 @@ export const DirectSideBar = async({
                 <div className="space-y-[2px]">
                   {directChannelProp.map((channel) => 
                   {
+                    const userAuth = (channel.memberOneId === profile.id);
                     return (
                     <DirectChannelItem
                       key={channel.id}
                       directChannelProp={channel}
-                      nameProp={""}
-                      avatar={""}
+                      nameProp={ userAuth ? channel.memberTwo.name : channel.memberOne.name}
+                      avatarProp={userAuth ? channel.memberTwo.imageUrl : channel.memberOne.imageUrl}
                     />)
                     })}
                 </div>

@@ -18,6 +18,7 @@ export const getAllDirectChannel = async (memberOneId: string) => {
   if (!conversation) {
     return null
   }
+  // console.log(conversation);
   return conversation;
 }
 
@@ -42,12 +43,13 @@ const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   }
 }
 
-const findAllDirectChannel = async (memberOneId: string) => {
+const findAllDirectChannel = async (memberId: string) => {
   try {
     const temp = await db.directChannel.findMany({
       where: {
-        AND: [
-          { memberOneId: memberOneId },
+        OR: [
+          { memberOneId: memberId },
+          { memberTwoId: memberId },          
         ]
         ,
         deleted: false

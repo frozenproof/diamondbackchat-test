@@ -37,7 +37,8 @@ export async function POST(req: Request){
             content,
             attachment: false,
             directChannelId: directChatIdProp as string,
-            userProfileId: profile.id
+            userProfileId: profile.id,
+            isReply: false
           },
           include: {
             userProfile: true

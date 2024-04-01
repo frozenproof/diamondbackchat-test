@@ -1,5 +1,4 @@
-import { Hash } from "lucide-react";
-
+"use client"
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 

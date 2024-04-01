@@ -14,16 +14,19 @@ import { cn } from "@/lib/utils";
 import { PromptType, usePrompt } from "@/hooks/use-prompt-store";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
+
 interface ServerChannelProps {
   directChannelProp: DirectChannel;
   nameProp: String;
-  avatar: String;
+  avatarProp: string;
 }
 
 export const DirectChannelItem = ({
   directChannelProp,
   nameProp,
-  avatar
+  avatarProp,
 }: ServerChannelProps) => {
   const { onOpen } = usePrompt();
   const params = useParams();
@@ -47,17 +50,33 @@ export const DirectChannelItem = ({
       )}
     >
       <div className={cn(
-        "font-semibold  text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition mr-auto",
+        "font-semibold flex text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition mr-auto h-[28px] w-full",
         params?.channelId === directChannelProp.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white "
       )}>
+        <div>
+          {/* <Avatar
+            className="h"
+          >
+            <AvatarImage 
+              src={avatar}
+            />
+          </Avatar> */}
+          <img 
+            alt=""
+            src={avatarProp}
+            className=""
+            width={"28px"}
+            height={"28px"}
+            style={{borderRadius: 50}}
+          />
+        </div>
         <div
-            className=" relative"
+            className="avatar text-center relative align-middle pl-[8px] h-full"
         >
-          Lmao
             {nameProp}
         </div>
         {
-        <div className="flex gap-x-2 relative">
+        <div className="flex gap-x-2 relative ml-auto">
           <ActionTooltip label="Delete">
             <Trash
               onClick={(e) => onAction(e, "DeleteChannel")}
