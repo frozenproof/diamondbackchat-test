@@ -102,6 +102,7 @@ export const DirectMessageItem = ({
     },
   });
  
+  console.log("What the fuck");
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -217,7 +218,7 @@ export const DirectMessageItem = ({
       )}
       {(isContinious) && (
         <div
-          className="w-full bg-green-800"
+          className="w-full "
         >
           {!isEditing && (
             <div 
@@ -226,7 +227,7 @@ export const DirectMessageItem = ({
           }
           style={{
             overflowWrap: "break-word",
-            width: (width<769) ? `${width-80}px` : `${width-320}px`
+            width: (width<769) ? `${width-80}px` : `${width-330}px`
           }}
           >
               {content}

@@ -9,18 +9,13 @@ import { DirectChatMessages } from "@/components/display/direct-message/direct-l
 import { MediaRoom } from "@/components/livekit-call-room";
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
 import { DirectChannel, UserProfile } from "@prisma/client";
+import { DirectChannelWithProfile } from "@/type";
 
 interface MemberIdPageProps {
     otherMember: UserProfile;
     directPageProp: DirectChannel ;
-    multiDirectPageProp: (DirectChannel & {
-      memberOne: UserProfile,
-      memberTwo: UserProfile
-    })[];
+    multiDirectPageProp: DirectChannelWithProfile[];
     profilePageProp: UserProfile;
-  // params: {
-  //   directId: string
-  // },
 }
 
 const DirectChatMemberIdPage = async ({
@@ -30,6 +25,8 @@ const DirectChatMemberIdPage = async ({
   multiDirectPageProp
 }: MemberIdPageProps) => {
 
+  console.log("DirectChatMemberIdPage");
+  if(otherMember)
   return ( 
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <DirectChannelHeader

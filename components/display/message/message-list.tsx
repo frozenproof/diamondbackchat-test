@@ -172,28 +172,28 @@ export const ChatMessagesList = ({
                       >
                         </div>
                     )}
-                <MessageItem
-                  key={message.id}
-                  id={message.id}
-                  currentUserMember={memberProp}
-                  memberProp={message.member}
-                  // userProp={message.member.userProfile}
-                  content={message.content}
-                  attachment={message.attachment}
-                  fileUrl=""
-                  deleted={message.deleted}
-                  timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                  isUpdated={message.edited}
-                  // isUpdated={message.updatedAt !== message.createdAt}
-                  socketUrl={socketUrl}
-                  socketQuery={socketQuery}
-                  isReply={false}
-                  replyId=""
-                  isContinious={isContiniousCock}
-                />
-              </div>
-             </div>
-            )}
+                    <MessageItem
+                      key={message.id}
+                      id={message.id}
+                      currentUserMember={memberProp}
+                      memberProp={message.member}
+                      // userProp={message.member.userProfile}
+                      content={message.content}
+                      attachment={message.attachment}
+                      fileUrl=""
+                      deleted={message.deleted}
+                      timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                      isUpdated={message.edited}
+                      // isUpdated={message.updatedAt !== message.createdAt}
+                      socketUrl={socketUrl}
+                      socketQuery={socketQuery}
+                      isReply={false}
+                      replyId=""
+                      isContinious={isContiniousCock}
+                    />
+                  </div>
+                </div>
+              )}
             )}
           </Fragment>
         ))}

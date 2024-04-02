@@ -1,6 +1,7 @@
 "use client"
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
+import { DirectChannelWithProfile } from "@/type";
 
 import { DirectChannel, UserProfile, UserStatus } from "@prisma/client";
 
@@ -8,13 +9,9 @@ interface DirectHeaderProps {
     userAvatarProp: string;
     userNameProp: string;
     userStatusProp: UserStatus;
-    directChannelProp?: (DirectChannel & {
-        memberOne: UserProfile,
-        memberTwo: UserProfile
-      })[];
+    directChannelProp?: DirectChannelWithProfile[];
     imageUrl?: string;
     name?: string;
-
   }
 
 export const DirectChannelHeader = ({

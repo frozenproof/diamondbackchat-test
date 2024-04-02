@@ -76,8 +76,6 @@ const DirectChannelIdPageLayout = async ({
       return null;
     }
 
-    const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
-   
     const multipleDirect = await db.directChannel.findMany({
       where: {
         OR: [
@@ -90,25 +88,31 @@ const DirectChannelIdPageLayout = async ({
         memberTwo: true
       }
     });
-  
-    if (!otherMember || !multipleDirect)
+    
+    if(direct)
     {
-        return null;
+      const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
+      if (!otherMember || !multipleDirect)
+      {
+          return redirect(`/meself/friend`);
+      }
+      // console.log("This is tag")
+      // console.log(otherMember);
+      if(otherMember)
+      return ( 
+          <div className="channelidpagelayout flex flex-col h-full">
+                  <DirectChatMemberIdPage 
+                      directPageProp={direct}
+                      otherMember={otherMember}
+                      profilePageProp={profile}
+                      multiDirectPageProp={multipleDirect}
+                  />
+          </div>
+       );
     }
-    console.log(otherMember);
-    if(direct && otherMember && profile && multipleDirect)
-    return ( 
-        <div className="channelidpagelayout flex flex-col h-full">
-                <DirectChatMemberIdPage 
-                    directPageProp={direct}
-                    otherMember={otherMember}
-                    profilePageProp={profile}
-                    multiDirectPageProp={multipleDirect}
-                />
-        </div>
-     );
 
-     return null;
+    return redirect(`/meself/friend`);
+
 }
  
 export default DirectChannelIdPageLayout;

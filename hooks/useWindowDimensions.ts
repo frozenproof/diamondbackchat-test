@@ -1,12 +1,23 @@
 import { useState, useEffect } from 'react';
 
 function getWindowDimensions() {
+  if(typeof window === "undefined")
+  {
+    return {
+      width: 80,
+      height: 80
+    };
+  }
+  else
+  {
+    console.log("typeof window",typeof window)
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    };
+  }
 
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
 }
 
 export default function useWindowDimensions() {

@@ -9,7 +9,7 @@ import { useChatQuery } from "@/hooks/use-chat-query";
 import { ChatWelcome } from "../channel-welcome";
 import { MessageWithMemberWithProfile, MessageWithMemberWithProfileEU, MessageWithMemberWithProfileWithFile, MessageWithProfile, MessageWithProfileWithFile } from "@/type";
 import { DirectMessageItem } from "./direct-item";
-import { useChatSocket } from "@/hooks/use-chat-socket";
+import { useChatSocket, useDirectChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"
@@ -38,10 +38,14 @@ export const DirectChatMessages = ({
   paramValue,
   type,
 }: ChatMessagesProps) => {
+  console.log("DirectChatMessages");
   const [activeId, setActiveId] = useState("tis but")
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
   const updateKey = `chat:${directChatId}:messages:update` 
+  const { height, width } = useWindowDimensions();
+
+  console.log("after useWindowDimensions")
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
   const {
@@ -56,7 +60,7 @@ export const DirectChatMessages = ({
     paramKey,
     paramValue,
   });
-  useChatSocket({ queryKey, addKey, updateKey });
+  useDirectChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
     bottomRef,
@@ -141,7 +145,6 @@ export const DirectChatMessages = ({
                     
                   </div>
                   <div
-                    key={message.id}
                     className={`flex ${ (isActiveItem) ? `bg-black/5` : `` }`}
                     onMouseEnter={() => setActiveElementOnHover(message.id)}
                     onMouseLeave={resetActiveElementOnLeave}
@@ -149,10 +152,10 @@ export const DirectChatMessages = ({
                     {isContiniousCock && (
                           <div
                             className={`continiouschat `}
-                            // style={{
-                            //   minWidth: (width<769) ? `${44}px` : `${56}px`,
-                            //   maxWidth: (width<769) ? `${44}px` : `${56}px`
-                            // }}
+                            style={{
+                              minWidth: (width<769) ? `${48}px` : `${60}px`,
+                              maxWidth: (width<769) ? `${48}px` : `${60}px`
+                            }}
                           >
                             {isActiveItem && (
                               <div
@@ -172,27 +175,27 @@ export const DirectChatMessages = ({
                         </div>
                     )}
                     <DirectMessageItem
-                        key={message.id}
-                        id={message.id}
-                        currentMember={currentMemberProp}
-                        memberProp={message.userProfile}
-                        // userProp={message.member.userProfile}
-                        content={message.content}
-                        attachment={message.attachment}
-                        fileUrl=""
-                        deleted={message.deleted}
-                        timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                        isUpdated={message.edited}
-                        // isUpdated={message.updatedAt !== message.createdAt}
-                        socketUrl={socketUrl}
-                        socketQuery={socketQuery}
-                        isReply={false}
-                        replyId=""
-                        isContinious={isContiniousCock}
-                      />
-                      </div>
-                 </div>
-            )}
+                      key={message.id}
+                      id={message.id}
+                      currentMember={currentMemberProp}
+                      memberProp={message.userProfile}
+                      // userProp={message.member.userProfile}
+                      content={message.content}
+                      attachment={message.attachment}
+                      fileUrl=""
+                      deleted={message.deleted}
+                      timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                      isUpdated={message.edited}
+                      // isUpdated={message.updatedAt !== message.createdAt}
+                      socketUrl={socketUrl}
+                      socketQuery={socketQuery}
+                      isReply={false}
+                      replyId=""
+                      isContinious={isContiniousCock}
+                    />
+                </div>
+              </div>
+              )}
             )}
           </Fragment>
         ))}
