@@ -11,13 +11,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-interface EmojiPickerProps {
-  onChange: (value: string) => void;
-}
 
-export const EmojiPicker = ({
-  onChange,
-}: EmojiPickerProps) => {
+export const UserProfilePopover = ({
+  
+}) => {
   const { resolvedTheme } = useTheme();
 
   return (
@@ -32,11 +29,7 @@ export const EmojiPicker = ({
         sideOffset={40}
         className="bg-transparent border-none shadow-none drop-shadow-none mb-16"
       >
-        <Picker
-          theme={resolvedTheme}
-          data={data}
-          onEmojiSelect={(emoji: any) => onChange(emoji.native)}
-        />
+
       </PopoverContent>
     </Popover>
   )

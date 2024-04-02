@@ -45,8 +45,10 @@ export const MediaRoom = ({
     (async () => {
       try {
         const name = userIdProp;
+        const room2 = "quickstart-room";
+        const name2 = "quickstart-user";
         const resp = await fetch(
-          `/api/livekit-create-token?room=${chatId}&username=${name}`
+          `/api/livekit-create-token?room=${room2}&username=${name2}`
         );
         const data = await resp.json();
         setToken(data.token);
@@ -78,8 +80,13 @@ export const MediaRoom = ({
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
       token={token}
       connect={true}
-      video={video}
+      video={false}
       audio={audio}
+      options={{
+        publishDefaults: {
+          videoCodec: 'vp9',
+        },
+      }}
     >
       {/* Your custom component with basic video conferencing functionality. */}
       {/* <MyVideoConference /> */}

@@ -102,7 +102,7 @@ export const DirectMessageItem = ({
     },
   });
  
-  console.log("What the fuck");
+  // console.log("What the fuck");
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+//hiển thị cho message item và bất cứ chỗ nào cần thay đổi kích thước theo màn hình hiển thị
 function getWindowDimensions() {
   if(typeof window === "undefined")
   {
@@ -10,7 +10,7 @@ function getWindowDimensions() {
   }
   else
   {
-    console.log("typeof window",typeof window)
+    // console.log("typeof window",typeof window)
     const { innerWidth: width, innerHeight: height } = window;
     return {
       width,
