@@ -1,13 +1,12 @@
 "use client";
 
 import { ElementRef, Fragment, useEffect, useRef, useState } from "react";
-import { Member, Message, UserProfile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 
 import { ChatWelcome } from "../channel-welcome";
-import { MessageWithMemberWithProfile, MessageWithMemberWithProfileEU, MessageWithMemberWithProfileWithFile, MessageWithProfile } from "@/type";
+import { MemberWithProfile,  MessageWithMemberWithProfileWithFile } from "@/type";
 import { MessageItem } from "./message-item";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
@@ -17,7 +16,7 @@ import { format } from "date-fns"
 
 interface ChatMessagesProps {
   name: string;
-  memberProp: Member;
+  memberProp: MemberWithProfile;
   channelChatId?: string;
   apiUrl: string;
   socketUrl: string;
@@ -176,7 +175,7 @@ export const ChatMessagesList = ({
                       key={message.id}
                       id={message.id}
                       currentUserMember={memberProp}
-                      memberProp={message.member}
+                      currentMessageMemberProp={message.member}
                       // userProp={message.member.userProfile}
                       content={message.content}
                       attachment={message.attachment}

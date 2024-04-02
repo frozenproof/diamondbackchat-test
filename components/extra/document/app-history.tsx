@@ -1,7 +1,4 @@
-import { CardBody, CardContainer, CardItem } from "@/components/effects/3d-card";
-import { CardStack } from "@/components/effects/card-stack";
 import { StickyScroll } from "@/components/effects/sticky-scroll-reveal";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 const content = [

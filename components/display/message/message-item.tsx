@@ -25,19 +25,19 @@ import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { FilesDisplay } from "../files-display-message";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { MemberWithProfile } from "@/type";
+import { UserProfilePopover } from "../user-profile-popover";
 
 interface ChatItemProps {
   id: string;
   content: string;
-  memberProp: Member & {
-    userProfile: UserProfile;
-  };
+  currentMessageMemberProp: MemberWithProfile;
   // userProp: UserProfile;
   timestamp: string;
   attachment: boolean;
   fileUrl: string | null;
   deleted: boolean;
-  currentUserMember: Member;
+  currentUserMember: MemberWithProfile;
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
@@ -60,7 +60,7 @@ const formSchema = z.object({
 export const MessageItem = ({
   id,
   content,
-  memberProp,
+  currentMessageMemberProp,
   attachment,
   timestamp,
   fileUrl,
@@ -79,14 +79,17 @@ export const MessageItem = ({
   const params = useParams();
   const router = useRouter();
 
+  const serverIdProp = params?.serverId as string;
+  const messageMemberProp = currentMessageMemberProp;
+  const currentMemberProp = currentMember;
   const onMemberClick = () => {
-    console.log(`memberPROP2/${memberProp.id == currentMember.id ? `Giong nhau + ${currentMember.id}` : `Khac nhau + ${memberProp.id}`} `);
-    if (memberProp.id === currentMember.id) {
+    console.log(`memberPROP2/${currentMemberProp.id == currentMember.id ? `Giong nhau + ${currentMember.id}` : `Khac nhau + ${currentMemberProp.id}`} `);
+    if (currentMemberProp.id === currentMember.id) {
       return;
     }
-    if (memberProp.id !== currentMember.id)
+    if (currentMemberProp.id !== currentMember.id)
     {
-      router.push(`/servers/${params?.serverId}/directChatChannels/${memberProp.id}/`);
+      router.push(`/servers/${params?.serverId}/directChatChannels/${currentMemberProp.id}/`);
     }
   }
 
@@ -140,7 +143,7 @@ export const MessageItem = ({
 
   const isAdmin = currentMember.role === OldMemberRole.ADMIN;
   const isModerator = currentMember.role === OldMemberRole.MODERATOR;
-  const isOwner = currentMember.id === memberProp.id;
+  const isOwner = currentMember.id === currentMemberProp.id;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner ;
   const isPDF = fileType === "pdf" && fileUrl;
@@ -160,17 +163,16 @@ export const MessageItem = ({
       {/* ${ (isContinious) ? `pl-[48px]` : `` } */}
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
-         
-        <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
-          {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
-          <UserProfileAvatar src={memberProp.userProfile.imageUrl} />
-        </div>
-        
+         <UserProfilePopover 
+          currentMemberProp={currentMember}
+          messageMemberProp={messageMemberProp}
+          serverIdProp={serverIdProp}
+         />
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
-                {memberProp.nickname}
+                {currentMemberProp.nickname}
               </p>
 
             </div>
@@ -199,7 +201,7 @@ export const MessageItem = ({
               )}
             </div>
           )}
-          {!fileUrl && isEditing && (
+          {isEditing && (
             <Form {...form}>
               <form 
                 className="flex items-center w-full gap-x-2 pt-2"
@@ -315,10 +317,5 @@ export const MessageItem = ({
     </div>
   )
   }
-  // else
-  // {
-    
-  // }
-  
+ 
 }
-// }

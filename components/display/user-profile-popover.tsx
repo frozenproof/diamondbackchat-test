@@ -10,26 +10,49 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { MemberWithProfile } from "@/type";
+import { useRouter } from "next/navigation";
+import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
 
-
+interface UserProfilePopoverProps {
+  serverIdProp: string;
+  messageMemberProp:MemberWithProfile;
+  currentMemberProp: MemberWithProfile;
+}
 export const UserProfilePopover = ({
-  
-}) => {
-  const { resolvedTheme } = useTheme();
+  currentMemberProp,
+  messageMemberProp,
+  serverIdProp
+}: UserProfilePopoverProps) => {
 
+  const router = useRouter();
+  const onMemberClick = () => {
+    console.log(`memberPROP2/${messageMemberProp.id == currentMemberProp.id ? `Giong nhau + ${currentMemberProp.id}` : `Khac nhau + ${messageMemberProp.id}`} `);
+    if (messageMemberProp.id === currentMemberProp.id) {
+      return;
+    }
+    if (messageMemberProp.id !== currentMemberProp.id)
+    {
+      router.push(`/servers/${serverIdProp}/directChatChannels/${messageMemberProp.id}/`);
+    }
+  }
   return (
     <Popover>
       <PopoverTrigger>
-        <Trees
-          className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
-        />
+        <div className="cursor-pointer hover:drop-shadow-md transition">
+          {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
+          <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
+        </div>
       </PopoverTrigger>
       <PopoverContent 
         side="right" 
-        sideOffset={40}
-        className="bg-transparent border-none shadow-none drop-shadow-none mb-16"
+        sideOffset={20}
+        className=""
       >
-
+        
+        <div onClick={onMemberClick} >
+          Click here to direct chat
+        </div>
       </PopoverContent>
     </Popover>
   )

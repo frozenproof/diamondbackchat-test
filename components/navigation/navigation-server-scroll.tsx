@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
 
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "@/components/navigation/navigation-item";
 import { EvervaultCardVer2 } from "../effects/evervault/EvervaultCardVer2";
 

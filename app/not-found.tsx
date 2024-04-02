@@ -1,4 +1,3 @@
-import { CardBody, CardContainer, CardItem } from "@/components/effects/3d-card";
 import { EvervaultCard } from "@/components/effects/evervault/EvervaultCard";
 
 import { Link } from "lucide-react";

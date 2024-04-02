@@ -1,6 +1,5 @@
 "use server"
 
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -21,11 +20,11 @@ import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-to
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar"
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
-import { findFriendsDefault } from "@/lib/friend-lib"
+
 import { cn } from "@/lib/utils"
 import { Trees, User } from "lucide-react"
 import { redirect } from "next/navigation"
-import { array } from "zod"
+
 
 const FriendsPage = async({
   
@@ -68,8 +67,6 @@ const FriendsPage = async({
       }
     }
   )
-
-  // console.log("Friends",friends);
 
   return (
     <Tabs 
