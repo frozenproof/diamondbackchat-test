@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 
   const apiKey = process.env.LIVEKIT_API_KEY;
   const apiSecret = process.env.LIVEKIT_API_SECRET;
-  const wsUrl = process.env.NEXT_PUBLIC_LIVEKIT_URL;
+  const wsUrl = process.env.NEXT_PUBLIC_LIVEKIT_WS_URL;
 
   console.log("apiKey",apiKey);
   console.log("apiSecret",apiSecret);
@@ -25,10 +25,11 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
   }
 
-  const at = new AccessToken(apiKey, apiSecret, { identity: "username" });
+  const at = new AccessToken(apiKey, apiSecret, { identity: username });
 
   at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
-
+  const realToken = await at.toJwt()
   console.log("token is ",at);
-  return NextResponse.json({ token: at.toJwt() });
+  console.log("token is ",realToken);
+  return NextResponse.json(realToken);
 }

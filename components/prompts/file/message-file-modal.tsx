@@ -66,7 +66,7 @@ export const MessageFilePrompt = () => {
   }
   if(!channelIdPropAPI || !memberIdPropAPI)
   {
-    console.log("No channel detected");
+    // console.log("No channel detected");
     return null;
   }
   return (

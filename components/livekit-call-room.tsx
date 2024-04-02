@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GridLayout, LiveKitRoom, ParticipantTile, VideoConference, useTracks } from "@livekit/components-react";
+import { ControlBar, GridLayout, LiveKitRoom, ParticipantTile, PreJoin, VideoConference, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
+import { Channel } from "@prisma/client";
 import { useUser } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import { Track } from "livekit-client";
+import { redirect } from "next/navigation";
 
 interface MediaRoomProps {
   chatId: string;
@@ -20,52 +22,72 @@ export const MediaRoom = ({
   audio,
   userIdProp
 }: MediaRoomProps) => {
-  const profile = useUser();
-  const [tokenState, setTokenState] = useState("");
-  var nameUser;
+  const { user } = useUser();
+  const [token, setToken] = useState("");
 
+  // useEffect(() => {
+  //   if (!user?.firstName || !user?.lastName) return;
+
+  //   const name = userIdProp;
+
+  //   (async () => {
+  //     try {
+  //       const resp = await fetch(`/api/livekit-create-token?room=${chatId}&username=${name}`);
+  //       const data = await resp.json();
+  //       console.log(data);
+  //       setToken(data.token);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   })()
+  // }, [user?.firstName, user?.lastName, chatId]);
   useEffect(() => {
     (async () => {
       try {
-        const resp = await fetch(`/api/livekit-create-token?room=${chatId}&username=${userIdProp}`);
+        const name = userIdProp;
+        const resp = await fetch(
+          `/api/livekit-create-token?room=${chatId}&username=${name}`
+        );
         const data = await resp.json();
-        nameUser = data.token;
-        console.log("token is ",nameUser)
+        setToken(data.token);
+        console.log(data);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
-    })()
-  }, [nameUser,chatId]);
-
-  if (nameUser === "") {
+    })();
+  }, [userIdProp]);
+  if (token === "") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <Loader2
           className="h-7 w-7 text-zinc-500 animate-spin my-4"
         />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Loading...
+        Loading {process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
         </p>
       </div>
     )
   }
-  else
-  {
-    // console.log("This is read")
-    return (
-      <LiveKitRoom
-        data-lk-theme="default"
-        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
-        token={nameUser}
-        connect={true}
-        video={video}
-        audio={audio}
-      >
-        <VideoConference />
-      </LiveKitRoom>
-    )
-  }
 
+  return (
+    <div
+      className="h-full"
+    >
+      <LiveKitRoom
+      data-lk-theme="default"
+      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
+      token={token}
+      connect={true}
+      video={video}
+      audio={audio}
+    >
+      {/* Your custom component with basic video conferencing functionality. */}
+      {/* <MyVideoConference /> */}
+      <VideoConference />
+    </LiveKitRoom>
+    </div>
+
+  )
 }
 
 function MyVideoConference() {
@@ -76,14 +98,13 @@ function MyVideoConference() {
       { source: Track.Source.Camera, withPlaceholder: true },
       { source: Track.Source.ScreenShare, withPlaceholder: false },
     ],
-    { onlySubscribed: true },
+    { onlySubscribed: false },
   );
   return (
     <GridLayout tracks={tracks} style={{ height: 'calc(100vh - var(--lk-control-bar-height))' }}>
       {/* The GridLayout accepts zero or one child. The child is used
       as a template to render all passed in tracks. */}
-        <ParticipantTile />
-     
+      <ParticipantTile />
     </GridLayout>
   );
 }

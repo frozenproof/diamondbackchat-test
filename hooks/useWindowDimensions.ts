@@ -4,8 +4,8 @@ function getWindowDimensions() {
   if(typeof window === "undefined")
   {
     return {
-      width: 80,
-      height: 80
+      width: 8880,
+      height: 8880
     };
   }
   else

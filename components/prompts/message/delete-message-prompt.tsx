@@ -43,7 +43,7 @@ export const DeleteMessageModal = () => {
     }
   }
 
-  console.log("Delete message prompt",messageId);
+  // console.log("Delete message prompt",messageId);
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">

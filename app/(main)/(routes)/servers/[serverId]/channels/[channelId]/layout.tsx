@@ -97,7 +97,7 @@ const ChannelIdPageLayout = async ({
     {
         return redirect("/meself");
     }
-    // if(member)
+
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
 
