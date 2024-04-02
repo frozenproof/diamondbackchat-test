@@ -42,8 +42,6 @@ export const DirectChatMessages = ({
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
   const updateKey = `chat:${directChatId}:messages:update` 
-  const { height, width } = useWindowDimensions();
-
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
   const {
@@ -151,10 +149,10 @@ export const DirectChatMessages = ({
                     {isContiniousCock && (
                           <div
                             className={`continiouschat `}
-                            style={{
-                              minWidth: (width<769) ? `${44}px` : `${56}px`,
-                              maxWidth: (width<769) ? `${44}px` : `${56}px`
-                            }}
+                            // style={{
+                            //   minWidth: (width<769) ? `${44}px` : `${56}px`,
+                            //   maxWidth: (width<769) ? `${44}px` : `${56}px`
+                            // }}
                           >
                             {isActiveItem && (
                               <div

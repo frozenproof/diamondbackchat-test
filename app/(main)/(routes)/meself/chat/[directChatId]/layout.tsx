@@ -1,4 +1,4 @@
-import { redirectToSignIn } from "@clerk/nextjs";
+
 import { redirect } from "next/navigation";
 
 
@@ -42,7 +42,7 @@ const DirectChannelIdPageLayout = async ({
     const profile = await currentUserProfile();
 
     if(!profile){
-        return redirectToSignIn();
+        return redirect(`/`);
     }
 
     const channel = await db.directChannel.findFirstOrThrow({
@@ -57,13 +57,58 @@ const DirectChannelIdPageLayout = async ({
         return redirect("/meself");
     }
 
+    const directId = params.directChatId;
+
+    if (!profile) {
+      return redirect(`/`);
+    }
+  
+    const direct = await db.directChannel.findFirstOrThrow({
+      where: {
+        id: directId
+      },
+      include: {
+        memberOne: true,
+        memberTwo: true
+      }
+    });
+    if (!direct ) {
+      return null;
+    }
+
+    const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
+   
+    const multipleDirect = await db.directChannel.findMany({
+      where: {
+        OR: [
+          {memberOneId: profile.id},
+          {memberTwoId: profile.id}
+        ]
+      },
+      include: {
+        memberOne: true,
+        memberTwo: true
+      }
+    });
+  
+    if (!otherMember || !multipleDirect)
+    {
+        return null;
+    }
+    console.log(otherMember);
+    if(direct && otherMember && profile && multipleDirect)
     return ( 
-        <div className="flex flex-col h-full">
+        <div className="channelidpagelayout flex flex-col h-full">
                 <DirectChatMemberIdPage 
-                    params={{directId: params.directChatId}}
+                    directPageProp={direct}
+                    otherMember={otherMember}
+                    profilePageProp={profile}
+                    multiDirectPageProp={multipleDirect}
                 />
         </div>
      );
+
+     return null;
 }
  
 export default DirectChannelIdPageLayout;

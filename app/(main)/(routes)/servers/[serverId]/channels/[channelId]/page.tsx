@@ -29,12 +29,6 @@ const ChannelIdPage = async ({
   channelProp,
   memberProp
 }: ChannelIdPageProps) => {
-  // const profile = await currentUserProfile();
-
-  // if (!profile) {
-  //   return redirectToSignIn();
-  // }
-
   if(!channelProp || !memberProp)
   {
     return null

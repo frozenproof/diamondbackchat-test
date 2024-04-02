@@ -2,13 +2,16 @@
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
-import { UserStatus } from "@prisma/client";
+import { DirectChannel, UserProfile, UserStatus } from "@prisma/client";
 
 interface DirectHeaderProps {
     userAvatarProp: string;
     userNameProp: string;
     userStatusProp: UserStatus;
-
+    directChannelProp?: (DirectChannel & {
+        memberOne: UserProfile,
+        memberTwo: UserProfile
+      })[];
     imageUrl?: string;
     name?: string;
 
@@ -19,10 +22,13 @@ export const DirectChannelHeader = ({
     name,
     userAvatarProp,
     userNameProp,
-    userStatusProp
+    userStatusProp,
+    directChannelProp
 }:DirectHeaderProps) => {
 
 
+    if(!userAvatarProp || !directChannelProp)
+    return null;
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
         {/* <MobileToggle serverId={serverId} /> */}
@@ -30,7 +36,7 @@ export const DirectChannelHeader = ({
         userAvatar={userAvatarProp}
         userName={userNameProp}
         userStatus={userStatusProp}
-        isDirectProp={true}
+        directChannelProp={directChannelProp}
         />
         <UserProfileAvatar 
             src={imageUrl}

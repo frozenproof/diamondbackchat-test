@@ -9,13 +9,9 @@ import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { Metadata, ResolvingMetadata } from "next";
-import { ChannelHeader } from "@/components/display/channel/channel-header";
+
 import ChannelIdPage from "./page";
-import { Suspense } from "react";
-import { LoadingMainPage } from "@/components/uihelper/loading-wait";
-import { MessageInput } from "@/components/display/message/message-input";
-import { ChatMessagesList } from "@/components/display/message/message-list";
-import { OldChannelType } from "@prisma/client";
+
 
 type Props = {
     params: { serverId: string ,channelId: string }

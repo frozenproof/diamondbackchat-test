@@ -8,70 +8,58 @@ import { DirectChannelHeader } from "@/components/display/direct/direct-header";
 import { DirectChatMessages } from "@/components/display/direct-message/direct-list";
 import { MediaRoom } from "@/components/livekit-call-room";
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
+import { DirectChannel, UserProfile } from "@prisma/client";
 
 interface MemberIdPageProps {
-  params: {
-    directId: string
-  },
+    otherMember: UserProfile;
+    directPageProp: DirectChannel ;
+    multiDirectPageProp: (DirectChannel & {
+      memberOne: UserProfile,
+      memberTwo: UserProfile
+    })[];
+    profilePageProp: UserProfile;
+  // params: {
+  //   directId: string
+  // },
 }
 
 const DirectChatMemberIdPage = async ({
-  params,
+  directPageProp,
+  otherMember,
+  profilePageProp,
+  multiDirectPageProp
 }: MemberIdPageProps) => {
-  const profile = await currentUserProfile();
-
-  if (!profile) {
-    return redirectToSignIn();
-  }
-
-  const direct = await db.directChannel.findFirstOrThrow({
-    where: {
-      id: params.directId
-    },
-    include: {
-      memberOne: true,
-      memberTwo: true
-    }
-  });
-
-  if (!direct) {
-    return redirect(`/meself/friend`);
-  }
-
-  // console.log("currentUSERID",profile.id)
-  // console.log("memberone",direct.memberOne.id);
-  // console.log("membertwo",direct.memberTwo.id);
-  const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
 
   return ( 
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <DirectChannelHeader
         imageUrl={otherMember.imageUrl}
         name={otherMember.name}
-        userAvatarProp={profile.imageUrl}
-        userNameProp={profile.name}
-        userStatusProp={profile.status}
+        userAvatarProp={profilePageProp.imageUrl}
+        userNameProp={profilePageProp.name}
+        userStatusProp={profilePageProp.status}
+        directChannelProp={multiDirectPageProp}
       />
       <>
           <DirectChatMessages
-            currentMemberProp={profile}
+            currentMemberProp={profilePageProp}
             name={otherMember.name}
-            directChatId={direct.id}
+            directChatId={directPageProp.id}
             type="direct"
             apiUrl="/api/messages/direct-get-api"
             paramKey="directChannelId"
-            paramValue={direct.id}
+            paramValue={directPageProp.id}
             socketUrl="/api/messages"
             socketQuery={{
-              channelId: direct.id,
+              channelId: directPageProp.id,
             }}
           />
           <DirectMessageInput
-            memberIdProp={profile.id}
+            memberIdProp={directPageProp.id}
             channelName={otherMember.name}
             apiUrl="/api/messages/direct-channel-send"
             query={{
-              directChatId: direct.id,
+              directChatId: directPageProp.id,
             }}
           />
         </>
