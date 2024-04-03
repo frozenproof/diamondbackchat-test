@@ -43,7 +43,7 @@ export async function GET(
               userProfile: true
             }
           },
-          Attachment: true
+          AttachmentChannel: true
         },
         orderBy: {
           createdAt: "desc",
@@ -62,7 +62,7 @@ export async function GET(
               userProfile: true
             }
           },
-          Attachment: true
+          AttachmentChannel: true
         },
         orderBy: {
           createdAt: "desc",

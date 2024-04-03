@@ -38,7 +38,7 @@ export async function GET(
         },
         include: {
           userProfile: true,
-          Attachment: true
+          AttachmentDirect: true
         },
         orderBy: {
           createdAt: "desc",
@@ -51,9 +51,8 @@ export async function GET(
           directChannelId,
         },
         include: {
-          userProfile: true,
-          
-          Attachment: true
+          userProfile: true,          
+          AttachmentDirect: true
         },
         orderBy: {
           createdAt: "desc",

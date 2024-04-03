@@ -37,8 +37,9 @@ export type MessageWithMemberWithProfile = Message & {
 export type MessageWithMemberWithProfileWithFile = Message & {
         member: Member & {
           userProfile: UserProfile
-        }
-      } & AttachmentChannel[];
+        };
+        AttachmentChannel: AttachmentChannel[];
+      } 
 
 export type MessageWithProfileWithFile = DirectMessage & {
   userProfile: UserProfile & AttachmentChannel[];

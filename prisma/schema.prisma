@@ -144,7 +144,7 @@ model Message {
   channelId String
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
-  attachment Boolean @default(false)
+  hasAttachment Boolean @default(false)
   deleted    Boolean @default(false)
 
   isReply          Boolean
@@ -155,7 +155,7 @@ model Message {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Attachment AttachmentChannel[]
+  AttachmentChannel AttachmentChannel[]
 
   @@index([channelId])
   @@index([memberId])
@@ -179,7 +179,7 @@ model DirectMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  Attachment      AttachmentDirect[]
+  AttachmentDirect      AttachmentDirect[]
   DirectChannel   DirectChannel?     @relation(fields: [directChannelId], references: [id])
   directChannelId String?
 

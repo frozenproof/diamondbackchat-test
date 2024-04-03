@@ -60,7 +60,7 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
         const message = await db.message.create({
           data: {
             content,
-            attachment: false,
+            hasAttachment: false,
             channelId: channelIdProp as string,
             memberId: member.id,
             isReply: false

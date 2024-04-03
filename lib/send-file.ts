@@ -41,7 +41,7 @@ export const sendFileExtra = async({
       const sendingFile = await db.message.create({
         data: {
           content:"",
-          attachment: true,
+          hasAttachment: true,
           channelId: channelIdFile as string,
           memberId: userIdFile as string,
           isReply: false

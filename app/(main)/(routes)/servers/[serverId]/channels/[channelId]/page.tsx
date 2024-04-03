@@ -4,7 +4,7 @@ import { Channel, Member, Message, OldChannelType, UserProfile } from "@prisma/c
 
 import { MessageInput } from "@/components/display/message/message-input";
 import { Fragment, Suspense } from "react";
-import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
+import { MemberWithProfile} from "@/type";
 import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";

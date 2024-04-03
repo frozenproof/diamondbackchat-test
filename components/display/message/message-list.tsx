@@ -132,6 +132,7 @@ export const ChatMessagesList = ({
             {
               var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
               var isActiveItem = (activeId === message.id)
+              console.log("this is message list file",message.AttachmentChannel)
               return (
                 <div
                   key={message.id}
@@ -178,12 +179,13 @@ export const ChatMessagesList = ({
                       currentMessageMemberProp={message.member}
                       // userProp={message.member.userProfile}
                       content={message.content}
-                      attachment={message.attachment}
+                      hasAttachment={message.hasAttachment}
                       fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                      isUpdated={message.edited}
-                      // isUpdated={message.updatedAt !== message.createdAt}
+                      // isUpdated={message.edited}
+                      attachmentsList={message.AttachmentChannel} 
+                      isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={false}

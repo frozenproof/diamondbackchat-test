@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Member, OldMemberRole, UserProfile } from "@prisma/client";
+import { AttachmentChannel, AttachmentDirect, Member, OldMemberRole, UserProfile } from "@prisma/client";
 import { Edit, Magnet, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
@@ -33,7 +33,8 @@ interface ChatItemProps {
   currentMessageMemberProp: MemberWithProfile;
   // userProp: UserProfile;
   timestamp: string;
-  attachment: boolean;
+  hasAttachment: boolean;
+  attachmentsList?: AttachmentChannel[] 
   fileUrl: string | null;
   deleted: boolean;
   currentUserMember: MemberWithProfile;
@@ -60,7 +61,7 @@ export const MessageItem = ({
   id,
   content,
   currentMessageMemberProp,
-  attachment,
+  hasAttachment,
   timestamp,
   fileUrl,
   deleted,
@@ -69,6 +70,7 @@ export const MessageItem = ({
   socketUrl,
   socketQuery,
   isContinious,
+  attachmentsList,
   isReply,
   replyId
 
@@ -78,6 +80,8 @@ export const MessageItem = ({
   const params = useParams();
   const router = useRouter();
 
+  if(hasAttachment)
+  console.log("file props",attachmentsList);
   const serverIdProp = params?.serverId as string;
   const messageMemberProp = currentMessageMemberProp;
   const currentMemberProp = currentMember;
@@ -178,8 +182,15 @@ export const MessageItem = ({
               {timestamp}
             </span>
           </div>
-          <FilesDisplay
-          />
+          {(hasAttachment) &&
+              (
+                  <FilesDisplay
+                    fileProps={attachmentsList}
+                    isChannel={true}
+                  />
+              )          
+          }
+          
           {!isEditing && (
             <div 
             className={              
@@ -254,6 +265,14 @@ export const MessageItem = ({
                   (edited)
                 </span>
               )}
+              {(hasAttachment) &&
+              (
+                  <FilesDisplay
+                    fileProps={attachmentsList}
+                    isChannel={true}
+                  />
+              )          
+              }
             </div>
           )}
           {isEditing && (
