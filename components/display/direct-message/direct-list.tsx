@@ -38,7 +38,7 @@ export const DirectChatMessages = ({
   paramValue,
   type,
 }: ChatMessagesProps) => {
-  console.log("DirectChatMessages");
+  // console.log("DirectChatMessages");
   const [activeId, setActiveId] = useState("tis but")
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;

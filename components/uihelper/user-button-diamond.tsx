@@ -24,7 +24,7 @@ export const UserButtonDiamond = ({
 
     return (
         <div
-            className="w-full flex "
+            className="w-full flex hover:bg-[#cdcdd391] p-1"
         >
             <div
                 className="flex "

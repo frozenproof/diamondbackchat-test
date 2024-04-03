@@ -21,11 +21,7 @@ const MePageLayout = async ({
     if(!profile){
         return redirect(`/check-auth`);
     } 
-    const direct = await getAllDirectChannel(profile.id);
-    // console.log(`Channel arrays`,direct);
-    if (!direct) {
-      return redirect(`/meself/friend`);
-    }   
+
     
     else
     {
@@ -36,7 +32,7 @@ const MePageLayout = async ({
                     bg-[#F2F3F5]
                 ">
                     <DirectSideBar 
-                        directChannelProp={direct}
+                        userProfileId={profile.id}
                     />
                     <div
                         className="mt-auto pt-1 pb-1 pl-1 flex"

@@ -174,9 +174,6 @@ export const DirectMessageItem = ({
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
                 {UserProp.name}
               </p>
-              {/* <ActionTooltip label={memberProp.role}>
-                {roleIconMap[memberProp.role]}
-              </ActionTooltip> */}
             </div>
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}

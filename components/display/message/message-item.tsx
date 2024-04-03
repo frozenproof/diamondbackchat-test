@@ -82,13 +82,13 @@ export const MessageItem = ({
   const messageMemberProp = currentMessageMemberProp;
   const currentMemberProp = currentMember;
   const onMemberClick = () => {
-    console.log(`memberPROP2/${currentMemberProp.id == currentMember.id ? `Giong nhau + ${currentMember.id}` : `Khac nhau + ${currentMemberProp.id}`} `);
-    if (currentMemberProp.id === currentMember.id) {
+    console.log(`memberPROP2/${currentMemberProp.userProfileId == currentMessageMemberProp.userProfileId ? `Giong nhau + ${currentMessageMemberProp.userProfileId}` : `Khac nhau + ${currentMessageMemberProp.userProfileId}`} `);
+    if (currentMemberProp.userProfileId === currentMessageMemberProp.userProfileId) {
       return;
     }
-    if (currentMemberProp.id !== currentMember.id)
+    if (currentMemberProp.userProfileId !== currentMessageMemberProp.userProfileId)
     {
-      router.push(`/servers/${params?.serverId}/directChatChannels/${currentMemberProp.id}/`);
+      router.push(`/api/directRequest/${currentMessageMemberProp.userProfileId}/`);
     }
   }
 
@@ -202,7 +202,7 @@ export const MessageItem = ({
           {isEditing && (
             <Form {...form}>
               <form 
-                className="flex items-center w-full gap-x-2 pt-2"
+                className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
                 onSubmit={form.handleSubmit(onSubmit)}>
                   <FormField
                     control={form.control}
@@ -210,7 +210,7 @@ export const MessageItem = ({
                     render={({ field }) => (
                       <FormItem className="flex-1">
                         <FormControl>
-                          <div className="relative w-full">
+                          <div className="relative w-full overflow-y-scroll">
                             <Input
                               disabled={isLoading}
                               className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 overflow-y-scroll"
@@ -259,19 +259,19 @@ export const MessageItem = ({
           {isEditing && (
             <Form {...form}>
               <form 
-                className="flex items-center w-full gap-x-2 pt-2"
+                className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
                 onSubmit={form.handleSubmit(onSubmit)}>
                   <FormField
                     control={form.control}
                     name="content"
                     render={({ field }) => (
-                      <FormItem className="flex-1 w-full">
+                      <FormItem className="flex-1 w-full overflow-y-scroll">
                         <FormControl>
-                          <div className="relative w-full">
+                          <div className="relative w-full overflow-y-scroll">
                             <Input
                               disabled={isLoading}
                               className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full overflow-y-scroll h-full"
-                              placeholder="Edited message"
+                              placeholder="Edited message overflow-y-scroll"
                               {...field}
                             />
                           </div>

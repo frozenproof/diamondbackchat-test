@@ -29,7 +29,7 @@ const DirectChatMemberIdPage = async ({
         userAvatarProp={profilePageProp.imageUrl}
         userNameProp={profilePageProp.name}
         userStatusProp={profilePageProp.status}
-        directChannelProp={multiDirectPageProp}
+        userProfileIdProp={profilePageProp.id}
       />
       <>
           <DirectChatMessages

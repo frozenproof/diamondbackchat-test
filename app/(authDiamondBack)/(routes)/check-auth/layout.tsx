@@ -20,7 +20,7 @@ const CheckAuthPageLayout = async (
     {
         // console.log(profile);
         return ( 
-            redirect(`/meself`)
+            redirect(`/meself/friend`)
         );
     }
 }

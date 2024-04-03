@@ -30,25 +30,26 @@ interface UserProfilePopoverProps {
   currentMemberProp?: MemberWithProfile;
   directUserProp?: UserProfile;
   currentUserProp?: UserProfile;
+  justUserProp?: UserProfile;
 }
 export const UserProfilePopover = ({
   currentMemberProp,
   messageMemberProp,
   serverIdProp,
   directUserProp,
-  currentUserProp
+  currentUserProp,
+  justUserProp
 }: UserProfilePopoverProps) => {
 
-  const router = useRouter();
-  const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
+  const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
   if(messageMemberProp && currentMemberProp && serverIdProp)
   {
     const onMemberClick = () => {
-      if(!idChecker(messageMemberProp.id,currentMemberProp.id))
+      if(!idChecker(messageMemberProp.userProfileId,currentMemberProp.userProfileId))
       {
-        router.push(`/servers/${serverIdProp}/directChatChannels/${messageMemberProp.id}/`);
+        routerPush(messageMemberProp.userProfileId);
       }
     }
   
@@ -63,20 +64,17 @@ export const UserProfilePopover = ({
         <PopoverContent 
           side="right" 
           // sideOffset={0}
-          className="bg-red-800 w-[380px]"
+          className="bg-transparent w-[380px]"
         >
           <Card className="w-full">
           <CardHeader>
             <CardTitle>
-              <UserProfileAvatar 
-                className="h-[80px] w-[80px]"
-              />
               <Avatar
-              className="h-[80x] w-[80px]"
+                className="h-[80x] w-[80px]"
               >
                 <AvatarImage   src={messageMemberProp.userProfile.imageUrl} 
                />
-              </Avatar>        
+              </Avatar>           
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -128,7 +126,7 @@ export const UserProfilePopover = ({
     const onMemberClick = () => {
       if(!idChecker(directUserProp.id,currentUserProp.id))
       {
-        router.push(`/meself/directChatChannels/${directUserProp.id}/`);
+        routerPush(directUserProp.id);
       }
     }
   
@@ -142,14 +140,11 @@ export const UserProfilePopover = ({
         <PopoverContent 
           side="right" 
           // sideOffset={0}
-          className="bg-red-800 w-[380px]"
+          className="bg-transparent w-[380px]"
         >
           <Card className="w-full">
           <CardHeader>
             <CardTitle>
-              <UserProfileAvatar 
-                className="h-[80px] w-[80px]"
-              />
               <Avatar
               className="h-[80x] w-[80px]"
               >
@@ -207,4 +202,10 @@ export const UserProfilePopover = ({
 function idChecker(id1: string , id2: string)
 {
   return(id1 === id2)
+}
+
+function routerPush(userProfileId: string)
+{
+  const router = useRouter();
+  router.push(`/api/directRequest/${userProfileId}/`);
 }

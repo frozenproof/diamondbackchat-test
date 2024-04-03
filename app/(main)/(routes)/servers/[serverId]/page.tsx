@@ -16,8 +16,9 @@ const ServerIdPage = async(
     const profile = await currentUserProfile();
     if(!profile)
     {
-        return redirect(`/meself`);
+        return redirect(`/meself/friend`);
     }
+    if(params.serverId)
     return (
         <EvervaultCard
             className="text-center border-[8px] "

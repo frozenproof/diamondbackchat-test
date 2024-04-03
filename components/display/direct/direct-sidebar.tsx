@@ -6,24 +6,27 @@ import { redirect } from "next/navigation";
 import { currentUserProfile } from "@/lib/current-profile"
 import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 import { DirectChannelItem } from "./direct-item";
-import { useEffect } from "react";
+
+import { getAllDirectChannel } from "@/lib/direct-search";
 
 
 interface DirectSideBarProps {
-    directChannelProp?: (DirectChannel & {
-      memberOne: UserProfile,
-      memberTwo: UserProfile
-    })[],
+  userProfileId?: string;
   }
 
 export const DirectSideBar = async({
-  directChannelProp
+  userProfileId
 }: DirectSideBarProps) => {
-    const profile = await currentUserProfile();
-    if(!profile){
-        redirect("/");
-    }
 
+    if(!userProfileId)
+    {
+      return redirect(`/`);
+    }
+    const directChannelProp = await getAllDirectChannel(userProfileId);
+    // console.log(`Channel arrays`,direct);
+    if (!directChannelProp) {
+      return redirect(`/meself/friend`);
+    }   
     if(directChannelProp)
     return (
       <div>
@@ -34,7 +37,7 @@ export const DirectSideBar = async({
                 <div className="space-y-[2px]">
                   {directChannelProp.map((channel) => 
                   {
-                    const userAuth = (channel.memberOneId === profile.id);
+                    const userAuth = (channel.memberOneId === userProfileId);
                     return (
                     <DirectChannelItem
                       key={channel.id}

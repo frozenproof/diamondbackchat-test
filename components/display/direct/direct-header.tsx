@@ -9,7 +9,7 @@ interface DirectHeaderProps {
     userAvatarProp: string;
     userNameProp: string;
     userStatusProp: UserStatus;
-    directChannelProp?: DirectChannelWithProfile[];
+    userProfileIdProp?: string;
     imageUrl?: string;
     name?: string;
   }
@@ -20,11 +20,11 @@ export const DirectChannelHeader = ({
     userAvatarProp,
     userNameProp,
     userStatusProp,
-    directChannelProp
+    userProfileIdProp
 }:DirectHeaderProps) => {
 
 
-    if(!userAvatarProp || !directChannelProp)
+    if(!userAvatarProp || !userProfileIdProp)
     return null;
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
@@ -33,7 +33,7 @@ export const DirectChannelHeader = ({
         userAvatar={userAvatarProp}
         userName={userNameProp}
         userStatus={userStatusProp}
-        directChannelProp={directChannelProp}
+        userProfileIdProp={userProfileIdProp}
         />
         <UserProfileAvatar 
             src={imageUrl}

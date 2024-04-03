@@ -77,7 +77,7 @@ const FriendsPage = async({
           userAvatar={profile.imageUrl}
           userName={profile.name}
           userStatus={profile.status}
-          directChannelProp={direct}
+          userProfileIdProp={profile.id}
         />
         <div
           className="flex"

@@ -101,12 +101,12 @@ const DirectChannelIdPageLayout = async ({
       if(otherMember)
       return ( 
           <div className="channelidpagelayout flex flex-col h-full">
-                  <DirectChatMemberIdPage 
-                      directPageProp={direct}
-                      otherMember={otherMember}
-                      profilePageProp={profile}
-                      multiDirectPageProp={multipleDirect}
-                  />
+            <DirectChatMemberIdPage 
+                directPageProp={direct}
+                otherMember={otherMember}
+                profilePageProp={profile}
+                multiDirectPageProp={multipleDirect}
+            />
           </div>
        );
     }
