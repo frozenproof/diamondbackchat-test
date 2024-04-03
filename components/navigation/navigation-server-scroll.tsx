@@ -28,7 +28,7 @@ export const NavigationServerScroll = async() => {
     
     if(!servers)
     {
-        return redirect("/meself");
+        return redirect("/meself/friend");
     }
     
     return (

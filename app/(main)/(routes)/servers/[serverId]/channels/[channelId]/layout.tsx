@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -64,7 +63,7 @@ const ChannelIdPageLayout = async ({
 
     if(!server)
     {
-        return redirect("/meself");
+        return redirect("/meself/friend");
     }
     
     const channel = await db.channel.findFirstOrThrow({
@@ -95,19 +94,17 @@ const ChannelIdPageLayout = async ({
     })
     if(!members || !channel || !member)
     {
-        return redirect("/meself");
+        return redirect("/meself/friend");
     }
 
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
-
                 <ChannelIdPage 
                     membersListProp={members}
                     memberProp={member}
                     channelProp={channel}
                     serverIdProp={server.id}
                 />
-
         </div>
      );
 }

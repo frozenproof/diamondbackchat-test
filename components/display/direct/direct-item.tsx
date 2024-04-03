@@ -1,13 +1,9 @@
 "use client";
 
 import { 
-  Channel, 
   DirectChannel, 
-  OldChannelType, 
-  OldMemberRole,
-  Server
 } from "@prisma/client";
-import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
+import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
@@ -51,13 +47,6 @@ export const DirectChannelItem = ({
         params?.channelId === directChannelProp.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white "
       )}>
         <div>
-          {/* <Avatar
-            className="h"
-          >
-            <AvatarImage 
-              src={avatar}
-            />
-          </Avatar> */}
           <img 
             alt=""
             src={avatarProp}

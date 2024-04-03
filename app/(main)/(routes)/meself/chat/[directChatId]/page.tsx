@@ -3,12 +3,11 @@ import { DirectChatMessages } from "@/components/display/direct-message/direct-l
 
 import { DirectMessageInput } from "@/components/display/direct-message/direct-input";
 import { DirectChannel, UserProfile } from "@prisma/client";
-import { DirectChannelWithProfile } from "@/type";
+import { Suspense } from "react";
 
 interface MemberIdPageProps {
     otherMember: UserProfile;
     directPageProp: DirectChannel ;
-    multiDirectPageProp: DirectChannelWithProfile[];
     profilePageProp: UserProfile;
 }
 
@@ -16,45 +15,52 @@ const DirectChatMemberIdPage = async ({
   directPageProp,
   otherMember,
   profilePageProp,
-  multiDirectPageProp
-}: MemberIdPageProps) => {
+  }: MemberIdPageProps) => {
 
   console.log("DirectChatMemberIdPage");
   if(otherMember)
   return ( 
-    <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
-      <DirectChannelHeader
-        imageUrl={otherMember.imageUrl}
-        name={otherMember.name}
-        userAvatarProp={profilePageProp.imageUrl}
-        userNameProp={profilePageProp.name}
-        userStatusProp={profilePageProp.status}
-        userProfileIdProp={profilePageProp.id}
-      />
-      <>
-          <DirectChatMessages
-            currentMemberProp={profilePageProp}
-            name={otherMember.name}
-            directChatId={directPageProp.id}
-            type="direct"
-            apiUrl="/api/messages/direct-get-api"
-            paramKey="directChannelId"
-            paramValue={directPageProp.id}
-            socketUrl="/api/messages"
-            socketQuery={{
-              channelId: directPageProp.id,
-            }}
-          />
-          <DirectMessageInput
-            memberIdPropInput={profilePageProp.id}
-            channelName={otherMember.name}
-            apiUrl="/api/messages/direct-channel-send"
-            query={{
-              directChatId: directPageProp.id,
-            }}
-          />
-        </>
-    </div>
+    <Suspense
+      fallback={
+        <div>
+          Loading
+        </div>
+      }
+    >
+      <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+        <DirectChannelHeader
+          imageUrl={otherMember.imageUrl}
+          name={otherMember.name}
+          userAvatarProp={profilePageProp.imageUrl}
+          userNameProp={profilePageProp.name}
+          userStatusProp={profilePageProp.status}
+          userProfileIdProp={profilePageProp.id}
+        />
+        <>
+            <DirectChatMessages
+              currentMemberProp={profilePageProp}
+              name={otherMember.name}
+              directChatId={directPageProp.id}
+              type="direct"
+              apiUrl="/api/messages/direct-get-api"
+              paramKey="directChannelId"
+              paramValue={directPageProp.id}
+              socketUrl="/api/messages"
+              socketQuery={{
+                channelId: directPageProp.id,
+              }}
+            />
+            <DirectMessageInput
+              memberIdPropInput={profilePageProp.id}
+              channelName={otherMember.name}
+              apiUrl="/api/messages/direct-channel-send"
+              query={{
+                directChatId: directPageProp.id,
+              }}
+            />
+          </>
+      </div>
+    </Suspense>
    );
 }
  

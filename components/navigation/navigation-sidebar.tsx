@@ -10,6 +10,7 @@ import { NavigationServerScroll } from "@/components/navigation/navigation-serve
 
 import { NavigationSelf } from "./navigation-self";
 import { SocketStatusDisplay } from "../socket/socket-status-display";
+import { Suspense } from "react";
 
 export const NavigationSideBar = (async () => {
     const profile = await currentUserProfile();
@@ -21,6 +22,13 @@ export const NavigationSideBar = (async () => {
 
 
     return ( 
+        <Suspense
+            fallback={
+                <div>
+                    Loading
+                </div>
+            }
+        >
         <div className="space-y-4 flex flex-col items-center h-full text-primary w-full "
             // style={{backgroundColor: '#00000000'}}
         >
@@ -42,6 +50,8 @@ export const NavigationSideBar = (async () => {
                 <ModeToggle />
             </div>
         </div>
+        </Suspense>
+
      );
 })
  

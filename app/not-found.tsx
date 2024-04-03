@@ -15,7 +15,7 @@ export default function Custom404() {
           You must have tried to access a page that doesn't exist anymore , or you simply don't have such authority.
         </div>
         <a
-          href="/meself"
+          href="/meself/friend"
         >
           Click here to return 
         </a>

@@ -3,7 +3,7 @@
 import { Channel, Member, Message, OldChannelType, UserProfile } from "@prisma/client";
 
 import { MessageInput } from "@/components/display/message/message-input";
-import { Fragment, Suspense } from "react";
+import { Suspense } from "react";
 import { MemberWithProfile} from "@/type";
 import { ChatMessagesList } from "@/components/display/message/message-list";
 

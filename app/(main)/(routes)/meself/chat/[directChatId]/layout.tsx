@@ -54,7 +54,7 @@ const DirectChannelIdPageLayout = async ({
 
     if( !channel )
     {
-        return redirect("/meself");
+        return redirect("/meself/friend");
     }
 
     const directId = params.directChatId;
@@ -96,8 +96,7 @@ const DirectChannelIdPageLayout = async ({
       {
           return redirect(`/meself/friend`);
       }
-      // console.log("This is tag")
-      // console.log(otherMember);
+
       if(otherMember)
       return ( 
           <div className="channelidpagelayout flex flex-col h-full">
@@ -105,7 +104,6 @@ const DirectChannelIdPageLayout = async ({
                 directPageProp={direct}
                 otherMember={otherMember}
                 profilePageProp={profile}
-                multiDirectPageProp={multipleDirect}
             />
           </div>
        );

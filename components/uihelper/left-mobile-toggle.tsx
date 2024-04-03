@@ -11,7 +11,7 @@ import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { UserButtonDiamond } from "./user-button-diamond";
 import { DirectChannel, UserProfile, UserStatus } from "@prisma/client";
 import { DirectSideBar } from "../display/direct/direct-sidebar";
-import React from "react";
+import React, { Suspense } from "react";
 
 export const MobileNavigationLeftToggle = async({
   serverId,
@@ -30,6 +30,7 @@ export const MobileNavigationLeftToggle = async({
   console.log("wutmobiles",serverId?.toString);
   console.log("wutmobileu",userProfileIdProp?.toString);
   return (
+    <Suspense>
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
@@ -61,6 +62,7 @@ export const MobileNavigationLeftToggle = async({
         </div>
       </SheetContent>
     </Sheet>
+    </Suspense>
   )
 }
 

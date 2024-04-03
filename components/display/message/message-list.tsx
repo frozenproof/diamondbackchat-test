@@ -132,7 +132,7 @@ export const ChatMessagesList = ({
             {
               var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
               var isActiveItem = (activeId === message.id)
-              console.log("this is message list file",message.AttachmentChannel)
+              // console.log("this is message list file",message.AttachmentChannel)
               return (
                 <div
                   key={message.id}
