@@ -22,7 +22,7 @@ interface MessageInputProps {
   apiUrl: string;
   query: Record<string, any>;
   channelName: string;
-  memberIdProp: string;
+  memberIdPropInput: string;
 }
 
 const formSchema = z.object({
@@ -33,7 +33,7 @@ export const DirectMessageInput = ({
   apiUrl,
   query,
   channelName,
-  memberIdProp
+  memberIdPropInput
 }: MessageInputProps) => {
   const { onOpen } = usePrompt();
   const router = useRouter();
@@ -46,7 +46,7 @@ export const DirectMessageInput = ({
   });
 
   const isLoading = form.formState.isSubmitting;
-  const channelId = query.directChannelId;
+  const channelId = query.directChatId;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -65,6 +65,7 @@ export const DirectMessageInput = ({
     }
   }
 
+  console.log("direct-input",memberIdPropInput)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -77,7 +78,7 @@ export const DirectMessageInput = ({
                 <div className="relative p-4 pb-6">
                   <button
                     type="button"
-                    onClick={() => onOpen("MessageFile", { channelIdPropAPI: channelId,memberIdPropAPI:memberIdProp,typeSend: "direct" })}
+                    onClick={() => onOpen("MessageFile", { channelIdPropAPI: channelId,memberIdPropAPI: memberIdPropInput,typeSend: "direct" })}
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                   >
                     <Plus className="text-white dark:text-[#313338]" />

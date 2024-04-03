@@ -168,7 +168,7 @@ model DirectMessage {
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
-  attachment Boolean @default(false)
+  hasAttachment Boolean @default(false)
   deleted    Boolean @default(false)
 
   isReply          Boolean

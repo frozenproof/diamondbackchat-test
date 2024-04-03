@@ -41,7 +41,7 @@ export const UserProfilePopover = ({
   justUserProp
 }: UserProfilePopoverProps) => {
 
-
+  const router = useRouter();
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
   if(messageMemberProp && currentMemberProp && serverIdProp)
@@ -49,7 +49,7 @@ export const UserProfilePopover = ({
     const onMemberClick = () => {
       if(!idChecker(messageMemberProp.userProfileId,currentMemberProp.userProfileId))
       {
-        routerPush(messageMemberProp.userProfileId);
+        router.push(`/api/directRequest/${messageMemberProp.userProfileId}`);
       }
     }
   
@@ -126,7 +126,7 @@ export const UserProfilePopover = ({
     const onMemberClick = () => {
       if(!idChecker(directUserProp.id,currentUserProp.id))
       {
-        routerPush(directUserProp.id);
+        router.push(`/api/directRequest/${directUserProp.id}`);
       }
     }
   
@@ -204,8 +204,3 @@ function idChecker(id1: string , id2: string)
   return(id1 === id2)
 }
 
-function routerPush(userProfileId: string)
-{
-  const router = useRouter();
-  router.push(`/api/directRequest/${userProfileId}/`);
-}

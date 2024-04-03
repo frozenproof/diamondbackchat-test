@@ -7,7 +7,7 @@ import { Loader2, ServerCrash } from "lucide-react";
 import { useChatQuery } from "@/hooks/use-chat-query";
 
 import { ChatWelcome } from "../channel-welcome";
-import { MessageWithMemberWithProfile, MessageWithMemberWithProfileEU, MessageWithMemberWithProfileWithFile, MessageWithProfile, MessageWithProfileWithFile } from "@/type";
+import { MessageWithProfileWithFile } from "@/type";
 import { DirectMessageItem } from "./direct-item";
 import { useChatSocket, useDirectChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
@@ -181,7 +181,8 @@ export const DirectChatMessages = ({
                       UserProp={message.userProfile}
                       // userProp={message.member.userProfile}
                       content={message.content}
-                      attachment={message.attachment}
+                      hasAttachment={message.hasAttachment}
+                      attachmentsList={message.AttachmentDirect}
                       fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}

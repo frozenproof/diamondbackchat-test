@@ -35,7 +35,7 @@ export async function POST(req: Request){
         const message = await db.directMessage.create({
           data: {
             content,
-            attachment: false,
+            hasAttachment: false,
             directChannelId: directChatIdProp as string,
             userProfileId: profile.id,
             isReply: false

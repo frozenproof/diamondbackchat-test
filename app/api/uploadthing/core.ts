@@ -30,7 +30,7 @@ export const ourUniqueFileRouter = {
 export const multiFileRouter = {
     messageFile: f(
         {
-            image:{maxFileCount:8},
+            image:{maxFileCount:8,maxFileSize:"16MB"},
             pdf:{maxFileCount:8},
             video:{maxFileCount:8}
         })

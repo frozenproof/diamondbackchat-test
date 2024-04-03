@@ -8,7 +8,7 @@ import "@uploadthing/react/styles.css";
 interface MultiFileUploadProps {
     channelIdProp : string;
     memberIdProp: string;
-    type: "sentMem" | "direct"
+    type: "sentMem" | "direct" | undefined
 }
 export const MultiFileUpload = ({
     channelIdProp,
@@ -16,6 +16,7 @@ export const MultiFileUpload = ({
     type
 }: MultiFileUploadProps) => {
 
+    if(type)
     return ( 
         <UploadMultiDropzone
             endpoint = {"messageFile"}
@@ -25,7 +26,7 @@ export const MultiFileUpload = ({
                 console.log("Member ID",memberIdProp)
                 console.log("Lmao_UPLOADING",res);
                 console.log("Res",typeof(res));
-                const temp = await sendFileExtra({channelIdFile:channelIdProp,userIdFile:memberIdProp,typeSend:"sentMem",resProp: res});
+                const temp = await sendFileExtra({channelIdFile:channelIdProp,userIdFile:memberIdProp,typeSend:type,resProp: res});
             }}
             onUploadError={(error: Error) =>{
                 console.log(error);

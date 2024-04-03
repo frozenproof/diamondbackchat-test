@@ -38,7 +38,8 @@ export const MessageFilePrompt = () => {
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "MessageFile";
-  const { channelIdPropAPI,memberIdPropAPI } = propData;
+  const { channelIdPropAPI,memberIdPropAPI,typeSend } = propData;
+  console.log("this is message file modal",channelIdPropAPI,"\n",memberIdPropAPI);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -66,7 +67,7 @@ export const MessageFilePrompt = () => {
   }
   if(!channelIdPropAPI || !memberIdPropAPI)
   {
-    // console.log("No channel detected");
+    console.log("No channel detected");
     return null;
   }
   return (
@@ -93,7 +94,7 @@ export const MessageFilePrompt = () => {
                         <MultiFileUpload
                           channelIdProp={channelIdPropAPI}
                           memberIdProp={memberIdPropAPI}
-                          type="sentMem"
+                          type={typeSend}
                         />
                       </FormControl>
                     </FormItem>

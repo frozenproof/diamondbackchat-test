@@ -5,7 +5,7 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Member, OldMemberRole, UserProfile } from "@prisma/client";
+import { AttachmentDirect, Member, OldMemberRole, UserProfile } from "@prisma/client";
 import { Edit, FileIcon, Magnet, Settings, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { UserProfilePopover } from "../user-profile-popover";
+import { FilesDisplay } from "../files-display-message";
 
 interface ChatItemProps {
   id: string;
@@ -32,7 +33,8 @@ interface ChatItemProps {
   UserProp: UserProfile;
   // userProp: UserProfile;
   timestamp: string;
-  attachment: boolean;
+  hasAttachment: boolean;
+  attachmentsList?: AttachmentDirect[]; 
   fileUrl: string | null;
   deleted: boolean;
   currentUser: UserProfile;
@@ -59,7 +61,8 @@ export const DirectMessageItem = ({
   id,
   content,
   UserProp,
-  attachment,
+  hasAttachment,
+  attachmentsList,
   timestamp,
   fileUrl,
   deleted,
@@ -77,6 +80,7 @@ export const DirectMessageItem = ({
   const params = useParams();
   const router = useRouter();
 
+  console.log("direct item",attachmentsList);
   const onMemberClick = () => {
     if (UserProp.id === currentUser.id) {
       return;
@@ -178,6 +182,14 @@ export const DirectMessageItem = ({
             <span className="text-xs text-zinc-500 dark:text-zinc-400">
               {timestamp}
             </span>
+            {(hasAttachment) &&
+              (
+                  <FilesDisplay
+                    directFileProps={attachmentsList}
+                    isChannel={false}
+                  />
+              )          
+            }
           </div>
           {!fileUrl && !isEditing && (
             <p className={cn(
@@ -247,6 +259,14 @@ export const DirectMessageItem = ({
                   (edited)
                 </span>
               )}
+              {(hasAttachment) &&
+              (
+                  <FilesDisplay
+                    directFileProps={attachmentsList}
+                    isChannel={false}
+                  />
+              )          
+              }
             </div>
           )}
           {!fileUrl && isEditing && (

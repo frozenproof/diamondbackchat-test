@@ -11,7 +11,7 @@ interface sendFileExtraProps
 {
     channelIdFile: string;
     userIdFile: string;
-    typeSend: "sentMem" | "direct"
+    typeSend: "sentMem" | "direct"; 
     resProp: fileInterfaceProps[]
 }
 export const sendFileExtra = async({
@@ -24,7 +24,7 @@ export const sendFileExtra = async({
    console.log("",channelIdFile);
    console.log("",userIdFile);
    console.log("",typeSend);
-   console.log("res",resProp);
+   console.log("resSendFileProp",resProp);
 
    if(typeSend==="sentMem")
    {
@@ -61,6 +61,40 @@ export const sendFileExtra = async({
       }
     }
 
+    if(typeSend==="direct")
+    {
+     const channel = await db.directChannel.findFirst({
+         where: {
+           id: channelIdFile as string,
+         }
+       });
+     
+       if (!channel) {
+         return null
+       }
+     
+       const sendingFile = await db.directMessage.create({
+         data: {
+           content:"",
+           hasAttachment: true,
+           directChannelId: channelIdFile as string,
+           userProfileId: userIdFile as string,
+           isReply: false
+         },
+       });
+     
+       for(let i=0;i<resProp.length;i++)
+       {
+         const attachmentFile = await db.attachmentDirect.create({
+             data: {
+                 directMessageId: sendingFile.id,
+                 directChannelId: channelIdFile as string,
+                 fileUrl: resProp[i].url as string,
+                 type: resProp[i].type as string
+             }
+           })
+       }
+     }
 
    return "";
 }
