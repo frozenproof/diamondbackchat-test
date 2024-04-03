@@ -1,10 +1,8 @@
 "use server"
 
 import { NavigationAction } from "@/components/navigation/navigation-action";
-import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/uihelper/mode-toggle";
 import { NavigationServerScroll } from "@/components/navigation/navigation-server-scroll";
-import { NavigationSelf } from "./navigation-self";
 import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 import { Suspense } from "react";
 import { db } from "@/lib/db";

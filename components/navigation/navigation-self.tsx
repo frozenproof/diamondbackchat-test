@@ -5,11 +5,12 @@ import { Home } from "lucide-react"
 import { ActionTooltip } from "@/components/uihelper/action-tooltip"
 
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 
 export const NavigationSelf = ({
-   
-}) => {
+
+} ) => {
 
     const router = useRouter();
 

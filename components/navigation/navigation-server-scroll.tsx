@@ -7,23 +7,16 @@ import { NavigationSelf } from "./navigation-self";
 import { Server } from "@prisma/client";
 import { Separator } from "../ui/separator";
 
-export const NavigationServerScroll = async(
+
+export const NavigationServerScroll = (
    {serversProp: servers }:{serversProp: Server[]}, 
 ) => {
-    var activeId = "tis but";
-    const setActiveElementOnHover = (id: string) => {
-        activeId=id;
-    };
-   
-   
     return (
         <div
             className="h-full space-y-[8px]"
         >
             <div
                 id="navigation"
-                // className="bg-red-800"
-                onClick={() => {setActiveElementOnHover("navigation")}}
             >
                 <NavigationSelf 
                 />
@@ -37,17 +30,17 @@ export const NavigationServerScroll = async(
                     {
                         return(
                             <div
-                                onClick={() => {setActiveElementOnHover(server.id)}}
+                                key={server.id} 
                             >
-                            <EvervaultCardVer2 className="" key={server.id}>                
-                                <div key={server.id} className="mt-[12px] mb-[12px]">
+                            {/* <EvervaultCardVer2 className="" key={server.id}>                 */}
+                                <div className="mt-[12px] mb-[12px]">
                                     <NavigationItem 
                                         id={server.id}
                                         name={server.name}
                                         imageUrl={server.imageUrl}
                                     />
                                 </div>
-                            </EvervaultCardVer2>
+                            {/* </EvervaultCardVer2> */}
                             </div>
                             ) 
                     }

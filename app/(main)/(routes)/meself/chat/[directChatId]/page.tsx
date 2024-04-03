@@ -17,7 +17,7 @@ const DirectChatMemberIdPage = async ({
   profilePageProp,
   }: MemberIdPageProps) => {
 
-  console.log("DirectChatMemberIdPage");
+  // console.log("DirectChatMemberIdPage");
   if(otherMember)
   return ( 
     <Suspense

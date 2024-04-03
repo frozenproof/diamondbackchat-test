@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 
-
 import { currentUserProfile } from "@/lib/current-profile";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 

@@ -36,10 +36,8 @@ export const ChatMessagesList = ({
   paramValue,
   type,
 }: ChatMessagesProps) => {
-  const [activeId, setActiveId] = useState("tis but")
+  const [activeId, setActiveId] = useState("tis but");
   const queryKey = `chat:${channelChatId}`;
-  const addKey = `chat:${channelChatId}:messages`;
-  const updateKey = `chat:${channelChatId}:messages:update` 
   const { height, width } = useWindowDimensions();
 
   const chatRef = useRef<ElementRef<"div">>(null);

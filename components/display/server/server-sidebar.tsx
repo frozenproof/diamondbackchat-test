@@ -31,7 +31,7 @@ interface ServerSideBarProps {
 export const ServerSideBar = async({
     serverId
 }:ServerSideBarProps) => {
-    console.log("serverId",serverId)
+    // console.log("ServerSideBar",serverId)
     const profile = await currentUserProfile();
     if(!profile){
         redirect("/");
