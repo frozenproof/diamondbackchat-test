@@ -16,6 +16,7 @@ model UserProfile {
   name     String     @default("Deleted")
   imageUrl String     @db.Text
   email    String     @db.Text
+  about    String     @db.Text  @default("")
   status   UserStatus @default(ONLINE)
   deleted  Boolean    @default(false)
 

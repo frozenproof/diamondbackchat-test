@@ -1,10 +1,10 @@
 "use client"
 
-import {  AvatarImage, DiamondAvatar } from "@/components/ui/diamondavatar";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Clock10, Settings, Settings2 } from "lucide-react";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 interface UserProfileAvatarProps {
     src?: string;
@@ -29,9 +29,9 @@ export const UserButtonDiamond = ({
             <div
                 className="flex "
             >
-            <DiamondAvatar >
+            <Avatar >
                 <AvatarImage src={src} />
-            </DiamondAvatar>
+            </Avatar>
             <div 
                 className=" gap-x-1 gap-y-1 pl-2 flex flex-col flex-wrap h-auto overflow-hidden mt-auto"
             >

@@ -73,7 +73,7 @@ const DirectChannelIdPageLayout = async ({
       }
     });
     if (!direct ) {
-      return null;
+      return redirect(`/meself/friend`);
     }
 
     const multipleDirect = await db.directChannel.findMany({

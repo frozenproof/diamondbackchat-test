@@ -153,8 +153,8 @@ export const DirectChatMessages = ({
                           <div
                             className={`continiouschat `}
                             style={{
-                              minWidth: (width<769) ? `${48}px` : `${60}px`,
-                              maxWidth: (width<769) ? `${48}px` : `${60}px`
+                              minWidth: (width<769) ? `${44}px` : `${56}px`,
+                              maxWidth: (width<769) ? `${44}px` : `${56}px`
                             }}
                           >
                             {isActiveItem && (
@@ -177,16 +177,16 @@ export const DirectChatMessages = ({
                     <DirectMessageItem
                       key={message.id}
                       id={message.id}
-                      currentMember={currentMemberProp}
-                      memberProp={message.userProfile}
+                      currentUser={currentMemberProp}
+                      UserProp={message.userProfile}
                       // userProp={message.member.userProfile}
                       content={message.content}
                       attachment={message.attachment}
                       fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                      isUpdated={message.edited}
-                      // isUpdated={message.updatedAt !== message.createdAt}
+                      // isUpdated={message.edited}
+                      isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={false}

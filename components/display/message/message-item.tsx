@@ -6,14 +6,13 @@ import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Member, OldMemberRole, UserProfile } from "@prisma/client";
-import { Edit, FileIcon, Magnet, Settings, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
-import Image from "next/image";
+import { Edit, Magnet, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
+
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
-import { cn } from "@/lib/utils";
+
 import {
   Form,
   FormControl,
@@ -160,8 +159,7 @@ export const MessageItem = ({
       }}
     >
       
-      {/* ${ (isContinious) ? `pl-[48px]` : `` } */}
-      {(!isContinious) && (
+    {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
          <UserProfilePopover 
           currentMemberProp={currentMember}
@@ -172,7 +170,7 @@ export const MessageItem = ({
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
-                {currentMemberProp.nickname}
+                {messageMemberProp.nickname}
               </p>
 
             </div>
@@ -189,7 +187,7 @@ export const MessageItem = ({
           }
           style={{
             overflowWrap: "break-word",
-            width: (width<769) ? `${width-80}px` : `${width-320}px`
+            width: (width<769) ? `${width-80}px` : `${width-360}px`
           }}
 
             >
@@ -215,7 +213,7 @@ export const MessageItem = ({
                           <div className="relative w-full">
                             <Input
                               disabled={isLoading}
-                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 overflow-y-scroll"
                               placeholder="Edited message"
                               {...field}
                             />
@@ -246,7 +244,7 @@ export const MessageItem = ({
             }
             style={{
               overflowWrap: "break-word",
-              width: (width<769) ? `${width-80}px` : `${width-320}px`
+              width: (width<769) ? `${width-80}px` : `${width-360}px`
             }}
 
             >
@@ -272,7 +270,7 @@ export const MessageItem = ({
                           <div className="relative w-full">
                             <Input
                               disabled={isLoading}
-                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full"
+                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full overflow-y-scroll h-full"
                               placeholder="Edited message"
                               {...field}
                             />

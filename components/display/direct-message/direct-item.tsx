@@ -24,17 +24,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { UserProfilePopover } from "../user-profile-popover";
 
 interface ChatItemProps {
   id: string;
   content: string;
-  memberProp: UserProfile;
+  UserProp: UserProfile;
   // userProp: UserProfile;
   timestamp: string;
   attachment: boolean;
   fileUrl: string | null;
   deleted: boolean;
-  currentMember: UserProfile;
+  currentUser: UserProfile;
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
@@ -57,12 +58,12 @@ const formSchema = z.object({
 export const DirectMessageItem = ({
   id,
   content,
-  memberProp,
+  UserProp,
   attachment,
   timestamp,
   fileUrl,
   deleted,
-  currentMember,
+  currentUser,
   isUpdated,
   socketUrl,
   socketQuery,
@@ -77,10 +78,10 @@ export const DirectMessageItem = ({
   const router = useRouter();
 
   const onMemberClick = () => {
-    if (memberProp.id === currentMember.id) {
+    if (UserProp.id === currentUser.id) {
       return;
     }
-    router.push(`/servers/${params?.serverId}/direct/${memberProp.id}`);
+    router.push(`/servers/${params?.serverId}/direct/${UserProp.id}`);
   }
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export const DirectMessageItem = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content: content
+      content: content,
     },
   });
  
@@ -133,32 +134,45 @@ export const DirectMessageItem = ({
 
   const fileType = fileUrl?.split(".").pop();
 
-  const isSender = currentMember.id === memberProp.id;
+  const isSender = currentUser.id === UserProp.id;
   const canDeleteMessage = !deleted && (isSender);
   const canEditMessage = !deleted && isSender && !fileUrl;
   const isPDF = fileType === "pdf" && fileUrl;
   const isImage = !isPDF && fileUrl;
 
+  const messageUserProp = currentUser;
+  const directUserProp = UserProp;
   const { height, width } = useWindowDimensions();
  
   if(id)
   {
     return (
-    <div className={`${!isContinious ? "p-[4px]" : ""} relative group flex items-center hover:bg-black/5 transition w-full`}>
-      
+
+      <div className={`relative group flex items-center w-full `}
+
+      style={{
+
+        overflowWrap: "break-word"
+
+      }}
+
+    >      
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
          
-        <div onClick={onMemberClick} className="cursor-pointer hover:drop-shadow-md transition">
-          {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
-          <UserProfileAvatar src={memberProp.imageUrl} />
-        </div>
+
+         <UserProfilePopover 
+
+          directUserProp={directUserProp}
+          currentUserProp={messageUserProp}
+
+         />
         
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
               <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
-                {memberProp.name}
+                {UserProp.name}
               </p>
               {/* <ActionTooltip label={memberProp.role}>
                 {roleIconMap[memberProp.role]}

@@ -33,7 +33,7 @@ export const InviteServerPrompt = () => {
     const [ copied, setCopied ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isUrlLoading, setIsUrlLoading ] = useState(false);
-    const [ dummy, setDummy ] = useState(Object);
+
     const [ realUrl, setRealUrl ] = useState("Click plus to get invite link!");
 
     const onCopy = () => {
@@ -78,15 +78,6 @@ export const InviteServerPrompt = () => {
         }
     }
 
-    useEffect(() => {
-        const getUsers = async () => {
-            const dummy = await fetchRealUrl();
-            setDummy(dummy);
-          };
-          return () => {
-            // this now gets called when the component unmounts
-          };
-    }, []);
     return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -119,7 +110,7 @@ export const InviteServerPrompt = () => {
 
                         </Suspense>
                         <Button
-                        disabled={isLoading}
+                        disabled={isLoading || copied}
                         onClick={onCopy} 
                         size="sm"
                         className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"

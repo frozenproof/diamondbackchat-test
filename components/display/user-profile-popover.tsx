@@ -1,9 +1,13 @@
 "use client";
 
-import { Moon, Smile, Trees } from "lucide-react";
-import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
-import { useTheme } from "next-themes";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 
 import {
   Popover,
@@ -14,46 +18,193 @@ import { MemberWithProfile } from "@/type";
 import { useRouter } from "next/navigation";
 import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
 
+import { Label } from "../ui/label";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { format } from "date-fns";
+import { Button } from "../ui/button";
+import { UserProfile } from "@prisma/client";
+
 interface UserProfilePopoverProps {
-  serverIdProp: string;
-  messageMemberProp:MemberWithProfile;
-  currentMemberProp: MemberWithProfile;
+  serverIdProp?: string;
+  messageMemberProp?:MemberWithProfile;
+  currentMemberProp?: MemberWithProfile;
+  directUserProp?: UserProfile;
+  currentUserProp?: UserProfile;
 }
 export const UserProfilePopover = ({
   currentMemberProp,
   messageMemberProp,
-  serverIdProp
+  serverIdProp,
+  directUserProp,
+  currentUserProp
 }: UserProfilePopoverProps) => {
 
   const router = useRouter();
-  const onMemberClick = () => {
-    console.log(`memberPROP2/${messageMemberProp.id == currentMemberProp.id ? `Giong nhau + ${currentMemberProp.id}` : `Khac nhau + ${messageMemberProp.id}`} `);
-    if (messageMemberProp.id === currentMemberProp.id) {
-      return;
+  const DATE_FORMAT = "d MMM yyyy, HH:mm";
+
+
+  if(messageMemberProp && currentMemberProp && serverIdProp)
+  {
+    const onMemberClick = () => {
+      if(!idChecker(messageMemberProp.id,currentMemberProp.id))
+      {
+        router.push(`/servers/${serverIdProp}/directChatChannels/${messageMemberProp.id}/`);
+      }
     }
-    if (messageMemberProp.id !== currentMemberProp.id)
-    {
-      router.push(`/servers/${serverIdProp}/directChatChannels/${messageMemberProp.id}/`);
-    }
+  
+    return (
+      <Popover>
+        <PopoverTrigger>
+          <div className="cursor-pointer hover:drop-shadow-md transition">
+            {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
+            <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent 
+          side="right" 
+          // sideOffset={0}
+          className="bg-red-800 w-[380px]"
+        >
+          <Card className="w-full">
+          <CardHeader>
+            <CardTitle>
+              <UserProfileAvatar 
+                className="h-[80px] w-[80px]"
+              />
+              <Avatar
+              className="h-[80x] w-[80px]"
+              >
+                <AvatarImage   src={messageMemberProp.userProfile.imageUrl} 
+               />
+              </Avatar>        
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Card className="h-[320px]">
+              <CardHeader>
+                <CardTitle>{messageMemberProp.userProfile.name}</CardTitle>
+                <CardDescription>
+                  {(messageMemberProp.userProfile.about === "") && (
+                    <div className={
+                      `text-sm text-zinc-600 dark:text-zinc-300 ` 
+                    }
+                    >
+                      Look like this user didn't add anything to their bio.
+                    </div>
+                  )}
+                  </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form>
+                  <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="name">Member since {format(new Date(messageMemberProp.userProfile.createdAt), DATE_FORMAT)}</Label>
+  
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="framework">Note</Label>
+                      
+                    </div>
+                  </div>
+                </form>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button>                  
+                  <div onClick={onMemberClick} >
+                    Click here to direct chat
+                  </div>
+                </Button>
+              </CardFooter>
+            </Card>
+          </CardContent>
+          </Card>
+          
+        </PopoverContent>
+      </Popover>
+    )
   }
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <div className="cursor-pointer hover:drop-shadow-md transition">
-          {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
-          <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
-        </div>
-      </PopoverTrigger>
-      <PopoverContent 
-        side="right" 
-        sideOffset={20}
-        className=""
-      >
-        
-        <div onClick={onMemberClick} >
-          Click here to direct chat
-        </div>
-      </PopoverContent>
-    </Popover>
-  )
+  if(directUserProp && currentUserProp)
+  {
+    const onMemberClick = () => {
+      if(!idChecker(directUserProp.id,currentUserProp.id))
+      {
+        router.push(`/meself/directChatChannels/${directUserProp.id}/`);
+      }
+    }
+  
+    return (
+      <Popover>
+        <PopoverTrigger>
+          <div className="cursor-pointer hover:drop-shadow-md transition">
+            <UserProfileAvatar src={directUserProp.imageUrl} />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent 
+          side="right" 
+          // sideOffset={0}
+          className="bg-red-800 w-[380px]"
+        >
+          <Card className="w-full">
+          <CardHeader>
+            <CardTitle>
+              <UserProfileAvatar 
+                className="h-[80px] w-[80px]"
+              />
+              <Avatar
+              className="h-[80x] w-[80px]"
+              >
+                <AvatarImage   src={directUserProp.imageUrl} 
+               />
+              </Avatar>        
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Card className="h-[320px]">
+              <CardHeader>
+                <CardTitle>{directUserProp.name}</CardTitle>
+                <CardDescription>
+                  {(directUserProp.about === "") && (
+                    <div className={
+                      `text-sm text-zinc-600 dark:text-zinc-300 ` 
+                    }
+                    >
+                      Look like this user didn't add anything to their bio.
+                    </div>
+                  )}
+                  </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form>
+                  <div className="grid w-full items-center gap-4">
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="name">Member since {format(new Date(directUserProp.createdAt), DATE_FORMAT)}</Label>
+  
+                    </div>
+                    <div className="flex flex-col space-y-1.5">
+                      <Label htmlFor="framework">Note</Label>
+                      
+                    </div>
+                  </div>
+                </form>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Button>                  
+                  <div onClick={onMemberClick} >
+                    Click here to direct chat
+                  </div>
+                </Button>
+              </CardFooter>
+            </Card>
+          </CardContent>
+          </Card>
+          
+        </PopoverContent>
+      </Popover>
+    )
+  }
+}
+
+function idChecker(id1: string , id2: string)
+{
+  return(id1 === id2)
 }

@@ -14,9 +14,6 @@ import { cn } from "@/lib/utils";
 import { PromptType, usePrompt } from "@/hooks/use-prompt-store";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-
 interface ServerChannelProps {
   directChannelProp: DirectChannel;
   nameProp: String;

@@ -1,11 +1,9 @@
 // "use server"
 
-import { Channel, DirectChannel, OldChannelType, OldMemberRole, Server, UserProfile } from "@prisma/client";
+import { DirectChannel,  UserProfile } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
-import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-
 import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 import { DirectChannelItem } from "./direct-item";
 import { useEffect } from "react";
