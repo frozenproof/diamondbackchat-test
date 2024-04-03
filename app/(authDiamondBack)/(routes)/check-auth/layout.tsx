@@ -13,12 +13,10 @@ const CheckAuthPageLayout = async (
     const profile = await currentUserProfile();
 
     if(!profile){
-        // console.log(profile);
         return redirect(`/login-dbc`);
     }   
     else
     {
-        // console.log(profile);
         return ( 
             redirect(`/meself/friend`)
         );

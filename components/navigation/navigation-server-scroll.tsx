@@ -1,4 +1,4 @@
-import { currentUserProfile } from "@/lib/current-profile";
+"use server"
 
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
@@ -7,19 +7,23 @@ import { db } from "@/lib/db";
 import { NavigationItem } from "@/components/navigation/navigation-item";
 import { EvervaultCardVer2 } from "../effects/evervault/EvervaultCardVer2";
 
-export const NavigationServerScroll = async() => {
-    const profile = await currentUserProfile();
+export const NavigationServerScroll = async(
+   {userProfileIdNavigationServerScroll }:{userProfileIdNavigationServerScroll: string}, 
+) => {
+    // const profile = await currentUserProfile();
 
-    if(!profile)
-    {
-        return redirect("/");
-    }
+    // if(!profile)
+    // {
+    //     return redirect("/");
+    // }
+
+    //bug vo han xay ra khi render doi tuong co chua ham async vi no render truoc khi item san sang , ke ca khi suspense duoc kich hoat
 
     const servers = await db.server.findMany({
         where: {
             Member:{
                 some:{
-                    userProfileId: profile.id,
+                    userProfileId: userProfileIdNavigationServerScroll,
                 }
             },
             deleted: false,

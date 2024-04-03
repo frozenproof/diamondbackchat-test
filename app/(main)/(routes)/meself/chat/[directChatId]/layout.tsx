@@ -45,27 +45,9 @@ const DirectChannelIdPageLayout = async ({
         return redirect(`/`);
     }
 
-    const channel = await db.directChannel.findFirstOrThrow({
-        where: {
-            id: params.directChatId,
-            deleted: false
-        }
-    })
-
-    if( !channel )
-    {
-        return redirect("/meself/friend");
-    }
-
-    const directId = params.directChatId;
-
-    if (!profile) {
-      return redirect(`/`);
-    }
-  
     const direct = await db.directChannel.findFirstOrThrow({
       where: {
-        id: directId
+        id: params.directChatId,
       },
       include: {
         memberOne: true,
@@ -75,24 +57,11 @@ const DirectChannelIdPageLayout = async ({
     if (!direct ) {
       return redirect(`/meself/friend`);
     }
-
-    const multipleDirect = await db.directChannel.findMany({
-      where: {
-        OR: [
-          {memberOneId: profile.id},
-          {memberTwoId: profile.id}
-        ]
-      },
-      include: {
-        memberOne: true,
-        memberTwo: true
-      }
-    });
-    
+ 
     if(direct)
     {
       const otherMember = direct.memberOneId === profile.id ? direct.memberTwo : direct.memberOne;
-      if (!otherMember || !multipleDirect)
+      if (!otherMember)
       {
           return redirect(`/meself/friend`);
       }
@@ -108,9 +77,6 @@ const DirectChannelIdPageLayout = async ({
           </div>
        );
     }
-
-    return redirect(`/meself/friend`);
-
 }
  
 export default DirectChannelIdPageLayout;

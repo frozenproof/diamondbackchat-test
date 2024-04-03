@@ -2,12 +2,9 @@ import { redirect } from "next/navigation";
 
 
 import { currentUserProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 import { UserButtonDiamond } from "@/components/uihelper/user-button-diamond";
 
 import { DirectSideBar } from "@/components/display/direct/direct-sidebar";
-import { getAllDirectChannel} from "@/lib/direct-search";
-
 
 const MePageLayout = async ({
     children,

@@ -1,6 +1,5 @@
-import { currentUserProfile } from "@/lib/current-profile";
+"use server"
 
-import { redirect } from "next/navigation";
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/uihelper/mode-toggle";
@@ -12,15 +11,9 @@ import { NavigationSelf } from "./navigation-self";
 import { SocketStatusDisplay } from "../socket/socket-status-display";
 import { Suspense } from "react";
 
-export const NavigationSideBar = (async () => {
-    const profile = await currentUserProfile();
-
-    if(!profile)
-    {
-        return redirect("/");
-    }
-
-
+export const NavigationSideBar = (async (
+    {userProfileIdNavigationSideBar} : {userProfileIdNavigationSideBar: string},
+) => {
     return ( 
         <Suspense
             fallback={
@@ -43,7 +36,9 @@ export const NavigationSideBar = (async () => {
                 className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
             />          
 
-            <NavigationServerScroll/>
+            <NavigationServerScroll
+                userProfileIdNavigationServerScroll={userProfileIdNavigationSideBar}
+            />
             {/* </div> */}
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
             <SocketStatusDisplay />

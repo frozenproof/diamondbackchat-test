@@ -60,7 +60,6 @@ export const DirectChatMessages = ({
     paramKey,
     paramValue,
   });
-  useDirectChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
     bottomRef,

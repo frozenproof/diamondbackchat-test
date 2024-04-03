@@ -1,4 +1,4 @@
-import { Hash, Pin } from "lucide-react";
+"use server"
 
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserStatus } from "@prisma/client";
@@ -9,6 +9,7 @@ import { ChannelSearchBar } from "./channel-search";
 interface ChannelHeaderProps {
   serverId: string;
   name: string;
+  userProfileIdProp: string;
   userAvatar: string;
   userName: string;
   userStatusProp: UserStatus;
@@ -18,10 +19,11 @@ interface ChannelHeaderProps {
 export const ChannelHeader = ({
   serverId,
   name,
+  userProfileIdProp,
   userAvatar,
   userName,
   userStatusProp,
-  membersList
+  membersList,
 }: ChannelHeaderProps) => {
   return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 w-full">
@@ -30,6 +32,7 @@ export const ChannelHeader = ({
         userAvatar={userAvatar}
         userName={userName}
         userStatus={userStatusProp}
+        userProfileIdProp={userProfileIdProp}
         />
       <p className="font-semibold text-md text-black dark:text-white w-full">
         {name}

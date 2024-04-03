@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { UserButtonDiamond } from "./user-button-diamond";
-import { DirectChannel, UserProfile, UserStatus } from "@prisma/client";
+import { UserStatus } from "@prisma/client";
 import { DirectSideBar } from "../display/direct/direct-sidebar";
 import React, { Suspense } from "react";
 
@@ -24,7 +24,7 @@ export const MobileNavigationLeftToggle = async({
   userName: string;
   userAvatar: string;
   userStatus: UserStatus;
-  userProfileIdProp?: string;
+  userProfileIdProp: string;
 }) => {
 
   console.log("wutmobiles",serverId?.toString);
@@ -39,7 +39,9 @@ export const MobileNavigationLeftToggle = async({
       </SheetTrigger>
       <SheetContent side="left" className="p-0 flex gap-0 ">
         <div className="w-[72px]">
-          <NavigationSideBar />
+          <NavigationSideBar 
+            userProfileIdNavigationSideBar={userProfileIdProp}
+          />
         </div>
         <div
             className="flex flex-col w-full"
@@ -47,7 +49,7 @@ export const MobileNavigationLeftToggle = async({
             {(serverId) && 
               <ServerSideBar serverId={serverId} />
             }
-            {(!serverId) && (
+            {(!serverId && userProfileIdProp) && (
                 <DirectSideBar 
                     userProfileId={userProfileIdProp}
                 />
@@ -66,15 +68,3 @@ export const MobileNavigationLeftToggle = async({
   )
 }
 
-const ChildComponent = () => {
-  console.log('I re-rendered');
-  return <p>Child</p>;
-};
-
-const ParentComponent = ( children?: React.ReactNode ) => {
-  return (
-    <div>
-        {children}
-    </div>
-  );
-};

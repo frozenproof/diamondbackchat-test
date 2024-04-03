@@ -48,6 +48,7 @@ const ChannelIdPage = async ({
                     userName={memberProp.userProfile.name}
                     userStatusProp={memberProp.userProfile.status}
                     membersList={membersListProp}
+                    userProfileIdProp={memberProp.id}
                 />
             </div>
             {channelProp.type === OldChannelType.TEXT && (

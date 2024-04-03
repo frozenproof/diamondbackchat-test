@@ -12,15 +12,6 @@ export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId:
 
   return directConversation;
 }
-export const getAllDirectChannel = async (memberOneId: string) => {
-  console.log("Kiem_tra_direct_GET : \n",memberOneId,"\n")
-  let conversation = await findAllDirectChannel(memberOneId);
-  if (!conversation) {
-    return null
-  }
-  // console.log(conversation);
-  return conversation;
-}
 
 const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   try {
@@ -43,7 +34,7 @@ const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   }
 }
 
-const findAllDirectChannel = async (memberId: string) => {
+export const findAllDirectChannel = async (memberId: string) => {
   try {
     const temp = await db.directChannel.findMany({
       where: {

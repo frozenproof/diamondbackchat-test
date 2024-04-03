@@ -1,13 +1,11 @@
-// "use server"
+"use server"
 
-import { DirectChannel,  UserProfile } from "@prisma/client";
 import { redirect } from "next/navigation";
 
-import { currentUserProfile } from "@/lib/current-profile"
 import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
 import { DirectChannelItem } from "./direct-item";
 
-import { getAllDirectChannel } from "@/lib/direct-search";
+import { db } from "@/lib/db";
 
 
 interface DirectSideBarProps {
@@ -22,7 +20,24 @@ export const DirectSideBar = async({
     {
       return redirect(`/`);
     }
-    const directChannelProp = await getAllDirectChannel(userProfileId);
+    // const directChannelProp = await findAllDirectChannel(userProfileId);
+    // cai nay gay ra bug reload vo han
+    // ly do la ham async chi phu hop khi nguoi dung yeu cau , chu khong phai khi render
+
+    const directChannelProp = await db.directChannel.findMany({
+      where: {
+        OR: [
+          { memberOneId: userProfileId },
+          { memberTwoId: userProfileId },          
+        ]
+        ,
+        deleted: false
+      },
+      include: {
+        memberOne: true,
+        memberTwo: true
+      }
+    });
     // console.log(`Channel arrays`,direct);
     if (!directChannelProp) {
       return redirect(`/meself/friend`);

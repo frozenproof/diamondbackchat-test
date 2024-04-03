@@ -28,11 +28,11 @@ const ServerIdPage = async(
             userAvatar={profile.imageUrl}
             userName={profile.name}
             userStatus={profile.status}
+            userProfileIdProp={profile.id}
             />
             <SocketStatusDisplay />
             {/* (　･ω･)☞	Create a channel and something productive ! */}
-        </EvervaultCard>
-                
+        </EvervaultCard>                
     )
 }
 

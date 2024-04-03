@@ -212,3 +212,7 @@ Vậy thì tốt nhất là xây hai đối tượng độc lập để ngăn ch
 Nhớ phải query cả đối tượng khi select để gửi đi api
 
 message list -> usechatquery -> useinfinitequery
+
+
+// "use client"
+// khong duoc dung use client o day
