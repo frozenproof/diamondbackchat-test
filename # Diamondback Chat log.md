@@ -215,4 +215,13 @@ message list -> usechatquery -> useinfinitequery
 
 
 // "use client"
-// khong duoc dung use client o day
+// khong duoc dung use client o day , vi toan bo cac module dung db la server actions
+
+// const profile = await currentUserProfile();
+
+// if(!profile)
+// {
+//     return redirect("/");
+// }
+
+//bug vo han xay ra khi render doi tuong co chua ham async vi no render truoc khi item san sang , ke ca khi suspense duoc kich hoat

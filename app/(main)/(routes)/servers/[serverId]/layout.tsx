@@ -1,4 +1,5 @@
-import { redirectToSignIn } from "@clerk/nextjs";
+"use server"
+
 import { redirect } from "next/navigation";
 
 import { ServerSideBar } from "@/components/display/server/server-sidebar";

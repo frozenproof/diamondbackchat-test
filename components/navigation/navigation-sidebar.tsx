@@ -3,17 +3,33 @@
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/uihelper/mode-toggle";
-
 import { NavigationServerScroll } from "@/components/navigation/navigation-server-scroll";
-
-
 import { NavigationSelf } from "./navigation-self";
-import { SocketStatusDisplay } from "../socket/socket-status-display";
+import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 import { Suspense } from "react";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
 export const NavigationSideBar = (async (
     {userProfileIdNavigationSideBar} : {userProfileIdNavigationSideBar: string},
 ) => {
+
+    const servers = await db.server.findMany({
+        where: {
+            Member:{
+                some:{
+                    userProfileId: userProfileIdNavigationSideBar,
+                }
+            },
+            deleted: false,
+        }
+    })
+    
+    if(!servers)
+    {
+        return redirect("/meself/friend");
+    }
+    
     return ( 
         <Suspense
             fallback={
@@ -22,24 +38,25 @@ export const NavigationSideBar = (async (
                 </div>
             }
         >
-        <div className="space-y-4 flex flex-col items-center h-full text-primary w-full "
+        <div className="pt-[8px] space-y-[8px] flex flex-col items-center h-full text-primary w-full "
             // style={{backgroundColor: '#00000000'}}
         >
             <div
-                className="mt-[8px]"
+                // className="bg-red-800"
             >
-                <NavigationSelf 
-                />
                 <NavigationAction/>            
             </div>
-            <Separator
-                className=" bg-zinc-300 dark:bg-slate-700 rounded-md mx-auto"
-            />          
+     
 
-            <NavigationServerScroll
-                userProfileIdNavigationServerScroll={userProfileIdNavigationSideBar}
-            />
-            {/* </div> */}
+            <div
+                id="serverscroll"
+                className="h-full"
+            >
+                <NavigationServerScroll
+                    serversProp={servers}
+                />
+            </div>
+            
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
             <SocketStatusDisplay />
                 <ModeToggle />

@@ -9,7 +9,7 @@ import { useChatQuery } from "@/hooks/use-chat-query";
 import { ChatWelcome } from "../channel-welcome";
 import { MessageWithProfileWithFile } from "@/type";
 import { DirectMessageItem } from "./direct-item";
-import { useChatSocket, useDirectChatSocket } from "@/hooks/use-chat-socket";
+
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"

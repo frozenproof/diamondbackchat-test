@@ -8,7 +8,6 @@ import { useChatQuery } from "@/hooks/use-chat-query";
 import { ChatWelcome } from "../channel-welcome";
 import { MemberWithProfile,  MessageWithMemberWithProfileWithFile } from "@/type";
 import { MessageItem } from "./message-item";
-import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 
@@ -57,7 +56,6 @@ export const ChatMessagesList = ({
     paramKey,
     paramValue,
   });
-  useChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
     bottomRef,
