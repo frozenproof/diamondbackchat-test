@@ -1,28 +1,23 @@
-"use server"
+"use client"
 
-import { redirect } from "next/navigation";
-import { currentUserProfile } from "@/lib/current-profile"
-
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { MemberItem } from "../member/member-item";
 import { MemberWithProfile } from "@/type";
+import { Suspense } from "react";
 
  
 interface MemberSideBarProps {
     memberProp:MemberWithProfile[]
 }
 
-export const MemberSideBar = async({
+export const MemberSideBar = ({
     memberProp
 }:MemberSideBarProps) => {
-    const profile = await currentUserProfile();
-    if(!profile){
-        return redirect("/");
-    }
     return (
-            <ScrollArea
-                    className="flex-1 px-1"            
+        <Suspense>
+
+            <div
+                    className="flex-1 px-1 overflow-y-scroll"            
                 >
                 {!!memberProp.length && (
                 <div className="mb-2">
@@ -39,6 +34,8 @@ export const MemberSideBar = async({
                     </div>
                 </div>
                 )}            
-       </ScrollArea>
+       </div>
+       </Suspense>
+        
     )
 }

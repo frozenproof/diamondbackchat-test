@@ -31,7 +31,7 @@ const ChannelIdPage = async ({
   
   if(channelProp && memberProp)
   {
-    console.log("ChannelIdPage",memberProp.id)
+    // console.log("ChannelIdPage",memberProp.id)
     return ( 
     <Suspense>
             <div

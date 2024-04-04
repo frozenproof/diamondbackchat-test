@@ -75,9 +75,7 @@ const ChannelIdPageLayout = async ({
 
     const members = await db.member.findMany({
         where:{
-            serverId: 
-                params.serverId,
-            userProfileId: profile.id
+            serverId: params.serverId,
         },
         include: {
             userProfile: true

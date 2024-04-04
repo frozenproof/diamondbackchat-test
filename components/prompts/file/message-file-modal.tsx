@@ -21,11 +21,9 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/files/file-upload";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { MultiFileUpload } from "@/components/files/multi-file-upload";
-import { useEffect } from "react";
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -39,7 +37,7 @@ export const MessageFilePrompt = () => {
 
   const isModalOpen = isOpen && type === "MessageFile";
   const { channelIdPropAPI,memberIdPropAPI,typeSend } = propData;
-  console.log("this is message file modal",channelIdPropAPI,"\n",memberIdPropAPI);
+  // console.log("this is message file modal",channelIdPropAPI,"\n",memberIdPropAPI);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -67,7 +65,7 @@ export const MessageFilePrompt = () => {
   }
   if(!channelIdPropAPI || !memberIdPropAPI)
   {
-    console.log("No channel detected");
+    // console.log("No channel detected");
     return null;
   }
   return (

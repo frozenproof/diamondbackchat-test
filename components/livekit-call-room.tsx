@@ -11,7 +11,7 @@ interface MediaRoomProps {
   chatId: string;
   video: boolean;
   audio: boolean;
-  userIdProp: string;
+  userIdProp?: string;
 };
 
 export const MediaRoom = ({
@@ -36,7 +36,56 @@ export const MediaRoom = ({
         console.error(e);
       }
     })();
-  }, [userIdProp]);
+  }, );
+  if (token === "") {
+    return (
+      <div className="flex flex-col flex-1 justify-center items-center">
+        <Loader2
+          className="h-7 w-7 text-zinc-500 animate-spin my-4"
+        />
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">
+        Loading {process.env.NEXT_PUBLIC_LIVEKIT_URL}
+        </p>
+      </div>
+    )
+  }
+
+  return (
+      <LiveKitRoom
+      token={token}
+      video={video}
+      audio={audio}
+      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+      data-lk-theme="default"
+    >
+      <VideoConference />
+
+    </LiveKitRoom>
+  )
+}
+
+export const MediaRoomDirect = ({
+  chatId,
+  video,
+  audio,
+}: MediaRoomProps) => {
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const name = "";
+        const resp = await fetch(
+          `/api/livekit-participate-token?room=${chatId}`
+        );
+        const data = await resp.json();
+        setToken(data.token);
+        console.log(data);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, );
   if (token === "") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">

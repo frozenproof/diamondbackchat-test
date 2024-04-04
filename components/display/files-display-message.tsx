@@ -26,7 +26,7 @@ export const FilesDisplay = ({
                 {
                     fileProps.map((file) => {
                         const isImage = (file.type.split('/')[0] === "image")
-                        console.log(file.type.split('/')[0])
+                        // console.log(file.type.split('/')[0])
                         return (
                             <div
                                 key={file.id}

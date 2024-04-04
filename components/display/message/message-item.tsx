@@ -80,8 +80,8 @@ export const MessageItem = ({
   const params = useParams();
   const router = useRouter();
 
-  if(hasAttachment)
-  console.log("file props",attachmentsList);
+  // if(hasAttachment)
+  // console.log("file props",attachmentsList);
   const serverIdProp = params?.serverId as string;
   const messageMemberProp = currentMessageMemberProp;
   const currentMemberProp = currentMember;

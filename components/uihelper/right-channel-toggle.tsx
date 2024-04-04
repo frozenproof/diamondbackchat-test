@@ -1,4 +1,4 @@
-import { Menu, User } from "lucide-react"
+import { User } from "lucide-react"
 
 import {
   Sheet,
