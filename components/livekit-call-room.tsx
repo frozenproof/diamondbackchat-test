@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ControlBar, GridLayout, LiveKitRoom, ParticipantTile, PreJoin, VideoConference, useTracks } from "@livekit/components-react";
+import { ControlBar, GridLayout, LiveKitRoom, ParticipantTile, PreJoin, RoomAudioRenderer, VideoConference, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
-import { Channel } from "@prisma/client";
-import { useUser } from "@clerk/nextjs";
+
 import { Loader2 } from "lucide-react";
 import { Track } from "livekit-client";
-import { redirect } from "next/navigation";
 
 interface MediaRoomProps {
   chatId: string;
@@ -22,33 +20,14 @@ export const MediaRoom = ({
   audio,
   userIdProp
 }: MediaRoomProps) => {
-  const { user } = useUser();
   const [token, setToken] = useState("");
 
-  // useEffect(() => {
-  //   if (!user?.firstName || !user?.lastName) return;
-
-  //   const name = userIdProp;
-
-  //   (async () => {
-  //     try {
-  //       const resp = await fetch(`/api/livekit-create-token?room=${chatId}&username=${name}`);
-  //       const data = await resp.json();
-  //       console.log(data);
-  //       setToken(data.token);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   })()
-  // }, [user?.firstName, user?.lastName, chatId]);
   useEffect(() => {
     (async () => {
       try {
         const name = userIdProp;
-        const room2 = "quickstart-room";
-        const name2 = "quickstart-user";
         const resp = await fetch(
-          `/api/livekit-create-token?room=${room2}&username=${name2}`
+          `/api/livekit-participate-token?room=${chatId}&username=${name}`
         );
         const data = await resp.json();
         setToken(data.token);
@@ -65,35 +44,23 @@ export const MediaRoom = ({
           className="h-7 w-7 text-zinc-500 animate-spin my-4"
         />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-        Loading {process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
+        Loading {process.env.NEXT_PUBLIC_LIVEKIT_URL}
         </p>
       </div>
     )
   }
 
   return (
-    <div
-      className="h-full"
-    >
       <LiveKitRoom
-      data-lk-theme="default"
-      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
       token={token}
-      connect={true}
-      video={false}
+      video={video}
       audio={audio}
-      options={{
-        publishDefaults: {
-          videoCodec: 'vp9',
-        },
-      }}
+      serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
+      data-lk-theme="default"
     >
-      {/* Your custom component with basic video conferencing functionality. */}
-      {/* <MyVideoConference /> */}
       <VideoConference />
-    </LiveKitRoom>
-    </div>
 
+    </LiveKitRoom>
   )
 }
 

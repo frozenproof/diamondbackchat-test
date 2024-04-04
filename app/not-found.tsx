@@ -1,7 +1,5 @@
 import { EvervaultCard } from "@/components/effects/evervault/EvervaultCard";
 
-import { Link } from "lucide-react";
-import { redirect } from "next/navigation";
 
 export default function Custom404() {
        

@@ -1,10 +1,11 @@
+"use server"
+
 import { OldChannelType, OldMemberRole } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db";
 import { ServerHeader } from "@/components/display/server/server-header";
-import { UserButtonDiamond } from "../../uihelper/user-button-diamond";
 import { ScrollArea } from "../../ui/scroll-area";
 import { ServerSearchBar } from "./server-search";
 import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";

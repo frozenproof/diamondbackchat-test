@@ -8,13 +8,9 @@ import { MemberWithProfile} from "@/type";
 import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
-import { MediaRoom } from "@/components/livekit-call-room";
+import {MediaRoom} from "@/components/livekit-call-room";
 
 interface ChannelIdPageProps {
-  // params: {
-  //   serverId: string;
-  //   channelId: string;
-  // };
   membersListProp: MemberWithProfile[];
   serverIdProp: string;
   channelProp: Channel;
@@ -23,7 +19,6 @@ interface ChannelIdPageProps {
 
 const ChannelIdPage = async ({
   // params,
-
   membersListProp,
   serverIdProp,
   channelProp,
@@ -40,7 +35,7 @@ const ChannelIdPage = async ({
     return ( 
     <Suspense>
             <div
-              className="w-full inset-y-0"
+              className="w-full inset-y-0 max-h-full"
             >
                 <ChannelHeader 
                     serverId={serverIdProp}
@@ -91,14 +86,6 @@ const ChannelIdPage = async ({
               userIdProp={memberProp.id}
             />
           )}
-          {/* {channelProp.type === OldChannelType.VIDEO && (
-            <MediaRoom
-              chatId={channelProp.id}
-              video={true}
-              audio={true}
-              userIdProp={memberProp.id}
-            />
-          )}     */}
           </Suspense>
    );
   }
