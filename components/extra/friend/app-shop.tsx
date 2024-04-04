@@ -1,10 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button";
-import { Trees } from "lucide-react";
+import { LucideShoppingBag } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export const FriendButton = () => {
+export const ShopButton = () => {
     const  router  = useRouter();
 
     const onAction = (MouseEvent: React.MouseEvent, url: string) => {
@@ -20,8 +19,8 @@ export const FriendButton = () => {
             <div 
                 className="h-full flex items-center justify-center"
             >
-                <Trees />
-                  Friends
+                <LucideShoppingBag />
+                  Shop
             </div>
         </button>
      );

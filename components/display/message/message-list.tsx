@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, Fragment, useEffect, useRef, useState } from "react";
+import { ElementRef, Fragment, useRef, useState } from "react";
 import { Loader2, ServerCrash } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";

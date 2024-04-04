@@ -1,6 +1,6 @@
 "use server"
 
-import { Channel, Member, Message, OldChannelType, UserProfile } from "@prisma/client";
+import { Channel, OldChannelType } from "@prisma/client";
 
 import { MessageInput } from "@/components/display/message/message-input";
 import { Suspense } from "react";
