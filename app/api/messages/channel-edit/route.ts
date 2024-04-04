@@ -64,7 +64,7 @@ export async function PATCH(req: Request,res: NextApiResponseServerIo){
           },
           create: {
             content: content,
-            attachment: false,
+            hasAttachment: false,
             channelId: channelIdProp as string,
             memberId: member.id,
             isReply: false

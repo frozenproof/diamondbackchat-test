@@ -9,28 +9,68 @@ import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
 import {MediaRoom} from "@/components/livekit-call-room";
-
-interface ChannelIdPageProps {
-  membersListProp: MemberWithProfile[];
-  serverIdProp: string;
-  channelProp: Channel;
-  memberProp: MemberWithProfile;
-}
+import { redirect } from "next/navigation";
+import { db } from "@/lib/db";
+import { currentUserProfile } from "@/lib/current-profile";
+import { redirectToSignIn } from "@clerk/nextjs";
 
 const ChannelIdPage = async ({
-  // params,
-  membersListProp,
-  serverIdProp,
-  channelProp,
-  memberProp
-}: ChannelIdPageProps) => {
-  if(!channelProp || !memberProp)
+  params,
+}: {    params: {serverId: string,channelId: string}
+}) => {
+  const profile = await currentUserProfile();
+
+  if(!profile){
+      return redirectToSignIn();
+  }
+
+  const server = await db.server.findUnique
+  ({
+      where:{
+          id: params.serverId,
+          Member:{
+              some:{
+                  userProfileId: profile.id,
+              }
+          },
+          deleted: false
+      }
+  })
+
+  if(!server)
   {
-    return null
+      return redirect("/meself/friend");
   }
   
-  if(channelProp && memberProp)
+  const channel = await db.channel.findFirstOrThrow({
+      where: {
+          id: params.channelId,
+          deleted: false
+      }
+  })
+
+  const members = await db.member.findMany({
+      where:{
+          serverId: params.serverId,
+      },
+      include: {
+          userProfile: true
+      }
+  })
+
+  const member = await db.member.findFirstOrThrow({
+      where: {
+          userProfileId: profile.id
+      },
+      include: {
+          userProfile: true
+      }
+  })
+  if(!members || !channel || !member)
   {
+      return redirect("/meself/friend");
+  }
+  
     // console.log("ChannelIdPage",memberProp.id)
     return ( 
     <Suspense>
@@ -38,58 +78,57 @@ const ChannelIdPage = async ({
               className="w-full inset-y-0 max-h-full"
             >
                 <ChannelHeader 
-                    serverId={serverIdProp}
-                    name={channelProp.name}
-                    userAvatar={memberProp.userProfile.imageUrl}
-                    userName={memberProp.userProfile.name}
-                    userStatusProp={memberProp.userProfile.status}
-                    membersList={membersListProp}
-                    userProfileIdProp={memberProp.userProfile.id}
+                    serverId={server.id}
+                    name={channel.name}
+                    userAvatar={profile.imageUrl}
+                    userName={profile.name}
+                    userStatusProp={profile.status}
+                    membersList={members}
+                    userProfileIdProp={profile.id}
                 />
             </div>
-            {channelProp.type === OldChannelType.TEXT && (
+            {channel.type === OldChannelType.TEXT && (
             <>
               
                 <ChatMessagesList
-                    memberProp={memberProp}
-                    name={channelProp.name}
-                    channelChatId={channelProp.id}
+                    memberProp={member}
+                    name={channel.name}
+                    channelChatId={channel.id}
                     type="channel"
                     apiUrl="/api/messages/get-api"
                     socketUrl="/api/messages"
                     // socketUrl="/api/socket/messages"
                     socketQuery={{
-                      channelId: channelProp.id,
-                      serverId: serverIdProp,
+                      channelId: channel.id,
+                      serverId: server.id,
                     }}
                     paramKey="channelId"
-                    paramValue={channelProp.id}
+                    paramValue={channel.id}
                 />
                 <MessageInput
                 // apiUrl="/api/socket/messages"
                 apiUrl="/api/messages/channel-send"
-                channelName={channelProp.name}
-                memberIdProp={memberProp.id}
+                channelName={channel.name}
+                memberIdProp={member.id}
                 query={{
-                  channelId: channelProp.id,
+                  channelId: channel.id,
                   // serverId: params.serverId,
-                  serverId: serverIdProp,
+                  serverId: server.id,
                 }}
               />
             </>
           )}
-          {channelProp.type === OldChannelType.VIDEO && (
+          {channel.type === OldChannelType.VIDEO && (
             <MediaRoom
-              chatId={channelProp.id}
+              chatId={channel.id}
               video={false}
               audio={true}
-              userIdProp={memberProp.id}
+              userIdProp={member.id}
             />
           )}
           </Suspense>
    );
   }
   
-}
  
 export default ChannelIdPage;

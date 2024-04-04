@@ -1,19 +1,12 @@
 "use server"
 
-import { redirectToSignIn } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
-
-import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { Metadata, ResolvingMetadata } from "next";
 
-import ChannelIdPage from "./page";
-
-
 type Props = {
     params: { serverId: string ,channelId: string }
-  }
+}
    
 export async function generateMetadata(
     { params }: Props,
@@ -34,74 +27,17 @@ export async function generateMetadata(
 
 
 const ChannelIdPageLayout = async ({
-    children,
-    params}:
+    children
+    }:
     {
         children: React.ReactNode;
-        params: {serverId: string,channelId: string}
     }
 ) => {
-    const profile = await currentUserProfile();
 
-    if(!profile){
-        return redirectToSignIn();
-    }
-
-    const server = await db.server.findUnique
-    ({
-        where:{
-            id: params.serverId,
-            Member:{
-                some:{
-                    userProfileId: profile.id,
-                }
-            },
-            deleted: false
-        }
-    })
-
-    if(!server)
-    {
-        return redirect("/meself/friend");
-    }
-    
-    const channel = await db.channel.findFirstOrThrow({
-        where: {
-            id: params.channelId,
-            deleted: false
-        }
-    })
-
-    const members = await db.member.findMany({
-        where:{
-            serverId: params.serverId,
-        },
-        include: {
-            userProfile: true
-        }
-    })
-
-    const member = await db.member.findFirstOrThrow({
-        where: {
-            userProfileId: profile.id
-        },
-        include: {
-            userProfile: true
-        }
-    })
-    if(!members || !channel || !member)
-    {
-        return redirect("/meself/friend");
-    }
 
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
-                <ChannelIdPage 
-                    membersListProp={members}
-                    memberProp={member}
-                    channelProp={channel}
-                    serverIdProp={server.id}
-                />
+            {children}   
         </div>
      );
 }

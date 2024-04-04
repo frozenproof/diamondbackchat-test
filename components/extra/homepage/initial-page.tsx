@@ -9,9 +9,7 @@ import { PinPerspective } from "@/components/effects/3d-pin";
 
 import { HomePageHeader } from "./homepage-header";
 import { HomePageAuth } from "./homepage-auth";
-import { AppReviews } from "../document/app-review";
 import { AppHistory } from "../document/app-history";
-import { GlobeDemo } from "../globe-display";
 
 export const InitialPage = ({
     isLoggedin   
