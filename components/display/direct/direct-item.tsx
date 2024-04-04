@@ -9,6 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { PromptType, usePrompt } from "@/hooks/use-prompt-store";
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
+import Image from "next/image";
 
 interface ServerChannelProps {
   directChannelProp: DirectChannel;
@@ -47,12 +48,12 @@ export const DirectChannelItem = ({
         params?.channelId === directChannelProp.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white "
       )}>
         <div>
-          <img 
+          <Image 
             alt=""
             src={avatarProp}
             className=""
-            width={"28px"}
-            height={"28px"}
+            width={28}
+            height={28}
             style={{borderRadius: 50}}
           />
         </div>

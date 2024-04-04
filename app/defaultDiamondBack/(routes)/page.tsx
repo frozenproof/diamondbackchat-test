@@ -7,7 +7,7 @@ export default function Home() {
     <div className="flex flex-col">
       <p className="text-3xl font-bold bg-slate-50 h-full flex items-center justify-center" color="chocolate">
        This is a uwu test protected page.
-       I'm glad you joined my beta version.
+       I`&#39;`m glad you joined my beta version.
       </p>
       <div className="h-full flex items-center justify-center">
       <UserButton 

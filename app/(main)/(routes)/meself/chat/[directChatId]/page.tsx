@@ -5,9 +5,9 @@ import { DirectMessageInput } from "@/components/display/direct-message/direct-i
 import { DirectChannel, UserProfile } from "@prisma/client";
 import { Suspense } from "react";
 
-interface MemberIdPageProps {
+interface DirectMemberIdPageProps {
     otherMember: UserProfile;
-    directPageProp: DirectChannel ;
+    directPageProp: DirectChannel;
     profilePageProp: UserProfile;
 }
 
@@ -15,7 +15,7 @@ const DirectChatMemberIdPage = async ({
   directPageProp,
   otherMember,
   profilePageProp,
-  }: MemberIdPageProps) => {
+  }: DirectMemberIdPageProps) => {
 
   // console.log("DirectChatMemberIdPage");
   if(otherMember)

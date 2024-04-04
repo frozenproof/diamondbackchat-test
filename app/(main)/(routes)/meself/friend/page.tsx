@@ -167,7 +167,7 @@ const FriendsPage = async({
           <CardHeader>
             <CardTitle>Password</CardTitle>
             <CardDescription>
-              Change your password here. After saving, you'll be logged out.
+              Change your password here. After saving, you`&#39;`ll be logged out.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

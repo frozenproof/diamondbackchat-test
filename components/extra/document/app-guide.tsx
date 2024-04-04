@@ -36,7 +36,7 @@ const content = [
     description:  (
       <div>
         <div>
-          Discord is where I first met with such a simple yet easy to use design , and a small group where I can meet friends without distinctions . With an user name that I'm sure I can be proud of , Viet Nam.
+          Discord is where I first met with such a simple yet easy to use design , and a small group where I can meet friends without distinctions . With an user name that I`&apos;`m sure I can be proud of , Viet Nam.
         </div>
         <div>
           This picture is a memory I always keep in my devices.

@@ -1,7 +1,5 @@
 "use client";
 
-import axios from "axios";
-import qs from "query-string";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -76,7 +74,7 @@ export const MessageFilePrompt = () => {
             Send files {channelIdPropAPI} here
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            This is a fire and I don't know how {memberIdPropAPI}
+            This is a fire and I don`&#39;`t know how {memberIdPropAPI}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

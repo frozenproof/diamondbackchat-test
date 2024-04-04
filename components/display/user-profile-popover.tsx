@@ -86,7 +86,7 @@ export const UserProfilePopover = ({
                       `text-sm text-zinc-600 dark:text-zinc-300 ` 
                     }
                     >
-                      Look like this user didn't add anything to their bio.
+                      Look like this user didn`&#39;`t add anything to their bio.
                     </div>
                   )}
                   </CardDescription>
@@ -176,7 +176,7 @@ export const UserProfilePopover = ({
                       `text-sm text-zinc-600 dark:text-zinc-300 ` 
                     }
                     >
-                      Look like this user didn't add anything to their bio.
+                      Look like this user didn`&#39;`t add anything to their bio.
                     </div>
                   )}
                   </CardDescription>

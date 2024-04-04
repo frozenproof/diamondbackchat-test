@@ -134,7 +134,7 @@ export const DirectMessageItem = ({
     form.reset({
       content: content,
     })
-  }, [content]);
+  }, [content,form]);
 
   const fileType = fileUrl?.split(".").pop();
 
