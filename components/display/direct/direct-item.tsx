@@ -65,7 +65,7 @@ export const DirectChannelItem = ({
         <div className="flex gap-x-2 relative ml-auto">
           <ActionTooltip label="Delete">
             <Trash
-              onClick={(e) => onAction(e, "DeleteChannel")}
+              onClick={(e) => onAction(e, "DeleteDirectChannel")}
               className="hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
             />
           </ActionTooltip>

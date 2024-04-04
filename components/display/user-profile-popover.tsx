@@ -57,7 +57,6 @@ export const UserProfilePopover = ({
       <Popover>
         <PopoverTrigger>
           <div className="cursor-pointer hover:drop-shadow-md transition">
-            {/* <UserProfileAvatar src={memberProp.imageUrl} /> */}
             <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
           </div>
         </PopoverTrigger>
@@ -144,13 +143,27 @@ export const UserProfilePopover = ({
         >
           <Card className="w-full">
           <CardHeader>
-            <CardTitle>
+            <CardTitle
+              className="flex "
+            >
               <Avatar
               className="h-[80x] w-[80px]"
               >
                 <AvatarImage   src={directUserProp.imageUrl} 
                />
               </Avatar>        
+              <Button
+                className="ml-auto flex"
+              >                  
+                  <div onClick={onMemberClick} >
+                    Friend Request
+                  </div>
+               </Button>
+               <Button>                  
+                  <div onClick={onMemberClick} >
+                    Message
+                  </div>
+                </Button>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -183,11 +196,7 @@ export const UserProfilePopover = ({
                 </form>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button>                  
-                  <div onClick={onMemberClick} >
-                    Click here to direct chat
-                  </div>
-                </Button>
+
               </CardFooter>
             </Card>
           </CardContent>

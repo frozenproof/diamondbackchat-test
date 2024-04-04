@@ -10,6 +10,10 @@ export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId:
     directConversation = await createNewDirectChannel(memberOneId, memberTwoId);
   }
 
+  if(directConversation?.deleted)
+  {
+    directConversation = await updateDeleteDirectChannel(directConversation.id);
+  }
   return directConversation;
 }
 
@@ -20,8 +24,7 @@ const findDirectChannel = async (memberOneId: string, memberTwoId: string) => {
         AND: [
           { memberOneId: memberOneId },
           { memberTwoId: memberTwoId },
-        ],
-        deleted: false
+        ]
       },
       include: {
         memberOne: true,
@@ -71,4 +74,25 @@ const createNewDirectChannel = async (memberOneId: string, memberTwoId: string) 
   } catch {
     return null;
   }
+}
+
+const updateDeleteDirectChannel = async (directChannelId : string) => {
+  try {
+    return await db.directChannel.update({
+      where: {
+        id: directChannelId
+      },
+      data: {
+        deleted: false
+      },
+      include: {
+        memberOne: true,
+        memberTwo: true
+      }
+    })
+  }
+  catch {
+    return null;
+  }
+
 }

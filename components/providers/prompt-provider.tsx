@@ -9,7 +9,7 @@ import { CreateChannelPrompt } from "@/components/prompts/channel/create-channel
 import { CreateChannelPromptDiamond } from "@/components/prompts/channel/create-channel-prompt-diamond ";
 import { LeaveServerPrompt } from "@/components/prompts/server/leave-server-prompt";
 import { DeleteServerPrompt } from "@/components/prompts/server/delete-server-prompt";
-import { DeleteChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
+import { DeleteChannelPrompt, DeleteDirectChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
 import { EditChannelPrompt } from "../prompts/channel/edit-channel-prompt";
 import { MessageFilePrompt } from "../prompts/file/message-file-modal";
 import { DeleteMessageModal } from "../prompts/message/delete-message-prompt";
@@ -39,6 +39,7 @@ export const PromptProvider = () => {
             <EditChannelPrompt />
             <MessageFilePrompt />
             <DeleteMessageModal />
+            <DeleteDirectChannelPrompt />
         </>
     )
 }

@@ -3,7 +3,6 @@
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { ServerSideBar } from "@/components/display/server/server-sidebar";
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 

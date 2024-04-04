@@ -80,7 +80,7 @@ export const DirectMessageItem = ({
   const params = useParams();
   const router = useRouter();
 
-  console.log("direct item",attachmentsList);
+  // console.log("direct item",attachmentsList);
   const onMemberClick = () => {
     if (UserProp.id === currentUser.id) {
       return;

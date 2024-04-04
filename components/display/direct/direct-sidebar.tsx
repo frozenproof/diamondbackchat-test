@@ -44,9 +44,14 @@ export const DirectSideBar = async({
     }   
     if(directChannelProp)
     return (
-      <div>
+      <div
+        // className="bg-red-800"
+      >
         <DirectSideBarHeader 
         />
+          <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400 pt-[8px] text-center align-middle">
+            Direct Channels
+          </p>       
         {!!directChannelProp?.length && (
               <div className="mb-2">
                 <div className="space-y-[2px]">

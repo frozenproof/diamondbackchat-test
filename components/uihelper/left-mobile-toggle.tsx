@@ -13,7 +13,7 @@ import { UserStatus } from "@prisma/client";
 import { DirectSideBar } from "../display/direct/direct-sidebar";
 import React, { Suspense } from "react";
 
-export const MobileNavigationLeftToggle = async({
+export const MobileNavigationLeftToggle = ({
   serverId,
   userName,
   userAvatar,
@@ -27,8 +27,8 @@ export const MobileNavigationLeftToggle = async({
   userProfileIdProp: string;
 }) => {
 
-  console.log("wutmobiles",serverId?.toString);
-  console.log("wutmobileu",userProfileIdProp?.toString);
+  // console.log("wutmobiles",serverId?.toString);
+  // console.log("wutmobileu",userProfileIdProp?.toString);
   return (
     <Suspense>
     <Sheet>
@@ -44,7 +44,7 @@ export const MobileNavigationLeftToggle = async({
           />
         </div>
         <div
-            className="flex flex-col w-full"
+            className="flex flex-col w-full h-full"
           >
             {(serverId) && 
               <ServerSideBar serverId={serverId} />
@@ -55,12 +55,15 @@ export const MobileNavigationLeftToggle = async({
                 />
               )
             }
-
+        <div
+          className="mt-auto"
+        >
         <UserButtonDiamond 
             name={userName}
             src={userAvatar}
             status={userStatus}
           />
+        </div>
         </div>
       </SheetContent>
     </Sheet>

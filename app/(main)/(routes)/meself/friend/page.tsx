@@ -51,7 +51,7 @@ const FriendsPage = async({
     return redirect(`/meself/friend`);
   }
 
-  console.log(profile.id)
+  // console.log(profile.id)
   const friends = await db.friend.findMany(
     {
       where: {

@@ -7,11 +7,9 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { useOrigin } from "@/hooks/use-origin";
-import { ServerWithMembersWithProfiles } from "@/type";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { Book, Cat, Check, Cross, Dog, Gavel, Hammer, Loader2, MagnetIcon, Minus, MoreVerticalIcon, PanelsTopLeft, RemoveFormatting, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis } from "lucide-react";

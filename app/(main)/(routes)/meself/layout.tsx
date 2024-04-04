@@ -17,7 +17,6 @@ const MePageLayout = async ({
     if(!profile){
         return redirect(`/check-auth`);
     } 
-
     
     else
     {
