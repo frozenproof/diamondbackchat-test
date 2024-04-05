@@ -73,7 +73,13 @@ const ChannelIdPage = async ({
   
     // console.log("ChannelIdPage",memberProp.id)
     return ( 
-    <Suspense>
+        <Suspense
+            fallback={
+                <div>
+                    Loading channel page
+                </div>
+            }
+        >
             <div
               className="w-full inset-y-0 max-h-full"
             >
@@ -88,8 +94,7 @@ const ChannelIdPage = async ({
                 />
             </div>
             {channel.type === OldChannelType.TEXT && (
-            <>
-              
+            <>              
                 <ChatMessagesList
                     memberProp={member}
                     name={channel.name}
@@ -117,17 +122,17 @@ const ChannelIdPage = async ({
                 }}
               />
             </>
-          )}
-          {channel.type === OldChannelType.VIDEO && (
-            <MediaRoom
-              chatId={channel.id}
-              video={false}
-              audio={true}
-              userIdProp={member.id}
-            />
-          )}
-          </Suspense>
-   );
+            )}
+            {channel.type === OldChannelType.VIDEO && (
+                <MediaRoom
+                chatId={channel.id}
+                video={false}
+                audio={true}
+                userIdProp={member.id}
+                />
+            )}
+        </Suspense>
+    );
   }
   
  

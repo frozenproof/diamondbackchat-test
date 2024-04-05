@@ -65,7 +65,7 @@ export const UserProfilePopover = ({
           // sideOffset={0}
           className="bg-transparent w-[380px]"
         >
-          <Card className="w-full">
+          <Card className="w-full flex">
           <CardHeader>
             <CardTitle>
               <Avatar
@@ -73,7 +73,15 @@ export const UserProfilePopover = ({
               >
                 <AvatarImage   src={messageMemberProp.userProfile.imageUrl} 
                />
-              </Avatar>           
+              </Avatar>
+              <Button
+                className="ml-auto flex"
+              >                  
+                  <div onClick={onMemberClick} >
+                    Friend Request
+                  </div>
+               </Button>
+       
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -86,7 +94,7 @@ export const UserProfilePopover = ({
                       `text-sm text-zinc-600 dark:text-zinc-300 ` 
                     }
                     >
-                      Look like this user didn`&#39;`t add anything to their bio.
+                      Look like this user didn&#39;t add anything to their bio.
                     </div>
                   )}
                   </CardDescription>
@@ -106,11 +114,6 @@ export const UserProfilePopover = ({
                 </form>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Button>                  
-                  <div onClick={onMemberClick} >
-                    Click here to direct chat
-                  </div>
-                </Button>
               </CardFooter>
             </Card>
           </CardContent>
@@ -176,7 +179,7 @@ export const UserProfilePopover = ({
                       `text-sm text-zinc-600 dark:text-zinc-300 ` 
                     }
                     >
-                      Look like this user didn`&#39;`t add anything to their bio.
+                      Look like this user didn&#39;t add anything to their bio.
                     </div>
                   )}
                   </CardDescription>

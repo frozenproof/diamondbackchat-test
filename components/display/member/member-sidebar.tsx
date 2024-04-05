@@ -14,16 +14,20 @@ export const MemberSideBar = ({
     memberProp
 }:MemberSideBarProps) => {
     return (
-        <Suspense>
-
-            <div
-                    className="flex-1 px-1 overflow-y-scroll"            
+        <div
+            className="flex-1 px-1 overflow-y-scroll"            
+        >
+            <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
+                members
+            </p>
+            {!!memberProp.length && (
+                <Suspense
+                    fallback={
+                        <div>
+                            Loading members
+                        </div>
+                    }
                 >
-                {!!memberProp.length && (
-                <div className="mb-2">
-                    <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
-                        members
-                    </p>
                     <div className="space-y-[2px]">
                     {memberProp.map((member) => (
                         <MemberItem
@@ -32,10 +36,8 @@ export const MemberSideBar = ({
                         />
                     ))}
                     </div>
-                </div>
-                )}            
-       </div>
-       </Suspense>
-        
+                </Suspense>
+            )}            
+       </div>        
     )
 }

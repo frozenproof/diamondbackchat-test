@@ -74,7 +74,7 @@ export const MessageFilePrompt = () => {
             Send files {channelIdPropAPI} here
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            This is a fire and I don`&#39;`t know how {memberIdPropAPI}
+            This is a fire and I don&#39;t know how {memberIdPropAPI}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

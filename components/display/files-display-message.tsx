@@ -30,7 +30,7 @@ export const FilesDisplay = ({
                         return (
                             <div
                                 key={file.id}
-                                className="w-full overflow-y-scroll"
+                                className="w-full"
                             >
                                 {isImage && (
                                 <a 

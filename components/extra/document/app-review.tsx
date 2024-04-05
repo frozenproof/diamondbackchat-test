@@ -54,7 +54,7 @@ const CARDS = [
       designation: "Senior Toramer",
       content: (
         <p>
-          I don`&#39;`t know about apps,therefore I just use it.
+          I don&#39;t know about apps,therefore I just use it.
         </p>
       ),
     },
@@ -64,7 +64,7 @@ const CARDS = [
       designation: "Creator",
       content: (
         <p>
-          I deployed this thing for free , and I don`&#39;`t know what I did.
+          I deployed this thing for free , and I don&#39;t know what I did.
         </p>
       ),
     },

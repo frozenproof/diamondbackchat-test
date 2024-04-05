@@ -10,7 +10,7 @@ export default function Custom404() {
         >
         <h1>404 - Page Not Found</h1>
         <div>
-          You must have tried to access a page that doesn`&#39;`t exist anymore , or you simply don`&#39;`t have such authority.
+          You must have tried to access a page that doesn&#39;t exist anymore , or you simply don&#39;t have such authority.
         </div>
         <a
           href="/meself/friend"

@@ -142,7 +142,6 @@ export const DirectMessageItem = ({
   const canDeleteMessage = !deleted && (isSender);
   const canEditMessage = !deleted && isSender && !fileUrl;
   const isPDF = fileType === "pdf" && fileUrl;
-  const isImage = !isPDF && fileUrl;
 
   const messageUserProp = currentUser;
   const directUserProp = UserProp;
@@ -162,14 +161,10 @@ export const DirectMessageItem = ({
 
     >      
       {(!isContinious) && (
-      <div className="group flex gap-x-2 items-start w-full">
-         
-
+      <div className="group flex gap-x-2 items-start w-full">    
          <UserProfilePopover 
-
           directUserProp={directUserProp}
           currentUserProp={messageUserProp}
-
          />
         
         <div className="flex flex-col w-full">

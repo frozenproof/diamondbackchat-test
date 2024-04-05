@@ -18,7 +18,7 @@ export const maxDuration = 5
 export const metadata: Metadata = {
   title: "LilTrees",
   description: "Everything you need , by Cattus",
-  icons: "icon8.ico"
+  icons: "icon.ico"
 };
 
 export default function RootLayout({

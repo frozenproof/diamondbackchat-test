@@ -12,6 +12,7 @@ import { UserButtonDiamond } from "./user-button-diamond";
 import { UserStatus } from "@prisma/client";
 import { DirectSideBar } from "../display/direct/direct-sidebar";
 import React, { Suspense } from "react";
+import { NavigationHeavyLoad } from "../optimization/navigation-side-toggle";
 
 export const MobileNavigationLeftToggle = ({
   serverId,
@@ -30,7 +31,6 @@ export const MobileNavigationLeftToggle = ({
   // console.log("wutmobiles",serverId?.toString);
   // console.log("wutmobileu",userProfileIdProp?.toString);
   return (
-    <Suspense>
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="md:hidden">
@@ -44,30 +44,32 @@ export const MobileNavigationLeftToggle = ({
           />
         </div>
         <div
-            className="flex flex-col w-full h-full"
-          >
-            {(serverId) && 
-              <ServerSideBar serverId={serverId} />
-            }
-            {(!serverId && userProfileIdProp) && (
-                <DirectSideBar 
-                    userProfileId={userProfileIdProp}
-                />
-              )
-            }
-        <div
-          className="mt-auto"
+          className="flex flex-col w-full h-full"
         >
-        <UserButtonDiamond 
-            name={userName}
-            src={userAvatar}
-            status={userStatus}
+        <Suspense
+          fallback={
+            <div>
+              Loading sidebar
+            </div>
+          }
+        >
+          <NavigationHeavyLoad 
+              userProfileIdProp={userProfileIdProp}
+              serverId={serverId}
+          />          
+        </Suspense>
+        <div
+        className="mt-auto"
+        >
+          <UserButtonDiamond 
+              name={userName}
+              src={userAvatar}
+              status={userStatus}
           />
         </div>
         </div>
       </SheetContent>
     </Sheet>
-    </Suspense>
   )
 }
 
