@@ -46,12 +46,6 @@ interface ChatItemProps {
   isContinious: Boolean;
 };
 
-const roleIconMap :{[key: string]: React.ReactNode}= {
-    [OldMemberRole.GUEST]       : null,
-    [OldMemberRole.MEMBER]      : <Magnet className="mr-2"/>,
-    [OldMemberRole.MODERATOR]   : <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />,
-    [OldMemberRole.ADMIN]       : <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
-  }
 
 const formSchema = z.object({
   content: z.string().min(1),
@@ -143,7 +137,7 @@ export const DirectMessageItem = ({
   const canEditMessage = !deleted && isSender && !fileUrl;
   const isPDF = fileType === "pdf" && fileUrl;
 
-  const messageUserProp = currentUser;
+  const currentUserProp = currentUser;
   const directUserProp = UserProp;
   const { height, width } = useWindowDimensions();
  
@@ -162,15 +156,16 @@ export const DirectMessageItem = ({
     >      
       {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">    
-         <UserProfilePopover 
-          directUserProp={directUserProp}
-          currentUserProp={messageUserProp}
-         />
-        
+          <div 
+            className="cursor-pointer hover:drop-shadow-md transition"
+            onClick={()=>onOpen("UserProfile", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)}
+          >
+            <UserProfileAvatar src={directUserProp.imageUrl} />
+          </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
+              <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)} className="font-semibold text-sm hover:underline cursor-pointer">
                 {UserProp.name}
               </p>
             </div>

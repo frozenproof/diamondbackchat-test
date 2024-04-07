@@ -26,6 +26,7 @@ import { FilesDisplay } from "../files-display-message";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { MemberWithProfile } from "@/type";
 import { UserProfilePopover } from "../user-profile-popover";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
 interface ChatItemProps {
   id: string;
@@ -165,15 +166,15 @@ export const MessageItem = ({
       
     {(!isContinious) && (
       <div className="group flex gap-x-2 items-start w-full">
-         <UserProfilePopover 
-          currentMemberProp={currentMember}
-          messageMemberProp={messageMemberProp}
-          serverIdProp={serverIdProp}
-         />
+          <div className="cursor-pointer hover:drop-shadow-md transition"
+            onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)}
+          >
+            <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
+          </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">
             <div className="flex items-center">
-              <p onClick={onMemberClick} className="font-semibold text-sm hover:underline cursor-pointer">
+              <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)} className="font-semibold text-sm hover:underline cursor-pointer">
                 {messageMemberProp.nickname}
               </p>
 

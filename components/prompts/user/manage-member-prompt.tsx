@@ -30,6 +30,7 @@ import {
 import { OldMemberRole } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ServerWithMembersWithProfiles } from "@/type";
 const roleIconMap: {[key: string]: React.ReactNode} = {
     "GUEST": <MagnetIcon />,
     "MEMBER": <MagnetIcon />,
