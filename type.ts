@@ -1,5 +1,5 @@
 
-import { Member, Message, Server, UserProfile ,AttachmentChannel, DirectMessage, DirectChannel, AttachmentDirect } from "@prisma/client";
+import { Member, Message, Server, UserProfile ,AttachmentChannel, DirectMessage, DirectChannel, AttachmentDirect, Channel } from "@prisma/client";
 import { Server as NetServer, Socket } from "net";
 import { NextApiResponse } from "next";
 import { Server as SocketIOServer } from "socket.io";
@@ -38,7 +38,7 @@ export type MessageWithMemberWithProfileWithFile = Message & {
 export type MessageWithProfileWithFile = DirectMessage & {
   userProfile: UserProfile ; 
   AttachmentDirect : AttachmentDirect[];
-}
+};
          
 
      
@@ -48,3 +48,6 @@ export type MessageWithMemberWithProfileEU = Message & {
   };
 
  
+export type ServerWithChannels = Server & {
+  Channel: Channel[]
+};

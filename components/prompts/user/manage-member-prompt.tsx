@@ -139,11 +139,11 @@ export const ManageMemberPrompt = () => {
                                     {roleIconMap[member.role]}   
                                     {member.userProfile.name} 
                                 </div>                                
-                                <p
+                                <div
                                     className="flex text-xs font-bold items-center gap-x-2"
                                 >
                                     {member.userProfile.email}
-                                </p>                                
+                                </div>                                
                             </div>
                             {server.userProfileId !== member.userProfileId && targetMemberId !== member.id && (
                                 <div  

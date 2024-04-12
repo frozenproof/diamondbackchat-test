@@ -37,6 +37,8 @@ export const ChannelItem = ({
   const Icon = iconMap[channel.type];
 
   const onClick = () => {
+    // alert("WHAT IS ALERTING")
+    console.log("pressed")
     router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
   }
 

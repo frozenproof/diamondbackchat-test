@@ -9,9 +9,9 @@ import { ChatWelcome } from "../channel-welcome";
 import { MemberWithProfile,  MessageWithMemberWithProfileWithFile } from "@/type";
 import { MessageItem } from "./message-item";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 import { format } from "date-fns"
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 interface ChatMessagesProps {
   name: string;
@@ -36,9 +36,9 @@ export const ChatMessagesList = ({
   paramValue,
   type,
 }: ChatMessagesProps) => {
-  const [activeId, setActiveId] = useState("tis but");
   const queryKey = `chat:${channelChatId}`;
-  const { height, width } = useWindowDimensions();
+  const addKey = `chat:${channelChatId}:messages`;
+  const updateKey = `chat:${channelChatId}:messages:update` 
 
   const chatRef = useRef<ElementRef<"div">>(null);
   const bottomRef = useRef<ElementRef<"div">>(null);
@@ -54,6 +54,7 @@ export const ChatMessagesList = ({
     paramKey,
     paramValue,
   });
+  useChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
     bottomRef,
@@ -62,15 +63,6 @@ export const ChatMessagesList = ({
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
-  const DATE_FORMAT_CONTINIOUS = "HH:mm";
-  
-  const setActiveElementOnHover = (id: string) => {
-    setActiveId(id);
-  };
-
-  const resetActiveElementOnLeave = () => {
-    setActiveId("");
-  };
 
   if (status === "loading") {
     return (
@@ -127,47 +119,20 @@ export const ChatMessagesList = ({
             {group.items.map((message: MessageWithMemberWithProfileWithFile,index: number,array: any) => 
             {
               var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
-              var isActiveItem = (activeId === message.id)
               // console.log("this is message list file",message.AttachmentChannel)
               return (
                 <div
                   key={message.id}
                 >
                   <div
-                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
+                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` } bg-red-800`}
                   >
-                    
+                    {/* cai nay de nhin cho roi ra */}
                   </div>
                   <div
-                    className={`flex ${ (isActiveItem) ? `bg-black/5` : `` }`}
-                    onMouseEnter={() => setActiveElementOnHover(message.id)}
-                    onMouseLeave={resetActiveElementOnLeave}
+                    className={`flex `}
                     >
-                    {isContiniousCock && (
-                          <div
-                            className={`continiouschat `}
-                            style={{
-                              minWidth: (width<769) ? `${44}px` : `${56}px`,
-                              maxWidth: (width<769) ? `${44}px` : `${56}px`
-                            }}
-                          >
-                            {isActiveItem && (
-                              <div
-                                className=""
-                              >
-                                {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
-                              </div>
-                              )
-                            }
-                          </div>
-                    )
-                    }
-                    {!isContiniousCock && (
-                      <div
-                        className="pl-[8px] "
-                      >
-                        </div>
-                    )}
+
                     <MessageItem
                       key={message.id}
                       id={message.id}
@@ -179,13 +144,12 @@ export const ChatMessagesList = ({
                       fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                      // isUpdated={message.edited}
                       attachmentsList={message.AttachmentChannel} 
                       isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
-                      isReply={false}
-                      replyId=""
+                      isReply={message.isReply}
+                      replyId={message.repliedMessageid}
                       isContinious={isContiniousCock}
                     />
                   </div>

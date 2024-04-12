@@ -5,8 +5,8 @@ import axios from "axios";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AttachmentChannel, AttachmentDirect, Member, OldMemberRole, UserProfile } from "@prisma/client";
-import { Edit, Magnet, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
+import { AttachmentChannel, OldMemberRole, UserProfile } from "@prisma/client";
+import { Edit, Trash } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -27,6 +27,7 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { MemberWithProfile } from "@/type";
 import { UserProfilePopover } from "../user-profile-popover";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
+import { format } from "date-fns";
 
 interface ChatItemProps {
   id: string;
@@ -46,13 +47,6 @@ interface ChatItemProps {
   replyId?: string;
   isContinious: Boolean;
 };
-
-const roleIconMap :{[key: string]: React.ReactNode}= {
-    [OldMemberRole.GUEST]       : null,
-    [OldMemberRole.MEMBER]      : <Magnet className="mr-2"/>,
-    [OldMemberRole.MODERATOR]   : <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />,
-    [OldMemberRole.ADMIN]       : <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
-  }
 
 const formSchema = z.object({
   content: z.string().min(1),
@@ -76,26 +70,21 @@ export const MessageItem = ({
   replyId
 
 }: ChatItemProps) => {
+  const [activeId, setActiveId] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
   const params = useParams();
   const router = useRouter();
 
-  // if(hasAttachment)
-  // console.log("file props",attachmentsList);
-  const serverIdProp = params?.serverId as string;
+  const setActiveElementOnHover = () => {
+    setActiveId(true);
+  };
+
+  const resetActiveElementOnLeave = () => {
+    setActiveId(false);
+  };
   const messageMemberProp = currentMessageMemberProp;
   const currentMemberProp = currentMember;
-  const onMemberClick = () => {
-    console.log(`memberPROP2/${currentMemberProp.userProfileId == currentMessageMemberProp.userProfileId ? `Giong nhau + ${currentMessageMemberProp.userProfileId}` : `Khac nhau + ${currentMessageMemberProp.userProfileId}`} `);
-    if (currentMemberProp.userProfileId === currentMessageMemberProp.userProfileId) {
-      return;
-    }
-    if (currentMemberProp.userProfileId !== currentMessageMemberProp.userProfileId)
-    {
-      router.push(`/api/directRequest/${currentMessageMemberProp.userProfileId}/`);
-    }
-  }
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
@@ -136,7 +125,21 @@ export const MessageItem = ({
       console.log(error);
     }
   }
+  const onSubmit2 = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const url = qs.stringifyUrl({
+        url: `${socketUrl}/${id}`,
+        query: socketQuery,
+      });
 
+      await axios.patch(url, values);
+
+      form.reset();
+      setIsEditing(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   useEffect(() => {
     form.reset({
       content: content,
@@ -144,7 +147,7 @@ export const MessageItem = ({
   }, [content,form]);
 
   const fileType = fileUrl?.split(".").pop();
-
+  const DATE_FORMAT_CONTINIOUS = "HH:mm";
   const isAdmin = currentMember.role === OldMemberRole.ADMIN;
   const isModerator = currentMember.role === OldMemberRole.MODERATOR;
   const isOwner = currentMember.id === currentMemberProp.id;
@@ -158,181 +161,210 @@ export const MessageItem = ({
   {
     // console.log("Message Id",id);
     return (
-    <div className={`relative group flex items-center w-full `}
-      style={{
-        overflowWrap: "break-word"
-      }}
+    <div
+      className={`flex ${ (activeId) ? `bg-black/5` : `` }`}
+      onMouseEnter={() => {setActiveElementOnHover()}}
+      onMouseLeave={resetActiveElementOnLeave}
     >
-      
-    {(!isContinious) && (
-      <div className="group flex gap-x-2 items-start w-full">
-          <div className="cursor-pointer hover:drop-shadow-md transition"
-            onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)}
-          >
-            <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
-          </div>
-        <div className="flex flex-col w-full">
-          <div className="flex items-center gap-x-2">
-            <div className="flex items-center">
-              <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)} className="font-semibold text-sm hover:underline cursor-pointer">
-                {messageMemberProp.nickname}
-              </p>
-
-            </div>
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">
-              {timestamp}
-            </span>
-          </div>
-          {(hasAttachment) &&
-              (
-                  <FilesDisplay
-                    fileProps={attachmentsList}
-                    isChannel={true}
-                  />
-              )          
-          }
-          
-          {!isEditing && (
-            <div 
-            className={              
-              `text-sm text-zinc-600 dark:text-zinc-300 ` 
-          }
+      {isContinious && (
+          <div
+          className={`continiouschat `}
           style={{
-            overflowWrap: "break-word",
-            width: (width<769) ? `${width-80}px` : `${width-360}px`
+            minWidth: (width<769) ? `${44}px` : `${56}px`,
+            maxWidth: (width<769) ? `${44}px` : `${56}px`
           }}
-
-            >
-              {content}
-              {isUpdated && !deleted && (
-                <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
-                  (edited)
-                </span>
-              )}
-            </div>
-          )}
-          {isEditing && (
-            <Form {...form}>
-              <form 
-                className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
-                onSubmit={form.handleSubmit(onSubmit)}>
-                  <FormField
-                    control={form.control}
-                    name="content"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormControl>
-                          <div className="relative w-full overflow-y-scroll">
-                            <Input
-                              disabled={isLoading}
-                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 overflow-y-scroll"
-                              placeholder="Edited message"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <Button disabled={isLoading} size="sm" variant="primary">
-                    Save
-                  </Button>
-              </form>
-              <span className="text-[10px] mt-1 text-zinc-400">
-                Press escape to cancel, enter to save
-              </span>
-            </Form>
-          )}
-        </div>
-      </div>
-      )}
-      {(isContinious) && (
+          >
+            {activeId && (
+              <div
+                className=""
+              >
+                {format(new Date(timestamp), DATE_FORMAT_CONTINIOUS)}
+              </div>
+              )
+            }
+          </div>
+      )
+      }
+      {!isContinious && (
         <div
-          className="w-full"
+        className="pl-[8px] "
         >
-         {!isEditing && (
-            <div className={
-              `text-sm text-zinc-600 dark:text-zinc-300 ` 
+        </div>
+      )}    
+      <div className={`relative group flex items-center w-full `}
+        style={{
+          overflowWrap: "break-word"
+        }}
+      >
+        
+      {(!isContinious) && (
+        <div className="group flex gap-x-2 items-start w-full">
+            <div className="cursor-pointer hover:drop-shadow-md transition"
+              onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)}
+            >
+              <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
+            </div>
+          <div className="flex flex-col w-full">
+            <div className="flex items-center gap-x-2">
+              <div className="flex items-center">
+                <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)} className="font-semibold text-sm hover:underline cursor-pointer">
+                  {messageMemberProp.nickname}
+                </p>
+
+              </div>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400">
+                {timestamp}
+              </span>
+            </div>
+            {(hasAttachment) &&
+                (
+                    <FilesDisplay
+                      fileProps={attachmentsList}
+                      isChannel={true}
+                    />
+                )          
+            }            
+            {!isEditing && (
+              <div 
+              className={              
+                `text-sm text-zinc-600 dark:text-zinc-300 ` 
             }
             style={{
               overflowWrap: "break-word",
               width: (width<769) ? `${width-80}px` : `${width-360}px`
             }}
-
-            >
-              {content}
-              {isUpdated && !deleted && (
-                <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
-                  (edited)
+              >
+                {content}
+                {isUpdated && !deleted && (
+                  <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
+                    (edited)
+                  </span>
+                )}
+              </div>
+            )}
+            {isEditing && (
+              <Form {...form}>
+                <form 
+                  className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
+                  onSubmit={form.handleSubmit(onSubmit)}>
+                    <FormField
+                      control={form.control}
+                      name="content"
+                      render={({ field }) => (
+                        <FormItem className="flex-1">
+                          <FormControl>
+                            <div className="relative w-full overflow-y-scroll">
+                              <Input
+                                disabled={isLoading}
+                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 overflow-y-scroll"
+                                placeholder="Edited message"
+                                {...field}
+                              />
+                            </div>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <Button disabled={isLoading} size="sm" variant="primary">
+                      Save
+                    </Button>
+                </form>
+                <span className="text-[10px] mt-1 text-zinc-400">
+                  Press escape to cancel, enter to save
                 </span>
-              )}
-              {(hasAttachment) &&
-              (
-                  <FilesDisplay
-                    fileProps={attachmentsList}
-                    isChannel={true}
-                  />
-              )          
-              }
-            </div>
-          )}
-          {isEditing && (
-            <Form {...form}>
-              <form 
-                className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
-                onSubmit={form.handleSubmit(onSubmit)}>
-                  <FormField
-                    control={form.control}
-                    name="content"
-                    render={({ field }) => (
-                      <FormItem className="flex-1 w-full overflow-y-scroll">
-                        <FormControl>
-                          <div className="relative w-full overflow-y-scroll">
-                            <Input
-                              disabled={isLoading}
-                              className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full overflow-y-scroll h-full"
-                              placeholder="Edited message overflow-y-scroll"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  <Button disabled={isLoading} size="sm" variant="primary">
-                    Save
-                  </Button>
-              </form>
-              <span className="text-[10px] mt-1 text-zinc-400">
-                Press escape to cancel, enter to save
-              </span>
-            </Form>
-          )}
+              </Form>
+            )}
+          </div>
         </div>
-      )}
-      {canDeleteMessage && (
-        <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-          {canEditMessage && (
-            <ActionTooltip label="Edit">
-              <Edit
-                onClick={() => setIsEditing(true)}
+        )}
+        {(isContinious) && (
+          <div
+            className="w-full "
+          >
+          {!isEditing && (
+              <div className={
+                `text-sm text-zinc-600 dark:text-zinc-300 ` 
+              }
+              style={{
+                overflowWrap: "break-word",
+                width: (width<769) ? `${width-80}px` : `${width-360}px`
+              }}
+
+              >
+                {content}
+                {isUpdated && !deleted && (
+                  <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
+                    (edited)
+                  </span>
+                )}
+                {(hasAttachment) &&
+                (
+                    <FilesDisplay
+                      fileProps={attachmentsList}
+                      isChannel={true}
+                    />
+                )          
+                }
+              </div>
+            )}
+            {isEditing && (
+              <Form {...form}>
+                <form 
+                  className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
+                  onSubmit={form.handleSubmit(onSubmit)}>
+                    <FormField
+                      control={form.control}
+                      name="content"
+                      render={({ field }) => (
+                        <FormItem className="flex-1 w-full overflow-y-scroll">
+                          <FormControl>
+                            <div className="relative w-full overflow-y-scroll">
+                              <Input
+                                disabled={isLoading}
+                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full overflow-y-scroll h-full"
+                                placeholder="Edited message overflow-y-scroll"
+                                {...field}
+                              />
+                            </div>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <Button disabled={isLoading} size="sm" variant="primary">
+                      Save
+                    </Button>
+                </form>
+                <span className="text-[10px] mt-1 text-zinc-400">
+                  Press escape to cancel, enter to save
+                </span>
+              </Form>
+            )}
+          </div>
+        )}
+        {canDeleteMessage && (
+          <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
+            {canEditMessage && (
+              <ActionTooltip label="Edit">
+                <Edit
+                  onClick={() => setIsEditing(true)}
+                  className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                />
+              </ActionTooltip>
+            )}
+            <ActionTooltip label="Delete">
+              <Trash
+                onClick={() => onOpen("DeleteMessage", { 
+                  apiUrl: `${socketUrl}/channel-delete`,
+                  query: socketQuery,
+                  messageId: id
+                })}
                 className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
               />
             </ActionTooltip>
-          )}
-          <ActionTooltip label="Delete">
-            <Trash
-              onClick={() => onOpen("DeleteMessage", { 
-                apiUrl: `${socketUrl}/channel-delete`,
-                query: socketQuery,
-                messageId: id
-               })}
-              className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
-            />
-          </ActionTooltip>
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    </div>   
   )
   }
  

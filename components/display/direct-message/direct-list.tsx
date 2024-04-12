@@ -133,46 +133,19 @@ export const DirectChatMessages = ({
             {group.items.map((message: MessageWithProfileWithFile,index: number,array: any) => 
             {
               var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
-              var isActiveItem = (activeId === message.id)
               return (
                 <div
                   key={message.id}
                 >
                   <div
-                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
+                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` } bg-red-800`}
                   >
                     
                   </div>
                   <div
-                    className={`flex ${ (isActiveItem) ? `bg-black/5` : `` }`}
-                    onMouseEnter={() => setActiveElementOnHover(message.id)}
-                    onMouseLeave={resetActiveElementOnLeave}
+                    className={`flex `}
                     >
-                    {isContiniousCock && (
-                          <div
-                            className={`continiouschat `}
-                            style={{
-                              minWidth: (width<769) ? `${44}px` : `${56}px`,
-                              maxWidth: (width<769) ? `${44}px` : `${56}px`
-                            }}
-                          >
-                            {isActiveItem && (
-                              <div
-                                className=""
-                              >
-                                {format(new Date(message.createdAt), DATE_FORMAT_CONTINIOUS)}
-                              </div>
-                              )
-                            }
-                          </div>
-                    )
-                    }
-                      {!isContiniousCock && (
-                      <div
-                        className="pl-[8px] "
-                      >
-                        </div>
-                    )}
+                      
                     <DirectMessageItem
                       key={message.id}
                       id={message.id}

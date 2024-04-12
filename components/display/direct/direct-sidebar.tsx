@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 import DirectSideBarHeader from "@/components/extra/direct-sidebar-header";
-import { DirectChannelItem } from "./direct-item";
+import { DirectChannelItem } from "@/components/display/direct/direct-item";
 
 import { db } from "@/lib/db";
 

@@ -7,19 +7,19 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { ServerNavigation } from "../server/server-navigation";
 import { ChannelItem } from "../channel/channel-item";
+import { ServerWithChannels } from "@/type";
 
 interface ChannelSideBarProps {
-    serverProp: Server,
-    channelProp: Channel[],
+    serverProp:  ServerWithChannels;
     roleProp: OldMemberRole | undefined
 }
 
 export const ChannelSideBar = async({
     serverProp,
-    channelProp,
     roleProp
 }:ChannelSideBarProps) => {
 
+    const channelProp = serverProp.Channel;
     const textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
@@ -35,7 +35,9 @@ export const ChannelSideBar = async({
                     className="flex-1 px-1"            
                 >
             {!!textChannels?.length && (
-              <div className="mb-2">
+              <div className="mb-2"
+                // onClick={() => {alert("WHAT THE FUCK IS GOING ON")}}
+              >
                 {/* <ServerNavigation
                   sectionType="channels"
                   oldChannelType={OldChannelType.TEXT}
