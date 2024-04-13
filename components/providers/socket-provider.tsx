@@ -10,7 +10,7 @@ import {
 import { socketInstance } from "./socket-instance";
 
 type SocketContextType = {
-  socketActual: any | null;
+  socketActual: typeof socketInstance | any | null;
   isConnected: boolean;
 };
 
@@ -33,9 +33,14 @@ export const SocketProvider = ({
   const [transport, setTransport] = useState("N/A");
 
   useEffect(() => {
-    console.log("Running provider of socket");
+    // console.log("Running provider of socket client");
     if (socketInstance.connected) {
       onConnect();
+      socketInstance.on("hello", (arg) => {
+        console.log(arg); // world
+      });
+
+      socketInstance.emit("emitting from provider", "this is emit from provider");
     }
 
     function onConnect() {
@@ -62,7 +67,8 @@ export const SocketProvider = ({
     };
   }, []);
 
-  console.log("This is socket provider",socket)
+  // console.log("This is socket client provider",socket)
+  // console.log("This is socket client transport",transport)
 
   if(socket)
   return (

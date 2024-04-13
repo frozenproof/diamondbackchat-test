@@ -23,9 +23,12 @@ body,
   justify-content: center;
   /* width: 48px */
 }
-/* .hover:continious-chat {
-  display: block
-} */
+.eup-image-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-row-gap: 10px;
+}
+
 /* channel */
 .lucide-x {
   display: none

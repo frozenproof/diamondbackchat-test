@@ -1,7 +1,7 @@
 # Functional
 
-|   Main	                             |   Status	
-|---	                                 |---	
+|   Main	                             |   Status |	
+|---	                                 |---	|
 |   Server Creation	                     |  [x]	|   	
 |   Server Invite Creation	             |  [x]	|   	
 |   Server Invite Search	             |  [x]	|   	
@@ -22,7 +22,8 @@
 |   Channel Send Multiple files          |  [x]	|   	 	
 |   Direct Channel Send Multiple files   |  [x]	| 
 |   User Profile Popup	                 |  [x]	|   	
-|   Video Conference	                 |  [x]	|   	
+|   Channel Video Conference	         |  [x]	|   	
+|   Channel Video Conference Token API   |  [x]	|   	
 |   Channels List   	                 |  [x]	|   	
 |   Direct Channels List                 |  [x]	|   	
 |   	    |   	|   	
@@ -32,6 +33,8 @@
 |   Working	                             |   Status	
 |---	                                 |---	
 |   Main Page	                         |  [w] |   	
+|   Message Notifications                |  [w] |   	
+|   Call Notifications                   |  [w] |   	
 |   Friend Page	                         |  [w] |  
 |   User Settings                        |  [w] |  
 |   Sending Friend Request               |  [w] |  

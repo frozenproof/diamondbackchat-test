@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Member, Message, UserProfile } from "@prisma/client";
@@ -31,7 +33,11 @@ export const useChatSocket = ({
       return;
     }
 
-    console.log("this is running socket",socketActual)
+    socketActual.onAny((event: any, ...args: any) => {
+      console.log(`got ${event}`);
+      console.log(`data is ${args}`);
+    });
+    console.log("this is running use chat socket",addKey,updateKey,queryKey)
     socketActual.on(updateKey, (message: MessageWithMemberWithProfile) => {
       console.log(`update key`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
@@ -59,6 +65,7 @@ export const useChatSocket = ({
     });
 
     socketActual.on(addKey, (message: MessageWithMemberWithProfile) => {
+      console.log("we heard you")
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {

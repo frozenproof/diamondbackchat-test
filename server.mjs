@@ -50,9 +50,17 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
     console.log("This is from server")
+    socket.emit("hello", "this is server socket, say cheese");
+
+
+    socket.on("channel-input",(arg1,arg2) => {
+      console.log("data from channel input",arg1,arg2.content);
+      }).emit("what is this",arg1,arg2);
+    
+  
     socket.onAny((event, ...args) => {
       console.log(`got ${event}`);
+      console.log(`data from server.mjs is ${args}`);
     });
   });
-  
 })

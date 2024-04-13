@@ -21,7 +21,7 @@ export const FilesDisplay = ({
         if(fileProps)
         return (
             <div
-                className="w-full flex flex-col"
+                className="w-full flex flex-col eup-image-container col-3"
             >
                 {
                     fileProps.map((file) => {
@@ -30,7 +30,6 @@ export const FilesDisplay = ({
                         return (
                             <div
                                 key={file.id}
-                                className="w-full"
                             >
                                 {isImage && (
                                 <a 

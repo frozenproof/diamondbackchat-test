@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 
 import { Metadata, ResolvingMetadata } from "next";
+import { redirect } from "next/navigation";
 
 type Props = {
     params: { serverId: string ,channelId: string }
@@ -20,6 +21,10 @@ export async function generateMetadata(
         }
     })
 
+    if(!channel)
+    {
+        return redirect(`/meself/friend`)
+    }
     return {
       title: `LilTrees | `+channel?.name,
     }
@@ -34,7 +39,7 @@ const ChannelIdPageLayout = async ({
     }
 ) => {
 
-
+    
     return ( 
         <div className="channelidpagelayout flex flex-col h-full">
             {children}   

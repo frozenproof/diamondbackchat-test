@@ -72,7 +72,6 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
 
         const channelKey = `chat:${channelIdProp}:messages`;
         console.log("this is channel key",channelKey);
-        // socket?.server?.emit(channelKey, message);
 
         return NextResponse.json(message);
       } catch (error) {
