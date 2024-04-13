@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
+import { useEffect } from "react";
 
 const formSchema = z.object({
     name: z.string().min(1,{
@@ -72,10 +73,17 @@ export const EditServerPrompt = () => {
         onClose();
     }
 
-    if(server)
-    {
+    useEffect(() => {
+        if(server){
+            
         form.setValue("name",server.name);
         form.setValue("imageUrl", server.imageUrl);
+        }
+    },[server, form])
+    
+    if(server)
+    {
+
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">

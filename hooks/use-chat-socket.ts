@@ -31,7 +31,7 @@ export const useChatSocket = ({
       return;
     }
 
-    console.log("this is running socket")
+    console.log("this is running socket",socketActual)
     socketActual.on(updateKey, (message: MessageWithMemberWithProfile) => {
       console.log(`update key`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
