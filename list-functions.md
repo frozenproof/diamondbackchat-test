@@ -18,11 +18,9 @@
 |   Message Edit Direct Channel          |  [x]	|   	
 |   Message Delete Channel               |  [x]	|   	
 |   Message Delete Direct Channel        |  [x]	|   	
- 	
 |   Request Direct Chat     	         |  [x]	|   	
 |   Channel Send Multiple files          |  [x]	|   	 	
-|   Direct Channel Send Multiple files   |  [x]	|   	 	
-
+|   Direct Channel Send Multiple files   |  [x]	| 
 |   User Profile Popup	                 |  [x]	|   	
 |   Video Conference	                 |  [x]	|   	
 |   Channels List   	                 |  [x]	|   	

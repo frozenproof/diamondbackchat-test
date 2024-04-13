@@ -1,3 +1,8 @@
+<script>
+import basics from './parts/basics.md'
+import functions from '@/list-function.md'
+</script>
+
 # Can you smell what is cooking ? 
 In order to prevent frauds 
 
@@ -19,3 +24,5 @@ Many improvements don't even rely on those certain breaking changes , but is bun
 
 
 
+# Functions
+<!--@include:@/list-function.md-->
