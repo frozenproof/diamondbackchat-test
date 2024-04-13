@@ -1,25 +1,43 @@
-|   Main	                |   Status	
-|---	                    |---	
-|   Main Page	            |  [w] 	|   	
-|   Friend Page	            |  [w] 	|   
-|   Server Edit	            |  [x]	|   	
-|   Server Delete	        |  [x]	|   	
-|   Server Creation	        |  [x]	|   	
-|   Channel Creation	    |  [x]	|   	
-|   Channel Edit	        |  [x]	|   	
-|   Channel Delete	        |  [x]	|   	
-|   Send Channel	        |  [x]	|   	
-|   Edit Message 	        |  [x]	|   	
-|   Delete Message  	    |  [x]	|   	
-|   Direct Chat     	    |  [x]	|   	
-|   Send multiple files	    |  [w] 	|   	
-|   Send Friend Request	    |  [w] 	|   	
-|   User Profile Popup	    |  [w] 	|   	
-|   Video Conference	    |  [w] 	|   	
-|   User Status     	    |  [y] 	|   	
-|   Channels List   	    |  [x] 	|   	
-|   Direct Channels List	|  [x] 	|   	
+# Functional
+
+|   Main	                             |   Status	
+|---	                                 |---	
+|   Server Creation	                     |  [x]	|   	
+|   Server Invite Creation	             |  [x]	|   	
+|   Server Invite Search	             |  [x]	|   	
+|   Server Invite Redirect	             |  [x]	|   	
+|   Server Leave                         |  [x]	|
+|   Server Edit	                         |  [x]	|   	
+|   Server Delete	                     |  [x]	|   	
+|   Channel Creation	                 |  [x]	|   	
+|   Channel Edit	                     |  [x]	|   	
+|   Channel Delete	                     |  [x]	|   	
+|   Message Send Channel	             |  [x]	|   	
+|   Message Send Direct Channel	         |  [x]	|   	
+|   Message Edit Channel                 |  [x]	|   	
+|   Message Edit Direct Channel          |  [x]	|   	
+|   Message Delete Channel               |  [x]	|   	
+|   Message Delete Direct Channel        |  [x]	|   	
+ 	
+|   Request Direct Chat     	         |  [x]	|   	
+|   Channel Send Multiple files          |  [x]	|   	 	
+|   Direct Channel Send Multiple files   |  [x]	|   	 	
+
+|   User Profile Popup	                 |  [x]	|   	
+|   Video Conference	                 |  [x]	|   	
+|   Channels List   	                 |  [x]	|   	
+|   Direct Channels List                 |  [x]	|   	
 |   	    |   	|   	
+
+
+# Working 
+|   Working	                             |   Status	
+|---	                                 |---	
+|   Main Page	                         |  [w] |   	
+|   Friend Page	                         |  [w] |  
+|   User Settings                        |  [w] |  
+|   Sending Friend Request               |  [w] |  
+
 
 [y] Is planned ?
 [x] Working

@@ -230,6 +230,10 @@ export const DirectMessageItem = ({
                 <Form {...form}>
                   <form 
                     className="flex items-center w-full gap-x-2 pt-2"
+                    style={{
+                      overflowWrap: "break-word",
+                      width: (width<769) ? `${width-80}px` : `${width-360}px`
+                    }}
                     onSubmit={form.handleSubmit(onSubmit)}>
                       <FormField
                         control={form.control}
@@ -295,6 +299,10 @@ export const DirectMessageItem = ({
               <Form {...form}>
                 <form 
                   className="flex items-center w-full gap-x-2 pt-2"
+                  style={{
+                    overflowWrap: "break-word",
+                    width: (width<769) ? `${width-80}px` : `${width-360}px`
+                  }}
                   onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                       control={form.control}

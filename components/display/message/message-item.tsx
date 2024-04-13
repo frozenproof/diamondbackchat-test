@@ -245,7 +245,11 @@ export const MessageItem = ({
             {isEditing && (
               <Form {...form}>
                 <form 
-                  className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
+                  className="flex items-center w-full gap-x-2 pt-2 "
+                  style={{
+                    overflowWrap: "break-word",
+                    width: (width<769) ? `${width-80}px` : `${width-360}px`
+                  }}
                   onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                       control={form.control}
@@ -253,10 +257,10 @@ export const MessageItem = ({
                       render={({ field }) => (
                         <FormItem className="flex-1">
                           <FormControl>
-                            <div className="relative w-full overflow-y-scroll">
+                            <div className="relative w-full ">
                               <Input
                                 disabled={isLoading}
-                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 overflow-y-scroll"
+                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
                                 placeholder="Edited message"
                                 {...field}
                               />
@@ -310,19 +314,23 @@ export const MessageItem = ({
             {isEditing && (
               <Form {...form}>
                 <form 
-                  className="flex items-center w-full gap-x-2 pt-2 overflow-y-scroll"
+                  className="flex items-center gap-x-2 pt-2 "
+                  style={{
+                    overflowWrap: "break-word",
+                    width: (width<769) ? `${width-80}px` : `${width-360}px`
+                  }}
                   onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
                       control={form.control}
                       name="content"
                       render={({ field }) => (
-                        <FormItem className="flex-1 w-full overflow-y-scroll">
+                        <FormItem className="flex-1 w-full ">
                           <FormControl>
-                            <div className="relative w-full overflow-y-scroll">
+                            <div className="relative w-full ">
                               <Input
                                 disabled={isLoading}
-                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full overflow-y-scroll h-full"
-                                placeholder="Edited message overflow-y-scroll"
+                                className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 w-full  h-full"
+                                placeholder="Edited message "
                                 {...field}
                               />
                             </div>
