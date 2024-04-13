@@ -21,18 +21,18 @@ export const useChatSocket = ({
   updateKey,
   queryKey
 }: ChatSocketProps) => {
-  const { socket } = useSocket();
+  const { socketActual } = useSocket();
   const queryClient = useQueryClient();
 
   useEffect(() => {
     console.log("UseChatSocket?");
-    if (!socket) {
+    if (!socketActual) {
       console.log("Socket is not running")
       return;
     }
 
     console.log("this is running socket")
-    socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
+    socketActual.on(updateKey, (message: MessageWithMemberWithProfile) => {
       console.log(`update key`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
@@ -58,7 +58,7 @@ export const useChatSocket = ({
       })
     });
 
-    socket.on(addKey, (message: MessageWithMemberWithProfile) => {
+    socketActual.on(addKey, (message: MessageWithMemberWithProfile) => {
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {
@@ -86,8 +86,8 @@ export const useChatSocket = ({
     });
 
     return () => {
-      socket.off(addKey);
-      socket.off(updateKey);
+      socketActual.off(addKey);
+      socketActual.off(updateKey);
     }
-  }, [queryClient, addKey, queryKey, socket, updateKey]);
+  }, [queryClient, addKey, queryKey, socketActual, updateKey]);
 }

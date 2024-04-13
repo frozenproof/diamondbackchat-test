@@ -6,15 +6,16 @@ import {
   useEffect,
   useState
 } from "react";
-import { io as ClientIO } from "socket.io-client";
+
+import { socketInstance } from "./socket-instance";
 
 type SocketContextType = {
-  socket: any | null;
+  socketActual: any | null;
   isConnected: boolean;
 };
 
 const SocketContext = createContext<SocketContextType>({
-  socket: null,
+  socketActual: null,
   isConnected: false,
 });
 
@@ -27,38 +28,45 @@ export const SocketProvider = ({
 }: { 
   children: React.ReactNode 
 }) => {
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState(Object);
   const [isConnected, setIsConnected] = useState(false);
+  const [transport, setTransport] = useState("N/A");
 
   useEffect(() => {
     console.log("Running provider of socket");
-    const socketInstance = new (ClientIO as any)(process.env.NEXT_PUBLIC_SITE_URL!, {
-      path: "/api/socket/io",
-      addTrailingSlash: false,
-    });
+    if (socketInstance.connected) {
+      onConnect();
+    }
 
-    const testingConnect = () => {
+    function onConnect() {
       setIsConnected(true);
-    };
+      setTransport(socketInstance.io.engine.transport.name);
 
-    const testingDisconnect = () => {
+      socketInstance.io.engine.on("upgrade", (transport) => {
+        setTransport(transport.name);
+      });
+    }
+
+    function onDisconnect() {
       setIsConnected(false);
-    };
+      setTransport("N/A");
+    }
 
-    socketInstance.on("connect", testingConnect );
-    socketInstance.on("disconnect", testingDisconnect);
+    socketInstance.on("connect", onConnect);
+    socketInstance.on("disconnect", onDisconnect);
 
     setSocket(socketInstance);
-
     return () => {
-      socketInstance.off("connect",testingConnect);
-      socketInstance.off("disconnect",testingDisconnect);
-      socketInstance.disconnect();
-    }
+      socketInstance.off("connect", onConnect);
+      socketInstance.off("disconnect", onDisconnect);
+    };
   }, []);
 
+  console.log("This is socket provider",socket)
+
+  if(socket)
   return (
-    <SocketContext.Provider value={{ socket, isConnected }}>
+    <SocketContext.Provider value={{ socketActual: socketInstance, isConnected }}>
       {children}
     </SocketContext.Provider>
   )

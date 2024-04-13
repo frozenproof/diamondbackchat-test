@@ -50,12 +50,7 @@ export const EditServerPrompt = () => {
         }
     }); 
 
-    
-    if(server)  {
-        form.setValue("name",server.name);
-        form.setValue("imageUrl", server.imageUrl);       
-    }
-        
+          
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
@@ -77,7 +72,11 @@ export const EditServerPrompt = () => {
         onClose();
     }
 
-    return ( 
+    if(server)
+    {
+        form.setValue("name",server.name);
+        form.setValue("imageUrl", server.imageUrl);
+        return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">
                     <DialogHeader className="pt-8 px-6">
@@ -97,6 +96,7 @@ export const EditServerPrompt = () => {
                                     <FormField
                                         control={form.control}
                                         name="imageUrl"
+                                        defaultValue={server.imageUrl}
                                         render={({field}) => (
                                             <FormItem
                                             >
@@ -126,7 +126,6 @@ export const EditServerPrompt = () => {
                                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                                                 placeholder="Enter your server name"
                                                 {...field}
-                                                value = {server?.name}
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -146,4 +145,6 @@ export const EditServerPrompt = () => {
                 </DialogContent>
             </Dialog>
         )
+    }
+
     }

@@ -34,7 +34,7 @@ export const DeleteChannelPrompt = () => {
             await axios.delete(`/api/channels/${channel?.id}/delete-api`);
             onClose();
             router.refresh();
-            router.push(`/server/${serverId}`);
+            router.push(`/servers/${serverId}`);
         }
         catch(error)
         {

@@ -52,6 +52,9 @@ export const ServerSideBar = async({
                 }
             },
             Channel: {
+                where: {
+                    deleted: false
+                },
                 orderBy: {
                     updatedAt: "desc"
                 }
@@ -143,7 +146,6 @@ export const ServerSideBar = async({
                 >
                   <ChannelSideBar 
                     serverProp={server2}
-                    channelProp={realChannels}
                     roleProp={role}
                   />
         </ScrollArea>
