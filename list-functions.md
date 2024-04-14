@@ -30,16 +30,21 @@
 |   Direct Channels List                 |  [x]	|
 |   Online Friend Page	                 |  [x] |     	
 |   Emoji In Message                     |  [x]	|   	
+|   Socket Handler For Message List      |  [x] |
+|   Friend Request Creation	             |  [x]	|   	
+|   Friend Request API  	             |  [x]	|   	
+|   Online Friend Page                   |  [x] |
 
 
 # Working 
 |   Working	                             |   Status	
 |---	                                 |---	
 |   Main Page	                         |  [w] |   	
+|   Friend Page                          |  [w] |
+|   Message Reply                        |  [w] |   	
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] |
 |   User Settings                        |  [w] |  
-|   Sending Friend Request               |  [w] |  
 |   Checking Friend Exist                |  [w] |  
 |   Sending Friend Request               |  [w] |  
 |   Sending Friend Request               |  [w] |  

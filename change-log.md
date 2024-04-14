@@ -66,3 +66,4 @@
 - added proper fall back for navigation item image
 - user profile prompt is upgraded for friend request, which is compulsory for user
 
+- added port support for render deployment
