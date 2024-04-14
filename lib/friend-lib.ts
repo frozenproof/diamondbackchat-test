@@ -3,23 +3,18 @@
 import { db } from "@/lib/db";
 import { currentUserProfile } from "./current-profile";
 import { redirect } from "next/navigation";
-import { NextResponse } from "next/server";
 
-export const findFriendsDefault = async () => {
+export const findFriendsDefault = async (currentUserId: string, otherUserId: string) => {
   try {
-    const profile = await currentUserProfile();
-    if(!profile)
-    {
-      return redirect(`/`)
-    }
-    const friends = await db.friend.findMany(
+    const friends = await db.friend.findFirstOrThrow(
       {
         where: {
           OR: [
-            {friendOneId: profile.id},
-            {friendTwoId: profile.id}
+            {friendOneId: currentUserId,friendTwoId: otherUserId},
+            {friendTwoId: currentUserId,friendOneId: otherUserId}
           ],
-          pending: false
+          pending: false,
+          blocked: false
         }
       }
     )
@@ -27,7 +22,7 @@ export const findFriendsDefault = async () => {
     if(friends)
     {
       console.log(friends);
-      return NextResponse.json(friends);
+      return (friends);
     }
   
   } catch {
@@ -35,32 +30,55 @@ export const findFriendsDefault = async () => {
   }
 }
 
-export const sendFriendRequest = async (otherFriendId: string) => {
+export const sendFriendRequest = async (currentUserId: string, otherUserId: string) => {
   try {
     const profile = await currentUserProfile();
     if(!profile)
     {
       return redirect(`/`)
     }
-    const friends = await db.friend.findMany(
+
+    const friends = await db.friend.findFirst(
       {
         where: {
           OR: [
-            {friendOneId: profile.id},
-            {friendTwoId: profile.id}
+            {friendOneId: currentUserId,friendTwoId: otherUserId},
+            {friendTwoId: currentUserId,friendOneId: otherUserId},            
           ],
-          pending: false
+          AND: {
+            OR:[
+              {pending: true},
+              {blocked: true}
+            ]            
+          }
         }
       }
     )
 
-    if(friends)
+    if(!friends)
     {
-      console.log(friends);
-      return NextResponse.json(friends);
+      const friendsCreate = await db.friend.create(
+        {
+          data: {
+            friendOneId: currentUserId ,
+            friendTwoId: otherUserId ,
+            pending: true
+          }
+        }
+      )
+  
+      if(friendsCreate)
+      {
+        // console.log(friendsCreate);
+        return (friendsCreate);
+      }
+    }
+    else if(friends) {
+      return friends;
     }
   
-  } catch {
+  } catch (e){
+    console.log("friend lib send friend request error",e)
     return null;
   }
 }

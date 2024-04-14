@@ -1,18 +1,8 @@
 "use client";
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import axios from "axios"
-import { FileUpload } from "@/components/files/file-upload";
-
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle
 } from "@/components/ui/dialog"
 import {
     Card,
@@ -29,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
 
 export const UserProfilePrompt = () => {
     const { isOpen,onClose,type,propData } = usePrompt();
@@ -44,13 +35,20 @@ export const UserProfilePrompt = () => {
 
     if(userProfilePropAPI && currentUserPropAPIID)
     {        
-    const onMemberClick = () => {
+      const onDirectChatRequest = () => {
         if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
         {
           router.push(`/api/directRequest/${userProfilePropAPI?.id}`);
         }
       }
+      const onFriendRequest = async () => {
+        if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
+        {
+          const friendCheck = await axios.patch(`http://localhost:3000/api/friend/friendRequest/${userProfilePropAPI.id}`)
 
+          console.log("user profile prompt friend request",friendCheck.data);
+        }
+      }
       return ( 
         <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -69,12 +67,12 @@ export const UserProfilePrompt = () => {
             className="flex ml-auto flex-col"
           >                  
           <Button>                  
-              <div onClick={onMemberClick} >
+              <div onClick={onFriendRequest} >
                 Friend Request
               </div>
            </Button>
            <Button>                  
-              <div onClick={onMemberClick} >
+              <div onClick={onDirectChatRequest} >
                 Message
               </div>
             </Button>

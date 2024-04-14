@@ -8,8 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
 import {
   Tabs,
   TabsContent,
@@ -22,7 +21,7 @@ import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
 
 import { cn } from "@/lib/utils"
-import { Trees, User } from "lucide-react"
+import { Cross, Trees, User, X } from "lucide-react"
 import { redirect } from "next/navigation"
 
 
@@ -59,7 +58,6 @@ const FriendsPage = async({
           {friendOneId: profile.id},
           {friendTwoId: profile.id}
         ],
-        pending: false
       },
       include: {
         friendOne: true,
@@ -68,6 +66,8 @@ const FriendsPage = async({
     }
   )
 
+  const allFriends = friends.filter((friend) => (friend.blocked === false && friend.pending === false ))
+  const pendingFriends = friends.filter((friend) => (friend.blocked === false && friend.pending === true ))
   return (
     <Tabs 
       defaultValue="Online"
@@ -111,14 +111,14 @@ const FriendsPage = async({
             <div
               className="space-y-2 h-[280px] "
             >
-              {friends.map((friendMember) => 
+              {allFriends.map((friendMember) => 
             {
               const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
               if(whichFriend.status === "ONLINE")
               return(
                 <div
                   key={whichFriend.id}
-                  className="flex align-middle h-full"
+                  className="flex align-middle "
                 >
                         <UserProfileAvatar 
                           src={whichFriend.imageUrl}
@@ -151,25 +151,25 @@ const FriendsPage = async({
           <div
               className="space-y-2 h-[280px] "
             >
-              {friends.map((friendMember) => 
+              {allFriends.map((friendMember) => 
             {
               const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
               return(
                 <div
                   key={whichFriend.id}
-                  className="flex align-middle h-full"
+                  className="flex align-middle "
                 >
-                        <UserProfileAvatar 
-                          src={whichFriend.imageUrl}
-                          className="h-8 w-8 md:h-8 md:w-8"
-                        />
-                        <div
-                          className={cn(
-                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
-                          )}
-                        >
-                          {whichFriend.name}
-                        </div>
+                  <UserProfileAvatar 
+                    src={whichFriend.imageUrl}
+                    className="h-8 w-8 md:h-8 md:w-8"
+                  />
+                  <div
+                    className={cn(
+                      "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
+                    )}
+                  >
+                    {whichFriend.name}
+                  </div>
                 </div>
               )
             }
@@ -187,7 +187,53 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-
+          <div
+              className="space-y-2 h-full "
+            >
+              {pendingFriends.map((friendMember) => 
+              {
+                const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
+                return(
+                  <div
+                    key={whichFriend.id}
+                    className="flex align-middle "
+                  >
+                    <UserProfileAvatar 
+                      src={whichFriend.imageUrl}
+                      className="h-8 w-8 md:h-8 md:w-8"
+                    />
+                    <div
+                      className={
+                        "font-semibold text-sm flex flex-row text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition "
+                      }
+                    >
+                      <p
+                        className="text-center pl-[18px] h-full"
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                      }}
+                      >  
+                        {whichFriend.name}
+                      </p>
+                    </div>
+                    <div
+                      className="ml-auto"
+                      style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                      }}
+                    >
+                      <Cross  />
+                    </div>
+                  </div>
+                )
+              }
+            )}
+            </div> 
+            
           </CardContent>
 
         </Card>

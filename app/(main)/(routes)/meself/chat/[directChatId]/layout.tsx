@@ -1,8 +1,3 @@
-
-import { redirect } from "next/navigation";
-
-
-import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { Metadata, ResolvingMetadata } from "next";

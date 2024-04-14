@@ -25,6 +25,7 @@ export const NavigationItem = ({
     const onClick = () => {
         router.push(`/servers/${id}`)
     }
+    console.log("image url for navigation item",imageUrl)
     return (
         <ActionTooltip
             side="right"
@@ -47,8 +48,10 @@ export const NavigationItem = ({
                     <Image
                         fill
                         src={imageUrl}
-                        alt="Channel"
+                        alt="Server"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL="/image/iconfinal.ico"
                     />
                 </div>
             </button>

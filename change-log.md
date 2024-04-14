@@ -59,3 +59,10 @@
 - changed livekit token api route and channel page to actually reflect member nickname or real username depends on which channel is calling 
 
 - added video display for message item , optimized files into interface
+
+- added friend lib
+- added friend request api
+- added friend request , but is using a static string as api route , which is fine but need to be changed when deployed
+- added proper fall back for navigation item image
+- user profile prompt is upgraded for friend request, which is compulsory for user
+

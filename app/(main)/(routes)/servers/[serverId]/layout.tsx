@@ -59,7 +59,7 @@ const ServerIdPageLayout = async({
 
     if(!server)
     {
-        return redirect("/");
+        return redirect("/meself/friend");
     }
 
     return ( 
