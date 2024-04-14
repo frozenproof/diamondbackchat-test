@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "custom": "node server.mjs",
+    "custom": "PUBLIC_SITE_URL_LILTREE=localhost node server.mjs",
+    "cum": "PUBLIC_SITE_URL_LILTREE=liltrees.onrender.com node server.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
