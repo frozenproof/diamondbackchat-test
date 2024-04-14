@@ -234,6 +234,15 @@ model Friend {
   @@index([id])
 }
 
+model Maintainence {
+  id          String      @id @default(uuid())
+  isOffline   Boolean     @default(false)
+  lastUpdate  DateTime    @default(now())
+
+
+
+  @@index([id])
+}
 enum OldMemberRole {
   CREATOR
   OWNER

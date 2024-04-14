@@ -1,11 +1,8 @@
-import { EvervaultCard } from "@/components/effects/evervault/EvervaultCard";
-
-
 export default function Custom404() {
        
     return (
 
-        <EvervaultCard
+        <div
           className="w-full h-full flex flex-col text-center"
         >
         <h1>404 - Page Not Found</h1>
@@ -17,7 +14,7 @@ export default function Custom404() {
         >
           Click here to return 
         </a>
-        </EvervaultCard>
+        </div>
       
     )
   }

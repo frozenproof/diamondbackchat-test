@@ -1,17 +1,16 @@
 import { createServer } from "node:http";
 import next from "next";
-import { parse } from "url"
+import { parse } from "url";
 import { Server as ServerIO } from "socket.io";
 
-const dev = process.env.NODE_ENV !== 'production'
-const hostname = 'localhost'
-const port = 3000
+const dev = process.env.NODE_ENV !== 'production';
+const hostname = 'localhost';
+const port = 3000;
 // when using middleware `hostname` and `port` must be provided below
-const app = next({ dev, hostname, port })
-const handler = app.getRequestHandler()
-
+const app = next({ dev, hostname, port });
+const handler = app.getRequestHandler();
 app.prepare().then(() => {
-  const path = "/";
+  // const pathToServer = "/server";
   const httpServer = createServer(async (req, res) => {
     try {
       // Be sure to pass `true` as the second argument to `url.parse`.
@@ -45,17 +44,21 @@ app.prepare().then(() => {
       maxDisconnectionDuration: 2 * 60 * 1000,
       // whether to skip middlewares upon successful recovery
       skipMiddlewares: true,
-    }
+    },
+    // path: pathToServer
   });
+
 
   io.on("connection", (socket) => {
     console.log("This is from server")
     socket.emit("hello", "this is server socket, say cheese");
 
 
-    socket.on("channel-input",(arg1,arg2) => {
+    socket.on("channel-input",function(arg1,arg2) {
       console.log("data from channel input",arg1,arg2.content);
-      }).emit("what is this",arg1,arg2);
+      // socket.broadcast.emit(arg1,arg2);
+      io.emit(arg1,arg2)
+      })
     
   
     socket.onAny((event, ...args) => {
@@ -64,3 +67,4 @@ app.prepare().then(() => {
     });
   });
 })
+

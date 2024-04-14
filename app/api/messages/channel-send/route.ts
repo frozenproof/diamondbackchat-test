@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 import { NextApiResponseServerIo } from "@/type";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request,res: NextApiResponseServerIo){
+export async function POST(req: Request){
     try{
         const profile = await currentUserProfile();
         const { content,checkFile } = await req.json();
@@ -73,6 +73,7 @@ export async function POST(req: Request,res: NextApiResponseServerIo){
         const channelKey = `chat:${channelIdProp}:messages`;
         console.log("this is channel key",channelKey);
 
+        
         return NextResponse.json(message);
       } catch (error) {
         console.log("CHANNELS_POST", error);

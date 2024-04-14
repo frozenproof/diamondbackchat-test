@@ -107,8 +107,51 @@ const FriendsPage = async({
               Anyone who is your friend and is online is displayed here
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2 h-full overflow-y-scroll ">
-          {friends.map((friendMember) => 
+          <CardContent >
+            <div
+              className="space-y-2 h-[280px] "
+            >
+              {friends.map((friendMember) => 
+            {
+              const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
+              if(whichFriend.status === "ONLINE")
+              return(
+                <div
+                  key={whichFriend.id}
+                  className="flex align-middle h-full"
+                >
+                        <UserProfileAvatar 
+                          src={whichFriend.imageUrl}
+                          className="h-8 w-8 md:h-8 md:w-8"
+                        />
+                        <div
+                          className={cn(
+                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
+                          )}
+                        >
+                          {whichFriend.name}
+                        </div>
+                </div>
+              )
+            }
+            )}
+            </div>          
+          </CardContent>
+        </Card>
+      </TabsContent>
+      <TabsContent value="All">
+        <Card>
+          <CardHeader>
+            <CardTitle>All friends</CardTitle>
+            <CardDescription>
+              All friends are displayed here .
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-2">
+          <div
+              className="space-y-2 h-[280px] "
+            >
+              {friends.map((friendMember) => 
             {
               const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
               return(
@@ -131,21 +174,8 @@ const FriendsPage = async({
               )
             }
             )}
+            </div> 
           </CardContent>
-        </Card>
-      </TabsContent>
-      <TabsContent value="All">
-        <Card>
-          <CardHeader>
-            <CardTitle>All friends</CardTitle>
-            <CardDescription>
-              All friends are displayed here .
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-
-          </CardContent>
-
         </Card>
       </TabsContent>
       <TabsContent value="Pending">
