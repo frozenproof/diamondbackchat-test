@@ -134,15 +134,15 @@ export const DirectChatMessages = ({
           <Fragment key={i}>
             {group.items.map((message: DirectMessageWithProfileWithFile,index: number,array: any) => 
             {
-              // var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
-              var isContiniousCock = false;
+              var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
+              // var isContiniousCock = false;
               
               return (
                 <div
                   key={message.id}
                 >
                   <div
-                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` } bg-red-800`}
+                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` } `}
                   >
                     
                   </div>

@@ -118,8 +118,8 @@ export const ChatMessagesList = ({
           <Fragment key={i}>
             {group.items.map((message: MessageWithMemberWithProfileWithFile,index: number,array: any) => 
             {
-              // var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
-              var isContiniousCock = false
+              var isContiniousCock = (message.memberId===(group.items[index+1]?.memberId));
+              // var isContiniousCock = false
 
               // console.log("this is message list file",message.AttachmentChannel)
               return (
@@ -127,7 +127,7 @@ export const ChatMessagesList = ({
                   key={message.id}
                 >
                   <div
-                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` } bg-red-800`}
+                  className={`${ (!isContiniousCock) ? `h-[8px] pl-[8px] ` : `hidden` }`}
                   >
                     {/* cai nay de nhin cho roi ra */}
                   </div>

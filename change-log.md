@@ -58,3 +58,4 @@
 - disabled all rules check for npm build 
 - changed livekit token api route and channel page to actually reflect member nickname or real username depends on which channel is calling 
 
+- added video display for message item , optimized files into interface
