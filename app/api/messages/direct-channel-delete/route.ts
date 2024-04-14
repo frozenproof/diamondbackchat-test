@@ -1,10 +1,10 @@
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db"
-import { NextApiResponseServerIo } from "@/type";
+
 import { NextResponse } from "next/server";
 
-export async function PATCH(req: Request,res: NextApiResponseServerIo){
+export async function PATCH(req: Request){
     try{
         const profile = await currentUserProfile();
         const { messageId } = await req.json();

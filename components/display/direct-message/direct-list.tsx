@@ -1,19 +1,20 @@
 "use client";
 
 import { ElementRef, Fragment, useEffect, useRef, useState } from "react";
-import { Member, Message, UserProfile } from "@prisma/client";
+import { UserProfile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 
 import { ChatWelcome } from "../channel-welcome";
-import { MessageWithProfileWithFile } from "@/type";
+import { DirectMessageWithProfileWithFile } from "@/type";
 import { DirectMessageItem } from "./direct-item";
 
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 interface ChatMessagesProps {
   name: string;
@@ -60,6 +61,7 @@ export const DirectChatMessages = ({
     paramKey,
     paramValue,
   });
+  useChatSocket({ queryKey, addKey, updateKey });
   useChatScroll({
     chatRef,
     bottomRef,
@@ -130,9 +132,11 @@ export const DirectChatMessages = ({
           //group la du lieu that
           
           <Fragment key={i}>
-            {group.items.map((message: MessageWithProfileWithFile,index: number,array: any) => 
+            {group.items.map((message: DirectMessageWithProfileWithFile,index: number,array: any) => 
             {
-              var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
+              // var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
+              var isContiniousCock = false;
+              
               return (
                 <div
                   key={message.id}

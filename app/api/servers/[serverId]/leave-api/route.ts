@@ -38,7 +38,7 @@ export async function PATCH
                 }
             })
 
-            revalidatePath("/");
+            revalidatePath("/servers");
             return NextResponse.json(server);
         }
         catch(error)

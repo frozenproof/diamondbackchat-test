@@ -21,9 +21,9 @@ export const sendFileExtra = async({
     resProp
 }:  sendFileExtraProps) =>{
     
-   console.log("",channelIdFile);
+  //  console.log("",channelIdFile);
    console.log("",userIdFile);
-   console.log("",typeSend);
+  //  console.log("",typeSend);
    console.log("resSendFileProp",resProp);
 
    if(typeSend==="sentMem")
@@ -59,9 +59,11 @@ export const sendFileExtra = async({
             }
           })
       }
+
+      return sendingFile;
     }
 
-    if(typeSend==="direct")
+    else if(typeSend==="direct")
     {
      const channel = await db.directChannel.findFirst({
          where: {
@@ -94,7 +96,6 @@ export const sendFileExtra = async({
              }
            })
        }
-     }
-
-   return "";
+       return sendingFile;
+     }     
 }

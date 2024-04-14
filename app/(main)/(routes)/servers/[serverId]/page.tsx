@@ -22,7 +22,7 @@ const ServerIdPage = async(
     }
     if(params.serverId)
     return (
-        <EvervaultCard
+        <div
             className="text-center border-[8px] "
         >
             <MobileNavigationLeftToggle 
@@ -34,7 +34,7 @@ const ServerIdPage = async(
             />
             <SocketStatusDisplay />
             {/* (　･ω･)☞	Create a channel and something productive ! */}
-        </EvervaultCard>                
+        </div>                
     )
 }
 

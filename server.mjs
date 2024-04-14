@@ -54,10 +54,10 @@ app.prepare().then(() => {
     socket.emit("hello", "this is server socket, say cheese");
 
 
-    socket.on("channel-input",function(arg1,arg2) {
-      console.log("data from channel input",arg1,arg2.content);
+    socket.on("channel-input",function(arg1_channelId,arg2_message_item,arg3_type_channel) {
+      console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
-      io.emit(arg1,arg2)
+      io.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
       })
     
   

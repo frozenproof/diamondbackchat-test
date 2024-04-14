@@ -33,7 +33,7 @@ export const LeaveServerPrompt = () => {
             await axios.patch(`/api/servers/${server?.id}/leave-api`);
             onClose();
             router.refresh();
-            router.push("/");
+            router.push("/meself/friend");
         }
         catch(error)
         {

@@ -30,14 +30,6 @@ import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Label } from "@/components/ui/label";
 
-const formSchema = z.object({
-    name: z.string().min(1,{
-        message: "Server name is required."
-    }),
-    imageUrl: z.string().min(1, {
-        message: "Server image is required."
-    })
-})
 export const UserProfilePrompt = () => {
     const { isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
@@ -45,17 +37,8 @@ export const UserProfilePrompt = () => {
     
     const isPromptOpen = isOpen && type === "UserProfile";
     const { userProfilePropAPI , currentUserPropAPIID }  = propData;
-
-    const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues:{
-            name: "",
-            imageUrl: "",
-        }
-    }); 
-  
+ 
     const handleClose = () => {
-        form.reset();
         onClose();
     }
 

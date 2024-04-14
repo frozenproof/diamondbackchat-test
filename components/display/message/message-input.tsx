@@ -63,10 +63,10 @@ export const MessageInput = ({
         return;
       }
       const testSend = await axios.post(url, {...values,checkFile: false});
-      const messageData = testSend.data as Message;
+      const messageData = testSend.data ;
 
       // console.log("Input log before emitting",testSend);
-      socketActual.emit("channel-input",`chat:${messageData.channelId}:messages`, messageData);
+      socketActual.emit("channel-input",`chat:${messageData.channelId}:messages`, messageData,"server-channel");
       form.reset();
       router.refresh();
       

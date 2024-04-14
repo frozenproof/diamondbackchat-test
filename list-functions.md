@@ -38,6 +38,9 @@
 |   Friend Page	                         |  [w] |  
 |   User Settings                        |  [w] |  
 |   Sending Friend Request               |  [w] |  
+|   Checking Friend Exist                |  [w] |  
+|   Sending Friend Request               |  [w] |  
+|   Sending Friend Request               |  [w] |  
 
 
 [y] Is planned ?

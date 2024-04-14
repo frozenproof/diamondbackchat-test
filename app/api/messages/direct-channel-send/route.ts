@@ -41,7 +41,12 @@ export async function POST(req: Request){
             isReply: false
           },
           include: {
-            userProfile: true
+            userProfile: {
+              select: {
+                name: true,
+                imageUrl: true
+              }
+            }
             }
         });
 

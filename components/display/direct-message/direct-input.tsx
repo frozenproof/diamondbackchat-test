@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { EmojiPicker } from "@/components/uihelper/emoji-picker";
+import { useSocket } from "@/components/providers/socket-provider";
+import { DirectMessage } from "@prisma/client";
 
 interface MessageInputProps {
   apiUrl: string;
@@ -36,6 +38,7 @@ export const DirectMessageInput = ({
   memberIdPropInput
 }: MessageInputProps) => {
   const { onOpen } = usePrompt();
+  const { socketActual } = useSocket();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,8 +58,16 @@ export const DirectMessageInput = ({
         query,
       });
 
+      if (!socketActual) {
+        console.log("Socket is not running")
+        return;
+      }
       const testSend = await axios.post(url, {...values,checkFile: false});
       
+      const messageData = testSend.data as DirectMessage;
+
+      // console.log("Input log before emitting",testSend);
+      socketActual.emit("channel-input",`chat:${messageData.directChannelId}:messages`, messageData,"direct-input");
       form.reset();
       router.refresh();
       
@@ -65,7 +76,7 @@ export const DirectMessageInput = ({
     }
   }
 
-  console.log("direct-input",memberIdPropInput)
+  // console.log("direct-input",memberIdPropInput)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>

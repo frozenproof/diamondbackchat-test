@@ -1,6 +1,7 @@
 "use client"
 
 import { AttachmentChannel, AttachmentDirect } from "@prisma/client"
+import { FileIcon } from "lucide-react";
 import Image from "next/image";
 
 interface FilesDisplayProps {
@@ -48,29 +49,28 @@ export const FilesDisplay = ({
                                     className="object-cover"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"      
                                     placeholder="blur"
-                                    blurDataURL="/public/image/iconfinal.ico"
+                                    blurDataURL="/image/iconfinal.ico"
                                 />
                                 </a>
+                                )}
+                                {!isImage && (
+                                <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
+                                <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
+                                <a 
+                                    href={file.fileUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
+                                >
+                                    {file.fileUrl}
+                                </a>
+                                </div>
                             )}
                             </div>
                         )
                     })
                 }
-                  {/* 
-    
-                  {isPDF && (
-                    <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
-                    <FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
-                    <a 
-                        href={fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
-                    >
-                        PDF File
-                    </a>
-                    </div>
-                )} */}
+        
     
             </div>
         )
@@ -103,7 +103,9 @@ export const FilesDisplay = ({
                                     fill
                                     className="object-cover"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"      
-                                 />
+                                    placeholder="blur"
+                                    blurDataURL="/image/iconfinal.ico"
+                                />
                                 </a>
                             )}
                             </div>

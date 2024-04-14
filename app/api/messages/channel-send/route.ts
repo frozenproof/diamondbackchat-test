@@ -1,7 +1,7 @@
 import { currentUserProfile } from "@/lib/current-profile";
 
 import { db } from "@/lib/db"
-import { NextApiResponseServerIo } from "@/type";
+
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request){
@@ -66,7 +66,15 @@ export async function POST(req: Request){
             isReply: false
           },
           include: {
-            member: true
+            member: {
+              include: {
+                userProfile: {
+                  select: {
+                    imageUrl: true
+                  }
+                }
+              }
+            }
             }
         });
 

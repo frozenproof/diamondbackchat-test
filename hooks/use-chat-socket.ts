@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Member, Message, UserProfile } from "@prisma/client";
+import { DirectMessage, Member, Message, UserProfile } from "@prisma/client";
 
 import { useSocket } from "@/components/providers/socket-provider";
 
@@ -18,6 +18,9 @@ type MessageWithMemberWithProfile = Message & {
   }
 }
 
+type DirectMessageWithProfile = DirectMessage & {
+  userProfile: UserProfile ; 
+}
 export const useChatSocket = ({
   addKey,
   updateKey,
@@ -36,10 +39,10 @@ export const useChatSocket = ({
     socketActual.onAny((event: any, ...args: any) => {
       console.log(`got ${event}`);
       console.log(`data is ${args}`);
+      console.log("this is listened by use-chat-socket",addKey,updateKey,queryKey)
     });
-    console.log("this is running use chat socket",addKey,updateKey,queryKey)
-    socketActual.on(updateKey, (message: MessageWithMemberWithProfile) => {
-      console.log(`update key`)
+    socketActual.on(updateKey, (message: MessageWithMemberWithProfile,typesend: string) => {
+      console.log(`we are updated`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;
@@ -64,13 +67,23 @@ export const useChatSocket = ({
       })
     });
 
-    socketActual.on(addKey, (message: MessageWithMemberWithProfile) => {
-      console.log("we heard you")
+    socketActual.on(addKey, (message: any,typesend: string) => {
+      console.log("we heard you, this actually just take items as they are items without types, so we added the type as additional respond ", typesend)
+      var messageReal: MessageWithMemberWithProfile | DirectMessageWithProfile;
+      if(typesend === "server-channel")
+      {
+        messageReal = message as MessageWithMemberWithProfile;
+      }
+      else if(typesend === "direct-input")
+      {
+        messageReal = message as DirectMessageWithProfile;
+      }
+      console.log("chat socket is saying",message)
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {
             pages: [{
-              items: [message],
+              items: [messageReal],
             }]
           }
         }
@@ -80,7 +93,7 @@ export const useChatSocket = ({
         newData[0] = {
           ...newData[0],
           items: [
-            message,
+            messageReal,
             ...newData[0].items,
           ]
         };
@@ -90,6 +103,7 @@ export const useChatSocket = ({
           pages: newData,
         };
       });
+      
     });
 
     return () => {
