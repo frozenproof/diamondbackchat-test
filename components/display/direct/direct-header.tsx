@@ -2,6 +2,7 @@
 // khong duoc dung use client o day
 "use server"
 
+import { ChatVideoButton } from "@/components/chat-video-button";
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
@@ -40,6 +41,11 @@ export const DirectChannelHeader = ({
         
         <div>
             {name}
+        </div>
+        <div
+            className="ml-auto"
+        >
+            <ChatVideoButton />
         </div>
     </div>
     )

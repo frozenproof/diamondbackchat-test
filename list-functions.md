@@ -19,14 +19,17 @@
 |   Message Delete Channel               |  [x]	|   	
 |   Message Delete Direct Channel        |  [x]	|   	
 |   Request Direct Chat     	         |  [x]	|   	
+|   Member Change Role       	         |  [x]	|   	
+|   Member Kick                	         |  [x]	|   	
 |   Channel Send Multiple files          |  [x]	|   	 	
 |   Direct Channel Send Multiple files   |  [x]	| 
 |   User Profile Popup	                 |  [x]	|   	
 |   Channel Video Conference	         |  [x]	|   	
 |   Channel Video Conference Token API   |  [x]	|   	
 |   Channels List   	                 |  [x]	|   	
-|   Direct Channels List                 |  [x]	|   	
-|   	    |   	|   	
+|   Direct Channels List                 |  [x]	|
+|   Online Friend Page	                 |  [x] |     	
+|   Emoji In Message                     |  [x]	|   	
 
 
 # Working 
@@ -34,13 +37,13 @@
 |---	                                 |---	
 |   Main Page	                         |  [w] |   	
 |   Message Notifications                |  [w] |   	
-|   Call Notifications                   |  [w] |   	
-|   Friend Page	                         |  [w] |  
+|   Call Notifications                   |  [w] |
 |   User Settings                        |  [w] |  
 |   Sending Friend Request               |  [w] |  
 |   Checking Friend Exist                |  [w] |  
 |   Sending Friend Request               |  [w] |  
 |   Sending Friend Request               |  [w] |  
+|   Handling Request Return Properly     |  [w] |  
 
 
 [y] Is planned ?

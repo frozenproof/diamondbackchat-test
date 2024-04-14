@@ -49,3 +49,12 @@
 - removed unused form in user profile prompt
 - changed redirect from leave server prompt
 - added extra display for files display , need to upgrade database to get item name
+
+- added name for the database for file schema
+- removed unnecessary import in navigation side toggle
+- send file updated to add name to database
+- added video call button to direct chat
+- added channel update listener in server mjs
+- disabled all rules check for npm build 
+- changed livekit token api route and channel page to actually reflect member nickname or real username depends on which channel is calling 
+

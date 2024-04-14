@@ -59,7 +59,12 @@ app.prepare().then(() => {
       // socket.broadcast.emit(arg1,arg2);
       io.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
       })
-    
+  
+      socket.on("channel-update",function(arg1_channelId,arg3_type_channel) {
+        console.log("data from channel update",arg1_channelId,arg3_type_channel);
+        // socket.broadcast.emit(arg1,arg2);
+        io.emit(arg1_channelId,arg3_type_channel)
+        })
   
     socket.onAny((event, ...args) => {
       console.log(`got ${event}`);

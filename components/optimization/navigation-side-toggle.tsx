@@ -1,7 +1,5 @@
-import { UserStatus } from "@prisma/client";
 import { DirectSideBar } from "../display/direct/direct-sidebar";
 import { ServerSideBar } from "../display/server/server-sidebar";
-import { UserButtonDiamond } from "../uihelper/user-button-diamond";
 
 export function NavigationHeavyLoad (
     {

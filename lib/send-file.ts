@@ -6,6 +6,7 @@ interface fileInterfaceProps
 {
     url: string;
     type: string;
+    name: string;
 }
 interface sendFileExtraProps  
 {
@@ -55,7 +56,8 @@ export const sendFileExtra = async({
                 messageId: sendingFile.id,
                 channelId: channelIdFile as string,
                 fileUrl: resProp[i].url as string,
-                type: resProp[i].type as string
+                type: resProp[i].type as string,
+                name: resProp[i].name as string
             }
           })
       }
@@ -92,7 +94,8 @@ export const sendFileExtra = async({
                  directMessageId: sendingFile.id,
                  directChannelId: channelIdFile as string,
                  fileUrl: resProp[i].url as string,
-                 type: resProp[i].type as string
+                 type: resProp[i].type as string,
+                 name: resProp[i].name as string
              }
            })
        }

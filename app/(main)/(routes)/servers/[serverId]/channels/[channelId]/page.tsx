@@ -128,7 +128,7 @@ const ChannelIdPage = async ({
                 chatId={channel.id}
                 video={false}
                 audio={true}
-                userIdProp={member.id}
+                userIdProp={member.nickname}
                 />
             )}
         </Suspense>

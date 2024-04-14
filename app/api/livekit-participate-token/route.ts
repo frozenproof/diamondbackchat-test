@@ -32,6 +32,8 @@ export async function GET(req: NextRequest) {
 
   if(username)
   {
+    console.log("live kit api route for user name",username);
+
     const at = new AccessToken(apiKey, apiSecret, { identity: username });
 
     at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
@@ -40,7 +42,8 @@ export async function GET(req: NextRequest) {
   } 
   else
   {
-    const at = new AccessToken(apiKey, apiSecret, { identity: username2?.id });
+    console.log("live kit api route",username2);
+    const at = new AccessToken(apiKey, apiSecret, { identity: username2?.name });
 
     at.addGrant({ room, roomJoin: true, canPublish: true, canSubscribe: true });
   
