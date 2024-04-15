@@ -33,7 +33,9 @@
 |   Socket Handler For Message List      |  [x] |
 |   Friend Request Creation	             |  [x]	|   	
 |   Friend Request API  	             |  [x]	|   	
-|   Online Friend Page                   |  [x] |
+|   Pending Friend Page                  |  [x] |
+|   Checking Friend Exist                |  [x] | 
+|   All Friend Page                      |  [x] |
 
 
 # Working 
@@ -45,7 +47,8 @@
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] |
 |   User Settings                        |  [w] |  
-|   Checking Friend Exist                |  [w] |  
+ 
+|   Sending Friend Request               |  [w] |  
 |   Sending Friend Request               |  [w] |  
 |   Handling Request Return Properly     |  [w] |  
 

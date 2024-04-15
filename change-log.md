@@ -86,3 +86,4 @@
 - added friend page component to seperate rendering and layout 
 - ready for deployment test
 - temporary added a friend confirm api route, need to complete tomorrow
+- the env is not loaded in when entry point of app is run
