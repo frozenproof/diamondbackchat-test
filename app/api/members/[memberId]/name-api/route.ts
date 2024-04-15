@@ -10,15 +10,17 @@ export async function PATCH(
     {
         const profile = await currentUserProfile();
         const { searchParams } = new URL(req.url);
-        const { nickname } = await req.json();
+        const receivedForm = await req.json();
+        const  nickname2  = receivedForm.values.nickname;
 
-        const serverId = searchParams.get("serverId");
+        // console.log("Nickname",receivedForm.values.nickname);
+        const serverId2 = searchParams.get("serverId");
 
         if(!profile) {
             throw new Error("Unauthorized access to cat server >:3");
         }
         
-        if(!serverId) {
+        if(!serverId2) {
             throw new Error("Server doesn't exist");
         }
 
@@ -26,38 +28,18 @@ export async function PATCH(
             throw new Error("How did you even request this ?");
         }
 
-        const server = await db.server.update({
+        const member = await db.member.update({
             where: {
-                id:serverId,
+                id:params.memberId,
+                serverId:serverId2 as string,
+                userProfileId: profile.id
             },
             data: {
-                Member: {
-                    update: {
-                        where: {
-                          id: params.memberId,
-                          userProfileId: {
-                            not: profile.id
-                          }
-                        },
-                        data: {
-                          nickname: nickname
-                        }
-                    }
-                }
+                nickname: nickname2
             },
-            include: {
-                Member: {
-                    include: {
-                        userProfile: true,
-                    },
-                    orderBy: {
-                        role: "asc"
-                    }
-                }
-            }
         });
 
-        return NextResponse.json(server);
+        return NextResponse.json(member);
     }
     catch (error)
     {

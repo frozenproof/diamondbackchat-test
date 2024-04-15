@@ -16,7 +16,7 @@ model UserProfile {
   name     String     @default("Deleted")
   imageUrl String     @db.Text
   email    String     @db.Text
-  about    String     @db.Text  @default("")
+  about    String     @default("") @db.Text
   status   UserStatus @default(ONLINE)
   deleted  Boolean    @default(false)
 
@@ -32,7 +32,9 @@ model UserProfile {
   DirectChannelSend DirectChannel[] @relation("UserOne")
   DirectChannelRepl DirectChannel[] @relation("UserTwo")
   FriendOne         Friend[]        @relation("UserOne")
-  friendTwo         Friend[]        @relation("UserTwo")
+  FriendTwo         Friend[]        @relation("UserTwo")
+  BlockerAway       Block[]         @relation("UserOne")
+  BlockedOut        Block[]         @relation("UserTwo")
 }
 
 model Server {
@@ -145,7 +147,7 @@ model Message {
   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   hasAttachment Boolean @default(false)
-  deleted    Boolean @default(false)
+  deleted       Boolean @default(false)
 
   isReply          Boolean
   repliedMessageid String  @default("")
@@ -169,7 +171,7 @@ model DirectMessage {
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   hasAttachment Boolean @default(false)
-  deleted    Boolean @default(false)
+  deleted       Boolean @default(false)
 
   isReply          Boolean
   repliedMessageid String  @default("")
@@ -179,9 +181,9 @@ model DirectMessage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  AttachmentDirect      AttachmentDirect[]
-  DirectChannel   DirectChannel?     @relation(fields: [directChannelId], references: [id])
-  directChannelId String?
+  AttachmentDirect AttachmentDirect[]
+  DirectChannel    DirectChannel?     @relation(fields: [directChannelId], references: [id])
+  directChannelId  String?
 
   @@index([directChannelId])
   @@index([userProfileId])
@@ -221,9 +223,8 @@ model AttachmentDirect {
 
 model Friend {
   id      String  @id @default(uuid())
-  blocked Boolean @default(false)
   pending Boolean @default(false)
-  
+
   updatedAt DateTime @updatedAt
 
   friendOneId String      @map("friendOneId")
@@ -236,15 +237,28 @@ model Friend {
   @@index([id])
 }
 
-model Maintainence {
-  id          String      @id @default(uuid())
-  isOffline   Boolean     @default(false)
-  lastUpdate  DateTime    @default(now())
+model Block {
+  id String @id @default(uuid())
 
+  updatedAt DateTime @updatedAt
 
+  blockerId   String      @map("blockerId")
+  blockerAway UserProfile @relation("UserOne", fields: [blockerId], references: [id], onDelete: Cascade)
+
+  blockedId  String      @map("blockedId")
+  blockedOut UserProfile @relation("UserTwo", fields: [blockedId], references: [id], onDelete: Cascade)
 
   @@index([id])
 }
+
+model Maintainence {
+  id         String   @id @default(uuid())
+  isOffline  Boolean  @default(false)
+  lastUpdate DateTime @default(now())
+
+  @@index([id])
+}
+
 enum OldMemberRole {
   CREATOR
   OWNER

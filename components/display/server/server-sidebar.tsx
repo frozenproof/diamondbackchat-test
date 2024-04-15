@@ -1,6 +1,6 @@
 "use server"
 
-import { OldChannelType, OldMemberRole } from "@prisma/client";
+import { Member, OldChannelType, OldMemberRole } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile"
@@ -62,35 +62,23 @@ export const ServerSideBar = async({
         }
     })
 
+
     if(!server2)
     {
-        return redirect("/");
+        return redirect("/meself/friend");
     }
-    // const serverChannels = await db.serverChannel.findMany({
-    //     where: {
-    //         serverId: server2?.id
-    //     }
-    // })
-
-    // const channelsListId = serverChannels.map((random) => random.channelId)
-    // const realChannels = await db.channel.findMany({
-    //     where: {
-    //         id: {
-    //             in: channelsListId
-    //         }
-    //     }
-    // })
     const realChannels = server2.Channel;
     const textChannels = realChannels.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = realChannels.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = realChannels.filter((channel) => channel.type === OldChannelType.VIDEO)
     const Member = server2?.Member.filter((member) => member.userProfileId !== profile.id)
+    const thisMember = server2?.Member.find((member) => member.userProfileId === profile.id)
     const role = server2?.Member.find((member) => member.userProfileId === profile.id)?.role
     return (
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#ffdbed]">
             <ServerHeader
                 server={server2}
-                role={role}
+                member={thisMember as unknown as Member}
             />
         <div
             className="mt-2 ml-1 mr-1 bg-[#f8eeee] "

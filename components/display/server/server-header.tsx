@@ -1,7 +1,7 @@
 "use client"
 
 import { ServerWithMembersWithProfiles } from "@/type";
-import { OldMemberRole } from "@prisma/client";
+import { Member, OldMemberRole } from "@prisma/client";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Cat, ChevronDown, Settings, UserPlus, Users, LogOut, PlusSquare, Fingerprint } from "lucide-react";
 
@@ -10,14 +10,15 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
-    role?: OldMemberRole;
+    member: Member;
 };
 
 export const ServerHeader = ({
     server,
-    role
+    member
 }:ServerHeaderProps) => {
     const { onOpen } = usePrompt();
+    const role = member.role;
     const isCreator = role === OldMemberRole.CREATOR;
     const isAdmin = isCreator || role === OldMemberRole.ADMIN;
     const isOwner = isAdmin || role === OldMemberRole.OWNER;
@@ -91,6 +92,7 @@ export const ServerHeader = ({
                 }
                <DropdownMenuItem 
                     className="text-amber-700  px-3 py-2 text-sm cursor-pointer"
+                    onClick={() => onOpen("MemberNickname", {memberPropAPI: member})}
                 >
                     Change Nickname
                     <Fingerprint className="h-4 w-4 ml-auto"/>

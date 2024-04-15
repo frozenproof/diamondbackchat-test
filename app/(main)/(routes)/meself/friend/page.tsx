@@ -67,8 +67,8 @@ const FriendsPage = async({
     }
   )
 
-  const allFriends = friends.filter((friend) => (friend.blocked === false && friend.pending === false ))
-  const pendingFriends = friends.filter((friend) => (friend.blocked === false && friend.pending === true ))
+  const allFriends = friends.filter((friend) => (friend.pending === false ))
+  const pendingFriends = friends.filter((friend) => (friend.pending === true ))
   return (
     <Tabs 
       defaultValue="Online"

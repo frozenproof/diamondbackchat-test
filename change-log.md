@@ -98,5 +98,9 @@
 - added route for user setting
 - added route for member nickname
 
+- update friend lib to accept both request to save memory
+- added block entity as an separate entity from friend
+- changed friend page to reflect new database friend model
 
-
+- added proper support for member nickname edit
+- strange bug with query string import

@@ -110,7 +110,7 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
   }
 }
 
-export const acceptFriendRequest = async (currentUserId: string, otherUserId: string) => {
+export const confirmFriendRequest = async (currentUserId: string, otherUserId: string) => {
   try {
     const profile = await currentUserProfile();
     if(!profile)
