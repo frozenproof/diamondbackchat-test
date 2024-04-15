@@ -76,3 +76,13 @@
 - deleted multi file router for now, we can use the original api route because we don't need to serve the file in different router 
 - updated both uploadthing/react and uploadthing to newest version , hoping they don't break before the presentation for the final project
 - included the multi-file route in the core for the uploadthing router
+
+- added extra type for friend page rendering
+- changed friend page display
+- user profile popover removed unused variable
+- message item removed unused import
+- removed backup for older invite route
+- added server mjs improvement for deployment
+- added friend page component to seperate rendering and layout 
+- ready for deployment test
+- temporary added a friend confirm api route, need to complete tomorrow

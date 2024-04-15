@@ -31,7 +31,7 @@ interface UserProfilePopoverProps {
   currentMemberProp?: MemberWithProfile;
   directUserProp?: UserProfile;
   currentUserProp?: UserProfile;
-  justUserProp?: UserProfile;
+
 }
 export const UserProfilePopover = ({
   currentMemberProp,
@@ -39,7 +39,7 @@ export const UserProfilePopover = ({
   serverIdProp,
   directUserProp,
   currentUserProp,
-  justUserProp
+
 }: UserProfilePopoverProps) => {
 
   const router = useRouter();

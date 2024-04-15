@@ -1,5 +1,6 @@
 "use server"
 
+import FriendProfileComponent from "@/components/display/friend-profile"
 import {
   Card,
   CardContent,
@@ -108,34 +109,10 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent >
-            <div
-              className="space-y-2 h-[280px] "
-            >
-              {allFriends.map((friendMember) => 
-            {
-              const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
-              if(whichFriend.status === "ONLINE")
-              return(
-                <div
-                  key={whichFriend.id}
-                  className="flex align-middle "
-                >
-                        <UserProfileAvatar 
-                          src={whichFriend.imageUrl}
-                          className="h-8 w-8 md:h-8 md:w-8"
-                        />
-                        <div
-                          className={cn(
-                            "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
-                          )}
-                        >
-                          {whichFriend.name}
-                        </div>
-                </div>
-              )
-            }
-            )}
-            </div>          
+          <FriendProfileComponent
+              pageFriendsProp={allFriends}
+              profileId={profile.id}
+            />   
           </CardContent>
         </Card>
       </TabsContent>
@@ -148,33 +125,10 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-          <div
-              className="space-y-2 h-[280px] "
-            >
-              {allFriends.map((friendMember) => 
-            {
-              const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
-              return(
-                <div
-                  key={whichFriend.id}
-                  className="flex align-middle "
-                >
-                  <UserProfileAvatar 
-                    src={whichFriend.imageUrl}
-                    className="h-8 w-8 md:h-8 md:w-8"
-                  />
-                  <div
-                    className={cn(
-                      "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition justify-center align-middle h-full text-center"
-                    )}
-                  >
-                    {whichFriend.name}
-                  </div>
-                </div>
-              )
-            }
-            )}
-            </div> 
+          <FriendProfileComponent
+              pageFriendsProp={allFriends}
+              profileId={profile.id}
+            />
           </CardContent>
         </Card>
       </TabsContent>
@@ -187,53 +141,11 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-          <div
-              className="space-y-2 h-full "
-            >
-              {pendingFriends.map((friendMember) => 
-              {
-                const whichFriend = (profile.id === friendMember.friendOneId) ? friendMember.friendTwo : friendMember.friendOne;
-                return(
-                  <div
-                    key={whichFriend.id}
-                    className="flex align-middle "
-                  >
-                    <UserProfileAvatar 
-                      src={whichFriend.imageUrl}
-                      className="h-8 w-8 md:h-8 md:w-8"
-                    />
-                    <div
-                      className={
-                        "font-semibold text-sm flex flex-row text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition "
-                      }
-                    >
-                      <p
-                        className="text-center pl-[18px] h-full"
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                      }}
-                      >  
-                        {whichFriend.name}
-                      </p>
-                    </div>
-                    <div
-                      className="ml-auto"
-                      style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                      }}
-                    >
-                      <Cross  />
-                    </div>
-                  </div>
-                )
-              }
-            )}
-            </div> 
-            
+            <FriendProfileComponent
+              pageFriendsProp={pendingFriends}
+              profileId={profile.id}
+            />
+          
           </CardContent>
 
         </Card>
@@ -241,9 +153,9 @@ const FriendsPage = async({
       <TabsContent value="Blocked">
         <Card>
           <CardHeader>
-            <CardTitle>Password</CardTitle>
+            <CardTitle>Blocked</CardTitle>
             <CardDescription>
-              Change your password here. After saving, you&#39;ll be logged out.
+              Got some beefs with someone , now you are in the battlefield .
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">

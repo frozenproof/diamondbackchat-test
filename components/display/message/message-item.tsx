@@ -73,8 +73,6 @@ export const MessageItem = ({
   const [activeId, setActiveId] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
-  const params = useParams();
-  const router = useRouter();
 
   const setActiveElementOnHover = () => {
     setActiveId(true);

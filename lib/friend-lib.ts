@@ -82,3 +82,83 @@ export const sendFriendRequest = async (currentUserId: string, otherUserId: stri
     return null;
   }
 }
+
+export const findFriendsRequest = async (currentUserId: string, friendRequestId: string) => {
+  try {
+    const friends = await db.friend.findFirstOrThrow(
+      {
+        where: {
+          OR: [
+            {friendOneId: currentUserId},
+            {friendTwoId: currentUserId}
+          ],
+          id: friendRequestId,
+          pending: false,
+          blocked: false
+        }
+      }
+    )
+
+    if(friends)
+    {
+      console.log(friends);
+      return (friends);
+    }
+  
+  } catch {
+    return null;
+  }
+}
+
+export const acceptFriendRequest = async (currentUserId: string, otherUserId: string) => {
+  try {
+    const profile = await currentUserProfile();
+    if(!profile)
+    {
+      return redirect(`/`)
+    }
+
+    const friends = await db.friend.findFirst(
+      {
+        where: {
+          OR: [
+            {friendOneId: currentUserId,friendTwoId: otherUserId},
+            {friendTwoId: currentUserId,friendOneId: otherUserId},            
+          ],
+          AND: {
+            OR:[
+              {pending: true},
+              {blocked: true}
+            ]            
+          }
+        }
+      }
+    )
+
+    if(!friends)
+    {
+      const friendsCreate = await db.friend.create(
+        {
+          data: {
+            friendOneId: currentUserId ,
+            friendTwoId: otherUserId ,
+            pending: true
+          }
+        }
+      )
+  
+      if(friendsCreate)
+      {
+        // console.log(friendsCreate);
+        return (friendsCreate);
+      }
+    }
+    else if(friends) {
+      return friends;
+    }
+  
+  } catch (e){
+    console.log("friend lib send friend request error",e)
+    return null;
+  }
+}

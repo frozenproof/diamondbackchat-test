@@ -47,7 +47,6 @@
 |   User Settings                        |  [w] |  
 |   Checking Friend Exist                |  [w] |  
 |   Sending Friend Request               |  [w] |  
-|   Sending Friend Request               |  [w] |  
 |   Handling Request Return Properly     |  [w] |  
 
 

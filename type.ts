@@ -1,5 +1,5 @@
 
-import { Member, Message, Server, UserProfile ,AttachmentChannel, DirectMessage, DirectChannel, AttachmentDirect, Channel } from "@prisma/client";
+import { Member, Message, Server, UserProfile ,AttachmentChannel, DirectMessage, DirectChannel, AttachmentDirect, Channel, Friend } from "@prisma/client";
 
 export type ServerWithMembersWithProfiles = 
                                     Server & {
@@ -34,3 +34,8 @@ export type DirectMessageWithProfileWithFile = DirectMessage & {
 export type ServerWithChannels = Server & {
   Channel: Channel[]
 };
+
+export type FriendWithProfile = Friend & {
+  friendOne: UserProfile,
+  friendTwo: UserProfile
+  };
