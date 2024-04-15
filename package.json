@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "custom": "PUBLIC_SITE_URL_LILTREE=localhost node server.mjs",
-    "cum": "PUBLIC_SITE_URL_LILTREE=liltrees.onrender.com node server.js",
+    "cum": "PUBLIC_SITE_URL_LILTREE=liltrees.onrender.com node server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -35,7 +35,7 @@
     "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.1",
     "@tanstack/react-query": "^4.33.0",
-    "@uploadthing/react": "^6.2.2",
+    "@uploadthing/react": "^6.4.4",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -62,7 +62,7 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.162.0",
     "three-globe": "^2.31.0",
-    "uploadthing": "^6.3.3",
+    "uploadthing": "^6.9.0",
     "uuid": "^9.0.1",
     "vaul": "^0.9.0",
     "zod": "^3.22.4",

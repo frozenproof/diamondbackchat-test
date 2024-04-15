@@ -1,7 +1,7 @@
 "use client"
 
 import { sendFileExtra } from "@/lib/send-file";
-import { UploadDropzone, UploadMultiDropzone } from "@/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 import "@uploadthing/react/styles.css";
 
@@ -18,7 +18,7 @@ export const MultiFileUpload = ({
 
     if(type)
     return ( 
-        <UploadMultiDropzone
+        <UploadDropzone
             endpoint = {"messageFile"}
             onClientUploadComplete={async (res) => {
                     // onChange(res?.[0].url);

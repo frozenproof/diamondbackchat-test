@@ -67,3 +67,12 @@
 - user profile prompt is upgraded for friend request, which is compulsory for user
 
 - added port support for render deployment
+- need to change configuration inside the server mjs for every deployment
+
+# 15/4
+- changed server js into server-back js to avoid wrong server file
+- added two routes for user setting and api for status
+- multi-file-upload regressed to file-upload different route due to the libraries breaking 
+- deleted multi file router for now, we can use the original api route because we don't need to serve the file in different router 
+- updated both uploadthing/react and uploadthing to newest version , hoping they don't break before the presentation for the final project
+- included the multi-file route in the core for the uploadthing router
