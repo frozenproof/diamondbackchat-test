@@ -7,10 +7,10 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
-import { ServerSideBar } from "@/components/display/server/server-sidebar";
+
 import { UserButtonDiamond } from "./user-button-diamond";
 import { UserStatus } from "@prisma/client";
-import { DirectSideBar } from "../display/direct/direct-sidebar";
+
 import React, { Suspense } from "react";
 import { NavigationHeavyLoad } from "../optimization/navigation-side-toggle";
 
@@ -19,12 +19,14 @@ export const MobileNavigationLeftToggle = ({
   userName,
   userAvatar,
   userStatus,
+  userAbout,
   userProfileIdProp,
 }: {
   serverId?: string;
   userName: string;
   userAvatar: string;
   userStatus: UserStatus;
+  userAbout: string;
   userProfileIdProp: string;
 }) => {
 
@@ -65,6 +67,7 @@ export const MobileNavigationLeftToggle = ({
               name={userName}
               src={userAvatar}
               status={userStatus}
+              about={userAbout}
           />
         </div>
         </div>

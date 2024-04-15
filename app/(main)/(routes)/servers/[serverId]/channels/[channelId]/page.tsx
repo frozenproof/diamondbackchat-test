@@ -1,10 +1,10 @@
 "use server"
 
-import { Channel, OldChannelType } from "@prisma/client";
+import { OldChannelType } from "@prisma/client";
 
 import { MessageInput } from "@/components/display/message/message-input";
 import { Suspense } from "react";
-import { MemberWithProfile} from "@/type";
+
 import { ChatMessagesList } from "@/components/display/message/message-list";
 
 import { ChannelHeader } from "@/components/display/channel/channel-header";
@@ -18,7 +18,9 @@ const ChannelIdPage = async ({
   params,
 }: {    params: {serverId: string,channelId: string}
 }) => {
-  const profile = await currentUserProfile();
+  try
+  {
+      const profile = await currentUserProfile();
 
   if(!profile){
       return redirectToSignIn();
@@ -71,7 +73,6 @@ const ChannelIdPage = async ({
       return redirect("/meself/friend");
   }
   
-    // console.log("ChannelIdPage",memberProp.id)
     return ( 
         <Suspense
             fallback={
@@ -91,6 +92,7 @@ const ChannelIdPage = async ({
                     userStatusProp={profile.status}
                     membersList={members}
                     userProfileIdProp={profile.id}
+                    userAboutProp={profile.about}
                 />
             </div>
             {channel.type === OldChannelType.TEXT && (
@@ -123,7 +125,7 @@ const ChannelIdPage = async ({
               />
             </>
             )}
-            {channel.type === OldChannelType.VIDEO && (
+            {channel.type === OldChannelType.AUDIO && (
                 <MediaRoom
                 chatId={channel.id}
                 video={false}
@@ -131,9 +133,22 @@ const ChannelIdPage = async ({
                 userIdProp={member.nickname}
                 />
             )}
+            {channel.type === OldChannelType.VIDEO && (
+                <MediaRoom
+                chatId={channel.id}
+                video={true}
+                audio={true}
+                userIdProp={member.nickname}
+                />
+            )}
         </Suspense>
     );
-  }
-  
+  }   
+  catch(e)
+  {
+    console.log("ChannelIdPageRenderError",e);
+    return redirect("/meself/friend");
+  }  
+}
  
 export default ChannelIdPage;

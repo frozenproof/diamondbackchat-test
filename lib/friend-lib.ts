@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export const findFriendsDefault = async (currentUserId: string, otherUserId: string) => {
   try {
-    const friends = await db.friend.findFirstOrThrow(
+    const friends = await db.friend.findFirst(
       {
         where: {
           OR: [
@@ -85,7 +85,7 @@ export const sendFriendRequest = async (currentUserId: string, otherUserId: stri
 
 export const findFriendsRequest = async (currentUserId: string, friendRequestId: string) => {
   try {
-    const friends = await db.friend.findFirstOrThrow(
+    const friends = await db.friend.findFirst(
       {
         where: {
           OR: [

@@ -1,7 +1,7 @@
 import { Channel, DirectChannel, OldChannelType, Server ,ServerInvite, UserProfile} from "@prisma/client";
 import { create } from "zustand"
 
-export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "CreateChannel" | "DeleteServer" | "ManageMember" | "ManageChannel" | "CreateChannelDiamond" | "LeaveServer" | "EditChannel" | "DeleteChannel" | "DeleteDirectChannel" | "MessageFile" | "DeleteMessage" | "UserProfile";
+export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "CreateChannel" | "DeleteServer" | "ManageMember" | "ManageChannel" | "CreateChannelDiamond" | "LeaveServer" | "EditChannel" | "DeleteChannel" | "DeleteDirectChannel" | "MessageFile" | "DeleteMessage" | "UserProfile" | "AccountSetting";
 
 interface PromptAPIData {
     server?: Server

@@ -13,6 +13,7 @@ interface ChannelHeaderProps {
   userAvatar: string;
   userName: string;
   userStatusProp: UserStatus;
+  userAboutProp: string;
   membersList: MemberWithProfile[];
 }
 
@@ -23,6 +24,7 @@ export const ChannelHeader = ({
   userAvatar,
   userName,
   userStatusProp,
+  userAboutProp,
   membersList,
 }: ChannelHeaderProps) => {
   return (
@@ -33,6 +35,7 @@ export const ChannelHeader = ({
         userName={userName}
         userStatus={userStatusProp}
         userProfileIdProp={userProfileIdProp}
+        userAbout={userAboutProp}
         />
       <p className="font-semibold text-md text-black dark:text-white w-full">
         {name}

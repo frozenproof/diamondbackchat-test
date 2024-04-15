@@ -31,6 +31,7 @@ const ServerIdPage = async(
             userName={profile.name}
             userStatus={profile.status}
             userProfileIdProp={profile.id}
+            userAbout={profile.about}
             />
             <SocketStatusDisplay />
             {/* (　･ω･)☞	Create a channel and something productive ! */}

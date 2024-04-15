@@ -73,6 +73,7 @@ const ServerIdPageLayout = async({
                         src={profile.imageUrl}
                         name={profile.name}
                         status={profile.status}
+                        about={profile.about}
                     />
                 </div>
             </div>

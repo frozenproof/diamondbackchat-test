@@ -27,7 +27,6 @@ export async function PATCH(
     const server = await db.server.update({
         where: {
             id: serverId,
-            userProfileId: profile.id,
         },
         data: {
             Member: {

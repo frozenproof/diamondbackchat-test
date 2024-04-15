@@ -3,13 +3,16 @@
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Clock10, Settings, Settings2 } from "lucide-react";
+import { Settings  } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { usePrompt } from "@/hooks/use-prompt-store";
+import { UserProfile } from "@prisma/client";
 
 interface UserProfileAvatarProps {
     src?: string;
     name?: string;
     status?: string;
+    about?: string;
     className?: string;
 };
 
@@ -17,11 +20,12 @@ export const UserButtonDiamond = ({
     src,
     name,
     status,
+    about,
     className
 }:UserProfileAvatarProps) => {
     const router = useRouter();
+    const { onOpen } = usePrompt();
     const { signOut } = useClerk();
-
     return (
         <div
             className="w-full flex hover:bg-[#cdcdd391] p-1"
@@ -53,7 +57,7 @@ export const UserButtonDiamond = ({
                     className="focus:outline-none ml-auto align-middle h-full"
                     asChild                
             >
-                    <Settings2 
+                    <Settings 
                         className="h-8 w-8 pr-[8px]"
                     />
             </DropdownMenuTrigger>
@@ -61,7 +65,9 @@ export const UserButtonDiamond = ({
                 side="top"
                 className="w-48"
             >
-                <DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => onOpen("AccountSetting",{userProfilePropAPI: {imageUrl:src, name: name,about: about} as unknown as UserProfile})}
+                >
                     Setting
                 </DropdownMenuItem>
                 <DropdownMenuSub>

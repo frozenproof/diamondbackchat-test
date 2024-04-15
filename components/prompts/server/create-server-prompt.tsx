@@ -78,7 +78,9 @@ return (
                         Create a new server
                     </DialogTitle>
                     <DialogDescription className="text-center">
-                        Give your server more details.
+                        Give your server more details. 
+                        <br/>
+                        Make sure to upload server image first before creating the server .
                     </DialogDescription>
                 </DialogHeader>
                 <Form  {...form}>

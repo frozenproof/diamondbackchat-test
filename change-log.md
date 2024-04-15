@@ -87,3 +87,16 @@
 - ready for deployment test
 - temporary added a friend confirm api route, need to complete tomorrow
 - the env is not loaded in when entry point of app is run
+
+# 16/4
+- added proper fallback for directChatId Page Search
+- removed unused import from channel Page
+- added proper user about for all user button diamond , which requested from mobile toggle , which got requested from channel and direct channel header
+- create server prompt added better suggestion for users
+- changed role api to allow actual users to change roles based on their member role
+- added user setting prompt
+- added route for user setting
+- added route for member nickname
+
+
+

@@ -259,11 +259,8 @@ enum OldMemberRole {
 
 enum OldChannelType {
   TEXT
-  DIRECT
   AUDIO
   VIDEO
-  STREAMING
-  BOT
   NOTIFICATION
 }
 

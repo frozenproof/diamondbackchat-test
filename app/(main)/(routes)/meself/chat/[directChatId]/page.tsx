@@ -1,3 +1,5 @@
+"use server"
+
 import { DirectChannelHeader } from "@/components/display/direct/direct-header";
 import { DirectChatMessages } from "@/components/display/direct-message/direct-list";
 
@@ -20,7 +22,7 @@ const DirectChatMemberIdPage = async ({
         return redirect(`/`);
     }
 
-    const direct = await db.directChannel.findFirstOrThrow({
+    const direct = await db.directChannel.findFirst({
       where: {
         id: params.directChatId,
       },
@@ -29,6 +31,7 @@ const DirectChatMemberIdPage = async ({
         memberTwo: true
       }
     });
+    
     if (!direct ) {
       return redirect(`/meself/friend`);
     }
@@ -59,6 +62,7 @@ const DirectChatMemberIdPage = async ({
               userNameProp={profile.name}
               userStatusProp={profile.status}
               userProfileIdProp={profile.id}
+              userAboutProp={profile.about}
             />
             <>
                 <DirectChatMessages

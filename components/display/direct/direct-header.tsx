@@ -12,6 +12,7 @@ interface DirectHeaderProps {
     userAvatarProp: string;
     userNameProp: string;
     userStatusProp: UserStatus;
+    userAboutProp: string;
     userProfileIdProp: string;
     imageUrl: string;
     name: string;
@@ -23,6 +24,7 @@ export const DirectChannelHeader = ({
     userAvatarProp,
     userNameProp,
     userStatusProp,
+    userAboutProp,
     userProfileIdProp
 }:DirectHeaderProps) => {
     return (
@@ -33,6 +35,7 @@ export const DirectChannelHeader = ({
             userName={userNameProp}
             userStatus={userStatusProp}
             userProfileIdProp={userProfileIdProp}
+            userAbout={userAboutProp}
         />
         <UserProfileAvatar 
             src={imageUrl}

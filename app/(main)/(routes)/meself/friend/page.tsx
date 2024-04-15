@@ -17,11 +17,11 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle"
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar"
+
 import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
 
-import { cn } from "@/lib/utils"
+
 import { Cross, Trees, User, X } from "lucide-react"
 import { redirect } from "next/navigation"
 
@@ -79,6 +79,7 @@ const FriendsPage = async({
           userName={profile.name}
           userStatus={profile.status}
           userProfileIdProp={profile.id}
+          userAbout={profile.about}
         />
         <div
           className="flex"

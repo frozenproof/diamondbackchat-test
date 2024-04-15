@@ -1,6 +1,5 @@
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { OldMemberRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function PATCH(
@@ -11,7 +10,7 @@ export async function PATCH(
     {
         const profile = await currentUserProfile();
         const { searchParams } = new URL(req.url);
-        const { role } = await req.json();
+        const { nickname } = await req.json();
 
         const serverId = searchParams.get("serverId");
 
@@ -38,13 +37,10 @@ export async function PATCH(
                           id: params.memberId,
                           userProfileId: {
                             not: profile.id
-                          },
-                          role: {
-                            in: [OldMemberRole.MODERATOR,OldMemberRole.OWNER,OldMemberRole.CREATOR,OldMemberRole.LILWITCH,OldMemberRole.ADMIN]
                           }
                         },
                         data: {
-                          role
+                          nickname: nickname
                         }
                     }
                 }
