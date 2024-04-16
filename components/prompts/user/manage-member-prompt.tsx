@@ -150,75 +150,101 @@ export const ManageMemberPrompt = () => {
                                    className="flex flex-row ml-auto h-auto w-auto gap-x-2"
                                 >
                                 <DropdownMenu >
-                                            <DropdownMenuTrigger>
-                                                <MoreVerticalIcon 
-                                                    className="h-4 w-4 text-[#eb4a5285]"
-                                                />
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent
-                                                side="right"
+                                    <DropdownMenuTrigger>
+                                        <MoreVerticalIcon 
+                                            className="h-4 w-4 text-[#eb4a5285]"
+                                        />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        side="right"
+                                    >
+                                        <DropdownMenuSub>
+                                            <DropdownMenuSubTrigger
+                                                className="flex items-center"
                                             >
-                                                <DropdownMenuSub>
-                                                    <DropdownMenuSubTrigger
-                                                        className="flex items-center"
+                                                <ShieldAlert />
+                                                <span>
+                                                    Role
+                                                </span>        
+                                            </DropdownMenuSubTrigger>
+                                            <DropdownMenuPortal>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuItem
+                                                        onClick={() => onRoleChange(member.id,"GUEST")}
                                                     >
-                                                        <ShieldAlert />
-                                                        <span>
-                                                            Role
-                                                        </span>        
-                                                    </DropdownMenuSubTrigger>
-                                                    <DropdownMenuPortal>
-                                                        <DropdownMenuSubContent>
-                                                            <DropdownMenuItem
-                                                                onClick={() => onRoleChange(member.id,"GUEST")}
-                                                            >
-                                                                <Dog 
-                                                                    className="mr-2"
-                                                                />
-                                                                Member
-                                                                {member.role === "GUEST" && (
-                                                                    <Check 
-                                                                        className="text-[#ff3b3b] ml-auto"
-                                                                    />
-                                                                )}
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem
-                                                                onClick={() => onRoleChange(member.id,"MODERATOR")}
-                                                            >
-                                                                <ShieldCheck 
-                                                                    className="mr-2"
-                                                                />
-                                                                Moderator
-                                                                {member.role === "MODERATOR" && (
-                                                                <Check 
-                                                                        className="text-[#ff3b3b] ml-auto"
-                                                                    />)
-                                                                }
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem
-                                                                onClick={() => onRoleChange(member.id,"LILWITCH")}
-                                                            >
-                                                                <Book 
-                                                                    className="mr-2"
-                                                                />
-                                                                    LILWITCH
-                                                                {member.role === "LILWITCH" && (
-                                                                    <Check 
-                                                                        className="text-[#ff3b3b] ml-auto"
-                                                                    />
-                                                                )}                                             
-                                                            </DropdownMenuItem>
-                                                        </DropdownMenuSubContent>
-                                                    </DropdownMenuPortal>
-                                                </DropdownMenuSub>
-                                                <DropdownMenuSeparator />
-                                                <DropdownMenuItem
-                                                    onClick={() => onKick(member.id)}
-                                                >
-                                                    <Minus />
-                                                    Kick
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
+                                                        <Dog 
+                                                            className="mr-2"
+                                                        />
+                                                        Guest
+                                                        {member.role === "GUEST" && (
+                                                            <Check 
+                                                                className="text-[#ff3b3b] ml-auto"
+                                                            />
+                                                        )}
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={() => onRoleChange(member.id,"MEMBER")}
+                                                    >
+                                                        <Dog 
+                                                            className="mr-2"
+                                                        />
+                                                        Member
+                                                        {member.role === "MEMBER" && (
+                                                            <Check 
+                                                                className="text-[#ff3b3b] ml-auto"
+                                                            />
+                                                        )}
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={() => onRoleChange(member.id,"MODERATOR")}
+                                                    >
+                                                        <ShieldCheck 
+                                                            className="mr-2"
+                                                        />
+                                                        Moderator
+                                                        {member.role === "MODERATOR" && (
+                                                        <Check 
+                                                                className="text-[#ff3b3b] ml-auto"
+                                                            />)
+                                                        }
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={() => onRoleChange(member.id,"LILWITCH")}
+                                                    >
+                                                        <Book 
+                                                            className="mr-2"
+                                                        />
+                                                            LILWITCH
+                                                        {member.role === "LILWITCH" && (
+                                                            <Check 
+                                                                className="text-[#ff3b3b] ml-auto"
+                                                            />
+                                                        )}                                             
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuItem
+                                                        onClick={() => onRoleChange(member.id,"SPECIALGUEST")}
+                                                    >
+                                                        <Book 
+                                                            className="mr-2"
+                                                        />
+                                                            Special Guest
+                                                        {member.role === "SPECIALGUEST" && (
+                                                            <Check 
+                                                                className="text-[#ff3b3b] ml-auto"
+                                                            />
+                                                        )}                                             
+                                                    </DropdownMenuItem>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuPortal>
+                                        </DropdownMenuSub>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem
+                                            onClick={() => onKick(member.id)}
+                                        >
+                                            <Minus />
+                                            Kick
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
                                 </DropdownMenu>                                
                                 </div>  
                             )}

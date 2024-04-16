@@ -104,3 +104,14 @@
 
 - added proper support for member nickname edit
 - strange bug with query string import
+
+- added user status control
+- added user status route
+- added more roles for member manage prompt
+- user button now function
+- added user status for enum user status in prisma
+- updated friend lib to reflect real database
+- removed unused user profile unused prompt
+
+
+

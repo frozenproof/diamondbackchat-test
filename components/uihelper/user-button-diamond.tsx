@@ -6,7 +6,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Settings  } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { UserProfile } from "@prisma/client";
+import { UserProfile, UserStatus } from "@prisma/client";
+import qs from "query-string"
+import axios from "axios";
 
 interface UserProfileAvatarProps {
     src?: string;
@@ -26,6 +28,21 @@ export const UserButtonDiamond = ({
     const router = useRouter();
     const { onOpen } = usePrompt();
     const { signOut } = useClerk();
+    const onUserStatusChange = async(status: UserStatus) => {
+        try {
+            const url = qs.stringifyUrl({
+                url: `/api/user/display-status-api`,
+            })
+
+            const response = await axios.patch(url, {status});
+
+            router.refresh();
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
     return (
         <div
             className="w-full flex hover:bg-[#cdcdd391] p-1"
@@ -75,16 +92,24 @@ export const UserButtonDiamond = ({
                         Status
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent>
-                    <DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onUserStatusChange("ONLINE")}
+                        >
                             Online
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onUserStatusChange("IDLE")}
+                        >
                             Idle
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onUserStatusChange("DO_NOT_DISTURB")}
+                        >
                             Do not disturb
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => onUserStatusChange("INVISIBLE")}
+                        >
                             Invisible
                         </DropdownMenuItem>
                     </DropdownMenuSubContent>

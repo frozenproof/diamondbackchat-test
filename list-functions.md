@@ -36,6 +36,8 @@
 |   Pending Friend Page                  |  [x] |
 |   Checking Friend Exist                |  [x] | 
 |   All Friend Page                      |  [x] |
+|   User Settings                        |  [x] |  
+|   Member Nickname	                     |  [x]	|   	
 
 
 # Working 

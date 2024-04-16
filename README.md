@@ -1,7 +1,5 @@
-<script>
-import basics from './parts/basics.md'
-import functions from '@/list-function.md'
-</script>
+# Deployed on Render.com
+
 
 # Can you smell what is cooking ? 
 In order to prevent frauds 

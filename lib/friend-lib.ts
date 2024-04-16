@@ -14,7 +14,6 @@ export const findFriendsDefault = async (currentUserId: string, otherUserId: str
             {friendTwoId: currentUserId,friendOneId: otherUserId}
           ],
           pending: false,
-          blocked: false
         }
       }
     )
@@ -48,7 +47,6 @@ export const sendFriendRequest = async (currentUserId: string, otherUserId: stri
           AND: {
             OR:[
               {pending: true},
-              {blocked: true}
             ]            
           }
         }
@@ -94,7 +92,6 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
           ],
           id: friendRequestId,
           pending: false,
-          blocked: false
         }
       }
     )
@@ -110,7 +107,7 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
   }
 }
 
-export const confirmFriendRequest = async (currentUserId: string, otherUserId: string) => {
+export const confirmFriendRequest = async (currentUserId: string, friendRequestId: string) => {
   try {
     const profile = await currentUserProfile();
     if(!profile)
@@ -122,13 +119,12 @@ export const confirmFriendRequest = async (currentUserId: string, otherUserId: s
       {
         where: {
           OR: [
-            {friendOneId: currentUserId,friendTwoId: otherUserId},
-            {friendTwoId: currentUserId,friendOneId: otherUserId},            
+            {friendOneId: currentUserId},
+            {friendTwoId: currentUserId},            
           ],
           AND: {
             OR:[
               {pending: true},
-              {blocked: true}
             ]            
           }
         }
@@ -137,23 +133,16 @@ export const confirmFriendRequest = async (currentUserId: string, otherUserId: s
 
     if(!friends)
     {
-      const friendsCreate = await db.friend.create(
-        {
-          data: {
-            friendOneId: currentUserId ,
-            friendTwoId: otherUserId ,
-            pending: true
-          }
-        }
-      )
-  
-      if(friendsCreate)
-      {
-        // console.log(friendsCreate);
-        return (friendsCreate);
-      }
+      return null;
     }
     else if(friends) {
+      // const friends2 = await db.friend.update(
+      //   {
+      //     where: {
+      //       id: friends.id
+      //     }
+      //   }
+      // )
       return friends;
     }
   

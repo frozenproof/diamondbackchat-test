@@ -4,7 +4,7 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 import { currentUserProfile } from "@/lib/current-profile";
-import { findFriendsRequest, sendFriendRequest } from "@/lib/friend-lib";
+import { confirmFriendRequest, findFriendsRequest, sendFriendRequest } from "@/lib/friend-lib";
 import { NextResponse } from "next/server";
 
 interface MemberIdPageProps {
@@ -31,7 +31,7 @@ export async function PATCH(
   {
     const friend = await findFriendsRequest(profile.id, params.friendRequestId);
     if (!friend) {      
-      const friendsCreate = await sendFriendRequest(profile.id, params.friendRequestId);
+      const friendsCreate = await confirmFriendRequest(profile.id, params.friendRequestId);
       // console.log(friendsCreate)
       return NextResponse.json({statusFriend: "appending",friendRes: friendsCreate});
     }
