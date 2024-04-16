@@ -74,9 +74,9 @@ export const UserButtonDiamond = ({
                     className="focus:outline-none ml-auto align-middle h-full"
                     asChild                
             >
-                    <Settings 
-                        className="h-8 w-8 pr-[8px]"
-                    />
+                <Settings 
+                    className="h-8 w-8 pr-[8px]"
+                />
             </DropdownMenuTrigger>
             <DropdownMenuContent
                 side="top"

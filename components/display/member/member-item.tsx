@@ -1,15 +1,17 @@
 "use client";
 
-import { Member, OldMemberRole, UserProfile, Server } from "@prisma/client";
+import { OldMemberRole } from "@prisma/client";
 import { CrownIcon, ShieldAlert, ShieldCheck } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { MemberWithProfile } from "@/type";
+import { usePrompt } from "@/hooks/use-prompt-store";
 
 interface MemberItemProps {
   member: MemberWithProfile
+  userProfileIdProp: string
 }
 
 const roleIconMap: {[key: string]: React.ReactNode} = {
@@ -21,21 +23,16 @@ const roleIconMap: {[key: string]: React.ReactNode} = {
 
 export const MemberItem = ({
   member ,
-  // user ,
-  // role
+  userProfileIdProp
 }: MemberItemProps) => {
+  const {onOpen} = usePrompt();
   const params = useParams();
-  const router = useRouter();
 
   const icon = roleIconMap[member.role];
 
-  const onClick = () => {
-    router.push(`/meself/chat/${member.userProfile.id}`)
-  }
-
   return (
     <button
-      onClick={onClick}
+      onClick={() => {onOpen("UserProfileDisplay", {userProfilePropAPI: member.userProfile, currentUserPropAPIID: userProfileIdProp})}}
       className={cn(
         "group px-2 py-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition mb-1",
         params?.memberId === member.userProfileId && "bg-zinc-700/20 dark:bg-zinc-700"

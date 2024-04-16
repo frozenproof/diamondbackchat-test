@@ -45,6 +45,7 @@ export const ChannelHeader = ({
       />
       <RightChannelToggle 
         anotherMemberProp={membersList}
+        userProfileIdProp={userProfileIdProp}
       />
     </div>
   )

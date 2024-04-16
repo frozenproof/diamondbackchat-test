@@ -37,14 +37,7 @@ export async function POST(req: Request){
                 serverId: server2.id
             }
         })
-
-        // const defaultChannelServer = await db.serverChannel.create({
-        //     data: {
-        //         serverId: server2.id,
-        //         channelId: defaultChannel.id
-        //     }
-        // })
-        
+     
         const inviteServer = await db.serverInvite.upsert({
             where: {
               inviteId: {

@@ -184,14 +184,14 @@ export const MessageItem = ({
       {(!isContinious) && (
         <div className="group flex gap-x-2 items-start w-full">
             <div className="cursor-pointer hover:drop-shadow-md transition"
-              onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)}
+              onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)}
             >
               <UserProfileAvatar src={messageMemberProp.userProfile.imageUrl} />
             </div>
           <div className="flex flex-col w-full">
             <div className="flex items-center gap-x-2">
               <div className="flex items-center">
-                <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)} className="font-semibold text-sm hover:underline cursor-pointer">
+                <p onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:messageMemberProp.userProfile, currentUserPropAPIID: currentMember.userProfileId },)} className="font-semibold text-sm hover:underline cursor-pointer">
                   {messageMemberProp.nickname}
                 </p>
 

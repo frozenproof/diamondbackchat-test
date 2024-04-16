@@ -38,6 +38,7 @@
 |   All Friend Page                      |  [x] |
 |   User Settings                        |  [x] |  
 |   Member Nickname	                     |  [x]	|   	
+|   Confirming Friend Request            |  [w] |  
 
 
 # Working 
@@ -50,7 +51,6 @@
 |   Call Notifications                   |  [w] |
 |   User Settings                        |  [w] |  
  
-|   Sending Friend Request               |  [w] |  
 |   Sending Friend Request               |  [w] |  
 |   Handling Request Return Properly     |  [w] |  
 

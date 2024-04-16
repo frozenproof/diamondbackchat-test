@@ -5,13 +5,14 @@ import { MemberItem } from "../member/member-item";
 import { MemberWithProfile } from "@/type";
 import { Suspense } from "react";
 
- 
 interface MemberSideBarProps {
     memberProp:MemberWithProfile[]
+    userProfileIdProp: string    
 }
 
 export const MemberSideBar = ({
-    memberProp
+    memberProp,
+    userProfileIdProp
 }:MemberSideBarProps) => {
     return (
         <div
@@ -33,6 +34,7 @@ export const MemberSideBar = ({
                         <MemberItem
                         key={member.id}
                         member={member}
+                        userProfileIdProp={userProfileIdProp}
                         />
                     ))}
                     </div>

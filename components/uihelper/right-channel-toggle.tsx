@@ -11,9 +11,12 @@ import { MemberSideBar } from "../display/member/member-sidebar";
 import { MemberWithProfile } from "@/type";
 
 export const RightChannelToggle = ({
-    anotherMemberProp
+    anotherMemberProp,
+    userProfileIdProp
+
 }: {
   anotherMemberProp: MemberWithProfile[];
+  userProfileIdProp: string;
 }) => {
   return (
     <Sheet>
@@ -25,6 +28,7 @@ export const RightChannelToggle = ({
       <SheetContent side="right" className="p-0 flex gap-0 ">
         <MemberSideBar 
             memberProp={anotherMemberProp}
+            userProfileIdProp={userProfileIdProp}
         />
       </SheetContent>
     </Sheet>

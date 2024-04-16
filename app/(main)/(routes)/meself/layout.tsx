@@ -20,7 +20,6 @@ const MePageLayout = async ({
     
     else
     {
-        // console.log(profile);
         return ( 
             <div className="h-full">
                 <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0
@@ -38,8 +37,7 @@ const MePageLayout = async ({
                             name={profile.name}
                             status={profile.status}
                             about={profile.about}
-                        />
-                       
+                        />                       
                     </div>
                 </div>
                 <main className="h-full md:pl-48">

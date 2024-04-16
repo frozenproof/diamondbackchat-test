@@ -185,14 +185,14 @@ export const DirectMessageItem = ({
           <div className="group flex gap-x-2 items-start w-full">    
               <div 
                 className="cursor-pointer hover:drop-shadow-md transition"
-                onClick={()=>onOpen("UserProfile", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)}
+                onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)}
               >
                 <UserProfileAvatar src={directUserProp.imageUrl} />
               </div>
             <div className="flex flex-col w-full">
                 <div className="flex items-center gap-x-2">
                   <div className="flex items-center">
-                    <p onClick={()=>onOpen("UserProfile", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)} className="font-semibold text-sm hover:underline cursor-pointer">
+                    <p onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)} className="font-semibold text-sm hover:underline cursor-pointer">
                       {UserProp.name}
                     </p>
                   </div>

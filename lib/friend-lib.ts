@@ -91,14 +91,14 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
             {friendTwoId: currentUserId}
           ],
           id: friendRequestId,
-          pending: false,
+          pending: true,
         }
       }
     )
 
     if(friends)
     {
-      console.log(friends);
+      // console.log(friends);
       return (friends);
     }
   
@@ -107,25 +107,22 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
   }
 }
 
-export const confirmFriendRequest = async (currentUserId: string, friendRequestId: string) => {
+export const confirmFriendRequest = async (currentUserId: string, friendRequestId: string,friendConfirm: number) => {
   try {
     const profile = await currentUserProfile();
+    console.log("Friend confirm string",friendConfirm)
     if(!profile)
     {
       return redirect(`/`)
     }
 
-    const friends = await db.friend.findFirst(
+    const friends = await db.friend.findUnique(
       {
         where: {
-          OR: [
-            {friendOneId: currentUserId},
-            {friendTwoId: currentUserId},            
-          ],
+          id: friendRequestId,
+          friendTwoId: currentUserId,
           AND: {
-            OR:[
-              {pending: true},
-            ]            
+            pending: true
           }
         }
       }
@@ -133,17 +130,34 @@ export const confirmFriendRequest = async (currentUserId: string, friendRequestI
 
     if(!friends)
     {
-      return null;
+      return 8;
     }
     else if(friends) {
-      // const friends2 = await db.friend.update(
-      //   {
-      //     where: {
-      //       id: friends.id
-      //     }
-      //   }
-      // )
-      return friends;
+      if(friendConfirm === 0)
+      {
+        const friends2 = await db.friend.update(
+          {
+            where: {
+              id: friends.id as string
+            },
+            data: {
+              pending: false
+            }
+          }
+        )
+        return friends2;
+      }
+      else if(friendConfirm === 1)
+      {
+        const friends2 = await db.friend.delete(
+          {
+            where: {
+              id: friends.id as string
+            }
+          }
+        )
+        return "deleted";
+      }
     }
   
   } catch (e){

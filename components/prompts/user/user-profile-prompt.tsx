@@ -26,7 +26,7 @@ export const UserProfilePrompt = () => {
     const router = useRouter();
     const DATE_FORMAT = "d MMM yyyy, HH:mm";
     
-    const isPromptOpen = isOpen && type === "UserProfile";
+    const isPromptOpen = isOpen && type === "UserProfileDisplay";
     const { userProfilePropAPI , currentUserPropAPIID }  = propData;
  
     const handleClose = () => {

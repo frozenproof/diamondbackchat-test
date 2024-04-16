@@ -113,5 +113,18 @@
 - updated friend lib to reflect real database
 - removed unused user profile unused prompt
 
+# 17/4
+- changed user profile prompt condition to avoid hacking and confusion
+- removed unused import
+- friend lib is upgraded
+- initial profile added default fallback
+- member item now has user profile prompt loaded
+- friend profile now can confirm friend request
+- removed back up for multi file upload
+- channel header updated to send information
+- added information to member side bar 
+
+
+
 
 

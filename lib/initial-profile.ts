@@ -3,16 +3,17 @@
 import { currentUser } from "@clerk/nextjs";
 
 import { db } from "@/lib/db"
+import { redirect } from "next/navigation";
 
 export const initialFirstProfile = async () => {
 
-    const user = await currentUser();
+    try{
+        const user = await currentUser();
     if(!user) {
         return ;
     }
         else
-    {
-        
+    {        
         {const profileInitial = await db.userProfile.findUnique({
             where:{
                 userId: user.id
@@ -35,5 +36,10 @@ export const initialFirstProfile = async () => {
             return newProfileInitial;
         }   }
     }
-
+    }
+    catch(error)
+    {
+        console.log("error from profile filler",error);
+        return redirect("/");
+    }   
 }
