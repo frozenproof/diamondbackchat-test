@@ -9,25 +9,17 @@ import { Button } from "@/components/ui/button";
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 
 import { UserButtonDiamond } from "./user-button-diamond";
-import { UserStatus } from "@prisma/client";
+import { UserProfile, UserStatus } from "@prisma/client";
 
 import React, { Suspense } from "react";
 import { NavigationHeavyLoad } from "../optimization/navigation-side-toggle";
 
 export const MobileNavigationLeftToggle = ({
   serverId,
-  userName,
-  userAvatar,
-  userStatus,
-  userAbout,
-  userProfileIdProp,
+  userProfileProp
 }: {
   serverId?: string;
-  userName: string;
-  userAvatar: string;
-  userStatus: UserStatus;
-  userAbout: string;
-  userProfileIdProp: string;
+  userProfileProp: UserProfile;
 }) => {
 
   // console.log("wutmobiles",serverId?.toString);
@@ -42,7 +34,7 @@ export const MobileNavigationLeftToggle = ({
       <SheetContent side="left" className="p-0 flex gap-0 ">
         <div className="w-[72px]">
           <NavigationSideBar 
-            userProfileIdNavigationSideBar={userProfileIdProp}
+            userProfileIdNavigationSideBar={userProfileProp.id}
           />
         </div>
         <div
@@ -56,7 +48,7 @@ export const MobileNavigationLeftToggle = ({
           }
         >
           <NavigationHeavyLoad 
-              userProfileIdProp={userProfileIdProp}
+              userProfileIdProp={userProfileProp.id}
               serverId={serverId}
           />          
         </Suspense>
@@ -64,10 +56,7 @@ export const MobileNavigationLeftToggle = ({
         className="mt-auto"
         >
           <UserButtonDiamond 
-              name={userName}
-              src={userAvatar}
-              status={userStatus}
-              about={userAbout}
+            currentUserProfile={userProfileProp}
           />
         </div>
         </div>

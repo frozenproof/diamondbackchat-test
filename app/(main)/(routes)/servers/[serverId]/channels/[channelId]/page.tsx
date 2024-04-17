@@ -87,12 +87,8 @@ const ChannelIdPage = async ({
                 <ChannelHeader 
                     serverId={server.id}
                     name={channel.name}
-                    userAvatar={profile.imageUrl}
-                    userName={profile.name}
-                    userStatusProp={profile.status}
+                    userProfileProp={profile}
                     membersList={members}
-                    userProfileIdProp={profile.id}
-                    userAboutProp={profile.about}
                 />
             </div>
             {channel.type === OldChannelType.TEXT && (

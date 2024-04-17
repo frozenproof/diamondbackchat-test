@@ -2,6 +2,8 @@
 
 |   Main	                             |   Status |	
 |---	                                 |---	|
+|   Sign In                              |  [x] |
+|   Sign Out                             |  [x] |
 |   Server Creation	                     |  [x]	|   	
 |   Server Invite Creation	             |  [x]	|   	
 |   Server Invite Search	             |  [x]	|   	
@@ -39,6 +41,7 @@
 |   User Settings                        |  [x] |  
 |   Member Nickname	                     |  [x]	|   	
 |   Confirming Friend Request            |  [x] |  
+|   Direct Video Conference              |  [x]	|   
 
 
 
@@ -48,7 +51,8 @@
 |---	                                 |---		
 |   Main Page	                         |  [w] |   	
 |   Friend Page                          |  [w] |
-|   Direct Call 	                     |  [w]	|   
+|   Block User  	                     |  [x]	|   	
+|   Ban Member  	                     |  [x]	|   	
 |   Message Reply                        |  [w] |   	
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] | 

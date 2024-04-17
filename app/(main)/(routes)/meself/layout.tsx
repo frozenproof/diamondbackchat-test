@@ -33,10 +33,7 @@ const MePageLayout = async ({
                     >
                         
                         <UserButtonDiamond 
-                            src={profile.imageUrl}
-                            name={profile.name}
-                            status={profile.status}
-                            about={profile.about}
+                            currentUserProfile={profile}
                         />                       
                     </div>
                 </div>

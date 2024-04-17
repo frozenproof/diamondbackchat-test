@@ -71,10 +71,7 @@ const ServerIdPageLayout = async({
                     className="mt-auto pt-1 pb-1 pl-1 flex"
                 >
                     <UserButtonDiamond 
-                        src={profile.imageUrl}
-                        name={profile.name}
-                        status={profile.status}
-                        about={profile.about}
+                        currentUserProfile={profile}
                     />
                 </div>
             </div>

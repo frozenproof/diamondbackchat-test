@@ -9,8 +9,8 @@ import { Track } from "livekit-client";
 
 interface MediaRoomProps {
   chatId: string;
-  video: boolean;
-  audio: boolean;
+  video?: boolean;
+  audio?: boolean;
   userIdProp?: string;
 };
 
@@ -66,8 +66,6 @@ export const MediaRoom = ({
 
 export const MediaRoomDirect = ({
   chatId,
-  video,
-  audio,
 }: MediaRoomProps) => {
   const [token, setToken] = useState("");
 
@@ -100,16 +98,26 @@ export const MediaRoomDirect = ({
   }
 
   return (
+    <div
+      className="w-full"
+      style={
+        {
+          minHeight: "50%"
+        }
+      }
+    >
       <LiveKitRoom
       token={token}
-      video={video}
-      audio={audio}
+      video={false}
+      audio={true}
       serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_URL}
       data-lk-theme="default"
     >
       <VideoConference />
 
     </LiveKitRoom>
+    </div>
+      
   )
 }
 

@@ -134,4 +134,16 @@
 - removed unused packages
 - added video call socket 
 
+# 18/4
+- direct call now work
+- updated media room to auto fill
+- majority of functionalities are now ready for users 
+- basically reformed the entire user button
+- changed the user profile prompt for better user 
+- improved edit prompt to keep the data when needed
+- removed back up for server js
+- optimized components to make them readable 
+- ready for deployment
+
+
 

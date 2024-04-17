@@ -11,18 +11,12 @@ import qs from "query-string"
 import axios from "axios";
 
 interface UserProfileAvatarProps {
-    src?: string;
-    name?: string;
-    status?: string;
-    about?: string;
+    currentUserProfile: UserProfile;
     className?: string;
 };
 
 export const UserButtonDiamond = ({
-    src,
-    name,
-    status,
-    about,
+    currentUserProfile,
     className
 }:UserProfileAvatarProps) => {
     const router = useRouter();
@@ -45,13 +39,13 @@ export const UserButtonDiamond = ({
     }
     return (
         <div
-            className="w-full flex hover:bg-[#cdcdd391] p-1"
+            className="w-full flex p-1"
         >
             <div
                 className="flex "
             >
             <Avatar >
-                <AvatarImage src={src} />
+                <AvatarImage src={currentUserProfile.imageUrl} />
             </Avatar>
             <div 
                 className=" gap-x-1 gap-y-1 pl-2 flex flex-col flex-wrap h-auto overflow-hidden mt-auto"
@@ -59,12 +53,12 @@ export const UserButtonDiamond = ({
                 <div
                     style={{color: "red",fontSize: "18px"}}
                 >
-                    {name}
+                    {currentUserProfile.name}
                 </div>
                 <div
                     style={{color: "green",fontSize: "8px"}}
                 >
-                    {status}
+                    {currentUserProfile.status}
                 </div>
             </div>
             </div>
@@ -83,7 +77,12 @@ export const UserButtonDiamond = ({
                 className="w-48"
             >
                 <DropdownMenuItem
-                    onClick={() => onOpen("AccountSetting",{userProfilePropAPI: {imageUrl:src, name: name,about: about} as unknown as UserProfile})}
+                    onClick={() => onOpen("UserProfileDisplay",{userProfilePropAPI: currentUserProfile,currentUserPropAPIID: currentUserProfile.id})}
+                >
+                    My profile
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                    onClick={() => onOpen("AccountSetting",{userProfilePropAPI: currentUserProfile})}
                 >
                     Setting
                 </DropdownMenuItem>

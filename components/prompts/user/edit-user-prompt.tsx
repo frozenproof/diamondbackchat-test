@@ -47,9 +47,9 @@ export const EditUserPrompt = () => {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            name: "",
-            imageUrl: "",
-            about: ""
+            name: userProfilePropAPI?.name as string,
+            imageUrl: userProfilePropAPI?.imageUrl as string,
+            about: userProfilePropAPI?.about as string
         }
     }); 
 
@@ -77,7 +77,8 @@ export const EditUserPrompt = () => {
     }
 
     useEffect(() => {
-        if(userProfilePropAPI){            
+        if(userProfilePropAPI){      
+            console.log("nani")      
         form.setValue("name",userProfilePropAPI.name);
         form.setValue("about",userProfilePropAPI.about);
         form.setValue("imageUrl", userProfilePropAPI.imageUrl);

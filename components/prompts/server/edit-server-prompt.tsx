@@ -43,11 +43,13 @@ export const EditServerPrompt = () => {
     const isPromptOpen = isOpen && type === "EditServer";
     const { server }  = propData;
 
+    if(server)
+    {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            name: "",
-            imageUrl: "",
+            name: server.name,
+            imageUrl: server.imageUrl,
         }
     }); 
 
@@ -57,8 +59,9 @@ export const EditServerPrompt = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try{
             await axios.patch(`/api/servers/${server?.id}/settings-api`,values);
-
+            
             form.reset();
+
             router.refresh();
             onClose();
         }
@@ -74,15 +77,12 @@ export const EditServerPrompt = () => {
     }
 
     useEffect(() => {
-        if(server){
-            
+        if(server){            
         form.setValue("name",server.name);
         form.setValue("imageUrl", server.imageUrl);
         }
     },[server, form])
     
-    if(server)
-    {
 
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>

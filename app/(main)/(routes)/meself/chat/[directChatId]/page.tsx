@@ -59,11 +59,7 @@ const DirectChatMemberIdPage = async ({
               imageUrl={otherMember.imageUrl}
               name={otherMember.name}
               directChannelHeaderIdProp={direct.id}
-              userAvatarProp={profile.imageUrl}
-              userNameProp={profile.name}
-              userStatusProp={profile.status}
-              userProfileIdProp={profile.id}
-              userAboutProp={profile.about}
+              userProfileProp={profile}
             />
             <>
                 <DirectChatMessages

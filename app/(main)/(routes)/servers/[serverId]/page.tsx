@@ -27,11 +27,7 @@ const ServerIdPage = async(
         >
             <MobileNavigationLeftToggle 
             serverId={params.serverId} 
-            userAvatar={profile.imageUrl}
-            userName={profile.name}
-            userStatus={profile.status}
-            userProfileIdProp={profile.id}
-            userAbout={profile.about}
+            userProfileProp={profile}
             />
             <SocketStatusDisplay />
             {/* (　･ω･)☞	Create a channel and something productive ! */}

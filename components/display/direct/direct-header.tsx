@@ -6,14 +6,10 @@ import { ChatVideoButton } from "@/components/chat-video-button";
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 
-import { UserStatus } from "@prisma/client";
+import { UserProfile } from "@prisma/client";
 
 interface DirectHeaderProps {
-    userAvatarProp: string;
-    userNameProp: string;
-    userStatusProp: UserStatus;
-    userAboutProp: string;
-    userProfileIdProp: string;
+    userProfileProp: UserProfile
     imageUrl: string;
     name: string;
     directChannelHeaderIdProp: string;
@@ -22,22 +18,14 @@ interface DirectHeaderProps {
 export const DirectChannelHeader = ({
     imageUrl,
     name,
-    userAvatarProp,
-    userNameProp,
-    userStatusProp,
-    userAboutProp,
-    userProfileIdProp,
+    userProfileProp,
     directChannelHeaderIdProp
 }:DirectHeaderProps) => {
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
         {/* <MobileToggle serverId={serverId} /> */}
         <MobileNavigationLeftToggle 
-            userAvatar={userAvatarProp}
-            userName={userNameProp}
-            userStatus={userStatusProp}
-            userProfileIdProp={userProfileIdProp}
-            userAbout={userAboutProp}
+            userProfileProp={userProfileProp}
         />
         <UserProfileAvatar 
             src={imageUrl}

@@ -75,11 +75,7 @@ const FriendsPage = async({
       className="w-full ">
       <TabsList className="grid w-full grid-cols-6">
         <MobileNavigationLeftToggle 
-          userAvatar={profile.imageUrl}
-          userName={profile.name}
-          userStatus={profile.status}
-          userProfileIdProp={profile.id}
-          userAbout={profile.about}
+          userProfileProp={profile}
         />
         <div
           className="flex"
