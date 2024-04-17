@@ -38,9 +38,14 @@ export const useChatSocket = ({
 
     socketActual.onAny((event: any, ...args: any) => {
       console.log(`got ${event}`);
-      console.log(`data is ${args}`);
-      console.log("this is listened by use-chat-socket",addKey,updateKey,queryKey)
+      console.log(`data from real chat socket is ${args}`);
+      // console.log("this is listened by use-chat-socket",addKey,updateKey,queryKey)
     });
+
+    socketActual.on("forced_popup",(arg1: any) => {
+      console.log("GOT THE MESSAGE");
+    })
+  
     socketActual.on(updateKey, (message: MessageWithMemberWithProfile,typesend: string) => {
       console.log(`we are updated`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
@@ -109,6 +114,8 @@ export const useChatSocket = ({
     return () => {
       socketActual.off(addKey);
       socketActual.off(updateKey);
+      socketActual.off("forced_popup");
+      socketActual.off();
     }
   }, [queryClient, addKey, queryKey, socketActual, updateKey]);
 }

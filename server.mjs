@@ -69,6 +69,10 @@ app.prepare().then(() => {
       io.emit(arg1_channelId,arg3_type_channel)
       })
   
+    socket.on("overlay",function(arg1_user){
+      io.emit("forced_popup",arg1_user);
+    })
+    
     socket.onAny((event, ...args) => {
       console.log(`got ${event}`);
       // console.log(`data from server.mjs is ${args}`);

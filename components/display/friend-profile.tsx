@@ -107,8 +107,7 @@ const FriendProfileComponent = (
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    )}
-                    
+                    )}                    
                 </div>
                 
               )

@@ -17,6 +17,7 @@ export const NavigationSideBar = (async (
             Member:{
                 some:{
                     userProfileId: userProfileIdNavigationSideBar,
+                    deleted: false
                 }
             },
             deleted: false,

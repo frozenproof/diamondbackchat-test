@@ -40,7 +40,6 @@ export const DirectChatMessages = ({
   type,
 }: ChatMessagesProps) => {
   // console.log("DirectChatMessages");
-  const [activeId, setActiveId] = useState("tis but")
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
   const updateKey = `chat:${directChatId}:messages:update` 
@@ -70,16 +69,7 @@ export const DirectChatMessages = ({
     count: data?.pages?.[0]?.items?.length ?? 0,
   })
   const DATE_FORMAT = "d MMM yyyy, HH:mm";
-  const DATE_FORMAT_CONTINIOUS = "HH:mm";
   
-  const setActiveElementOnHover = (id: string) => {
-    setActiveId(id);
-  };
-
-  const resetActiveElementOnLeave = () => {
-    setActiveId("");
-  };
-
   if (status === "loading") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">

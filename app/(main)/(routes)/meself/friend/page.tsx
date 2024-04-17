@@ -22,7 +22,7 @@ import { currentUserProfile } from "@/lib/current-profile"
 import { db } from "@/lib/db"
 
 
-import { Cross, Trees, User, X } from "lucide-react"
+import { Trees, } from "lucide-react"
 import { redirect } from "next/navigation"
 
 
@@ -71,7 +71,7 @@ const FriendsPage = async({
   const pendingFriends = friends.filter((friend) => (friend.pending === true ))
   return (
     <Tabs 
-      defaultValue="Online"
+      defaultValue="All"
       className="w-full ">
       <TabsList className="grid w-full grid-cols-6">
         <MobileNavigationLeftToggle 
@@ -85,38 +85,20 @@ const FriendsPage = async({
           className="flex"
           style={
             {
-              overflowWrap: "break-word"
+              overflowWrap: "break-word",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }
           }
         >
             <Trees />
             Friends 
         </div>
-        <TabsTrigger value="Online">Online</TabsTrigger>
         <TabsTrigger value="All">All</TabsTrigger>
         <TabsTrigger value="Pending">Pending</TabsTrigger>
         <TabsTrigger value="Blocked">Blocked</TabsTrigger>
       </TabsList>
-      <TabsContent value="Online" 
-        className="h-full"
-      >
-        <Card
-          className="h-full"
-        >
-          <CardHeader>
-            <CardTitle>Friends who are online</CardTitle>
-            <CardDescription>
-              Anyone who is your friend and is online is displayed here
-            </CardDescription>
-          </CardHeader>
-          <CardContent >
-          <FriendProfileComponent
-              pageFriendsProp={allFriends}
-              profileId={profile.id}
-            />   
-          </CardContent>
-        </Card>
-      </TabsContent>
       <TabsContent value="All">
         <Card>
           <CardHeader>
@@ -126,6 +108,7 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
+
           <FriendProfileComponent
               pageFriendsProp={allFriends}
               profileId={profile.id}
@@ -145,8 +128,7 @@ const FriendsPage = async({
             <FriendProfileComponent
               pageFriendsProp={pendingFriends}
               profileId={profile.id}
-            />
-          
+            />          
           </CardContent>
 
         </Card>

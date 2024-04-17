@@ -16,6 +16,7 @@ interface DirectHeaderProps {
     userProfileIdProp: string;
     imageUrl: string;
     name: string;
+    directChannelHeaderIdProp: string;
   }
 
 export const DirectChannelHeader = ({
@@ -25,7 +26,8 @@ export const DirectChannelHeader = ({
     userNameProp,
     userStatusProp,
     userAboutProp,
-    userProfileIdProp
+    userProfileIdProp,
+    directChannelHeaderIdProp
 }:DirectHeaderProps) => {
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
@@ -48,7 +50,9 @@ export const DirectChannelHeader = ({
         <div
             className="ml-auto"
         >
-            <ChatVideoButton />
+            <ChatVideoButton 
+                directChannelId={directChannelHeaderIdProp}
+            />
         </div>
     </div>
     )

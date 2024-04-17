@@ -51,7 +51,8 @@ const ServerIdPageLayout = async({
             Member:{
                 some:{
                     userProfileId: profile.id,
-                }
+                    deleted: false
+                },
             },
             deleted: false
         }

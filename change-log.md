@@ -124,7 +124,14 @@
 - channel header updated to send information
 - added information to member side bar 
 
-
-
+- changed member delete
+- added display condition for friends list
+- updated invite api route to change member deletion status where possible
+- member side bar now display properly who is still in the server
+- removed unused import from message input
+- removed online friend page until we have a better solution
+- put the video call for direct call as an overlay for the original chat to make sure its accessible
+- removed unused packages
+- added video call socket 
 
 

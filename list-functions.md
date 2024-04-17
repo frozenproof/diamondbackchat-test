@@ -38,20 +38,20 @@
 |   All Friend Page                      |  [x] |
 |   User Settings                        |  [x] |  
 |   Member Nickname	                     |  [x]	|   	
-|   Confirming Friend Request            |  [w] |  
+|   Confirming Friend Request            |  [x] |  
+
+
 
 
 # Working 
 |   Working	                             |   Status	
-|---	                                 |---	
+|---	                                 |---		
 |   Main Page	                         |  [w] |   	
 |   Friend Page                          |  [w] |
+|   Direct Call 	                     |  [w]	|   
 |   Message Reply                        |  [w] |   	
 |   Message Notifications                |  [w] |   	
-|   Call Notifications                   |  [w] |
-|   User Settings                        |  [w] |  
- 
-|   Sending Friend Request               |  [w] |  
+|   Call Notifications                   |  [w] | 
 |   Handling Request Return Properly     |  [w] |  
 
 

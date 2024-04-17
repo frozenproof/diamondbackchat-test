@@ -17,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { EmojiPicker } from "@/components/uihelper/emoji-picker";
-import { Channel, Message } from "@prisma/client";
 import { useSocket } from "@/components/providers/socket-provider";
 
 interface MessageInputProps {

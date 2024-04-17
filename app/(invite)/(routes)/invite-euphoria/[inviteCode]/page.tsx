@@ -38,20 +38,33 @@ const InviteCodePageDiamond = async ({
       return redirect("/");
     }
 
-    const alreadyJoinedServer = await db.server.findFirst({
+    const alreadyJoinedServer = await db.member.findFirst({
       where: {
-        id: findServerId.serverId,
-        Member: {
-          some: {
-            userProfileId: profile.id
-          }
-        },
+        serverId: findServerId.serverId,
+        userProfileId: profile.id,
         deleted: false
       }
     });
   
     if (alreadyJoinedServer) {
-      return redirect(`/servers/${alreadyJoinedServer.id}`);
+      if (alreadyJoinedServer.deleted === false)    
+      {
+        return redirect(`/servers/${alreadyJoinedServer.serverId}`);
+      }
+      else if(alreadyJoinedServer.deleted === true)
+      {
+        const alreadyJoinedServer2 = await db.member.update({
+          where: {
+            id: alreadyJoinedServer.id     
+          },
+          data: {
+            deleted: false
+          }
+        });
+
+        return redirect(`/servers/${alreadyJoinedServer2.serverId}`);
+
+      }
     }
   
     const server2 = await db.server.update({

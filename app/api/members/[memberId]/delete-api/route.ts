@@ -30,10 +30,15 @@ export async function PATCH(
         },
         data: {
             Member: {
-            deleteMany: {
-                id: params.memberId,
-                userProfileId: {
-                not: profile.id
+                update: {
+                    where: {
+                        id: params.memberId,
+                        userProfileId: {
+                        not: profile.id
+                    },
+                },
+                data: {
+                    deleted: true
                 }
             }
             }
