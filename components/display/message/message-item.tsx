@@ -25,7 +25,6 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 import { FilesDisplay } from "../files-display-message";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { MemberWithProfile } from "@/type";
-import { UserProfilePopover } from "../user-profile-popover";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { format } from "date-fns";
 
@@ -37,7 +36,6 @@ interface ChatItemProps {
   timestamp: string;
   hasAttachment: boolean;
   attachmentsList?: AttachmentChannel[] 
-  fileUrl: string | null;
   deleted: boolean;
   currentUserMember: MemberWithProfile;
   isUpdated: boolean;
@@ -58,7 +56,6 @@ export const MessageItem = ({
   currentMessageMemberProp,
   hasAttachment,
   timestamp,
-  fileUrl,
   deleted,
   currentUserMember: currentMember,
   isUpdated,
@@ -130,15 +127,12 @@ export const MessageItem = ({
     })
   }, [content,form]);
 
-  const fileType = fileUrl?.split(".").pop();
   const DATE_FORMAT_CONTINIOUS = "HH:mm";
   const isAdmin = currentMember.role === OldMemberRole.ADMIN;
   const isModerator = currentMember.role === OldMemberRole.MODERATOR;
   const isOwner = currentMember.id === currentMemberProp.id;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner ;
-  const isPDF = fileType === "pdf" && fileUrl;
-  const isImage = !isPDF && fileUrl;
   const { height, width } = useWindowDimensions();
   
   if(id)

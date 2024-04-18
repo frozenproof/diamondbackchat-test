@@ -33,7 +33,6 @@ interface ChatItemProps {
   timestamp: string;
   hasAttachment: boolean;
   attachmentsList?: AttachmentDirect[]; 
-  fileUrl: string | null;
   deleted: boolean;
   currentUser: UserProfile;
   isUpdated: boolean;
@@ -56,7 +55,6 @@ export const DirectMessageItem = ({
   hasAttachment,
   attachmentsList,
   timestamp,
-  fileUrl,
   deleted,
   currentUser,
   isUpdated,
@@ -130,13 +128,11 @@ export const DirectMessageItem = ({
     })
   }, [content,form]);
 
-  const fileType = fileUrl?.split(".").pop();
   const DATE_FORMAT_CONTINIOUS = "HH:mm";
 
   const isSender = currentUser.id === UserProp.id;
   const canDeleteMessage = !deleted && (isSender);
-  const canEditMessage = !deleted && isSender && !fileUrl;
-  const isPDF = fileType === "pdf" && fileUrl;
+  const canEditMessage = !deleted && isSender ;
 
   const currentUserProp = currentUser;
   const directUserProp = UserProp;
@@ -295,7 +291,7 @@ export const DirectMessageItem = ({
                 }
               </div>
             )}
-            {!fileUrl && isEditing && (
+            {isEditing && (
               <Form {...form}>
                 <form 
                   className="flex items-center w-full gap-x-2 pt-2"

@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, Fragment, useRef, useState } from "react";
+import { ElementRef, Fragment, useRef } from "react";
 import { Loader2, ServerCrash } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
@@ -143,7 +143,6 @@ export const ChatMessagesList = ({
                       // userProp={message.member.userProfile}
                       content={message.content}
                       hasAttachment={message.hasAttachment}
-                      fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                       attachmentsList={message.AttachmentChannel} 

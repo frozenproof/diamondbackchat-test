@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, Fragment, useEffect, useRef, useState } from "react";
+import { ElementRef, Fragment, useRef } from "react";
 import { UserProfile } from "@prisma/client";
 import { Loader2, ServerCrash } from "lucide-react";
 
@@ -13,7 +13,6 @@ import { DirectMessageItem } from "./direct-item";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 import { format } from "date-fns"
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 
 interface ChatMessagesProps {
@@ -43,7 +42,6 @@ export const DirectChatMessages = ({
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
   const updateKey = `chat:${directChatId}:messages:update` 
-  const { height, width } = useWindowDimensions();
 
   console.log("after useWindowDimensions")
   const chatRef = useRef<ElementRef<"div">>(null);
@@ -149,7 +147,6 @@ export const DirectChatMessages = ({
                       content={message.content}
                       hasAttachment={message.hasAttachment}
                       attachmentsList={message.AttachmentDirect}
-                      fileUrl=""
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                       // isUpdated={message.edited}
