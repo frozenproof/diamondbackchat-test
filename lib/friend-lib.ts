@@ -29,14 +29,30 @@ export const findFriendsDefault = async (currentUserId: string, otherUserId: str
   }
 }
 
+export const removeFriend = async (friendRequestId: string) => {
+  try {
+    const friends = await db.friend.delete(
+      {
+        where: {
+          id: friendRequestId,
+          pending: false,
+        }
+      }
+    )
+
+    if(friends)
+    {
+      console.log(friends);
+      return (friends);
+    }
+  
+  } catch {
+    return null;
+  }
+}
+
 export const sendFriendRequest = async (currentUserId: string, otherUserId: string) => {
   try {
-    const profile = await currentUserProfile();
-    if(!profile)
-    {
-      return redirect(`/`)
-    }
-
     const friends = await db.friend.findFirst(
       {
         where: {
@@ -109,13 +125,6 @@ export const findFriendsRequest = async (currentUserId: string, friendRequestId:
 
 export const confirmFriendRequest = async (currentUserId: string, friendRequestId: string,friendConfirm: number) => {
   try {
-    const profile = await currentUserProfile();
-    console.log("Friend confirm string",friendConfirm)
-    if(!profile)
-    {
-      return redirect(`/`)
-    }
-
     const friends = await db.friend.findUnique(
       {
         where: {
@@ -130,7 +139,7 @@ export const confirmFriendRequest = async (currentUserId: string, friendRequestI
 
     if(!friends)
     {
-      return 8;
+      return null;
     }
     else if(friends) {
       if(friendConfirm === 0)

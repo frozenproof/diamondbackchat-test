@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { DropdownMenu, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import qs from "query-string"
 
 export const UserProfilePrompt = () => {
     const { isOpen,onClose,type,propData } = usePrompt();
@@ -42,6 +43,16 @@ export const UserProfilePrompt = () => {
           if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
           {
             router.push(`/api/directRequest/${userProfilePropAPI?.id}`);
+          }
+        }
+        const onBlockUser = async () => {
+          if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
+          {
+            const url = qs.stringifyUrl({
+              url: `/api/user/block-api`,
+          })
+
+          const response = await axios.patch(url, {otherUserId: userProfilePropAPI.id});
           }
         }
         const onFriendRequest = async () => {
@@ -88,7 +99,7 @@ export const UserProfilePrompt = () => {
                   </div>
               </DropdownMenuItem>
               <DropdownMenuItem>                  
-                  <div onClick={() => {}} >
+                  <div onClick={onBlockUser} >
                     Block
                   </div>
               </DropdownMenuItem>

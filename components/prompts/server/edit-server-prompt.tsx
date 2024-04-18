@@ -43,17 +43,17 @@ export const EditServerPrompt = () => {
     const isPromptOpen = isOpen && type === "EditServer";
     const { server }  = propData;
 
-    if(server)
-    {
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            name: server.name,
-            imageUrl: server.imageUrl,
+            name: server?.name as string,
+            imageUrl: server?.imageUrl as string,
         }
-    }); 
+    });  
+    
 
-          
+
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
@@ -74,16 +74,18 @@ export const EditServerPrompt = () => {
     const handleClose = () => {
         form.reset();
         onClose();
-    }
-
+    } 
+    
     useEffect(() => {
         if(server){            
         form.setValue("name",server.name);
         form.setValue("imageUrl", server.imageUrl);
         }
     },[server, form])
-    
 
+    if(server)
+    {        
+ 
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">

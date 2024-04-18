@@ -54,7 +54,7 @@ export const ServerSearchBar = ({
       }
     }
   
-    console.log("data from server-search",data)
+    // console.log("data from server-search",data)
     return (
       <>
         <button
@@ -84,7 +84,7 @@ export const ServerSearchBar = ({
                 return (
                     <CommandGroup key={label} heading={label}>
                         {data?.map(({ id, icon, name, member }) => {
-                        console.log(member)  
+                        // console.log(member)  
                         return (
                             <CommandItem key={id} onSelect={() => onClick({ id, type, member })}>
                             {icon}

@@ -225,3 +225,25 @@ message list -> usechatquery -> useinfinitequery
 // }
 
 //bug vo han xay ra khi render doi tuong co chua ham async vi no render truoc khi item san sang , ke ca khi suspense duoc kich hoat
+
+
+
+
+# Day ?
+- Mot viec rat quan trong
+
+
+- Thay doi cau truc cua message item ->
+    - Thay doi api calls 8
+    - Thay doi render calls 4
+
+
+
+
+
+
+
+
+
+
+

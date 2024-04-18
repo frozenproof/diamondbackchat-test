@@ -42,6 +42,22 @@ const FriendProfileComponent = (
           console.log(error);
       }
     }
+
+    const onUnfriendChange = async(otherUserId: string) => {
+      try {
+          const url = qs.stringifyUrl({
+              url: `/api/friend/unfriendRequest`,
+          })
+
+          const response = await axios.patch(url, {otherUserId});
+          console.log("Friend request respond",response)
+          router.refresh();
+      }
+      catch(error)
+      {
+          console.log(error);
+      }
+    }
     return ( 
         <div
               className="space-y-2 h-[280px] "
@@ -101,8 +117,29 @@ const FriendProfileComponent = (
                           >
                             Refuse
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
-                            Ignore
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                    )}
+                    {(friendMember.pending === false) && 
+                    (
+                      <div
+                      className="ml-auto"
+                      style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                      }}
+                    >
+                      <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Cross />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem
+                            onClick={() => {onUnfriendChange(whichFriend.id)}}
+                          >
+                            Unfriend
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

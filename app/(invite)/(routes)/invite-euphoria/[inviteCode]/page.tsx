@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { currentUserProfile } from "@/lib/current-profile";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { v4 as uuidv4 } from "uuid";
+import { NextResponse } from "next/server";
 
 interface InviteCodePagePropsDiamond {
   params: {
@@ -35,7 +36,7 @@ const InviteCodePageDiamond = async ({
     )
 
     if (!findServerId) {
-      return redirect("/");
+      return redirect("/meself/friend");
     }
 
     const alreadyJoinedServer = await db.member.findFirst({
@@ -67,6 +68,17 @@ const InviteCodePageDiamond = async ({
       }
     }
   
+    const bannedCheck = await db.bannedServerMember.findFirst({
+      where: {
+        userProfileId: profile.id,
+        serverId: findServerId.serverId
+      }
+    })
+    if(bannedCheck)
+    {
+      return new NextResponse("banned");
+    }
+    
     const server2 = await db.server.update({
       where: {
         id: findServerId.serverId,

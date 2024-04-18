@@ -234,7 +234,7 @@ model Friend {
   friendTwoId String      @map("friendTwoId")
   friendTwo   UserProfile @relation("UserTwo", fields: [friendTwoId], references: [id], onDelete: Cascade)
 
-  @@unique([friendOneId, friendTwoId])
+  @@unique(name: "friendId",[friendOneId, friendTwoId])
   @@index([id])
 }
 
@@ -250,6 +250,7 @@ model Block {
   blockedOut UserProfile @relation("UserTwo", fields: [blockedId], references: [id], onDelete: Cascade)
 
   @@index([id])
+  @@unique(name: "blockId",[blockerId,blockedId])
 }
 
 model Maintainence {

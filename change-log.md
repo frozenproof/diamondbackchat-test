@@ -148,3 +148,18 @@
 - removed unused variable to save system build time
 
 - upgraded search bar to display more information
+
+# 19/4
+- added block and unblock route
+- upgraded database
+- added block function for profile prompt
+- added unfriend route
+- added friend lib upgrade
+- added unfriend button to friend profile
+- added unblock function to block profile
+- added new type for data
+- fixed edit server prompt
+- added improvement to user setting
+- removed unused console.log
+- added ban check when using invite link
+

@@ -1,6 +1,5 @@
 "use server"
 
-import { EvervaultCard } from "@/components/effects/evervault/EvervaultCard"
 import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 import { MobileNavigationLeftToggle } from "@/components/uihelper/left-mobile-toggle";
 import { currentUserProfile } from "@/lib/current-profile";

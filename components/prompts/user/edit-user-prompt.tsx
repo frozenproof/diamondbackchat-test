@@ -78,7 +78,6 @@ export const EditUserPrompt = () => {
 
     useEffect(() => {
         if(userProfilePropAPI){      
-            console.log("nani")      
         form.setValue("name",userProfilePropAPI.name);
         form.setValue("about",userProfilePropAPI.about);
         form.setValue("imageUrl", userProfilePropAPI.imageUrl);
