@@ -147,3 +147,4 @@
 
 - removed unused variable to save system build time
 
+- upgraded search bar to display more information

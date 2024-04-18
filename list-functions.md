@@ -5,6 +5,7 @@
 |   Sign In                              |  [x] |
 |   Sign Out                             |  [x] |
 |   Server Creation	                     |  [x]	|   	
+|   Server Search	                     |  [x]	|   	
 |   Server Invite Creation	             |  [x]	|   	
 |   Server Invite Search	             |  [x]	|   	
 |   Server Invite Redirect	             |  [x]	|   	

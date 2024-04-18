@@ -8,7 +8,7 @@ import { db } from "@/lib/db";
 import { ServerHeader } from "@/components/display/server/server-header";
 import { ScrollArea } from "../../ui/scroll-area";
 import { ServerSearchBar } from "./server-search";
-import { Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { Crown, Hash, Magnet, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 
 import { ChannelSideBar } from "../channel/channel-sidebar";
 
@@ -21,6 +21,8 @@ const iconMap :{[key: string]: React.ReactNode}= {
   const roleIconMap :{[key: string]: React.ReactNode}= {
     [OldMemberRole.GUEST]       : null,
     [OldMemberRole.MEMBER]      : <Magnet className="mr-2"/>,
+    [OldMemberRole.CREATOR]     : <Crown className="mr-2 text-yellow-200"/>,
+    [OldMemberRole.OWNER]       : <Crown className="mr-2 text-blue-200"/>,
     [OldMemberRole.MODERATOR]   : <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />,
     [OldMemberRole.ADMIN]       : <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />
   }
@@ -71,7 +73,8 @@ export const ServerSideBar = async({
     const textChannels = realChannels.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = realChannels.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = realChannels.filter((channel) => channel.type === OldChannelType.VIDEO)
-    const Member = server2?.Member.filter((member) => member.userProfileId !== profile.id)
+    const Member = server2?.Member
+    // .filter((member) => member.userProfileId !== profile.id)
     const thisMember = server2?.Member.find((member) => member.userProfileId === profile.id)
     const role = server2?.Member.find((member) => member.userProfileId === profile.id)?.role
     return (
@@ -84,6 +87,7 @@ export const ServerSideBar = async({
             className="mt-2 ml-1 mr-1 bg-[#f8eeee] "
         >
             <ServerSearchBar 
+            userId={profile.id}
             data={[
                 {
                 label: "Text Channels",
@@ -119,6 +123,7 @@ export const ServerSideBar = async({
                     id: member.id,
                     name: member.userProfile.name,
                     icon: roleIconMap[member.role],
+                    member: member
                 }))
                 },
             ]}

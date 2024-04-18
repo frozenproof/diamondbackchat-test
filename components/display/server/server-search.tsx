@@ -4,8 +4,11 @@ import { Search } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../../ui/command";
+import { MemberWithProfile } from "@/type";
+import { usePrompt } from "@/hooks/use-prompt-store";
 
 interface ServerSearchProps {
+    userId: string;
     data: {
         label: string;
         type: "channel" | "member",
@@ -13,16 +16,19 @@ interface ServerSearchProps {
             icon:React.ReactNode;
             name: string;
             id: string;
+            member?: MemberWithProfile;
         }[] | undefined
     }[]
 };
 
 export const ServerSearchBar = ({
-    data
+  userId,
+  data
 }: ServerSearchProps) => {
     const [open, setOpen] = useState(false);
     const router = useRouter();
     const params = useParams();
+    const {onOpen} = usePrompt();
   
     useEffect(() => {
       const down = (e: KeyboardEvent) => {
@@ -36,11 +42,11 @@ export const ServerSearchBar = ({
       return () => document.removeEventListener("keydown", down)
     }, []);
   
-    const onClick = ({ id, type }: { id: string, type: "channel" | "member"}) => {
+    const onClick = ({ id, type, member }: { id: string, type: "channel" | "member", member? : MemberWithProfile}) => {
       setOpen(false);
   
-      if (type === "member") {
-        return router.push(`/me/${id}`)
+      if (type === "member" && member) {
+        onOpen("UserProfileDisplay", {userProfilePropAPI:member.userProfile, currentUserPropAPIID:userId})
       }
   
       if (type === "channel") {
@@ -48,6 +54,7 @@ export const ServerSearchBar = ({
       }
     }
   
+    console.log("data from server-search",data)
     return (
       <>
         <button
@@ -73,13 +80,13 @@ export const ServerSearchBar = ({
                 Are you sure you are writing ?
                 </CommandEmpty>
                 {data.map(({ label, type, data }) => {
-                if (!data?.length) return null;
-    
+                if (!data?.length) return null;    
                 return (
                     <CommandGroup key={label} heading={label}>
-                        {data?.map(({ id, icon, name }) => {
+                        {data?.map(({ id, icon, name, member }) => {
+                        console.log(member)  
                         return (
-                            <CommandItem key={id} onSelect={() => onClick({ id, type })}>
+                            <CommandItem key={id} onSelect={() => onClick({ id, type, member })}>
                             {icon}
                             <span>{name}</span>
                             </CommandItem>
