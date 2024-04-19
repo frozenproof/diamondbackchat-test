@@ -163,3 +163,10 @@
 - removed unused console.log
 - added ban check when using invite link
 
+- upgraded database
+- added proper database for block page
+- virus detected
+
+# 20/4
+- added notification button
+- optimized video call button

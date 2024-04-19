@@ -1,11 +1,11 @@
 "use server"
 
+import BlockProfileComponent from "@/components/display/block-profile"
 import FriendProfileComponent from "@/components/display/friend-profile"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -67,6 +67,15 @@ const FriendsPage = async({
     }
   )
 
+  const blocked = await db.block.findMany({
+    where: {
+      blockerId: profile.id
+    },
+    include: {
+      blocker: true,
+      blocked: true
+    }
+  })
   const allFriends = friends.filter((friend) => (friend.pending === false ))
   const pendingFriends = friends.filter((friend) => (friend.pending === true ))
   return (
@@ -138,7 +147,10 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-
+            <BlockProfileComponent 
+              pageFriendsProp={blocked}
+              profileId={profile.id}
+            />
           </CardContent>
 
         </Card>

@@ -31,12 +31,9 @@ export const ChatVideoButton = (
   return (
       <Sheet>
       <SheetTrigger asChild>
-        <Button 
-        variant="ghost" size="icon" className="ml-auto"
-        onClick={onClick}
-        >
-            <Video className="h-6 w-6 text-zinc-500 dark:text-zinc-400" />      
-        </Button>
+            <Video className="h-6 w-6 text-zinc-500 dark:text-zinc-400" 
+              onClick={onClick}
+            />      
       </SheetTrigger>
       <SheetContent side="bottom" className="p-0 flex gap-0 w-full">
         <MediaRoomDirect 

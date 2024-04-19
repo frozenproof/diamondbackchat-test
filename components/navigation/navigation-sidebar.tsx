@@ -7,8 +7,9 @@ import { SocketStatusDisplay } from "@/components/socket/socket-status-display";
 import { Suspense } from "react";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+import { NotificationButton } from "../notification-button";
 
-export const NavigationSideBar = (async (
+export const NavigationSideBar = async (
     {userProfileIdNavigationSideBar} : {userProfileIdNavigationSideBar: string},
 ) => {
 
@@ -57,12 +58,13 @@ export const NavigationSideBar = (async (
             </div>
             
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-            <SocketStatusDisplay />
+                <NotificationButton />
+                <SocketStatusDisplay />
                 <ModeToggle />
             </div>
         </div>
         </Suspense>
 
      );
-})
+}
  

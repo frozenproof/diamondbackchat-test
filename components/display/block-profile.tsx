@@ -13,7 +13,7 @@ interface FriendProfileComponentInterface {
     profileId: string;
 }
 
-const FriendProfileComponent = (
+const BlockProfileComponent = (
     { 
         pageFriendsProp,
         profileId
@@ -92,4 +92,4 @@ const FriendProfileComponent = (
      );
 }
  
-export default FriendProfileComponent;
+export default BlockProfileComponent;

@@ -15,7 +15,6 @@ type Props = {
    
 export async function generateMetadata(
     { params }: Props,
-    parent: ResolvingMetadata
   ): Promise<Metadata> {
     
     const server = await db.server.findUnique
