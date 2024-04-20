@@ -7,7 +7,8 @@ export const getOrCreateDirectChannel = async (memberOneId: string, memberTwoId:
   let directConversation = await findDirectChannel(memberOneId, memberTwoId) || await findDirectChannel(memberTwoId, memberOneId);
 
   if (!directConversation) {
-    directConversation = await createNewDirectChannel(memberOneId, memberTwoId);
+    let directConversation2 = await createNewDirectChannel(memberOneId, memberTwoId);
+    return directConversation2
   }
 
   if(directConversation?.deleted)
@@ -61,6 +62,17 @@ export const findAllDirectChannel = async (memberId: string) => {
 
 const createNewDirectChannel = async (memberOneId: string, memberTwoId: string) => {
   try {
+
+    const blockCheck = await db.block.findFirst({
+      where: {
+        OR: [
+          {blockerId: memberOneId, blockedId: memberTwoId},
+          {blockedId: memberOneId, blockerId: memberTwoId},
+        ]
+      }
+    })
+
+    if(!blockCheck)
     return await db.directChannel.create({
       data: {
         memberOneId,
@@ -70,7 +82,8 @@ const createNewDirectChannel = async (memberOneId: string, memberTwoId: string) 
         memberOne: true,
         memberTwo: true
       }
-    })
+    });
+
   } catch {
     return null;
   }

@@ -1,7 +1,7 @@
 "use client"
 
-import { ServerWithMembersWithProfiles } from "@/type";
-import { Member, OldMemberRole } from "@prisma/client";
+import { BanWithMemberWithProfile, ServerWithMembersWithProfiles } from "@/type";
+import { BannedServerMember, Member, OldMemberRole } from "@prisma/client";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Cat, ChevronDown, Settings, UserPlus, Users, LogOut, PlusSquare, Fingerprint } from "lucide-react";
 
@@ -10,11 +10,13 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
+    banned: BanWithMemberWithProfile[];
     member: Member;
 };
 
 export const ServerHeader = ({
     server,
+    banned,
     member
 }:ServerHeaderProps) => {
     const { onOpen } = usePrompt();
@@ -82,6 +84,17 @@ export const ServerHeader = ({
                 {
                     isModerator && (
                         <DropdownMenuItem
+                            onClick={() => onOpen("BanManage", { banList: banned })}
+                            className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
+                        >
+                            Unban Members 
+                            <Users className="h-4 w-4 ml-auto"/>
+                        </DropdownMenuItem>
+                    )
+                }
+                {
+                    isModerator && (
+                        <DropdownMenuItem
                             onClick={() => onOpen("CreateChannel", {server:server})}
                             className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
                         >
@@ -101,7 +114,7 @@ export const ServerHeader = ({
                     <DropdownMenuSeparator/>
                 </DropdownMenuItem>                 
                 {
-                    isModerator && (
+                    isOwner && (
                         <DropdownMenuItem 
                         onClick={() => onOpen("DeleteServer", {server:server})}
                         className="text-red-600  px-3 py-2 text-sm cursor-pointer"

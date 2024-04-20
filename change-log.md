@@ -168,5 +168,15 @@
 - virus detected
 
 # 20/4
-- added notification button
+- added notification button 
 - optimized video call button
+
+- added ban / unban api route
+- manage member prompt added ban function
+- server header added unban section
+- prompt data added another prop
+- direct search now check for blocks
+- prompt store added api prop for banned list
+- added unban function
+- added a new prompt
+

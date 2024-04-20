@@ -64,6 +64,14 @@ export const ServerSideBar = async({
         }
     })
 
+    const banned = await db.bannedServerMember.findMany({
+        where: {
+            serverId: server2?.id
+        },
+        include: {
+            userProfile: true
+        }
+    })
 
     if(!server2)
     {
@@ -81,6 +89,7 @@ export const ServerSideBar = async({
         <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#ffdbed]">
             <ServerHeader
                 server={server2}
+                banned={banned}
                 member={thisMember as unknown as Member}
             />
         <div

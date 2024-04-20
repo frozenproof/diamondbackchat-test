@@ -18,7 +18,6 @@ import React, { useState } from "react";
 import { 
     DropdownMenu, 
     DropdownMenuItem, 
-    DropdownMenuLabel, 
     DropdownMenuTrigger, 
     DropdownMenuSeparator,
     DropdownMenuSub, 
@@ -74,6 +73,30 @@ export const ManageMemberPrompt = () => {
         }
     }
     
+    const onBan = async (userProfileId: string) => {
+        try {
+            setTargetMemberId(userProfileId);
+            const url = qs.stringifyUrl({
+                url: `/api/members/ban-api`,
+                query: {
+                    serverId: server?.id,
+                },
+            });
+        
+            const response = await axios.patch(url, {userProfileId: userProfileId, banStatus: "yes"});
+        
+            router.refresh();
+        } 
+        catch (error) 
+        {
+          console.log(error);
+        } 
+        finally 
+        {
+          setTargetMemberId("");
+        }
+    }
+
     const onRoleChange = async(memberId: string, role: OldMemberRole) => {
         try {
             setTargetMemberId(memberId);
@@ -125,7 +148,9 @@ export const ManageMemberPrompt = () => {
                 <ScrollArea
                     className="mt-8 max-h-[420px] border items-center manage-member "
                 >
-                    {server?.Member?.map((member) => (
+                    {server?.Member?.map((member) => {
+                        if(member.deleted === false)
+                        return (
                         <div key={member.id}
                             className="flex items-center gap-x-2 mt-2 mb-2  "                            
                         >
@@ -244,9 +269,15 @@ export const ManageMemberPrompt = () => {
                                             <Minus />
                                             Kick
                                         </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            onClick={() => onBan(member.userProfileId)}
+                                        >
+                                            <Minus />
+                                            Ban
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>                                
-                                </div>  
+                                </div>                              
                             )}
                             { targetMemberId === member.id && (
                                 <Loader2 
@@ -254,7 +285,8 @@ export const ManageMemberPrompt = () => {
                                 />
                             )}                            
                         </div>
-                    ))}
+                        )
+                    })}
                 </ScrollArea>
             </DialogContent>
         </Dialog>

@@ -1,7 +1,8 @@
-import { Channel, DirectChannel, Member, OldChannelType, Server ,ServerInvite, UserProfile} from "@prisma/client";
-import { create } from "zustand"
+import { BanWithMemberWithProfile } from "@/type";
+import { Channel, DirectChannel, Member, OldChannelType, Server, ServerInvite, UserProfile } from "@prisma/client";
+import { create } from "zustand";
 
-export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "CreateChannel" | "DeleteServer" | "ManageMember" | "ManageChannel" | "CreateChannelDiamond" | "LeaveServer" | "EditChannel" | "DeleteChannel" | "DeleteDirectChannel" | "MessageFile" | "DeleteMessage" | "UserProfileDisplay" | "AccountSetting" | "MemberNickname";
+export type PromptType = "CreateServer" | "EditServer" | "InviteServer" | "CreateChannel" | "DeleteServer" | "ManageMember" | "ManageChannel" | "CreateChannelDiamond" | "LeaveServer" | "EditChannel" | "DeleteChannel" | "DeleteDirectChannel" | "MessageFile" | "DeleteMessage" | "UserProfileDisplay" | "AccountSetting" | "MemberNickname" | "BanManage";
 
 interface PromptAPIData {
     server?: Server
@@ -18,6 +19,7 @@ interface PromptAPIData {
     memberPropAPI?: Member;
     userProfilePropAPI?: UserProfile;
     currentUserPropAPIID?: string;
+    banList?: BanWithMemberWithProfile[];
   }
 
 interface PromptStoredInfo {

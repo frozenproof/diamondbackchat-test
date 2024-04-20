@@ -60,13 +60,13 @@ app.prepare().then(() => {
     socket.on("channel-input",function(arg1_channelId,arg2_message_item,arg3_type_channel) {
       // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
-      io.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
+      socket.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
       })
   
-    socket.on("channel-update",function(arg1_channelId,arg3_type_channel) {
+    socket.on("channel-typing",function(arg1_channelId,arg2_identity) {
       // console.log("data from channel update",arg1_channelId,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
-      io.emit(arg1_channelId,arg3_type_channel)
+      socket.emit(arg1_channelId,arg2_identity)
       })
   
     socket.on("overlay",function(arg1_user){
