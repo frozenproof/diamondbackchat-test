@@ -33,11 +33,14 @@ const MemberIdPage = async ({
   if(params)
   {
     const direct = await getOrCreateDirectChannel(profile.id, params.userProfileId);
-    console.log(direct?.id)
     if (!direct) {
       return redirect(`/meself/friend`);
     }
-    return redirect(`/meself/chat/${direct.id}`);  
+    else {
+      if(typeof direct !== "string")
+      return redirect(`/meself/chat/${direct.id}`);  
+      return "blocked"
+    }    
   }   
 }
  

@@ -180,3 +180,7 @@
 - added unban function
 - added a new prompt
 
+- added direct exception handler for direct request
+- added return handler for direct message request
+- ready for deployment 2.0
+- LETS FUCKING GO

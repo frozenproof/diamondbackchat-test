@@ -83,7 +83,9 @@ const createNewDirectChannel = async (memberOneId: string, memberTwoId: string) 
         memberTwo: true
       }
     });
-
+    else {
+      return "blocked"
+    }
   } catch {
     return null;
   }
