@@ -71,7 +71,7 @@ model Member {
   nickname String    @default("")
   Message  Message[]
 
-  @@unique(name: "MemberUSID",[userProfileId, serverId])
+  @@unique(name: "MemberUSID", [userProfileId, serverId])
 }
 
 model Channel {
@@ -150,8 +150,10 @@ model Message {
   hasAttachment Boolean @default(false)
   deleted       Boolean @default(false)
 
-  isReply          Boolean
-  repliedMessageid String  @default("")
+  isReply         Boolean
+  messageParentId String?
+  messageParent   Message?  @relation("MessageToMessage", fields: [messageParentId], references: [id])
+  children        Message[] @relation("MessageToMessage")
 
   pinned    Boolean  @default(false)
   edited    Boolean  @default(false)
@@ -174,8 +176,10 @@ model DirectMessage {
   hasAttachment Boolean @default(false)
   deleted       Boolean @default(false)
 
-  isReply          Boolean
-  repliedMessageid String  @default("")
+  isReply         Boolean
+  messageParentId String?
+  messageParent   DirectMessage?  @relation("DirectMessageToMessage", fields: [messageParentId], references: [id])
+  children        DirectMessage[] @relation("DirectMessageToMessage")
 
   pinned    Boolean  @default(false)
   edited    Boolean  @default(false)

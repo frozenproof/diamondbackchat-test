@@ -124,6 +124,7 @@ export const DirectChatMessages = ({
             {
               var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
               // var isContiniousCock = false;
+              let messageReplyId = message.messageParentId as string | undefined;
               
               return (
                 <div
@@ -153,8 +154,8 @@ export const DirectChatMessages = ({
                       isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
-                      isReply={false}
-                      replyId=""
+                      isReply={message.isReply}
+                      replyId={messageReplyId}
                       isContinious={isContiniousCock}
                     />
                 </div>

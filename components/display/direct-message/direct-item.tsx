@@ -1,17 +1,15 @@
 "use client";
 
-import * as z from "zod";
-import axios from "axios";
-import qs from "query-string";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AttachmentDirect, Member, OldMemberRole, UserProfile } from "@prisma/client";
-import { Edit,Trash } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { AttachmentDirect, UserProfile } from "@prisma/client";
+import axios from "axios";
+import { Edit, Trash } from "lucide-react";
+import qs from "query-string";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-import { ActionTooltip } from "@/components/uihelper/action-tooltip";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,11 +17,12 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { ActionTooltip } from "@/components/uihelper/action-tooltip";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { FilesDisplay } from "../files-display-message";
 import { format } from "date-fns";
+import { FilesDisplay } from "../files-display-message";
 
 interface ChatItemProps {
   id: string;
@@ -60,16 +59,11 @@ export const DirectMessageItem = ({
   isUpdated,
   socketUrl,
   socketQuery,
-  isContinious,
-  isReply,
-  replyId
-
+  isContinious
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
-  const params = useParams();
-  const router = useRouter();
 
   // console.log("direct item",attachmentsList);
   const setActiveElementOnHover = () => {
@@ -136,7 +130,7 @@ export const DirectMessageItem = ({
 
   const currentUserProp = currentUser;
   const directUserProp = UserProp;
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
  
   if(id)
   {

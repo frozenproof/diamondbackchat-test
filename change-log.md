@@ -184,3 +184,8 @@
 - added return handler for direct message request
 - ready for deployment 2.0
 - LETS FUCKING GO
+
+# 21/4
+- added proper foreign key for message replies
+- 
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ControlBar, GridLayout, LiveKitRoom, ParticipantTile, PreJoin, RoomAudioRenderer, VideoConference, useTracks } from "@livekit/components-react";
+import { GridLayout, LiveKitRoom, ParticipantTile, VideoConference, useTracks } from "@livekit/components-react";
 import "@livekit/components-styles";
 
 import { Loader2 } from "lucide-react";
@@ -31,7 +31,6 @@ export const MediaRoom = ({
         );
         const data = await resp.json();
         setToken(data.token);
-        console.log(data);
       } catch (e) {
         console.error(e);
       }
@@ -72,13 +71,11 @@ export const MediaRoomDirect = ({
   useEffect(() => {
     (async () => {
       try {
-        const name = "";
         const resp = await fetch(
           `/api/livekit-participate-token?room=${chatId}`
         );
         const data = await resp.json();
         setToken(data.token);
-        console.log(data);
       } catch (e) {
         console.error(e);
       }

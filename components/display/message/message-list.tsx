@@ -122,6 +122,8 @@ export const ChatMessagesList = ({
               // var isContiniousCock = false
 
               // console.log("this is message list file",message.AttachmentChannel)
+              let messageReplyId = message.messageParentId as string | undefined;
+              
               return (
                 <div
                   key={message.id}
@@ -150,7 +152,7 @@ export const ChatMessagesList = ({
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}
-                      replyId={message.repliedMessageid}
+                      replyId={messageReplyId}
                       isContinious={isContiniousCock}
                     />
                   </div>

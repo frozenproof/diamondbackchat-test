@@ -66,7 +66,6 @@
 # Working 
 |   Working	                             |   Status	
 |---	                                 |---		
-|   Friend Page                          |  [w] |
 |   Message Reply                        |  [w] |   	
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] | 

@@ -1,18 +1,18 @@
 "use client";
 
-import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AttachmentChannel, OldMemberRole } from "@prisma/client";
 import axios from "axios";
+import { Edit, Trash } from "lucide-react";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { AttachmentChannel, OldMemberRole, UserProfile } from "@prisma/client";
-import { Edit, Trash } from "lucide-react";
+import * as z from "zod";
 
-import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { ActionTooltip } from "@/components/uihelper/action-tooltip";
 
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -20,13 +20,12 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { FilesDisplay } from "../files-display-message";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { MemberWithProfile } from "@/type";
-import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { format } from "date-fns";
+import { FilesDisplay } from "../files-display-message";
 
 interface ChatItemProps {
   id: string;
@@ -62,10 +61,7 @@ export const MessageItem = ({
   socketUrl,
   socketQuery,
   isContinious,
-  attachmentsList,
-  isReply,
-  replyId
-
+  attachmentsList
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -133,7 +129,7 @@ export const MessageItem = ({
   const isOwner = currentMember.id === currentMemberProp.id;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner ;
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   
   if(id)
   {
