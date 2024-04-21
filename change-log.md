@@ -187,5 +187,6 @@
 
 # 21/4
 - added proper foreign key for message replies
-- 
-
+- middleware need to be updated on every deploy
+- message list and direct list now added continious check with time
+- added reply component

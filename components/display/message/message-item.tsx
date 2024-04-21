@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AttachmentChannel, OldMemberRole } from "@prisma/client";
 import axios from "axios";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Reply, Trash } from "lucide-react";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -64,6 +64,7 @@ export const MessageItem = ({
   attachmentsList
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
+  const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
 
@@ -81,6 +82,7 @@ export const MessageItem = ({
     const handleKeyDown = (event: any) => {
       if (event.key === "Escape" || event.keyCode === 27) {
         setIsEditing(false);
+        setIsReplying(false)
       }
     };
 
@@ -89,15 +91,22 @@ export const MessageItem = ({
     return () => window.removeEventListener("keyDown", handleKeyDown);
   }, []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const formMessageItem = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: content,
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = formMessageItem.formState.isSubmitting;
+  const formReply = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      content: content,
+    },
+  });
 
+  const isLoading2 = formReply.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
@@ -110,18 +119,37 @@ export const MessageItem = ({
       };
       await axios.patch(url, contents);
 
-      form.reset();
+      formMessageItem.reset();
       setIsEditing(false);
     } catch (error) {
       console.log(error);
     }
   }
 
+  const doRespond = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const url = qs.stringifyUrl({
+        url: `${socketUrl}/channel-edit`,
+        query: socketQuery,
+      });
+      const contents = {
+        content: (values.content),
+        id: id
+      };
+      await axios.patch(url, contents);
+
+      formReply.reset();
+      setIsReplying(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   useEffect(() => {
-    form.reset({
+    formMessageItem.reset({
       content: content,
     })
-  }, [content,form]);
+  }, [content,formMessageItem]);
 
   const DATE_FORMAT_CONTINIOUS = "HH:mm";
   const isAdmin = currentMember.role === OldMemberRole.ADMIN;
@@ -217,16 +245,16 @@ export const MessageItem = ({
               </div>
             )}
             {isEditing && (
-              <Form {...form}>
+              <Form {...formMessageItem}>
                 <form 
                   className="flex items-center w-full gap-x-2 pt-2 "
                   style={{
                     overflowWrap: "break-word",
                     width: (width<769) ? `${width-80}px` : `${width-360}px`
                   }}
-                  onSubmit={form.handleSubmit(onSubmit)}>
+                  onSubmit={formMessageItem.handleSubmit(onSubmit)}>
                     <FormField
-                      control={form.control}
+                      control={formMessageItem.control}
                       name="content"
                       render={({ field }) => (
                         <FormItem className="flex-1">
@@ -286,16 +314,16 @@ export const MessageItem = ({
               </div>
             )}
             {isEditing && (
-              <Form {...form}>
+              <Form {...formMessageItem}>
                 <form 
                   className="flex items-center gap-x-2 pt-2 "
                   style={{
                     overflowWrap: "break-word",
                     width: (width<769) ? `${width-80}px` : `${width-360}px`
                   }}
-                  onSubmit={form.handleSubmit(onSubmit)}>
+                  onSubmit={formMessageItem.handleSubmit(onSubmit)}>
                     <FormField
-                      control={form.control}
+                      control={formMessageItem.control}
                       name="content"
                       render={({ field }) => (
                         <FormItem className="flex-1 w-full ">
@@ -323,8 +351,45 @@ export const MessageItem = ({
             )}
           </div>
         )}
+        {isReplying && (
+              <Form {...formReply}>
+                <form 
+                  className="flex items-center w-full gap-x-2 pt-2 absolute"
+                  style={{
+                    overflowWrap: "break-word",
+                    width: (width<769) ? `${width-80}px` : `${width-360}px`
+                  }}
+                  onSubmit={formReply.handleSubmit(doRespond)}>
+                    <FormField
+                      control={formReply.control}
+                      name="content"
+                      render={({ field }) => (
+                        <FormItem className="flex-1">
+                          <FormControl>
+                            <div className="relative w-full ">
+                              <Input
+                                disabled={isLoading2}
+                                className="bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
+                                placeholder="Edited message"
+                                {...field}
+                              />
+                            </div>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    <Button disabled={isLoading2} size="sm" variant="primary">
+                      Save
+                    </Button>
+                </form>
+                <span className="text-[10px] mt-1 text-zinc-400">
+                  Press escape to cancel, enter to save
+                </span>
+              </Form>
+        )}      
+        <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
         {canDeleteMessage && (
-          <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
+          <div className="group-hover:flex">
             {canEditMessage && (
               <ActionTooltip label="Edit">
                 <Edit
@@ -345,6 +410,13 @@ export const MessageItem = ({
             </ActionTooltip>
           </div>
         )}
+              <ActionTooltip label="Reply">
+                <Reply
+                  onClick={() => setIsReplying(true)}
+                  className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                />
+              </ActionTooltip>
+        </div>
       </div>
     </div>   
   )

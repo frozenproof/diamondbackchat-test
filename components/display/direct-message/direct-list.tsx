@@ -2,7 +2,7 @@
 
 import { ElementRef, Fragment, useRef } from "react";
 import { UserProfile } from "@prisma/client";
-import { Loader2, ServerCrash } from "lucide-react";
+import { Loader2, ServerCrashIcon } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 
@@ -12,7 +12,7 @@ import { DirectMessageItem } from "./direct-item";
 
 import { useChatScroll } from "@/hooks/use-chat-scroll";
 
-import { format } from "date-fns"
+import { differenceInMinutes, format } from "date-fns";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 
 interface ChatMessagesProps {
@@ -82,9 +82,9 @@ export const DirectChatMessages = ({
   if (status === "error") {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
-        <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />
+        <ServerCrashIcon className="h-7 w-7 text-zinc-500 my-4" />
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Lmao get rekt by this horrible design
+          It seems you are disconnected
         </p>
       </div>
     )
@@ -120,10 +120,17 @@ export const DirectChatMessages = ({
           //group la du lieu that
           
           <Fragment key={i}>
-            {group.items.map((message: DirectMessageWithProfileWithFile,index: number,array: any) => 
+            {group.items.map((message: DirectMessageWithProfileWithFile,index: number) => 
             {
               var isContiniousCock = (message.userProfileId===(group.items[index+1]?.userProfileId));
-              // var isContiniousCock = false;
+              if(group.items[index+1])
+              {
+                var date_thisMessage2 = group.items[index+1]?.createdAt;
+
+                var date_thisMessage = message.createdAt;
+                if(date_thisMessage2)
+                isContiniousCock = ( isContiniousCock && (Math.abs((differenceInMinutes(date_thisMessage2,date_thisMessage))) < 20))
+              }
               let messageReplyId = message.messageParentId as string | undefined;
               
               return (

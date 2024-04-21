@@ -10,9 +10,7 @@ type Props = {
 }
    
 export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-  ): Promise<Metadata> {
+    { params }: Props  ): Promise<Metadata> {
     
     const channel = await db.channel.findUnique
     ({
