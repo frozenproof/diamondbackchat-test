@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request){
     try{
         const profile = await currentUserProfile();
-        const { content,checkFile } = await req.json();
+        const { content,checkMessageReplyId } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const directChatIdProp = searchParams.get("directChatId");
@@ -19,7 +19,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        console.log("This is check file",checkFile);
+        console.log("This is check file",checkMessageReplyId);
 
         const channel = await db.directChannel.findFirst({
           where: {

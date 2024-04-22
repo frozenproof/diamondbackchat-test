@@ -212,3 +212,18 @@
 
 - moved all aux front end component into a more managable folder
 
+- changed reply system
+- adding version field for the following tables:
+    - channel : avoid conflicts for channel edit and channel creation
+    - message : avoid conflict for older message being replied , or message getting edited multiple times due to slow internet
+    - direct message : avoid conflict for older message being replied , or message getting edited multiple times due to slow internet
+    - server : avoid conflicts for server edit
+    - member : avoid conflicts for member edit
+    - user's : avoid conflicts for user's edit
+
+## work for 23/4
+- properly handle all of the version update 
+- adding reply function
+- adding reply route
+
+

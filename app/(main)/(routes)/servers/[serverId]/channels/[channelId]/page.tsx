@@ -1,18 +1,17 @@
 "use server"
 
-import { OldChannelType } from "@prisma/client";
-
-import { MessageInput } from "@/components/display/message/message-input";
-import { Suspense } from "react";
-
-import { ChatMessagesList } from "@/components/display/message/message-list";
-
 import { ChannelHeader } from "@/components/display/channel/channel-header";
-import {MediaRoom} from "@/components/livekit-call-room";
-import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
+import { MessageInput } from "@/components/display/message/message-input";
+import { ChatMessagesList } from "@/components/display/message/message-list";
+import { MediaRoom } from "@/components/livekit-call-room";
 import { currentUserProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { OldChannelType } from "@prisma/client";
+import { redirect } from "next/navigation";
+import { Suspense, createContext, useState } from "react";
+
+const messageIdContext = createContext;
 
 const ChannelIdPage = async ({
   params,
@@ -73,6 +72,7 @@ const ChannelIdPage = async ({
       return redirect("/meself/friend");
   }
   
+
     return ( 
         <Suspense
             fallback={

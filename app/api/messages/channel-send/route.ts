@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request){
     try{
         const profile = await currentUserProfile();
-        const { content,checkFile } = await req.json();
+        const { content,checkMessageReplyId } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const serverIdProp = searchParams.get("serverId");
@@ -21,7 +21,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        // console.log("This is check file",checkFile);
+        console.log("This is check file",checkMessageReplyId);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,
@@ -63,7 +63,7 @@ export async function POST(req: Request){
             hasAttachment: false,
             channelId: channelIdProp as string,
             memberId: member.id,
-            isReply: false
+            isReply: (checkMessageReplyId === "lmaoREPLY") ? false : true,
           },
           include: {
             member: {
@@ -77,6 +77,22 @@ export async function POST(req: Request){
             }
             }
         });
+
+        if(checkMessageReplyId !== "lmaoREPLY" && (checkMessageReplyId!== null || checkMessageReplyId !== undefined))
+        {
+          const message2 = await db.message.update({
+            where: {
+              id: message.id,
+              version: message.version
+            },
+            data: {
+              messageParentId: checkMessageReplyId,
+              version: {
+                increment: 1
+              }
+            }
+          })
+        }
 
         const channelKey = `chat:${channelIdProp}:messages`;
         console.log("this is channel key",channelKey);

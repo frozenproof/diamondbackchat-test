@@ -239,7 +239,11 @@ message list -> usechatquery -> useinfinitequery
 
 
 
-
+# Day ?
+- Thiet ke he thong reply
+    - Can mot display cho reply
+    - Can mot state updater de theo doi reply
+    - Can api route de reply
 
 
 

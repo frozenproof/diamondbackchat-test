@@ -19,6 +19,7 @@ model UserProfile {
   about    String     @default("") @db.Text
   status   UserStatus @default(ONLINE)
   deleted  Boolean    @default(false)
+  version  Int        @default(1)
 
   createdAt DateTime @default(now())
 
@@ -41,6 +42,7 @@ model Server {
   id       String @id @default(uuid())
   name     String
   imageUrl String @db.Text
+  version  Int    @default(1)
 
   updatedAt DateTime @updatedAt
   deleted   Boolean  @default(false)
@@ -61,6 +63,7 @@ model Member {
   id      String        @id @default(uuid())
   role    OldMemberRole @default(MEMBER)
   deleted Boolean       @default(false)
+  version Int           @default(1)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
@@ -79,6 +82,7 @@ model Channel {
   name      String
   type      OldChannelType @default(TEXT)
   updatedAt DateTime       @updatedAt
+  version   Int            @default(1)
 
   categories String
   deleted    Boolean @default(false)
@@ -140,6 +144,7 @@ model ServerInvite {
 model Message {
   id      String @id @default(uuid())
   content String @db.Text
+  version Int    @default(1)
 
   memberId String
   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
@@ -169,6 +174,7 @@ model Message {
 model DirectMessage {
   id      String @id @default(uuid())
   content String @db.Text
+  version Int    @default(1)
 
   userProfileId String
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)

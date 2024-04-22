@@ -40,8 +40,6 @@ interface ChatItemProps {
   isUpdated: boolean;
   socketUrl: string;
   socketQuery: Record<string, string>;
-  isReply: Boolean;
-  replyId?: string;
   isContinious: Boolean;
 };
 

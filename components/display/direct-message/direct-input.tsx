@@ -62,7 +62,7 @@ export const DirectMessageInput = ({
         console.log("Socket is not running")
         return;
       }
-      const testSend = await axios.post(url, {...values,checkFile: false});
+      const testSend = await axios.post(url, {...values,checkMessageReplyId: "lmaoREPLY"});
       
       const messageData = testSend.data as DirectMessage;
 

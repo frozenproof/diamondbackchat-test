@@ -68,7 +68,7 @@ export const MessageInput = ({
       
       form.reset();
       router.refresh();
-      const testSend = await axios.post(url, {...values,checkFile: false});
+      const testSend = await axios.post(url, {...values,checkMessageReplyId: "lmaoREPLY"});
       const messageData = testSend.data ;
 
       
