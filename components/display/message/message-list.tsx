@@ -5,7 +5,7 @@ import { Loader2, ServerCrashIcon } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 
-import { ChatWelcome } from "../channel-welcome";
+import { ChatWelcome } from "../many-aux/channel-welcome";
 import { MemberWithProfile, MessageWithMemberWithProfileWithFile } from "@/type";
 import { MessageItem } from "./message-item";
 import { useChatScroll } from "@/hooks/use-chat-scroll";

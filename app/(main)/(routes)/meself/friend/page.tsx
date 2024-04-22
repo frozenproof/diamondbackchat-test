@@ -1,7 +1,7 @@
 "use server"
 
-import BlockProfileComponent from "@/components/display/block-profile"
-import FriendProfileComponent from "@/components/display/friend-profile"
+import BlockProfileComponent from "@/components/display/many-aux/block-profile"
+import FriendProfileComponent from "@/components/display/many-aux/friend-profile"
 import {
   Card,
   CardContent,

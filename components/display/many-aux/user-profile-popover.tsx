@@ -16,12 +16,12 @@ import {
 } from "@/components/ui/popover";
 import { MemberWithProfile } from "@/type";
 import { useRouter } from "next/navigation";
-import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
+import { UserProfileAvatar } from "../../uihelper/user-profile-avatar";
 
-import { Label } from "../ui/label";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Label } from "../../ui/label";
+import { Avatar, AvatarImage } from "../../ui/avatar";
 import { format } from "date-fns";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { UserProfile } from "@prisma/client";
 import { usePrompt } from "@/hooks/use-prompt-store";
 

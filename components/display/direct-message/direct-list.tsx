@@ -6,7 +6,7 @@ import { Loader2, ServerCrashIcon } from "lucide-react";
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 
-import { ChatWelcome } from "../channel-welcome";
+import { ChatWelcome } from "../many-aux/channel-welcome";
 import { DirectMessageWithProfileWithFile } from "@/type";
 import { DirectMessageItem } from "./direct-item";
 

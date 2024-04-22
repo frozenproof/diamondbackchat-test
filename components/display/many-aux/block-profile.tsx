@@ -1,7 +1,7 @@
 "use client"
 
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
+import { UserProfileAvatar } from "../../uihelper/user-profile-avatar";
 import { BlockWithProfile } from "@/type";
 import { CircleSlash2Icon, Cross } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -25,7 +25,7 @@ const BlockProfileComponent = (
     const onUnblockChange = async(otherUserId: string) => {
       try {
           const url = qs.stringifyUrl({
-              url: `/api/friend/unfriendRequest`,
+              url: `/api/user/unblock-api`,
           })
 
           const response = await axios.patch(url, {userProfileId: otherUserId});

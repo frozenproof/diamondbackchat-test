@@ -209,3 +209,6 @@
 - all routes are now static to preserve server ram
 - removed unused file
 - added better host handling with env variable
+
+- moved all aux front end component into a more managable folder
+

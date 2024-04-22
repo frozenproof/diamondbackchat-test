@@ -22,7 +22,7 @@ import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { format } from "date-fns";
-import { FilesDisplay } from "../files-display-message";
+import { FilesDisplay } from "../many-aux/files-display-message";
 
 interface ChatItemProps {
   id: string;

@@ -1,9 +1,9 @@
 "use client"
 
 import { usePrompt } from "@/hooks/use-prompt-store";
-import { UserProfileAvatar } from "../uihelper/user-profile-avatar";
+import { UserProfileAvatar } from "../../uihelper/user-profile-avatar";
 import { FriendWithProfile } from "@/type";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { Cross } from "lucide-react";
 import { useRouter } from "next/navigation";
 import qs from "query-string"
