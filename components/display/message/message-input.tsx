@@ -18,12 +18,15 @@ import { Input } from "@/components/ui/input";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { EmojiPicker } from "@/components/uihelper/emoji-picker";
 import { useSocket } from "@/components/providers/socket-provider";
+import { Member } from "@prisma/client";
+import { useToast } from "@/components/ui/use-toast";
 
 interface MessageInputProps {
   apiUrl: string;
   query: Record<string, any>;
   channelName: string;
-  memberIdProp: string
+  memberIdProp: string;
+  memberListProp: Member[];
 }
 
 const formSchema = z.object({
@@ -34,9 +37,11 @@ export const MessageInput = ({
   apiUrl,
   query,
   channelName,
-  memberIdProp
+  memberIdProp,
+  memberListProp
 }: MessageInputProps) => {
   const { onOpen } = usePrompt();
+  const { toast } = useToast()
   const { socketActual } = useSocket();
   const router = useRouter();
 
@@ -47,7 +52,6 @@ export const MessageInput = ({
     }
   });
 
-  const isLoading = form.formState.isSubmitting;
   const channelId = query.channelId;
   // console.log("Channel id is",channelId);
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -58,16 +62,23 @@ export const MessageInput = ({
       });
 
       if (!socketActual) {
-        console.log("Socket is not running")
+        console.log("Disconnected")
         return;
       }
+      
+      form.reset();
+      router.refresh();
       const testSend = await axios.post(url, {...values,checkFile: false});
       const messageData = testSend.data ;
 
+      
       // console.log("Input log before emitting",testSend);
       socketActual.emit("channel-input",`chat:${messageData.channelId}:messages`, messageData,"server-channel");
-      form.reset();
-      router.refresh();
+      if(messageData)
+      toast({
+        description: "Sent",
+      })
+ 
       
     } catch (error) {
       console.log(error);
@@ -93,7 +104,6 @@ export const MessageInput = ({
                   </button>
                   <Input
                     id="input"
-                    disabled={isLoading}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
                     placeholder={`Message ${"#" + channelName}`}
                     {...field}

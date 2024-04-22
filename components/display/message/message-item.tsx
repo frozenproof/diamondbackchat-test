@@ -351,13 +351,14 @@ export const MessageItem = ({
             )}
           </div>
         )}
-        {isReplying && (
+        {isReplying && !isEditing && (
               <Form {...formReply}>
                 <form 
-                  className="flex items-center w-full gap-x-2 pt-2 absolute"
+                  className="flex items-center w-full gap-x-2 pt-2 absolute "
                   style={{
                     overflowWrap: "break-word",
-                    width: (width<769) ? `${width-80}px` : `${width-360}px`
+                    width: (width<769) ? `${width-80}px` : `${width-360}px`,
+                    top: "80px"
                   }}
                   onSubmit={formReply.handleSubmit(doRespond)}>
                     <FormField
@@ -370,7 +371,7 @@ export const MessageItem = ({
                               <Input
                                 disabled={isLoading2}
                                 className="bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
-                                placeholder="Edited message"
+                                placeholder="Reply message"
                                 {...field}
                               />
                             </div>
@@ -388,7 +389,7 @@ export const MessageItem = ({
               </Form>
         )}      
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-        {canDeleteMessage && (
+        {canDeleteMessage && !isReplying && (
           <div className="group-hover:flex">
             {canEditMessage && (
               <ActionTooltip label="Edit">
@@ -410,12 +411,14 @@ export const MessageItem = ({
             </ActionTooltip>
           </div>
         )}
+        {!isEditing && !isReplying && (
               <ActionTooltip label="Reply">
                 <Reply
                   onClick={() => setIsReplying(true)}
                   className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
                 />
               </ActionTooltip>
+        )}
         </div>
       </div>
     </div>   

@@ -118,6 +118,7 @@ const ChannelIdPage = async ({
                   // serverId: params.serverId,
                   serverId: server.id,
                 }}
+                memberListProp={members}
               />
             </>
             )}

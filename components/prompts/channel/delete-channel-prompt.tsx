@@ -11,11 +11,9 @@ import {
 
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Button } from "../../ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { channel } from "diagnostics_channel";
 
 
 export const DeleteChannelPrompt = () => {
@@ -23,15 +21,15 @@ export const DeleteChannelPrompt = () => {
     const router = useRouter();
 
     const isPromptOpen = isOpen && type === "DeleteChannel";
-    const { channel } = propData;
+    const { channel: channelProp } = propData;
 
     const [ isLoading, setIsLoading ] = useState(false);
 
     const onDelete = async() => {
         try {
             setIsLoading(true);
-            const serverId = channel?.serverId;
-            await axios.delete(`/api/channels/${channel?.id}/delete-api`);
+            const serverId = channelProp?.serverId;
+            await axios.patch(`/api/channels/delete-api`, {channelId: channelProp?.id});
             onClose();
             router.refresh();
             router.push(`/servers/${serverId}`);

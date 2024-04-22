@@ -5,11 +5,10 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req:Request,
-    {params} : { params: {channelId: string}}
 ) {
     try {
         const profile = await currentUserProfile();
-        const { name, type } = await req.json();
+        const { name, type, channelId } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const serverIdParam = searchParams.get("serverId");
@@ -44,7 +43,7 @@ export async function PATCH(
         
         const channel = await db.channel.update({
             where: {
-              id: params.channelId
+              id: channelId
             },
             data: {
               name,

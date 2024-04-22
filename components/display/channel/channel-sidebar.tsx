@@ -19,7 +19,7 @@ export const ChannelSideBar = async({
     roleProp
 }:ChannelSideBarProps) => {
 
-    const channelProp = serverProp.Channel;
+    const channelProp = serverProp.Channel.filter((channel) => channel.deleted === false);
     const textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
     const audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
     const videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)

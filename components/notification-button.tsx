@@ -3,10 +3,9 @@
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover"
 import { Popover } from "./ui/popover"
 import { Bell } from "lucide-react"
-import { useEffect } from "react"
 import { Card, CardContent, CardHeader } from "./ui/card"
 
-export const NotificationButton = async () => {
+export const NotificationButton = () => {
     
     function NotificationRing(NotificationData: string) {
 

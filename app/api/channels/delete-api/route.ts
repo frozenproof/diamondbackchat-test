@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
     req: Request,
-    { params }: { params: { channelId: string } }
   ) {
     try {
       const profile = await currentUserProfile();
-  
+      const { channelId } = await req.json();
+
       if (!profile) {
         throw new Error("Unauthorized");
       }
@@ -19,10 +19,9 @@ export async function DELETE(
       //     userProfileId: profile.id,
       //   }
       // });
-      console.log("CHANNEL_ID_DELETE",params.channelId)
-      const channel = await db.directChannel.updateMany({
+      const channel = await db.channel.updateMany({
         where: {
-          id: params.channelId,
+          id: channelId,
         },
         data: {
           deleted: true
@@ -31,7 +30,7 @@ export async function DELETE(
   
       return NextResponse.json(channel);
     } catch (error) {
-      console.log("[CHANNEL_ID_DELETE]", error);
+      console.log("[SERVER_ID_DELETE]", error);
       return new NextResponse("Internal Error", { status: 500 });
     }
   }

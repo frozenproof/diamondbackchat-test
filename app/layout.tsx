@@ -10,6 +10,7 @@ import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { Suspense } from "react";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 // const font = Open_Sans({ subsets: ["latin"],display: "swap", });
 
@@ -54,6 +55,7 @@ export default function RootLayout({
                     <QueryProvider>
                       {children}
                     </QueryProvider>
+                   <Toaster /> 
                 </SocketProvider>
                 </ThemeProvider>
             </Suspense>

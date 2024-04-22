@@ -63,12 +63,12 @@ export const EditChannelPrompt = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try {
             const url = qs.stringifyUrl({
-            url: `/api/channels/${channel?.id}/settings-api`,
+            url: `/api/channels/settings-api`,
             query: {
                 serverId: params?.serverId,
             }
             });
-            await axios.patch(url, values);
+            await axios.patch(url, {name:values.name, type:values.type,channelId: channel?.id});
             
             form.reset();
             router.refresh();

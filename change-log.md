@@ -190,3 +190,14 @@
 - middleware need to be updated on every deploy
 - message list and direct list now added continious check with time
 - added reply component
+
+# 20/4
+- fixed wrong channel data for channels list
+- removed channel dynamic route api due to inefficiency in compile
+- added static channel api route
+- message item included reply functionality but not working
+- added toast for message sending instead of forcing users to wait for message sending
+- lucide-x is now visible 
+- notification button is fixed where async is unallowed in client component
+- middleware is set back to original req.url for redirection
+
