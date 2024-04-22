@@ -5,13 +5,12 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { memberId: string}}
 ) {
     try
     {
         const profile = await currentUserProfile();
         const { searchParams } = new URL(req.url);
-        const { role } = await req.json();
+        const { memberId,role } = await req.json();
 
         const serverId = searchParams.get("serverId");
 
@@ -23,7 +22,7 @@ export async function PATCH(
             throw new Error("Server doesn't exist");
         }
 
-        if(!params.memberId) {
+        if(!memberId) {
             throw new Error("How did you even request this ?");
         }
 
@@ -35,7 +34,7 @@ export async function PATCH(
                 Member: {
                     update: {
                         where: {
-                          id: params.memberId,
+                          id: memberId,
                           userProfileId: {
                             not: profile.id
                           },

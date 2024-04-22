@@ -6,23 +6,23 @@ import { NextResponse } from "next/server";
 
 export async function PATCH( 
     req: Request, 
-    {params}:{params:{serverId: string}},
 ){
     try {
         const profile = await currentUserProfile();
-
+        const { serverId } = await req.json();
+        
         if(!profile) {
             throw new Error("Unauthorized personel detected.");    
         }
         
-        if(!params.serverId){
+        if(!serverId){
             throw new Error(">:3 no server detected.");
         }
 
         const serverInvite = await db.serverInvite.update({
             where: {
                 inviteId: {
-                    serverId: params.serverId,
+                    serverId: serverId,
                     userProfileId: profile.id,
                 }
             },

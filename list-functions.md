@@ -73,7 +73,7 @@
 
 
 [y] Is planned ?
-[x] Working
+[x] Working on
 [n] Never 
 [w] Will complete
 

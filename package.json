@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "custom": "node server.mjs",
-    "cum": "node server.mjs",
+    "custom": "CUM=localhost node server.mjs",
+    "cum": "CUM=liltrees.onrender.com node server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

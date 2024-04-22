@@ -191,7 +191,7 @@
 - message list and direct list now added continious check with time
 - added reply component
 
-# 20/4
+# 22/4
 - fixed wrong channel data for channels list
 - removed channel dynamic route api due to inefficiency in compile
 - added static channel api route
@@ -202,3 +202,10 @@
 - middleware is set back to original req.url for redirection
 
 - changed all server api route to static route
+
+- changed invite api route to static
+- changed friend api route to static
+- changed member api route to ......
+- all routes are now static to preserve server ram
+- removed unused file
+- added better host handling with env variable

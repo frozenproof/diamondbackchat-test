@@ -6,7 +6,7 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Label } from "../../ui/label";
@@ -14,7 +14,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { Check, Copy, Plus, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
-import { useEffect, useState, Suspense, useRef } from "react";
+import { useState, Suspense } from "react";
 import axios from "axios";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 
@@ -48,7 +48,7 @@ export const InviteServerPrompt = () => {
     const onNew = async() => {
         try {
             setIsLoading(true);
-            const temp = await axios.patch(`/api/invite/inviteServerGenerate/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
+            const temp = await axios.patch(`/api/invite/inviteServerGenerate`, {serverId: server?.id}).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
             
             // onOpen("InviteServer", {server: response.data});
         }
@@ -65,7 +65,7 @@ export const InviteServerPrompt = () => {
         try {
             console.log(server?.id);
             setIsUrlLoading(true);
-            const temp = await axios.patch(`/api/invite/inviteServerSearch/${server?.id}`).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
+            const temp = await axios.patch(`/api/invite/inviteServerSearch`, {serverId: server?.id}).then((response) => setRealUrl(`${origin}/invite-euphoria/`+response.data.inviteCode));
 
             console.log("Information is here",temp);
 

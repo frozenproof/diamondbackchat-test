@@ -7,33 +7,28 @@ import { currentUserProfile } from "@/lib/current-profile";
 import { confirmFriendRequest, findFriendsRequest } from "@/lib/friend-lib";
 import { NextResponse } from "next/server";
 
-interface MemberIdPageProps {
-  params: { friendRequestId: string, },
-};
-
 export async function PATCH( 
   req: Request, 
-  {params}:MemberIdPageProps,
 ) {
   const profile = await currentUserProfile();
-  const { friendConfirm } = await req.json();
+  const { friendRequestId,friendConfirm } = await req.json();
 
   if (!profile) {
     return redirectToSignIn();
   }
 
-  if(!params.friendRequestId )
+  if(!friendRequestId )
   {
     console.log("how")
     return redirect(`/meself/friend`);
   }
 
-  if(params)
+  if(friendRequestId)
   {
-    const friendRequestSearch = await findFriendsRequest(profile.id, params.friendRequestId);
+    const friendRequestSearch = await findFriendsRequest(profile.id, friendRequestId);
     // console.log("Friend request found",friendRequestSearch)
     if (friendRequestSearch) {      
-      const friendsCreate = await confirmFriendRequest(profile.id, params.friendRequestId, friendConfirm);
+      const friendsCreate = await confirmFriendRequest(profile.id, friendRequestId, friendConfirm);
       // console.log(friendsCreate)
       return NextResponse.json({statusFriend: "appending",friendRes: friendsCreate});
     }
@@ -43,7 +38,7 @@ export async function PATCH(
       return NextResponse.json("Friend Request Failure");
     }          
   }  
-  else if(!params) {
+  else if(!friendRequestId) {
     console.log("no friends detected")
   }
 }

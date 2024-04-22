@@ -58,7 +58,10 @@ export const UserProfilePrompt = () => {
         const onFriendRequest = async () => {
           if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
           {
-            const friendCheck = await axios.patch(`http://localhost:3000/api/friend/friendRequest/${userProfilePropAPI.id}`)
+            const url = qs.stringifyUrl({
+                url: `/api/friend/friendRequest`,
+            })
+            const friendCheck = await axios.patch( url , {userProfileId: userProfilePropAPI.id})
   
             console.log("user profile prompt friend request",friendCheck.data);
           }

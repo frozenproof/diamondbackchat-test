@@ -52,13 +52,13 @@ export const EditMemberNicknamePrompt = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try{
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberPropAPI?.id}/name-api`,
+                url: `/api/members/name-api`,
                 query: {
                     serverId: memberPropAPI?.serverId,
                 },
             });
 
-            const result = await axios.patch(url, {values});
+            const result = await axios.patch(url, {memberId: memberPropAPI?.id, nickname2: values.nickname});
             // console.log("api url",result);
             form.reset();
             router.refresh();

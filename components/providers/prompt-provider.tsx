@@ -6,7 +6,6 @@ import { InviteServerPrompt } from "@/components/prompts/server/invite-server-pr
 import { EditServerPrompt } from "@/components/prompts/server/edit-server-prompt";
 import { ManageMemberPrompt } from "@/components/prompts/user/manage-member-prompt";
 import { CreateChannelPrompt } from "@/components/prompts/channel/create-channel-prompt";
-import { CreateChannelPromptDiamond } from "@/components/prompts/channel/create-channel-prompt-diamond ";
 import { LeaveServerPrompt } from "@/components/prompts/server/leave-server-prompt";
 import { DeleteServerPrompt } from "@/components/prompts/server/delete-server-prompt";
 import { DeleteChannelPrompt, DeleteDirectChannelPrompt } from "@/components/prompts/channel/delete-channel-prompt";
@@ -36,7 +35,6 @@ export const PromptProvider = () => {
             <EditServerPrompt />
             <ManageMemberPrompt />
             <CreateChannelPrompt />
-            <CreateChannelPromptDiamond />
             <LeaveServerPrompt />
             <DeleteServerPrompt />
             <DeleteChannelPrompt />

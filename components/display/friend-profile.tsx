@@ -29,11 +29,10 @@ const FriendProfileComponent = (
     const onFriendChange = async(friendRequestId: string,friendConfirm: FriendRequestStatus) => {
       try {
           const url = qs.stringifyUrl({
-              url: `/api/friend/confirm/${friendRequestId}`,
+              url: `/api/friend/confirm`,
           })
 
-          console.log("friend confirm status check",friendConfirm)
-          const response = await axios.patch(url, {friendConfirm});
+          const response = await axios.patch(url, {friendRequestId,friendConfirm});
           console.log("Friend request respond",response)
           router.refresh();
       }

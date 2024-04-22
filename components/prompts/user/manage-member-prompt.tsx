@@ -1,6 +1,6 @@
 "use client";
 
-import qs from "query-string"
+import qs from "query-string";
 import {
     Dialog,
     DialogContent,
@@ -12,20 +12,20 @@ import {
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-import { Book, Cat, Check, Cross, Dog, Gavel, Hammer, Loader2, MagnetIcon, Minus, MoreVerticalIcon, PanelsTopLeft, RemoveFormatting, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis } from "lucide-react";
+import { Book, Cat, Check, Dog, Loader2, MagnetIcon, Minus, MoreVerticalIcon, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis } from "lucide-react";
 import React, { useState } from "react";
 
-import { 
-    DropdownMenu, 
-    DropdownMenuItem, 
-    DropdownMenuTrigger, 
+import {
+    DropdownMenu,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
     DropdownMenuSeparator,
-    DropdownMenuSub, 
-    DropdownMenuSubContent, 
+    DropdownMenuSub,
+    DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuContent,
-    DropdownMenuPortal, 
-}     from "@/components/ui/dropdown-menu";
+    DropdownMenuPortal,
+} from "@/components/ui/dropdown-menu";
 import { OldMemberRole } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -52,13 +52,13 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberId}/delete-api`,
+                url: `/api/members/delete-api`,
                 query: {
                     serverId: server?.id,
                 },
             });
         
-            const response = await axios.patch(url);
+            const response = await axios.patch(url, {memberId});
         
             router.refresh();
             onOpen("ManageMember", { server: response.data });
@@ -101,14 +101,13 @@ export const ManageMemberPrompt = () => {
         try {
             setTargetMemberId(memberId);
             const url = qs.stringifyUrl({
-                url: `/api/members/${memberId}/role-api`,
+                url: `/api/members/role-api`,
                 query: {
                     serverId: server?.id,
-                    memberId,
                 }
             })
 
-            const response = await axios.patch(url, {role});
+            const response = await axios.patch(url, {memberId, role});
 
             router.refresh();
             onOpen("ManageMember", {server: response.data});

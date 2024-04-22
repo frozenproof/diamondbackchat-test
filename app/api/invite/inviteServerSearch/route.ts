@@ -4,18 +4,21 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req:Request,
-    {params} : { params: {serverId: string}}
 ) {
     try {
         const profile = await currentUserProfile();
-
+        const { serverId } = await req.json();
         if(!profile) {
             throw new Error("Unauthorized ");
         }
+        if(!serverId){
+            throw new Error(">:3 no server detected.");
+        }
+
         
         const serverInvites = await db.serverInvite.findFirst({
             where: {
-                serverId: params.serverId,
+                serverId: serverId,
                 userProfileId: profile.id
             }
         })

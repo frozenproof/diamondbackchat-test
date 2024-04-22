@@ -6,8 +6,9 @@ import { Server as ServerIO } from "socket.io";
 
 const dev = process.env.NODE_ENV !== 'production';
 // const hostname = 'liltrees.onrender.com';
-const hostname = 'localhost';
+const hostname = process.env.CUM;
 console.log(process.env.NODE_ENV)
+console.log(process.env.CUM)
 const port = process.env.PORT || 3000;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });
