@@ -6,25 +6,25 @@ import { NextResponse } from "next/server";
 export async function PATCH
 (
     req:Request,
-    { params }: { params: {serverId: string}}
 ) 
     {
         try 
         {
             const profile = await currentUserProfile();
-
+            const { serverId } = await req.json();
+            
             if(!profile) {
                 throw new Error("Unauthorized");
             }
             
-            if(!params.serverId)
+            if(!serverId)
             {
                 throw new Error("Server Id doesn't exist")
             }
 
             const server = await db.server.update({
                 where: {
-                    id: params.serverId,
+                    id: serverId,
                     userProfileId: {
                         not: profile.id
                     }

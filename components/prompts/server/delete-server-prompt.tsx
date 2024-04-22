@@ -11,7 +11,6 @@ import {
 
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { Button } from "../../ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -30,7 +29,7 @@ export const DeleteServerPrompt = () => {
         try {
             setIsLoading(true);
             
-            await axios.delete(`/api/servers/${server?.id}/delete-api`);
+            await axios.patch(`/api/servers/delete-api`,{serverId: server?.id});
             onClose();
             router.refresh();
             router.push("/meself/friend");

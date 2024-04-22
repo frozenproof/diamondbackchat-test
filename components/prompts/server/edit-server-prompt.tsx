@@ -58,7 +58,7 @@ export const EditServerPrompt = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try{
-            await axios.patch(`/api/servers/${server?.id}/settings-api`,values);
+            await axios.patch(`/api/servers/settings-api`, {name:values.name, imageUrl: values.imageUrl, serverId: server?.id});
             
             form.reset();
 

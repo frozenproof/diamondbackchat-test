@@ -201,3 +201,4 @@
 - notification button is fixed where async is unallowed in client component
 - middleware is set back to original req.url for redirection
 
+- changed all server api route to static route
