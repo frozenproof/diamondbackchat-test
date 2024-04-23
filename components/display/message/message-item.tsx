@@ -167,11 +167,11 @@ export const MessageItem = ({
     // console.log("Message Id",id);
     return (
   <div
-    className={`flex flex-col`}  
+    className={`flex flex-col `}  
   >
     {isReply && replyMessage && (     
         <div
-        className="flex text-xs"
+        className="flex text-xs w-full"
         style={{
           paddingLeft: (width<769) ? `${44}px` : `${56}px`,
         }}
@@ -179,10 +179,23 @@ export const MessageItem = ({
           <ReplyIcon 
             style={
               {
-                height: "18px"
+                height: "12px"
               }
             }
-          /> {replyMessage.content}
+          /> 
+          <div
+              style={{
+                width: (width<769) ? `${width-150}px` : `${width-420}px`,
+                display: "flex"
+              }}
+           >
+            {replyMessage.member.nickname} said: {replyMessage.content}          
+            {hasAttachment && (
+              <div>
+                Attachment
+              </div>
+            )}
+          </div>
         </div>     
     )}
     <div
@@ -373,42 +386,6 @@ export const MessageItem = ({
             )}
           </div>
         )}
-        {/* {isReplying && !isEditing && (
-              <Form {...formReply}>
-                <form 
-                  className="flex items-center w-full gap-x-2 flex-col pt-2 absolute"
-                  style={{
-                    overflowWrap: "break-word",
-                    width: (width<769) ? `${width-80}px` : `${width-360}px`,
-                  }}
-                  onSubmit={formReply.handleSubmit(doRespond)}>
-                    <FormField
-                      control={formReply.control}
-                      name="content"
-                      render={({ field }) => (
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <div className="relative w-full ">
-                              <Input
-                                disabled={isLoading2}
-                                className="bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
-                                placeholder="Reply message"
-                                {...field}
-                              />
-                            </div>
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <Button disabled={isLoading2} size="sm" variant="primary">
-                      Send
-                    </Button>
-                    <span className="text-[10px] mt-1 text-zinc-400">
-                    Press escape to cancel, enter to save
-                  </span>
-                </form>
-              </Form>
-        )}       */}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
         {canDeleteMessage && !isReplying && (
           <div className="group-hover:flex">

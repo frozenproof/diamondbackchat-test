@@ -129,8 +129,10 @@ export const ChatMessagesList = ({
               }             
 
               // console.log("this is message list file",message.AttachmentChannel)
-              console.log("this is message list file",message)
-              console.log("message birth time",message.createdAt)
+              // if(typeof message.messageParent.member !== null)
+              // console.log("this is message list file",message.messageParent.member)
+              // console.log("message birth time",message.createdAt)
+              if(message)
               return (
                 <div
                   key={message.id}

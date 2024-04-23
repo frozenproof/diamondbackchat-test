@@ -23,6 +23,7 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { format } from "date-fns";
 import { FilesDisplay } from "../many-aux/files-display-message";
+import { DirectChannelMessageWithProfile, DirectMessageWithProfileWithFile } from "@/type";
 
 interface ChatItemProps {
   id: string;
@@ -38,8 +39,9 @@ interface ChatItemProps {
   socketUrl: string;
   socketQuery: Record<string, string>;
   isReply: Boolean;
-  replyId?: string;
+  replyMessage: DirectChannelMessageWithProfile;
   isContinious: Boolean;
+  channelId: string;  
 };
 
 
@@ -59,7 +61,10 @@ export const DirectMessageItem = ({
   isUpdated,
   socketUrl,
   socketQuery,
-  isContinious
+  isContinious,
+  isReply,
+  replyMessage,
+  channelId
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
   const [isEditing, setIsEditing] = useState(false);

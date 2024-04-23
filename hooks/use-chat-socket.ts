@@ -68,6 +68,11 @@ export const useChatSocket = ({
     socketActual.on(addKey, (message: any,typesend: string) => {
       console.log("we heard you, this actually just take items as they are items without types, so we added the type as additional respond ", typesend)
       var messageReal: MessageWithMemberWithProfileWithFile | DirectMessageWithProfileWithFile;
+      if(!message.createdAt)
+      {
+        console.log("chat socket is saying",message);
+        message = message.data;
+      }
       if(typesend === "server-channel")
       {
         messageReal = message as MessageWithMemberWithProfileWithFile;
@@ -76,7 +81,7 @@ export const useChatSocket = ({
       {
         messageReal = message as DirectMessageWithProfileWithFile;
       }
-      console.log("chat socket is saying",message)
+
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return {

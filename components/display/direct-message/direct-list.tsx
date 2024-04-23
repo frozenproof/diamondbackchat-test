@@ -162,8 +162,9 @@ export const DirectChatMessages = ({
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}
-                      replyId={messageReplyId}
+                      replyMessage={message.messageParent}
                       isContinious={isContiniousCock}
+                      channelId={message.directChannelId}
                     />
                 </div>
               </div>

@@ -236,3 +236,7 @@
 - reply system is functional
 - we will be fine
 
+# 24/4
+- added proper fix for reply
+- fixed database where the direct channel id could be null
+- added proper api support for reply

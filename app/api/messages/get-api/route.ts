@@ -44,7 +44,16 @@ export async function GET(
             }
           },
           AttachmentChannel: true,
-          messageParent: true
+          messageParent: {
+            include: {
+              member: {
+                select: {
+                  id: true,
+                  nickname: true,
+                }
+              }
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",
@@ -64,7 +73,16 @@ export async function GET(
             }
           },
           AttachmentChannel: true,
-          messageParent: true
+          messageParent: {
+            include: {
+              member: {
+                select: {
+                  id: true,
+                  nickname: true,
+                }
+              }
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",

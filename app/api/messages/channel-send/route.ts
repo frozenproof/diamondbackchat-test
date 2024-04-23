@@ -63,7 +63,7 @@ export async function POST(req: Request){
             hasAttachment: false,
             channelId: channelIdProp as string,
             memberId: member.id,
-            isReply: (checkMessageReplyId === "lmaoREPLY") ? false : true,
+            isReply: false
           },
           include: {
             member: {
@@ -90,8 +90,8 @@ export async function POST(req: Request){
               version: {
                 increment: 1
               },
-              createdAt: new Date(),
-              updatedAt: new Date()
+              isReply: true,
+              edited: false,
             }
           })
           const message3 = await db.message.findFirst({
@@ -99,23 +99,26 @@ export async function POST(req: Request){
               id: message2.id,
             },
             include: {
-              // userProfile: true,
               member: {
                 include: {
                   userProfile: true
                 }
               },
               AttachmentChannel: true,
-              messageParent: true
+              messageParent: {
+                include: {
+                  member: true
+                }
+              }
             }
           });
-          console.log("testing reply", message3)
+          // console.log("testing reply", message3)
          return NextResponse.json(message3);
-
         }
 
-        const channelKey = `chat:${channelIdProp}:messages`;
-        console.log("this is channel key",channelKey);
+        // const channelKey = `chat:${channelIdProp}:messages`;
+        // console.log("this is channel key",channelKey);
+        // console.log("testing reply", message)
         return NextResponse.json(message);
         
       } catch (error) {

@@ -38,7 +38,17 @@ export async function GET(
         },
         include: {
           userProfile: true,
-          AttachmentDirect: true
+          AttachmentDirect: true,
+          messageParent: {
+            include: {
+              userProfile: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              }
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",
@@ -53,7 +63,16 @@ export async function GET(
         include: {
           userProfile: true,          
           AttachmentDirect: true,
-          messageParent: true
+          messageParent: {
+            include: {
+              userProfile: {
+                select: {
+                  id: true,
+                  name: true,
+                }
+              }
+            }
+          }
 
         },
         orderBy: {

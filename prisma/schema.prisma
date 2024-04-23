@@ -193,8 +193,8 @@ model DirectMessage {
   updatedAt DateTime @updatedAt
 
   AttachmentDirect AttachmentDirect[]
-  DirectChannel    DirectChannel?     @relation(fields: [directChannelId], references: [id])
-  directChannelId  String?
+  DirectChannel    DirectChannel     @relation(fields: [directChannelId], references: [id])
+  directChannelId  String
 
   @@index([directChannelId])
   @@index([userProfileId])
