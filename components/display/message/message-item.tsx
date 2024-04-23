@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AttachmentChannel, OldMemberRole } from "@prisma/client";
 import axios from "axios";
-import { Edit, Reply, Trash } from "lucide-react";
+import { Edit, Reply, ReplyIcon, Trash } from "lucide-react";
 import qs from "query-string";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { MemberWithProfile } from "@/type";
+import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
 import { format } from "date-fns";
 import { FilesDisplay } from "../many-aux/files-display-message";
 
@@ -31,9 +31,11 @@ interface ChatItemProps {
   id: string;
   content: string;
   currentMessageMemberProp: MemberWithProfile;
-  // userProp: UserProfile;
+  isReply: Boolean;
+  replyMessage: MessageWithMemberWithProfile;
   timestamp: string;
   hasAttachment: boolean;
+  channelId: string;
   attachmentsList?: AttachmentChannel[] 
   deleted: boolean;
   currentUserMember: MemberWithProfile;
@@ -59,7 +61,10 @@ export const MessageItem = ({
   socketUrl,
   socketQuery,
   isContinious,
-  attachmentsList
+  attachmentsList,
+  isReply,
+  replyMessage,
+  channelId
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
   const [isReplying, setIsReplying] = useState(false);
@@ -161,6 +166,25 @@ export const MessageItem = ({
   {
     // console.log("Message Id",id);
     return (
+  <div
+    className={`flex flex-col`}  
+  >
+    {isReply && replyMessage && (     
+        <div
+        className="flex text-xs"
+        style={{
+          paddingLeft: (width<769) ? `${44}px` : `${56}px`,
+        }}
+        >
+          <ReplyIcon 
+            style={
+              {
+                height: "18px"
+              }
+            }
+          /> {replyMessage.content}
+        </div>     
+    )}
     <div
       className={`flex ${ (activeId) ? `bg-black/5` : `` }`}
       onMouseEnter={() => {setActiveElementOnHover()}}
@@ -349,14 +373,13 @@ export const MessageItem = ({
             )}
           </div>
         )}
-        {isReplying && !isEditing && (
+        {/* {isReplying && !isEditing && (
               <Form {...formReply}>
                 <form 
-                  className="flex items-center w-full gap-x-2 pt-2 absolute "
+                  className="flex items-center w-full gap-x-2 flex-col pt-2 absolute"
                   style={{
                     overflowWrap: "break-word",
                     width: (width<769) ? `${width-80}px` : `${width-360}px`,
-                    top: "80px"
                   }}
                   onSubmit={formReply.handleSubmit(doRespond)}>
                     <FormField
@@ -378,14 +401,14 @@ export const MessageItem = ({
                       )}
                     />
                     <Button disabled={isLoading2} size="sm" variant="primary">
-                      Save
+                      Send
                     </Button>
+                    <span className="text-[10px] mt-1 text-zinc-400">
+                    Press escape to cancel, enter to save
+                  </span>
                 </form>
-                <span className="text-[10px] mt-1 text-zinc-400">
-                  Press escape to cancel, enter to save
-                </span>
               </Form>
-        )}      
+        )}       */}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
         {canDeleteMessage && !isReplying && (
           <div className="group-hover:flex">
@@ -412,7 +435,7 @@ export const MessageItem = ({
         {!isEditing && !isReplying && (
               <ActionTooltip label="Reply">
                 <Reply
-                  onClick={() => setIsReplying(true)}
+                  onClick={() => onOpen("ReplyMessage",{messageId:id,memberPropAPI:messageMemberProp,apiUrl: channelId})}
                   className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
                 />
               </ActionTooltip>
@@ -420,6 +443,7 @@ export const MessageItem = ({
         </div>
       </div>
     </div>   
+  </div>
   )
   }
  

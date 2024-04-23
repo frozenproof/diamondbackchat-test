@@ -16,13 +16,18 @@ export type DirectChannelWithProfile = DirectChannel & {
                                       memberOne: UserProfile,
                                       memberTwo: UserProfile
                                     }
-
+export type MessageWithMemberWithProfile = Message & {
+  member: Member & {
+    userProfile: UserProfile
+  };
+}
 
 export type MessageWithMemberWithProfileWithFile = Message & {
         member: Member & {
           userProfile: UserProfile
         };
         AttachmentChannel: AttachmentChannel[];
+        messageParent: MessageWithMemberWithProfile;
       } 
 
 export type DirectMessageWithProfileWithFile = DirectMessage & {

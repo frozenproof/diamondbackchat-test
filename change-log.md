@@ -226,4 +226,13 @@
 - adding reply function
 - adding reply route
 
+# 23/4
+- added version check for server settings
+- added reply system
+- added reply prompt
+- updated chat socket
+- added reply handler
+- still need to fix the issue with channel get
+- reply system is functional
+- we will be fine
 

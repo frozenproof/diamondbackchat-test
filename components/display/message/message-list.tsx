@@ -129,8 +129,8 @@ export const ChatMessagesList = ({
               }             
 
               // console.log("this is message list file",message.AttachmentChannel)
-              let messageReplyId = message.messageParentId as string | undefined;
-              
+              console.log("this is message list file",message)
+              console.log("message birth time",message.createdAt)
               return (
                 <div
                   key={message.id}
@@ -152,6 +152,7 @@ export const ChatMessagesList = ({
                       // userProp={message.member.userProfile}
                       content={message.content}
                       hasAttachment={message.hasAttachment}
+                      channelId={message.channelId}
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                       attachmentsList={message.AttachmentChannel} 
@@ -159,7 +160,7 @@ export const ChatMessagesList = ({
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}
-                      replyId={messageReplyId}
+                      replyMessage={message.messageParent}
                       isContinious={isContiniousCock}
                     />
                   </div>

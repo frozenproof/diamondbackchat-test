@@ -4,7 +4,7 @@ import { Message } from "@prisma/client";
 import { currentUserProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
-const MESSAGES_BATCH_MAX = 28;
+const MESSAGES_BATCH_MAX = 20;
 
 export async function GET(
   req: Request
@@ -43,7 +43,8 @@ export async function GET(
               userProfile: true
             }
           },
-          AttachmentChannel: true
+          AttachmentChannel: true,
+          messageParent: true
         },
         orderBy: {
           createdAt: "desc",
@@ -62,7 +63,8 @@ export async function GET(
               userProfile: true
             }
           },
-          AttachmentChannel: true
+          AttachmentChannel: true,
+          messageParent: true
         },
         orderBy: {
           createdAt: "desc",

@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { useEffect } from "react";
+import { useSocket } from "@/components/providers/socket-provider";
 
 const formSchema = z.object({
     nickname: z.string().min(1,
@@ -35,9 +36,10 @@ const formSchema = z.object({
 export const ReplyMessagePrompt = () => {
     const { isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
+    const { socketActual } = useSocket();
 
     const isPromptOpen = isOpen && type === "ReplyMessage";
-    const { memberPropAPI }  = propData;
+    const { memberPropAPI,messageId,apiUrl }  = propData;
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -52,21 +54,23 @@ export const ReplyMessagePrompt = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try{
             const url = qs.stringifyUrl({
-                url: `/api/members/name-api`,
+                url: `/api/messages/channel-send`,        
                 query: {
                     serverId: memberPropAPI?.serverId,
-                },
+                    channelId: apiUrl
+                },        
             });
+            console.log("api url",url);
 
-            const result = await axios.patch(url, {memberId: memberPropAPI?.id, nickname2: values.nickname});
-            // console.log("api url",result);
+            const result = await axios.post(url, {checkMessageReplyId: messageId, content: values.nickname});
+            socketActual.emit("channel-input",`chat:${apiUrl}:messages`, result,"server-channel");
             form.reset();
             router.refresh();
             onClose();
         }
         catch(error)
         {
-            console.log(values);
+            console.log("we recieved an error",error);
         }
     }
 
@@ -76,9 +80,7 @@ export const ReplyMessagePrompt = () => {
     }
 
     useEffect(() => {
-        if(memberPropAPI){            
-        form.setValue("nickname",memberPropAPI.nickname);
-        }
+
     },[memberPropAPI, form])
     
     if(memberPropAPI)
@@ -88,11 +90,8 @@ export const ReplyMessagePrompt = () => {
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
-                            Edit your nickname
+                            Reply to {memberPropAPI.nickname}
                         </DialogTitle>
-                        <DialogDescription className="text-center">
-                            How you call yourself
-                        </DialogDescription>
                     </DialogHeader>
                     <Form  {...form}>
                         <form onSubmit = {form.handleSubmit(onSubmit)} 
@@ -103,14 +102,11 @@ export const ReplyMessagePrompt = () => {
                                 name = "nickname"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                                            Nick name
-                                        </FormLabel>
                                         <FormControl>
                                             <Input
                                                 disabled={isLoading}
                                                 className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                                                placeholder="Enter your nick name"
+                                                placeholder="Say something"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -122,7 +118,7 @@ export const ReplyMessagePrompt = () => {
                             <div className="text-center justify-center items-center bg-gray-100 px-6 py-4">
                                 <DialogFooter>
                                         <Button className="flex" disabled={isLoading} variant={"primary"}>
-                                            Save
+                                            Reply
                                         </Button>
                                 </DialogFooter>
                             </div>

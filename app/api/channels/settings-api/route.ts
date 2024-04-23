@@ -41,17 +41,31 @@ export async function PATCH(
           throw new Error("Unauthorized ");
         }
         
-        const channel = await db.channel.update({
+        const channel2 = await db.channel.findFirst({
+          where: {
+            id: channelId,
+            serverId: serverCheckAuth.id,
+            deleted: false
+          },
+        })
+
+        if(channel2)
+        {
+          const channel = await db.channel.update({
             where: {
-              id: channelId
+              id: channel2.id,
+              version: channel2.version
             },
             data: {
               name,
               type,
             },
           });
-      
+          
           return NextResponse.json(channel);
+        }
+        
+        return "how did you even get here ?";
         } catch (error) {
           console.log("[CHANNEL_ID_EDIT_PATCH]", error);
           return new NextResponse("Internal Error", { status: 500 });

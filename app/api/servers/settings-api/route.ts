@@ -12,19 +12,40 @@ export async function PATCH(
         if(!profile) {
             throw new Error("Unauthorized ");
         }
-        
-        const server = await db.server.update({
+
+        const serverVersion = await db.server.findFirst({
             where: {
                 id: serverId,
-                userProfileId: profile.id
             },
-            data: {
-                name,
-                imageUrl
+            select: {
+                version: true,
             }
         })
-
-        return NextResponse.json(server);
+        
+        if(serverVersion)
+        {
+            try {
+                const server = await db.server.update({
+                    where: {
+                        id: serverId,
+                        userProfileId: profile.id,
+                        version: serverVersion.version
+                    },
+                    data: {
+                        name,
+                        imageUrl
+                    }
+                })
+                return NextResponse.json(server);
+            }
+            catch {
+                return new NextResponse("Server version was updated during run time");
+            }
+        }
+        if(!serverVersion)
+        {
+            return new NextResponse("No server detected during run time");
+        }
     }
     catch(error) {
         console.log("[SERVER_ID_SETTING",error);

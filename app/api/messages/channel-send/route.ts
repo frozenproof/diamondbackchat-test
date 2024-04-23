@@ -21,7 +21,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        console.log("This is check file",checkMessageReplyId);
+        // console.log("This is check file",checkMessageReplyId);
         const serverAPI = await db.server.findFirst({
           where: {
             id: serverIdProp as string,
@@ -89,16 +89,35 @@ export async function POST(req: Request){
               messageParentId: checkMessageReplyId,
               version: {
                 increment: 1
-              }
+              },
+              createdAt: new Date(),
+              updatedAt: new Date()
             }
           })
+          const message3 = await db.message.findFirst({
+            where: {
+              id: message2.id,
+            },
+            include: {
+              // userProfile: true,
+              member: {
+                include: {
+                  userProfile: true
+                }
+              },
+              AttachmentChannel: true,
+              messageParent: true
+            }
+          });
+          console.log("testing reply", message3)
+         return NextResponse.json(message3);
+
         }
 
         const channelKey = `chat:${channelIdProp}:messages`;
         console.log("this is channel key",channelKey);
-
-        
         return NextResponse.json(message);
+        
       } catch (error) {
         console.log("CHANNELS_POST", error);
         return new NextResponse("Internal Error", { status: 500 });

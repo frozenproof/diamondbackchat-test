@@ -16,6 +16,7 @@ import { UserProfilePrompt } from "../prompts/user/user-profile-prompt";
 import { EditUserPrompt } from "../prompts/user/edit-user-prompt";
 import { EditMemberNicknamePrompt } from "../prompts/user/edit-member-prompt";
 import { BanMemberPrompt } from "../prompts/user/ban-member-prompt";
+import { ReplyMessagePrompt } from "../prompts/message/reply-message-prompt";
 
 export const PromptProvider = () => {
     const [isMounted,setIsMounted] = useState(false);
@@ -46,6 +47,7 @@ export const PromptProvider = () => {
             <EditUserPrompt />
             <EditMemberNicknamePrompt />
             <BanMemberPrompt />
+            <ReplyMessagePrompt />
         </>
     )
 }

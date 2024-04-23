@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DirectMessage, Member, Message, UserProfile } from "@prisma/client";
 
 import { useSocket } from "@/components/providers/socket-provider";
+import { DirectMessageWithProfileWithFile, MessageWithMemberWithProfileWithFile } from "@/type";
 
 type ChatSocketProps = {
   addKey: string;
@@ -12,15 +13,7 @@ type ChatSocketProps = {
   queryKey: string;
 }
 
-type MessageWithMemberWithProfile = Message & {
-  member: Member & {
-    profile: UserProfile;
-  }
-}
 
-type DirectMessageWithProfile = DirectMessage & {
-  userProfile: UserProfile ; 
-}
 export const useChatSocket = ({
   addKey,
   updateKey,
@@ -46,7 +39,7 @@ export const useChatSocket = ({
       console.log("GOT THE MESSAGE");
     })
   
-    socketActual.on(updateKey, (message: MessageWithMemberWithProfile,typesend: string) => {
+    socketActual.on(updateKey, (message: MessageWithMemberWithProfileWithFile,typesend: string) => {
       console.log(`we are updated`)
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
@@ -56,7 +49,7 @@ export const useChatSocket = ({
         const newData = oldData.pages.map((page: any) => {
           return {
             ...page,
-            items: page.items.map((item: MessageWithMemberWithProfile) => {
+            items: page.items.map((item: MessageWithMemberWithProfileWithFile) => {
               if (item.id === message.id) {
                 return message;
               }
@@ -74,14 +67,14 @@ export const useChatSocket = ({
 
     socketActual.on(addKey, (message: any,typesend: string) => {
       console.log("we heard you, this actually just take items as they are items without types, so we added the type as additional respond ", typesend)
-      var messageReal: MessageWithMemberWithProfile | DirectMessageWithProfile;
+      var messageReal: MessageWithMemberWithProfileWithFile | DirectMessageWithProfileWithFile;
       if(typesend === "server-channel")
       {
-        messageReal = message as MessageWithMemberWithProfile;
+        messageReal = message as MessageWithMemberWithProfileWithFile;
       }
       else if(typesend === "direct-input")
       {
-        messageReal = message as DirectMessageWithProfile;
+        messageReal = message as DirectMessageWithProfileWithFile;
       }
       console.log("chat socket is saying",message)
       queryClient.setQueryData([queryKey], (oldData: any) => {

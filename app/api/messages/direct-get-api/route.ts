@@ -52,7 +52,9 @@ export async function GET(
         },
         include: {
           userProfile: true,          
-          AttachmentDirect: true
+          AttachmentDirect: true,
+          messageParent: true
+
         },
         orderBy: {
           createdAt: "desc",

@@ -9,9 +9,8 @@ import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { OldChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { Suspense, createContext, useState } from "react";
+import { Suspense,  } from "react";
 
-const messageIdContext = createContext;
 
 const ChannelIdPage = async ({
   params,
