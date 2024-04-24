@@ -49,7 +49,7 @@ export const DirectMessageInput = ({
   });
 
   const isLoading = form.formState.isSubmitting;
-  const channelId = query.directChatId;
+  const channelId = query.channelId;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {

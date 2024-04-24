@@ -157,8 +157,8 @@ export const DirectChatMessages = ({
                       attachmentsList={message.AttachmentDirect}
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                      // isUpdated={message.edited}
-                      isUpdated={message.updatedAt !== message.createdAt}
+                      isUpdated={message.edited}
+                      // isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}

@@ -240,3 +240,10 @@
 - added proper fix for reply
 - fixed database where the direct channel id could be null
 - added proper api support for reply
+
+- added proper reply function
+- strange bug in prisma where updated at is overwriting my update
+- added channel check for reply prompt
+- added proper ui support for reply display
+- we are ready for deployment 
+- another day to fight 

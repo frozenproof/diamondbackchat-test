@@ -412,7 +412,7 @@ export const MessageItem = ({
         {!isEditing && !isReplying && (
               <ActionTooltip label="Reply">
                 <Reply
-                  onClick={() => onOpen("ReplyMessage",{messageId:id,memberPropAPI:messageMemberProp,apiUrl: channelId})}
+                  onClick={() => onOpen("ReplyMessage",{messageId:id,memberPropAPI:messageMemberProp,apiUrl: channelId,isChannelSend: true})}
                   className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
                 />
               </ActionTooltip>

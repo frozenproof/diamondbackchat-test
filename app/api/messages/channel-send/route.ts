@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request){
     try{
         const profile = await currentUserProfile();
-        const { content,checkMessageReplyId } = await req.json();
+        const { content,checkMessageReplyId,isReplyAPI } = await req.json();
         const { searchParams } = new URL(req.url);
     
         const serverIdProp = searchParams.get("serverId");
@@ -78,7 +78,7 @@ export async function POST(req: Request){
             }
         });
 
-        if(checkMessageReplyId !== "lmaoREPLY" && (checkMessageReplyId!== null || checkMessageReplyId !== undefined))
+        if(checkMessageReplyId !== "lmaoREPLY" && (checkMessageReplyId!== null || checkMessageReplyId !== undefined) && isReplyAPI === true)
         {
           const message2 = await db.message.update({
             where: {

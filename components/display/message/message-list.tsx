@@ -158,7 +158,8 @@ export const ChatMessagesList = ({
                       deleted={message.deleted}
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                       attachmentsList={message.AttachmentChannel} 
-                      isUpdated={message.updatedAt !== message.createdAt}
+                      isUpdated={message.edited}
+                      // isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}

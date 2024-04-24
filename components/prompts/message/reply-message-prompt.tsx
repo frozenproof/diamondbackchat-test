@@ -30,7 +30,7 @@ import { useEffect } from "react";
 import { useSocket } from "@/components/providers/socket-provider";
 
 const formSchema = z.object({
-    nickname: z.string().min(1,
+    content: z.string().min(1,
         "Reply must not be empty")
 })
 export const ReplyMessagePrompt = () => {
@@ -39,12 +39,12 @@ export const ReplyMessagePrompt = () => {
     const { socketActual } = useSocket();
 
     const isPromptOpen = isOpen && type === "ReplyMessage";
-    const { memberPropAPI,messageId,apiUrl }  = propData;
+    const { memberPropAPI,messageId,apiUrl,isChannelSend,userProfilePropAPI }  = propData;
 
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues:{
-            nickname: "",
+            content: "",
         }
     }); 
 
@@ -54,7 +54,7 @@ export const ReplyMessagePrompt = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) =>{
         try{
             const url = qs.stringifyUrl({
-                url: `/api/messages/channel-send`,        
+                url: (isChannelSend === true) ? `/api/messages/channel-send` : `/api/messages/direct-channel-send`,        
                 query: {
                     serverId: memberPropAPI?.serverId,
                     channelId: apiUrl
@@ -62,7 +62,7 @@ export const ReplyMessagePrompt = () => {
             });
             console.log("api url",url);
 
-            const result = await axios.post(url, {checkMessageReplyId: messageId, content: values.nickname});
+            const result = await axios.post(url, {checkMessageReplyId: messageId, content: values.content, isReplyAPI: true});
             socketActual.emit("channel-input",`chat:${apiUrl}:messages`, result,"server-channel");
             form.reset();
             router.refresh();
@@ -99,7 +99,7 @@ export const ReplyMessagePrompt = () => {
                             <div className="space-y-8 px-6">
                                 <FormField 
                                 control={form.control} 
-                                name = "nickname"
+                                name = "content"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormControl>

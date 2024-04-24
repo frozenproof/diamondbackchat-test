@@ -80,7 +80,7 @@ const DirectChatMemberIdPage = async ({
                   channelName={otherMember.name}
                   apiUrl="/api/messages/direct-channel-send"
                   query={{
-                    directChatId: direct.id,
+                    channelId: direct.id,
                   }}
                 />
               </>

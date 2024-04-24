@@ -20,6 +20,7 @@ interface PromptAPIData {
     userProfilePropAPI?: UserProfile;
     currentUserPropAPIID?: string;
     banList?: BanWithMemberWithProfile[];
+    isChannelSend?: boolean;
   }
 
 interface PromptStoredInfo {

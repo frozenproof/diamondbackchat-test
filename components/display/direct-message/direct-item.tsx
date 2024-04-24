@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AttachmentDirect, UserProfile } from "@prisma/client";
 import axios from "axios";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Reply, ReplyIcon, Trash } from "lucide-react";
 import qs from "query-string";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,7 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { format } from "date-fns";
 import { FilesDisplay } from "../many-aux/files-display-message";
-import { DirectChannelMessageWithProfile, DirectMessageWithProfileWithFile } from "@/type";
+import { DirectChannelMessageWithProfile } from "@/type";
 
 interface ChatItemProps {
   id: string;
@@ -67,6 +67,7 @@ export const DirectMessageItem = ({
   channelId
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
+  const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
 
@@ -134,13 +135,44 @@ export const DirectMessageItem = ({
   const canEditMessage = !deleted && isSender ;
 
   const currentUserProp = currentUser;
-  const directUserProp = UserProp;
+  const directMessageUserProp = UserProp;
   const { width } = useWindowDimensions();
  
   if(id)
   {
     return (
-
+      <div
+      className={`flex flex-col `}  
+    >
+      {isReply && replyMessage && (     
+          <div
+          className="flex text-xs w-full"
+          style={{
+            paddingLeft: (width<769) ? `${44}px` : `${56}px`,
+          }}
+          >
+            <ReplyIcon 
+              style={
+                {
+                  height: "12px"
+                }
+              }
+            /> 
+            <div
+                style={{
+                  width: (width<769) ? `${width-150}px` : `${width-420}px`,
+                  display: "flex"
+                }}
+             >
+              {replyMessage.userProfile.name} said: {replyMessage.content}          
+              {hasAttachment && (
+                <div>
+                  Attachment
+                </div>
+              )}
+            </div>
+          </div>     
+      )}
       <div
         className={`flex ${ (activeId) ? `bg-black/5` : `` }`}
         onMouseEnter={() => {setActiveElementOnHover()}}
@@ -180,14 +212,14 @@ export const DirectMessageItem = ({
           <div className="group flex gap-x-2 items-start w-full">    
               <div 
                 className="cursor-pointer hover:drop-shadow-md transition"
-                onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)}
+                onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directMessageUserProp, currentUserPropAPIID: currentUserProp.id },)}
               >
-                <UserProfileAvatar src={directUserProp.imageUrl} />
+                <UserProfileAvatar src={directMessageUserProp.imageUrl} />
               </div>
             <div className="flex flex-col w-full">
                 <div className="flex items-center gap-x-2">
                   <div className="flex items-center">
-                    <p onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directUserProp, currentUserPropAPIID: currentUserProp.id },)} className="font-semibold text-sm hover:underline cursor-pointer">
+                    <p onClick={()=>onOpen("UserProfileDisplay", {userProfilePropAPI:directMessageUserProp, currentUserPropAPIID: currentUserProp.id },)} className="font-semibold text-sm hover:underline cursor-pointer">
                       {UserProp.name}
                     </p>
                   </div>
@@ -350,8 +382,17 @@ export const DirectMessageItem = ({
             </ActionTooltip>
           </div>
         )}
+        {!isEditing && !isReplying && (
+              <ActionTooltip label="Reply">
+                <Reply
+                  onClick={() => onOpen("ReplyMessage",{messageId:id,userProfilePropAPI:directMessageUserProp,apiUrl: channelId,isChannelSend: false})}
+                  className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                />
+              </ActionTooltip>
+        )}
       </div>
     </div> 
+  </div>  
   )
   }
   // else

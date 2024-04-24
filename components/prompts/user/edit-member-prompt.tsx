@@ -77,7 +77,7 @@ export const EditMemberNicknamePrompt = () => {
 
     useEffect(() => {
         if(memberPropAPI){            
-        form.setValue("nickname",memberPropAPI.nickname);
+        form.setValue("content",memberPropAPI.nickname);
         }
     },[memberPropAPI, form])
     
@@ -100,7 +100,7 @@ export const EditMemberNicknamePrompt = () => {
                             <div className="space-y-8 px-6">
                                 <FormField 
                                 control={form.control} 
-                                name = "nickname"
+                                name = "content"
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
