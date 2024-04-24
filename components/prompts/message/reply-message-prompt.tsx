@@ -19,7 +19,6 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -38,6 +37,7 @@ export const ReplyMessagePrompt = () => {
     const router = useRouter();
     const { socketActual } = useSocket();
 
+    console.log("bug detected")
     const isPromptOpen = isOpen && type === "ReplyMessage";
     const { memberPropAPI,messageId,apiUrl,isChannelSend,userProfilePropAPI }  = propData;
 
@@ -83,14 +83,14 @@ export const ReplyMessagePrompt = () => {
 
     },[memberPropAPI, form])
     
-    if(memberPropAPI)
+    if(messageId )
     {
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
                 <DialogContent className="bg-white text-black p-0 overflow-hidden">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
-                            Reply to {memberPropAPI.nickname}
+                            Reply to {memberPropAPI?.nickname} {userProfilePropAPI?.name}
                         </DialogTitle>
                     </DialogHeader>
                     <Form  {...form}>

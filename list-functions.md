@@ -27,6 +27,7 @@
 |   Message Edit Direct Channel          |  [x]	|   	
 |   Message Delete Channel               |  [x]	|   	
 |   Message Delete Direct Channel        |  [x]	|   	
+|   Message Reply                        |  [X] |   	
 |   Emoji In Message                     |  [x]	|   	
 |   Member List 	                     |  [x]	|   	
 |   Member Nickname	                     |  [x]	|   	
@@ -66,7 +67,6 @@
 # Working 
 |   Working	                             |   Status	
 |---	                                 |---		
-|   Message Reply                        |  [w] |   	
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] | 
 |   Handling Request Return Properly     |  [w] |  

@@ -131,8 +131,10 @@ export const DirectMessageItem = ({
   const DATE_FORMAT_CONTINIOUS = "HH:mm";
 
   const isSender = currentUser.id === UserProp.id;
-  const canDeleteMessage = !deleted && (isSender);
+  const canDeleteMessage = !deleted && isSender;
   const canEditMessage = !deleted && isSender ;
+  // console.log("this is direct item check",currentUser.id,"\n",UserProp.id)
+  // console.log("this is direct bool check",canDeleteMessage,"\n",canEditMessage)
 
   const currentUserProp = currentUser;
   const directMessageUserProp = UserProp;
@@ -360,8 +362,9 @@ export const DirectMessageItem = ({
             )}
           </div>
         )}
+        <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
         {canDeleteMessage && (
-          <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
+          <div className="group-hover:flex">
             {canEditMessage && (
               <ActionTooltip label="Edit">
                 <Edit
@@ -373,7 +376,7 @@ export const DirectMessageItem = ({
             <ActionTooltip label="Delete">
               <Trash
                 onClick={() => onOpen("DeleteMessage", { 
-                  apiUrl: `${socketUrl}/direct-channel-delete`,
+                  apiUrl: `${socketUrl}/channel-delete`,
                   query: socketQuery,
                   messageId: id
                 })}
@@ -382,7 +385,7 @@ export const DirectMessageItem = ({
             </ActionTooltip>
           </div>
         )}
-        {!isEditing && !isReplying && (
+        {!isEditing && (
               <ActionTooltip label="Reply">
                 <Reply
                   onClick={() => onOpen("ReplyMessage",{messageId:id,userProfilePropAPI:directMessageUserProp,apiUrl: channelId,isChannelSend: false})}
@@ -390,6 +393,8 @@ export const DirectMessageItem = ({
                 />
               </ActionTooltip>
         )}
+        </div>
+
       </div>
     </div> 
   </div>  

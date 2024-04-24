@@ -247,3 +247,11 @@
 - added proper ui support for reply display
 - we are ready for deployment 
 - another day to fight 
+
+- fixed bug in reply prompt 
+- added proper reply for direct channel
+- another day to fight
+
+
+
+
