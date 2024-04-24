@@ -252,6 +252,7 @@
 - added proper reply for direct channel
 - another day to fight
 
-
+- added proper size for the video player for file display
+- i need more sleep and i want to kill more people
 
 

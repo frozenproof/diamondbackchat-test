@@ -132,7 +132,6 @@ export const DirectMessageItem = ({
 
   const isSender = currentUser.id === UserProp.id;
   const canDeleteMessage = !deleted && isSender;
-  const canEditMessage = !deleted && isSender ;
   // console.log("this is direct item check",currentUser.id,"\n",UserProp.id)
   // console.log("this is direct bool check",canDeleteMessage,"\n",canEditMessage)
 
@@ -363,16 +362,14 @@ export const DirectMessageItem = ({
           </div>
         )}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-        {canDeleteMessage && (
-          <div className="group-hover:flex">
-            {canEditMessage && (
+        {canDeleteMessage && !isReplying && !isEditing && (
+          <div className="group-hover:flex">            
               <ActionTooltip label="Edit">
                 <Edit
                   onClick={() => setIsEditing(true)}
                   className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
                 />
-              </ActionTooltip>
-            )}
+              </ActionTooltip>            
             <ActionTooltip label="Delete">
               <Trash
                 onClick={() => onOpen("DeleteMessage", { 

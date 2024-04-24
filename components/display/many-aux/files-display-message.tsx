@@ -49,7 +49,7 @@ export const FilesDisplay = ({
                                     rel="noopener noreferrer"
                                     className="relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary "
                                     style={
-                                        {maxHeight:260,maxWidth:260}
+                                        {maxHeight:260,maxWidth:320}
                                     }
                                     >
                                     <Image
@@ -71,6 +71,9 @@ export const FilesDisplay = ({
                                         rel="noopener noreferrer"
                                         className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
                                         controls
+                                        style={
+                                            {maxHeight:260,maxWidth:480}
+                                        }
                                     >
                                         {file.name}
                                     </video>

@@ -28,6 +28,7 @@
 |   Message Delete Channel               |  [x]	|   	
 |   Message Delete Direct Channel        |  [x]	|   	
 |   Message Reply                        |  [X] |   	
+|   Direct Message Reply                 |  [x]	|   	
 |   Emoji In Message                     |  [x]	|   	
 |   Member List 	                     |  [x]	|   	
 |   Member Nickname	                     |  [x]	|   	
@@ -61,6 +62,7 @@
 |   Main	                             |   Status |	
 |---	                                 |---	|
 |   Main Page	                         |  [x] |   	
+|   Handling Request Return Properly     |  [x] |  
 
 
 
@@ -69,7 +71,6 @@
 |---	                                 |---		
 |   Message Notifications                |  [w] |   	
 |   Call Notifications                   |  [w] | 
-|   Handling Request Return Properly     |  [w] |  
 
 
 [y] Is planned ?

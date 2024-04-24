@@ -387,7 +387,7 @@ export const MessageItem = ({
           </div>
         )}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-        {canDeleteMessage && !isReplying && (
+        {canDeleteMessage && !isReplying && !isEditing && (
           <div className="group-hover:flex">
             {canEditMessage && (
               <ActionTooltip label="Edit">
@@ -409,7 +409,7 @@ export const MessageItem = ({
             </ActionTooltip>
           </div>
         )}
-        {!isEditing && !isReplying && (
+        {!isEditing && (
               <ActionTooltip label="Reply">
                 <Reply
                   onClick={() => onOpen("ReplyMessage",{messageId:id,memberPropAPI:messageMemberProp,apiUrl: channelId,isChannelSend: true})}
