@@ -38,7 +38,7 @@ app.prepare().then(() => {
     process.exit(1)
   })
   .listen(port, () => {
-    console.log(`> Ready on http://${hostname}:${port}`)
+    console.log(`> Cat is now running on http://${hostname}:${port}`)
   })
 
   const io = new ServerIO(httpServer,{
@@ -57,13 +57,17 @@ app.prepare().then(() => {
     console.log("This is from server")
     socket.emit("hello", "this is server socket, say cheese");
 
-
     socket.on("channel-input",function(arg1_channelId,arg2_message_item,arg3_type_channel) {
       // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
       socket.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
       })
   
+    socket.on("channel-update",function(arg1_channelId,arg2_message_item) {
+      // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
+      // socket.broadcast.emit(arg1,arg2);
+      socket.emit(arg1_channelId,arg2_message_item)
+      })
     socket.on("channel-typing",function(arg1_channelId,arg2_identity) {
       // console.log("data from channel update",arg1_channelId,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
@@ -74,10 +78,10 @@ app.prepare().then(() => {
       io.emit("forced_popup",arg1_user);
     })
     
-    socket.onAny((event, ...args) => {
-      console.log(`got ${event}`);
-      // console.log(`data from server.mjs is ${args}`);
-    });
+    // socket.onAny((event, ...args) => {
+      // console.log(`got ${event}`);
+    //   // console.log(`data from server.mjs is ${args}`);
+    // });
   });
 })
 

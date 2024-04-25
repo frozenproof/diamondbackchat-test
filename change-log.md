@@ -255,4 +255,7 @@
 - added proper size for the video player for file display
 - i need more sleep and i want to kill more people
 
-
+# 25/4
+- added proper update socket check
+- added changes for api for message send and edit
+- added server socket for update

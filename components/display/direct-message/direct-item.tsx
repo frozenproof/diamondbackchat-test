@@ -24,6 +24,7 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { format } from "date-fns";
 import { FilesDisplay } from "../many-aux/files-display-message";
 import { DirectChannelMessageWithProfile } from "@/type";
+import { useSocket } from "@/components/providers/socket-provider";
 
 interface ChatItemProps {
   id: string;
@@ -67,7 +68,7 @@ export const DirectMessageItem = ({
   channelId
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
-  const [isReplying, setIsReplying] = useState(false);
+  const { socketActual } = useSocket();
   const [isEditing, setIsEditing] = useState(false);
   const { onOpen } = usePrompt();
 
@@ -92,7 +93,7 @@ export const DirectMessageItem = ({
     return () => window.removeEventListener("keyDown", handleKeyDown);
   }, []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const formMessageItem = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       content: content,
@@ -100,7 +101,7 @@ export const DirectMessageItem = ({
   });
  
   // console.log("What the fuck");
-  const isLoading = form.formState.isSubmitting;
+  const isLoading = formMessageItem.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -113,9 +114,11 @@ export const DirectMessageItem = ({
         content: (values.content),
         id: id
       };
-      await axios.patch(url, contents);
-
-      form.reset();
+      const testSend = await axios.patch(url, contents);
+      const messageData = testSend.data ;
+      socketActual.emit("channel-update",`chat:${messageData.directChannelId}:update`, messageData);
+      
+      formMessageItem.reset();
       setIsEditing(false);
     } catch (error) {
       console.log(error);
@@ -123,17 +126,17 @@ export const DirectMessageItem = ({
   }
   useEffect(() => {
 
-    form.reset({
+    formMessageItem.reset({
       content: content,
     })
-  }, [content,form]);
+  }, [content,formMessageItem]);
 
   const DATE_FORMAT_CONTINIOUS = "HH:mm";
 
   const isSender = currentUser.id === UserProp.id;
-  const canDeleteMessage = !deleted && isSender;
+  const canDeleteMessage = !deleted && (isSender);
   // console.log("this is direct item check",currentUser.id,"\n",UserProp.id)
-  // console.log("this is direct bool check",canDeleteMessage,"\n",canEditMessage)
+  // console.log("this is direct bool check",canDeleteMessage,"\n",canDeleteMessage)
 
   const currentUserProp = currentUser;
   const directMessageUserProp = UserProp;
@@ -255,16 +258,16 @@ export const DirectMessageItem = ({
                 </div>
               )}
               {isEditing && (
-                <Form {...form}>
+                <Form {...formMessageItem}>
                   <form 
                     className="flex items-center w-full gap-x-2 pt-2"
                     style={{
                       overflowWrap: "break-word",
                       width: (width<769) ? `${width-80}px` : `${width-360}px`
                     }}
-                    onSubmit={form.handleSubmit(onSubmit)}>
+                    onSubmit={formMessageItem.handleSubmit(onSubmit)}>
                       <FormField
-                        control={form.control}
+                        control={formMessageItem.control}
                         name="content"
                         render={({ field }) => (
                           <FormItem className="flex-1">
@@ -324,16 +327,16 @@ export const DirectMessageItem = ({
               </div>
             )}
             {isEditing && (
-              <Form {...form}>
+              <Form {...formMessageItem}>
                 <form 
                   className="flex items-center w-full gap-x-2 pt-2"
                   style={{
                     overflowWrap: "break-word",
                     width: (width<769) ? `${width-80}px` : `${width-360}px`
                   }}
-                  onSubmit={form.handleSubmit(onSubmit)}>
+                  onSubmit={formMessageItem.handleSubmit(onSubmit)}>
                     <FormField
-                      control={form.control}
+                      control={formMessageItem.control}
                       name="content"
                       render={({ field }) => (
                         <FormItem className="flex-1">
@@ -362,7 +365,7 @@ export const DirectMessageItem = ({
           </div>
         )}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-        {canDeleteMessage && !isReplying && !isEditing && (
+        {canDeleteMessage && !isEditing && (
           <div className="group-hover:flex">            
               <ActionTooltip label="Edit">
                 <Edit

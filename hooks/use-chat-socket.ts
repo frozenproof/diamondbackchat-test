@@ -36,11 +36,11 @@ export const useChatSocket = ({
     });
 
     socketActual.on("forced_popup",(arg1: any) => {
-      console.log("GOT THE MESSAGE");
+      console.log("GOT THE MESSAGE",arg1);
     })
   
-    socketActual.on(updateKey, (message: MessageWithMemberWithProfileWithFile,typesend: string) => {
-      console.log(`we are updated`)
+    socketActual.on(updateKey, (message: any,typesend: string) => {
+      // console.log(`we are updated`);
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;
@@ -49,7 +49,7 @@ export const useChatSocket = ({
         const newData = oldData.pages.map((page: any) => {
           return {
             ...page,
-            items: page.items.map((item: MessageWithMemberWithProfileWithFile) => {
+            items: page.items.map((item: any) => {
               if (item.id === message.id) {
                 return message;
               }
@@ -66,7 +66,7 @@ export const useChatSocket = ({
     });
 
     socketActual.on(addKey, (message: any,typesend: string) => {
-      console.log("we heard you, this actually just take items as they are items without types, so we added the type as additional respond ", typesend)
+      // console.log("we heard you, this actually just take items as they are items without types, so we added the type as additional respond ", typesend)
       var messageReal: MessageWithMemberWithProfileWithFile | DirectMessageWithProfileWithFile;
       if(!message.createdAt)
       {

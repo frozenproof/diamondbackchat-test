@@ -37,7 +37,6 @@ export const ReplyMessagePrompt = () => {
     const router = useRouter();
     const { socketActual } = useSocket();
 
-    console.log("bug detected")
     const isPromptOpen = isOpen && type === "ReplyMessage";
     const { memberPropAPI,messageId,apiUrl,isChannelSend,userProfilePropAPI }  = propData;
 

@@ -41,7 +41,7 @@ export const DirectChatMessages = ({
   // console.log("DirectChatMessages");
   const queryKey = `chat:${directChatId}`;
   const addKey = `chat:${directChatId}:messages`;
-  const updateKey = `chat:${directChatId}:messages:update` 
+  const updateKey = `chat:${directChatId}:update`; 
 
   console.log("after useWindowDimensions")
   const chatRef = useRef<ElementRef<"div">>(null);

@@ -74,12 +74,11 @@ export const MessageInput = ({
       
       // console.log("Input log before emitting",testSend);
       socketActual.emit("channel-input",`chat:${messageData.channelId}:messages`, messageData,"server-channel");
-      if(messageData)
-      toast({
-        description: "Sent",
-      })
- 
-      
+      // if(messageData)
+      // toast({
+      //   description: "Sent",
+      // })
+       
     } catch (error) {
       console.log(error);
     }

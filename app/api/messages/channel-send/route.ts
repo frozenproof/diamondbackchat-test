@@ -78,7 +78,7 @@ export async function POST(req: Request){
             }
         });
 
-        if(checkMessageReplyId !== "lmaoREPLY" && (checkMessageReplyId!== null || checkMessageReplyId !== undefined) && isReplyAPI === true)
+        if((checkMessageReplyId!== null || checkMessageReplyId !== undefined) && isReplyAPI === true)
         {
           const message2 = await db.message.update({
             where: {

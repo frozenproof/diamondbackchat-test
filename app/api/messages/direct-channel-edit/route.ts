@@ -20,8 +20,8 @@ export async function PATCH(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        console.log("This is check content",content);
-        console.log("This is check file",id);
+        // console.log("This is check content",content);
+        // console.log("This is check file",id);
 
 
         const channel = await db.directChannel.findFirst({

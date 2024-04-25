@@ -73,7 +73,24 @@ export async function PATCH(req: Request){
             edited: true
           },
           include: {
-            member: true
+            member: {
+              include: {
+                userProfile: {
+                  select: {
+                    imageUrl: true
+                  }
+                }
+              }
+            },
+            messageParent: {
+              include: {
+                member: {
+                  select: {
+                    nickname: true
+                  }
+                }
+              }
+            }
             }
         });
 

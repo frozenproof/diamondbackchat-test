@@ -26,6 +26,7 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { MemberWithProfile, MessageWithMemberWithProfile } from "@/type";
 import { format } from "date-fns";
 import { FilesDisplay } from "../many-aux/files-display-message";
+import { useSocket } from "@/components/providers/socket-provider";
 
 interface ChatItemProps {
   id: string;
@@ -67,8 +68,8 @@ export const MessageItem = ({
   channelId
 }: ChatItemProps) => {
   const [activeId, setActiveId] = useState(false);
-  const [isReplying, setIsReplying] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const { socketActual } = useSocket();
   const { onOpen } = usePrompt();
 
   const setActiveElementOnHover = () => {
@@ -85,7 +86,6 @@ export const MessageItem = ({
     const handleKeyDown = (event: any) => {
       if (event.key === "Escape" || event.keyCode === 27) {
         setIsEditing(false);
-        setIsReplying(false)
       }
     };
 
@@ -109,7 +109,6 @@ export const MessageItem = ({
     },
   });
 
-  const isLoading2 = formReply.formState.isSubmitting;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
@@ -120,8 +119,10 @@ export const MessageItem = ({
         content: (values.content),
         id: id
       };
-      await axios.patch(url, contents);
-
+      const testSend = await axios.patch(url, contents);
+      const messageData = testSend.data ;
+      socketActual.emit("channel-update",`chat:${messageData.channelId}:update`, messageData);
+      
       formMessageItem.reset();
       setIsEditing(false);
     } catch (error) {
@@ -129,25 +130,6 @@ export const MessageItem = ({
     }
   }
 
-  const doRespond = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const url = qs.stringifyUrl({
-        url: `${socketUrl}/channel-edit`,
-        query: socketQuery,
-      });
-      const contents = {
-        content: (values.content),
-        id: id
-      };
-      await axios.patch(url, contents);
-
-      formReply.reset();
-      setIsReplying(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
   useEffect(() => {
     formMessageItem.reset({
       content: content,
@@ -387,7 +369,7 @@ export const MessageItem = ({
           </div>
         )}
         <div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
-        {canDeleteMessage && !isReplying && !isEditing && (
+        {canDeleteMessage && !isEditing && (
           <div className="group-hover:flex">
             {canEditMessage && (
               <ActionTooltip label="Edit">

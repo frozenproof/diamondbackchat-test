@@ -28,6 +28,8 @@
 |   Message Delete Channel               |  [x]	|   	
 |   Message Delete Direct Channel        |  [x]	|   	
 |   Message Reply                        |  [X] |   	
+|   Message Respond Socket               |  [x]	|   	
+|   Direct Message Socket                |  [x]	|   	
 |   Direct Message Reply                 |  [x]	|   	
 |   Emoji In Message                     |  [x]	|   	
 |   Member List 	                     |  [x]	|   	

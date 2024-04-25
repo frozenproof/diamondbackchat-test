@@ -19,7 +19,7 @@ export async function POST(req: Request){
           return new NextResponse("Server ID missing", { status: 400 });
         }
     
-        console.log("This is check file",checkMessageReplyId);
+        // console.log("This is check file",checkMessageReplyId);
 
         const channel = await db.directChannel.findFirst({
           where: {
@@ -50,7 +50,7 @@ export async function POST(req: Request){
             }
         });
 
-        if(checkMessageReplyId !== "lmaoREPLY" && (checkMessageReplyId!== null || checkMessageReplyId !== undefined) && isReplyAPI === true)
+        if((checkMessageReplyId!== null || checkMessageReplyId !== undefined) && isReplyAPI === true)
         {
           const message2 = await db.directMessage.update({
             where: {
