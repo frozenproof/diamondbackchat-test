@@ -22,7 +22,7 @@ app.prepare().then(() => {
       const parsedUrl = parse(req.url, true)
       const { pathname, query } = parsedUrl
 
-      if (pathname === '/') {
+      if (pathname === '/' || pathname === ':10000/') {
         await app.render(req, res, '/')
       } else {
         await handler(req, res, parsedUrl, query)

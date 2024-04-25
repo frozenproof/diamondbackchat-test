@@ -259,3 +259,5 @@
 - added proper update socket check
 - added changes for api for message send and edit
 - added server socket for update
+
+- added password field to user database for the first time 
