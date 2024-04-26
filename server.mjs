@@ -85,7 +85,7 @@ app.prepare().then(() => {
     socket.on("calling_user",function(arg1_user_recipient,arg2_user_request){
       console.log(`data from server.mjs is`,arg1_user_recipient,"\n",arg2_user_request);
       io.emit("calling_user_"+arg1_user_recipient,arg2_user_request);
-      io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
+      // io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
     })
     
     // console.log(io.sockets.adapter.rooms);

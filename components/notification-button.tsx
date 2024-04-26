@@ -5,7 +5,7 @@ import { Popover } from "./ui/popover"
 import { Bell } from "lucide-react"
 import { Card, CardContent, CardHeader } from "./ui/card"
 import { useSocket } from "./providers/socket-provider"
-import { useEffect } from "react"
+import { ElementRef, useEffect, useRef } from "react"
 import { UserProfile } from "@prisma/client"
 import { useToast } from "./ui/use-toast"
 
@@ -18,18 +18,22 @@ export const NotificationButton = (
 ) => {
     const {socketActual} = useSocket();
     const { toast } = useToast()
+    const notificationRef = useRef(Array());
 
     let tempNotifications: string[] = [];
-    var renderedOutput;
-    if (!socketActual) {
-        console.log("Socket is not running")
-        return;
-    }
+
 
     useEffect(() => {
-        console.log("UserSocket?");
+        if (!socketActual) {
+            console.log("Socket is not running")
+            return;
+        }
+        
+        // console.log("UserSocket?");
 
-        renderedOutput = tempNotifications.map(item => <div> {item} </div>);
+        notificationRef.current = tempNotifications.map(item => <div
+            key={Date().toString()}
+        > {item} </div>);
 
         socketActual.emit("personal-subcribe",userSocketId);
         
@@ -43,7 +47,7 @@ export const NotificationButton = (
             console.log("Other user on ",otherUserRequest);
             console.log("Message is calling",ACK);
             toast({
-                duration: 1008,
+                duration: 2808,
                 description: otherUserRequest.name+` is calling you`,
               })
             tempNotifications.push(otherUserRequest.name+` is calling you`)
@@ -58,7 +62,7 @@ export const NotificationButton = (
         socketActual.off("calling_user_"+userSocketId);
         socketActual.off(userSocketId);
       }
-    },[userSocketId,socketActual,renderedOutput,tempNotifications])
+    },[userSocketId,socketActual,tempNotifications])
 
     return (
         <Popover>
@@ -89,7 +93,9 @@ export const NotificationButton = (
                             }}
                             // className="bg-[#e78888]"
                         >
-                            {renderedOutput}
+                            <div
+                            >
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

@@ -268,3 +268,12 @@
 - added room system to save bandwidth for broadcasting in socket
 - added socket listener to notification button for specific user notification
 - removed unused comments in server mjs
+
+```
+29:5  Error: React Hook "useEffect" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+32:26  Warning: Assignments to the 'renderedOutput' variable from inside React Hook useEffect will be lost after each render. To preserve the value over time, store it in a useRef Hook and keep the mutable value in the '.current' property. Otherwise, you can move this variable directly inside useEffect.  react-hooks/exhaustive-deps
+32:56  Error: Missing "key" prop for element in iterator  react/jsx-key
+```
+- fixed and suppressed bugs listed in here
+- added health check api route
+

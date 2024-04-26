@@ -57,6 +57,8 @@
 |   User Block API                       |  [x] |  
 |   User Profile Popup	                 |  [x]	|   	
 |   Request Direct Chat     	         |  [x]	|   	
+|   Call Notifications                   |  [x] | 
+|   Infinite Message SCroll              |  [x]	|   	
 
 
 # Functional
@@ -72,7 +74,6 @@
 |   Working	                             |   Status	
 |---	                                 |---		
 |   Message Notifications                |  [w] |   	
-|   Call Notifications                   |  [w] | 
 
 
 [y] Is planned ?
