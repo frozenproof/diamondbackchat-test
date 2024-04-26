@@ -37,6 +37,9 @@ model UserProfile {
   FriendTwo         Friend[]        @relation("UserTwo")
   Blocker           Block[]         @relation("UserOne")
   Blocked           Block[]         @relation("UserTwo")
+
+  @@index([id])
+  @@index([userId])
 }
 
 model Server {
@@ -57,6 +60,7 @@ model Server {
   ServerInvite       ServerInvite[]
   Channel            Channel[]
 
+  @@index([id])
   @@index([userProfileId])
 }
 
