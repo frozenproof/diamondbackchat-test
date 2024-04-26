@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { DirectMessage, Member, Message, UserProfile } from "@prisma/client";
 
 import { useSocket } from "@/components/providers/socket-provider";
 import { DirectMessageWithProfileWithFile, MessageWithMemberWithProfileWithFile } from "@/type";
@@ -29,17 +28,13 @@ export const useChatSocket = ({
       return;
     }
 
-    socketActual.onAny((event: any, ...args: any) => {
-      console.log(`got ${event}`);
-      console.log(`data from real chat socket is ${args}`);
-      // console.log("this is listened by use-chat-socket",addKey,updateKey,queryKey)
-    });
+    // socketActual.onAny((event: any, ...args: any) => {
+    //   console.log(`got ${event}`);
+    //   console.log(`data from real chat socket is ${args}`);
+    //   // console.log("this is listened by use-chat-socket",addKey,updateKey,queryKey)
+    // });
 
-    socketActual.on("forced_popup",(arg1: any) => {
-      console.log("GOT THE MESSAGE",arg1);
-    })
-  
-    socketActual.on(updateKey, (message: any,typesend: string) => {
+    socketActual.on(updateKey, (message: any) => {
       // console.log(`we are updated`);
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {

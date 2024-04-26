@@ -261,3 +261,10 @@
 - added server socket for update
 
 - added password field to user database for the first time 
+
+# 26/4
+- added video call notification
+- fixed npm issue with unfound package
+- added room system to save bandwidth for broadcasting in socket
+- added socket listener to notification button for specific user notification
+- removed unused comments in server mjs

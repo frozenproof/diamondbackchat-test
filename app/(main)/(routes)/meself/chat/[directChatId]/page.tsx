@@ -60,6 +60,7 @@ const DirectChatMemberIdPage = async ({
               name={otherMember.name}
               directChannelHeaderIdProp={direct.id}
               userProfileProp={profile}
+              otherUserIdSocket={otherMember.id}
             />
             <>
                 <DirectChatMessages

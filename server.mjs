@@ -57,6 +57,16 @@ app.prepare().then(() => {
     console.log("This is from server")
     socket.emit("hello", "this is server socket, say cheese");
 
+    socket.on("personal-subcribe", function(arg1_userId) {
+      try{
+        console.log('[socket]','join room :',arg1_userId)
+        socket.join(arg1_userId);
+        io.to(arg1_userId).emit(arg1_userId, socket.id,"this is from io");
+      }catch(e){
+        console.log('[error]','join room :',e);
+        socket.emit('error','couldnt perform requested action');
+      }
+    })
     socket.on("channel-input",function(arg1_channelId,arg2_message_item,arg3_type_channel) {
       // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
@@ -64,22 +74,23 @@ app.prepare().then(() => {
       })
   
     socket.on("channel-update",function(arg1_channelId,arg2_message_item) {
-      // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
-      // socket.broadcast.emit(arg1,arg2);
+
       socket.emit(arg1_channelId,arg2_message_item)
       })
     socket.on("channel-typing",function(arg1_channelId,arg2_identity) {
-      // console.log("data from channel update",arg1_channelId,arg3_type_channel);
-      // socket.broadcast.emit(arg1,arg2);
+
       socket.emit(arg1_channelId,arg2_identity)
       })
   
-    socket.on("overlay",function(arg1_user){
-      io.emit("forced_popup",arg1_user);
+    socket.on("calling_user",function(arg1_user_recipient,arg2_user_request){
+      console.log(`data from server.mjs is`,arg1_user_recipient,"\n",arg2_user_request);
+      io.emit("calling_user_"+arg1_user_recipient,arg2_user_request);
+      io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
     })
     
+    // console.log(io.sockets.adapter.rooms);
     // socket.onAny((event, ...args) => {
-      // console.log(`got ${event}`);
+    //   // console.log(`got ${event}`);
     //   // console.log(`data from server.mjs is ${args}`);
     // });
   });

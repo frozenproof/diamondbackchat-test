@@ -245,7 +245,9 @@ message list -> usechatquery -> useinfinitequery
     - Can mot state updater de theo doi reply
     - Can api route de reply
 
-
+# Day ?
+- Thiet ke he thong call
+- Bo sung he thong socket join
 
 
 

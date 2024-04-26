@@ -13,13 +13,15 @@ interface DirectHeaderProps {
     imageUrl: string;
     name: string;
     directChannelHeaderIdProp: string;
+    otherUserIdSocket: string;
   }
 
 export const DirectChannelHeader = ({
     imageUrl,
     name,
     userProfileProp,
-    directChannelHeaderIdProp
+    directChannelHeaderIdProp,
+    otherUserIdSocket
 }:DirectHeaderProps) => {
     return (
     <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
@@ -40,6 +42,8 @@ export const DirectChannelHeader = ({
         >
             <ChatVideoButton 
                 directChannelId={directChannelHeaderIdProp}
+                otherUserIdSocket={otherUserIdSocket}
+                currentUser={userProfileProp}
             />
         </div>
     </div>

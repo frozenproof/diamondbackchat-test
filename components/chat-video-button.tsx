@@ -1,18 +1,21 @@
 "use client";
 
-import { Video, VideoOff } from "lucide-react";
-
+import { Video } from "lucide-react";
 
 import { useSocket } from "./providers/socket-provider";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import { Button } from "./ui/button";
 import { MediaRoomDirect } from "./livekit-call-room";
+import { UserProfile } from "@prisma/client";
 interface ChatVideoButtonInterface {
   directChannelId: string;
+  otherUserIdSocket: string;
+  currentUser: UserProfile;
 }
 export const ChatVideoButton = (
   {
-    directChannelId
+    directChannelId,
+    otherUserIdSocket,
+    currentUser
   } : ChatVideoButtonInterface
 ) => {
   const { socketActual } = useSocket();
@@ -22,11 +25,9 @@ export const ChatVideoButton = (
     return;
   }
 
-
   const onClick = () => {
-    socketActual.emit("overlay",`chat:${directChannelId}:call`);
+    socketActual.emit("calling_user",otherUserIdSocket,currentUser);
   }
-
 
   return (
       <Sheet>

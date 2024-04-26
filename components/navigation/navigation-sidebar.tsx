@@ -58,7 +58,9 @@ export const NavigationSideBar = async (
             </div>
             
             <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-                <NotificationButton />
+                <NotificationButton 
+                    userSocketId={userProfileIdNavigationSideBar}
+                />
                 <SocketStatusDisplay />
                 <ModeToggle />
             </div>
