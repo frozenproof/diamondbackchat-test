@@ -2,7 +2,10 @@ import { createServer } from "node:http";
 import next from "next";
 import { parse } from "url";
 import { Server as ServerIO } from "socket.io";
+import { PrismaClient } from '@prisma/client'  
 
+const prismaServerGlobal = new PrismaClient()  
+// use `prisma` in your application to read and write data in your DB
 
 const dev = process.env.NODE_ENV !== 'production';
 // const hostname = 'liltrees.onrender.com';
@@ -22,7 +25,7 @@ app.prepare().then(() => {
       const parsedUrl = parse(req.url, true)
       const { pathname, query } = parsedUrl
 
-      if (pathname === '/' || pathname === ':10000/') {
+      if (pathname === '/' ) {
         await app.render(req, res, '/')
       } else {
         await handler(req, res, parsedUrl, query)
@@ -38,7 +41,7 @@ app.prepare().then(() => {
     process.exit(1)
   })
   .listen(port, () => {
-    console.log(`> Cat is now running on http://${hostname}:${port}`)
+    console.log(`> Cat is now running on ${hostname}:${port}`)
   })
 
   const io = new ServerIO(httpServer,{
@@ -59,9 +62,9 @@ app.prepare().then(() => {
 
     socket.on("personal-subcribe", function(arg1_userId) {
       try{
-        console.log('[socket]','join room :',arg1_userId)
+        // console.log('[socket]','join room :',arg1_userId)
         socket.join(arg1_userId);
-        io.to(arg1_userId).emit(arg1_userId, socket.id,"this is from io");
+        io.to(arg1_userId).emit(arg1_userId, socket.id,"this is from server personal notification");
       }catch(e){
         console.log('[error]','join room :',e);
         socket.emit('error','couldnt perform requested action');
@@ -82,10 +85,16 @@ app.prepare().then(() => {
       socket.emit(arg1_channelId,arg2_identity)
       })
   
-    socket.on("calling_user",function(arg1_user_recipient,arg2_user_request){
-      console.log(`data from server.mjs is`,arg1_user_recipient,"\n",arg2_user_request);
-      io.emit("calling_user_"+arg1_user_recipient,arg2_user_request);
+    socket.on("calling_user",async function(arg1_user_recipient_id,arg2_user_request){
+      // console.log(`data from server.mjs is`,arg1_user_recipient_id,"\n",arg2_user_request);
+      io.emit("calling_user_"+arg1_user_recipient_id,arg2_user_request);
       // io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
+      await prismaServerGlobal.userNotification.create({
+        data: {          
+          data: arg2_user_request.name + " called you at" + new Date(),
+          userProfileId: arg1_user_recipient_id
+        }
+      })
     })
     
     // console.log(io.sockets.adapter.rooms);
@@ -95,4 +104,16 @@ app.prepare().then(() => {
     // });
   });
 })
+
+process.on('SIGINT', async () => {
+  console.log('Received SIGINT. Flushing database connections and shutting down gracefully...');
+  await prismaServerGlobal.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('Received SIGTERM. Flushing database connections and shutting down gracefully...');
+  await prismaServerGlobal.$disconnect();
+  process.exit(0);
+});
 

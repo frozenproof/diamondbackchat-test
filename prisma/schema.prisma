@@ -31,12 +31,13 @@ model UserProfile {
 
   Server            Server[]
   DirectMessage     DirectMessage[]
-  DirectChannelSend DirectChannel[] @relation("UserOne")
-  DirectChannelRepl DirectChannel[] @relation("UserTwo")
-  FriendOne         Friend[]        @relation("UserOne")
-  FriendTwo         Friend[]        @relation("UserTwo")
-  Blocker           Block[]         @relation("UserOne")
-  Blocked           Block[]         @relation("UserTwo")
+  DirectChannelSend DirectChannel[]    @relation("UserOne")
+  DirectChannelRepl DirectChannel[]    @relation("UserTwo")
+  FriendOne         Friend[]           @relation("UserOne")
+  FriendTwo         Friend[]           @relation("UserTwo")
+  Blocker           Block[]            @relation("UserOne")
+  Blocked           Block[]            @relation("UserTwo")
+  UserNotification  UserNotification[]
 
   @@index([id])
   @@index([userId])
@@ -273,7 +274,21 @@ model Maintainence {
   isOffline  Boolean  @default(false)
   lastUpdate DateTime @default(now())
 
+  from  DateTime @default(now())
+  until DateTime @default(now())
+
   @@index([id])
+}
+
+model UserNotification {
+  id         String   @id @default(uuid())
+  lastUpdate DateTime @default(now())
+  data       String   @default("")
+
+  userProfileId String      @default("Deleted")
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: SetDefault)
+
+  @@unique(name: "UserNotificationId", [id, userProfileId])
 }
 
 enum OldMemberRole {

@@ -59,6 +59,7 @@
 |   Request Direct Chat     	         |  [x]	|   	
 |   Call Notifications                   |  [x] | 
 |   Infinite Message SCroll              |  [x]	|   	
+|   Automatic Message SCroll             |  [x]	|   	
 
 
 # Functional

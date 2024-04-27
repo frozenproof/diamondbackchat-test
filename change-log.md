@@ -277,3 +277,14 @@
 - fixed and suppressed bugs listed in here
 - added health check api route
 
+- we need a system of notifications
+    - either use a database or directly handle it in react component
+
+# 27/4
+- added notifications    
+- added model notification for database
+- db instance now is only one to save memory
+- added maintainence check and maintainence return
+
+
+

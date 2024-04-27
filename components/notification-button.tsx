@@ -6,22 +6,21 @@ import { Bell } from "lucide-react"
 import { Card, CardContent, CardHeader } from "./ui/card"
 import { useSocket } from "./providers/socket-provider"
 import { ElementRef, useEffect, useRef } from "react"
-import { UserProfile } from "@prisma/client"
+import { UserNotification, UserProfile } from "@prisma/client"
 import { useToast } from "./ui/use-toast"
 
 interface NotificationButtonProps {
     userSocketId: string;
+    notificationProp: UserNotification[];
 }
 
 export const NotificationButton = (
-    {userSocketId} : NotificationButtonProps
+    {userSocketId,notificationProp} : NotificationButtonProps
 ) => {
     const {socketActual} = useSocket();
     const { toast } = useToast()
-    const notificationRef = useRef(Array());
 
-    let tempNotifications: string[] = [];
-
+    var tempNotificationsRender;
 
     useEffect(() => {
         if (!socketActual) {
@@ -30,11 +29,6 @@ export const NotificationButton = (
         }
         
         // console.log("UserSocket?");
-
-        notificationRef.current = tempNotifications.map(item => <div
-            key={Date().toString()}
-        > {item} </div>);
-
         socketActual.emit("personal-subcribe",userSocketId);
         
         // socketActual.onAny((event: any, ...args: any) => {
@@ -50,7 +44,6 @@ export const NotificationButton = (
                 duration: 2808,
                 description: otherUserRequest.name+` is calling you`,
               })
-            tempNotifications.push(otherUserRequest.name+` is calling you`)
         })
         
         socketActual.on(userSocketId, (socketId : string,testString: string,ACK: string) => {
@@ -62,7 +55,7 @@ export const NotificationButton = (
         socketActual.off("calling_user_"+userSocketId);
         socketActual.off(userSocketId);
       }
-    },[userSocketId,socketActual,tempNotifications])
+    },[userSocketId,socketActual,notificationProp])
 
     return (
         <Popover>
@@ -84,19 +77,38 @@ export const NotificationButton = (
                         Your notifications will only last for a day .
                         <br/>
                         Read them before they are gone forever .
+                        <br/>
                     </CardHeader>
                     <CardContent>
                         <div
                             style={{
                                 height: "200px",
-                                overflow: "scroll"
+                                overflowY: "scroll",
+                                border: "2px",
+                                borderBlockColor: "red",
+                                borderColor: "blue",
+                                borderBlock: "true"
                             }}
                             // className="bg-[#e78888]"
                         >
-                            <div
-                            >
-                            </div>
+                            {notificationProp.map(item => <div
+                                key={item.id}
+                            > 
+                                {item.data} 
+                                <div                               
+                                >
+                                    Read
+                                </div>    
+                            </div>)
+                            }   
+                   
                         </div>
+                        <br/>
+
+                        <div                               
+                            >
+                            Mark all as read
+                        </div>     
                     </CardContent>
                 </Card>
             </PopoverContent>

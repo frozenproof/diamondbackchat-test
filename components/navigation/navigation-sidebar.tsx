@@ -8,11 +8,15 @@ import { Suspense } from "react";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { NotificationButton } from "../notification-button";
+import { ChatVideoButton } from "../chat-video-button";
+import { currentUserProfile } from "@/lib/current-profile";
 
 export const NavigationSideBar = async (
     {userProfileIdNavigationSideBar} : {userProfileIdNavigationSideBar: string},
 ) => {
 
+    //for testing only
+    const profile = await currentUserProfile();
     const servers = await db.server.findMany({
         where: {
             Member:{
@@ -25,48 +29,66 @@ export const NavigationSideBar = async (
         }
     })
     
+
+
+    
     if(!servers)
     {
         return redirect("/meself/friend");
     }
     
-    return ( 
-        <Suspense
-            fallback={
-                <div>
-                    Loading
-                </div>
+    if(profile)
+    {
+        const notification = await db.userNotification.findMany({
+            where: {
+                userProfileId: profile.id
             }
-        >
-        <div className="pt-[8px] space-y-[8px] flex flex-col items-center h-full text-primary w-full "
-            // style={{backgroundColor: '#00000000'}}
-        >
-            <div
-                // className="bg-red-800"
+        })
+        return ( 
+            <Suspense
+                fallback={
+                    <div>
+                        Loading
+                    </div>
+                }
             >
-                <NavigationAction/>            
-            </div>
-     
-
-            <div
-                id="serverscroll"
-                className="h-full"
+            <div className="pt-[8px] space-y-[8px] flex flex-col items-center h-full text-primary w-full "
+                // style={{backgroundColor: '#00000000'}}
             >
-                <NavigationServerScroll
-                    serversProp={servers}
-                />
+                <div
+                    // className="bg-red-800"
+                >
+                    <NavigationAction/>            
+                </div>
+         
+    
+                <div
+                    id="serverscroll"
+                    className="h-full"
+                >
+                    <NavigationServerScroll
+                        serversProp={servers}
+                    />
+                </div>
+                
+                <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
+                    <ChatVideoButton 
+                        currentUser={profile}
+                        directChannelId="testing"
+                        otherUserIdSocket={profile.id}
+                    />
+                    <NotificationButton 
+                        userSocketId={userProfileIdNavigationSideBar}
+                        notificationProp={notification}
+                    />
+                    <SocketStatusDisplay />
+                    <ModeToggle />
+                </div>
             </div>
-            
-            <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-                <NotificationButton 
-                    userSocketId={userProfileIdNavigationSideBar}
-                />
-                <SocketStatusDisplay />
-                <ModeToggle />
-            </div>
-        </div>
-        </Suspense>
-
-     );
+            </Suspense>
+    
+         );
+    }
+   
 }
  

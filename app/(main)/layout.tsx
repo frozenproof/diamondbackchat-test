@@ -3,6 +3,7 @@
 import { NavigationSideBar } from "@/components/navigation/navigation-sidebar";
 import { LoadingMainPage } from "@/components/uihelper/loading-wait";
 import { currentUserProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
 
@@ -11,6 +12,23 @@ var MainLayout = async ({
 }:{
     children: React.ReactNode;
 }) => {
+    const currentSystem = await db.maintainence.findFirst()
+    if(currentSystem && currentSystem.isOffline)
+    {
+        return (
+            <div
+                className="text-center"
+            >
+                <div>
+                    This message is from developers .
+                </div>
+                (　･ω･)☞	We are currently doing maintainence.       
+                <br />
+                From {currentSystem.from.toDateString()} until {currentSystem.until.toDateString()} the maintainence will be performed.        
+            </div>    
+        )
+    }
+
     const profile = await currentUserProfile();
     if(!profile)
     {
