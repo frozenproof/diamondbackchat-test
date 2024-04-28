@@ -31,6 +31,7 @@
 |   Message Respond Socket               |  [x]	|   	
 |   Direct Message Socket                |  [x]	|   	
 |   Direct Message Reply                 |  [x]	|   	
+|   Direct Message Respond Socket        |  [x]	|   	
 |   Emoji In Message                     |  [x]	|   	
 |   Member List 	                     |  [x]	|   	
 |   Member Nickname	                     |  [x]	|   	
@@ -58,8 +59,10 @@
 |   User Profile Popup	                 |  [x]	|   	
 |   Request Direct Chat     	         |  [x]	|   	
 |   Call Notifications                   |  [x] | 
+|   Display Notifications                |  [x] | 
 |   Infinite Message SCroll              |  [x]	|   	
 |   Automatic Message SCroll             |  [x]	|   	
+|   Read Notifications                   |  [x]	|   	
 
 
 # Functional

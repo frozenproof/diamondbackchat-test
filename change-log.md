@@ -286,5 +286,8 @@
 - db instance now is only one to save memory
 - added maintainence check and maintainence return
 
-
+# 28/4
+- added notification api route
+- added is read to notification
+- server added try catch
 

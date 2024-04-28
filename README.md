@@ -1,8 +1,11 @@
 # Deployed on Render.com
+We are running the app and looking for beta testers !
+As per protocol , our app will NOT store any user password except for the one you created .
 
+https://liltrees.onrender.com
 
 # Can you smell what is cooking ? 
-In order to prevent frauds 
+In order to prevent frauds , we have a functions list to tell you what to expect when using the app .
 
 **Get it?**
 

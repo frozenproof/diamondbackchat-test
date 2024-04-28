@@ -8,6 +8,9 @@ import { useSocket } from "./providers/socket-provider"
 import { ElementRef, useEffect, useRef } from "react"
 import { UserNotification, UserProfile } from "@prisma/client"
 import { useToast } from "./ui/use-toast"
+import qs from "query-string";
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 interface NotificationButtonProps {
     userSocketId: string;
@@ -19,8 +22,7 @@ export const NotificationButton = (
 ) => {
     const {socketActual} = useSocket();
     const { toast } = useToast()
-
-    var tempNotificationsRender;
+    const router = useRouter();
 
     useEffect(() => {
         if (!socketActual) {
@@ -57,17 +59,37 @@ export const NotificationButton = (
       }
     },[userSocketId,socketActual,notificationProp])
 
+    async function buttonReadAll (){
+        const url = qs.stringifyUrl({
+            url: "/api/user/notice-api",
+          });
+        
+          const response = await axios.patch(url, {typeRead: "ALL"});
+        
+          router.refresh();
+    }
     return (
-        <Popover>
+        <Popover
+            onOpenChange={function temp(){
+                console.log("Changed")
+            }}
+        >
             <PopoverTrigger>
-                <Bell />
+                <div
+                    className=""
+                >
+                    <Bell />
+                    {notificationProp.length}
+                </div>
             </PopoverTrigger>
             <PopoverContent
                       side="top" 
                       // sideOffset={0}
                       className="bg-transparent w-[280px]"
                       >
-                <Card>
+                <Card
+                    // className=" dark:bg-[#128398]"
+                >
                     <CardHeader
                         className="flex"
                         style={{
@@ -84,31 +106,35 @@ export const NotificationButton = (
                             style={{
                                 height: "200px",
                                 overflowY: "scroll",
-                                border: "2px",
-                                borderBlockColor: "red",
-                                borderColor: "blue",
-                                borderBlock: "true"
                             }}
-                            // className="bg-[#e78888]"
                         >
-                            {notificationProp.map(item => <div
+                            {notificationProp.map(item => {
+                            
+                            return(
+                            <div
                                 key={item.id}
                             > 
                                 {item.data} 
-                                <div                               
-                                >
-                                    Read
-                                </div>    
+                                {
+                                    <button className="button-53" role="button">
+                                    Delete
+                                    </button>
+                                }                                
                             </div>)
+                            }
+                            
+                            )
                             }   
                    
                         </div>
                         <br/>
 
-                        <div                               
+                        <button     
+                            onClick={buttonReadAll}
+                            className="button-49"                 
                             >
                             Mark all as read
-                        </div>     
+                        </button>     
                     </CardContent>
                 </Card>
             </PopoverContent>

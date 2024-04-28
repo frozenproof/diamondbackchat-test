@@ -67,13 +67,19 @@ app.prepare().then(() => {
         io.to(arg1_userId).emit(arg1_userId, socket.id,"this is from server personal notification");
       }catch(e){
         console.log('[error]','join room :',e);
-        socket.emit('error','couldnt perform requested action');
+        socket.emit('error',"compromised socket detected",'couldnt perform requested action');
       }
     })
     socket.on("channel-input",function(arg1_channelId,arg2_message_item,arg3_type_channel) {
       // console.log("data from channel input",arg1_channelId,arg2_message_item.content,arg3_type_channel);
       // socket.broadcast.emit(arg1,arg2);
-      socket.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
+      try {
+        socket.emit(arg1_channelId,arg2_message_item,arg3_type_channel)
+      }
+      catch(e){
+        console.log('[error]','channel-input',e);
+        socket.emit('error',"compromised socket detected",'couldnt perform requested action');
+      }
       })
   
     socket.on("channel-update",function(arg1_channelId,arg2_message_item) {
@@ -89,12 +95,12 @@ app.prepare().then(() => {
       // console.log(`data from server.mjs is`,arg1_user_recipient_id,"\n",arg2_user_request);
       io.emit("calling_user_"+arg1_user_recipient_id,arg2_user_request);
       // io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
-      await prismaServerGlobal.userNotification.create({
+      prismaServerGlobal.userNotification.create({
         data: {          
-          data: arg2_user_request.name + " called you at" + new Date(),
+          data: arg2_user_request.name + " called you at " + new Date(),
           userProfileId: arg1_user_recipient_id
         }
-      })
+      }).then()
     })
     
     // console.log(io.sockets.adapter.rooms);

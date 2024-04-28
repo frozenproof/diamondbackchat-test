@@ -281,9 +281,11 @@ model Maintainence {
 }
 
 model UserNotification {
-  id         String   @id @default(uuid())
-  lastUpdate DateTime @default(now())
-  data       String   @default("")
+  id         String           @id @default(uuid())
+  lastUpdate DateTime         @default(now())
+  data       String           @default("")
+  type       NotificationType @default(USER)
+  isRead     Boolean          @default(false)
 
   userProfileId String      @default("Deleted")
   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: SetDefault)
@@ -320,7 +322,7 @@ enum UserStatus {
   BANNED
 }
 
-enum ServerStatus {
-  ONLINE
-  DELETED
+enum NotificationType {
+  USER
+  SYSTEM
 }
