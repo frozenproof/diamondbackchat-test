@@ -64,7 +64,7 @@ export const NotificationButton = (
             url: "/api/user/notice-api",
           });
         
-          const response = await axios.patch(url, {typeRead: "ALL"});
+          const response = axios.patch(url, {typeRead: "ALL"}).then();
         
           router.refresh();
     }
