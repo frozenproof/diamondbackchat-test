@@ -13,7 +13,7 @@ export async function PATCH(
             throw new Error("Unauthorized ");
         }
         
-        if(typeRead === "ALL")
+        if(typeRead === "DELETE")
         {
             db.userNotification.deleteMany({
                 where: {
@@ -22,12 +22,26 @@ export async function PATCH(
             }).then()
             return NextResponse.json("We are done");
         }
+
+        if(typeRead === "ALL")
+        {
+            db.userNotification.updateMany({
+                where: {
+                    userProfileId: profile.id
+                },
+                data: {
+                    isRead: true
+                }
+            }).then()
+            return NextResponse.json("We are done");
+        }
+
         if(isRead === true && typeof noticeId === "string")
         {
             
         }
 
-        return "";
+        return NextResponse.json("");
     }
     catch(error) {
         console.log("[USER_ID_SETTING",error);

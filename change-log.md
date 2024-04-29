@@ -291,3 +291,5 @@
 - added is read to notification
 - server added try catch
 
+# 29/4
+- updated some minor part in notification api, including a new option for clearing notifications as it's easy

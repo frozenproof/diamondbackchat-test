@@ -64,14 +64,20 @@ export const NotificationButton = (
             url: "/api/user/notice-api",
           });
         
-          const response = axios.patch(url, {typeRead: "ALL"}).then();
+          const response = await axios.patch(url, {typeRead: "DELETE"}).then();
         
           router.refresh();
     }
     return (
         <Popover
-            onOpenChange={function temp(){
-                console.log("Changed")
+            onOpenChange={async function temp(){
+                const url = qs.stringifyUrl({
+                    url: "/api/user/notice-api",
+                  });
+                
+                  const response = await axios.patch(url, {typeRead: "ALL"}).then();
+                
+                  router.refresh();
             }}
         >
             <PopoverTrigger>
@@ -79,7 +85,7 @@ export const NotificationButton = (
                     className=""
                 >
                     <Bell />
-                    {notificationProp.length}
+                    {notificationProp.filter(item => item.isRead === false).length}
                 </div>
             </PopoverTrigger>
             <PopoverContent
@@ -133,7 +139,7 @@ export const NotificationButton = (
                             onClick={buttonReadAll}
                             className="button-49"                 
                             >
-                            Mark all as read
+                            Clear all notifications
                         </button>     
                     </CardContent>
                 </Card>
