@@ -71,13 +71,16 @@ export const NotificationButton = (
     return (
         <Popover
             onOpenChange={async function temp(){
-                const url = qs.stringifyUrl({
-                    url: "/api/user/notice-api",
-                  });
+                if(notificationProp.filter(x => x.isRead === false).length !== 0)
+                {
+                    const url = qs.stringifyUrl({
+                        url: "/api/user/notice-api",
+                      });
                 
-                  const response = await axios.patch(url, {typeRead: "ALL"}).then();
+                    const response = await axios.patch(url, {typeRead: "ALL"}).then();
                 
-                  router.refresh();
+                    router.refresh();
+                }               
             }}
         >
             <PopoverTrigger>
@@ -134,7 +137,7 @@ export const NotificationButton = (
                    
                         </div>
                         <br/>
-
+                          
                         <button     
                             onClick={buttonReadAll}
                             className="button-49"                 
