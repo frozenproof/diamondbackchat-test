@@ -14,7 +14,7 @@ export const ShopButton = () => {
     return ( 
         <button
             className="w-full hover:bg-[#88828814] dark:bg-primary  dark:hover:bg-[#282828]/90 h-[72px] p-[8x] "
-            onClick={(MouseEvent) => {onAction(MouseEvent,`/meself/friend`)}}
+            onClick={(MouseEvent) => {onAction(MouseEvent,`/meself/botchat`)}}
         >
             <div 
                 className="h-full flex items-center justify-center"
