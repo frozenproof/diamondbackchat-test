@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "custom": "CUM=localhost node server.mjs",
-    "cum": "CUM=liltrees.onrender.com node server.mjs",
+    "cum": "COREPACK_ENABLE_STRICT=0 CUM=liltrees.onrender.com node server.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
