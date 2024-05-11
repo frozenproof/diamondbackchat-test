@@ -1,4 +1,5 @@
-import { ShopButton } from "./friend/app-shop";
+import { ShopButton } from "./shop/app-shop";
+import { AiButton } from "./friend/ai-chat";
 import { FriendButton } from "./friend/friend-button";
 
 const DirectSideBarHeader = () => {
@@ -7,6 +8,8 @@ const DirectSideBarHeader = () => {
             <FriendButton 
             />
             <ShopButton
+            />
+            <AiButton
             />
         </div>
      );

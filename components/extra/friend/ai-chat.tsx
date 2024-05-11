@@ -3,7 +3,7 @@
 import { LucideShoppingBag, TreeDeciduousIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-export const ShopButton = () => {
+export const AiButton = () => {
     const  router  = useRouter();
 
     const onAction = (MouseEvent: React.MouseEvent, url: string) => {

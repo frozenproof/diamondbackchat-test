@@ -63,7 +63,7 @@
 |   Infinite Message SCroll              |  [x]	|   	
 |   Automatic Message SCroll             |  [x]	|   	
 |   Read Notifications                   |  [x]	|   	
-
+|   Shop                                 |  [x] |
 
 # Functional
 

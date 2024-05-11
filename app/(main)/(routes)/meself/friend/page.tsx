@@ -25,7 +25,12 @@ import { db } from "@/lib/db"
 import { Trees, } from "lucide-react"
 import { redirect } from "next/navigation"
 
-
+export async function generateMetadata(
+  ) {
+    return {
+      title: "Friends",
+    }
+}
 const FriendsPage = async({
   
 }) => {
