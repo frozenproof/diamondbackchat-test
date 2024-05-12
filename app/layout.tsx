@@ -11,7 +11,6 @@ import { Suspense } from "react";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/toaster";
-
 // const font = Open_Sans({ subsets: ["latin"],display: "swap", });
 
 export const dynamicParams = true 

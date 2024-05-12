@@ -9,8 +9,9 @@ type Props = {
 export const ProductsDisplay = async({productsList}: Props) => {
 
     return ( 
-        <div>
-            Products list is here
+        <div
+            className="flex flex-col"
+        >
             {productsList.map((item: any, i: number) => (
             <ProductItem
                 key={i}

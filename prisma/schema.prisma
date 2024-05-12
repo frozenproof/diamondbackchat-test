@@ -38,6 +38,7 @@ model UserProfile {
   Blocker           Block[]            @relation("UserOne")
   Blocked           Block[]            @relation("UserTwo")
   UserNotification  UserNotification[]
+  Subcription       Subcription[]
 
   @@index([id])
   @@index([userId])
@@ -276,6 +277,20 @@ model Maintainence {
 
   from  DateTime @default(now())
   until DateTime @default(now())
+
+  @@index([id])
+}
+
+model Subcription {
+  id         String   @id @default(uuid())
+  productId  String   @default(uuid())
+  isOffline  Boolean  @default(false)
+  lastUpdate DateTime @default(now())
+
+  at DateTime @default(now())
+
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
 
   @@index([id])
 }

@@ -26,6 +26,6 @@
   },
   "forceConsistentCasingInFileNames": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts", "components/providers/socket-instance.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "middleware.ts", "components/providers/socket-instance.tsx", "pages/0_shop/return.js", "components/extra/shop/checkout-form.jsx"],
   "exclude": ["node_modules"]
 }

@@ -41,6 +41,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "emoji-mart": "^5.5.2",
+    "express": "^4.19.2",
     "framer-motion": "^11.0.20",
     "global": "^4.4.0",
     "livekit-client": "^2.0.10",
