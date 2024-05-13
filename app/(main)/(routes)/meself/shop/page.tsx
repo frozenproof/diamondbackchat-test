@@ -26,23 +26,26 @@ const AppShop = async(
             <div
                     // className="w-full bg-transparent h-full flex flex-col text-center overflow-y-scroll"
                 >
+                    <div
+                        className="w-full bg-transparent h-full flex flex-row  items-center justify-center
+                        pb-[88px] py-2
+                        "
+                    >
+                        PLease note that we do not refund under any circumstance right now.
+                        <br/>
+                        However, we will not charge more money for cancelled subscription
+                    </div>                    
                     <Script src="https://js.stripe.com/v3/pricing-table.js" />
                     {/* This is our humble shop, where you can buy stuffs and things. */}
 
-                    <ProductsDisplay
+                    {/* <ProductsDisplay
                         productsList={products} 
-                    />
+                    /> */}
                     
                     <PricingPage 
                     />
                     
-                    {/* <div
-                        className="w-full bg-transparent h-full flex flex-row  items-center justify-center
-                        pt-[88px] py-2
-                        "
-                    >
-                        Hello
-                    </div> */}
+
                 </div>
         )
     }

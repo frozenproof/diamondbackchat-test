@@ -11,16 +11,17 @@ datasource db {
 }
 
 model UserProfile {
-  id       String     @id @default(uuid())
-  userId   String     @unique
-  name     String     @default("Deleted")
-  imageUrl String     @db.Text
-  email    String     @db.Text
-  about    String     @default("") @db.Text
-  status   UserStatus @default(ONLINE)
-  deleted  Boolean    @default(false)
-  version  Int        @default(1)
-  password String     @default("")
+  id              String     @id @default(uuid())
+  userId          String     @unique
+  name            String     @default("Deleted")
+  imageUrl        String     @db.Text
+  email           String     @db.Text
+  about           String     @default("") @db.Text
+  status          UserStatus @default(ONLINE)
+  deleted         Boolean    @default(false)
+  version         Int        @default(1)
+  password        String     @default("")
+  userCurrentRank String     @default("None")
 
   createdAt DateTime @default(now())
 
@@ -38,8 +39,9 @@ model UserProfile {
   Blocker           Block[]            @relation("UserOne")
   Blocked           Block[]            @relation("UserTwo")
   UserNotification  UserNotification[]
-  Subcription       Subcription[]
+  UserBilling       UserBilling[]
 
+  @@unique([id, email])
   @@index([id])
   @@index([userId])
 }
@@ -281,18 +283,39 @@ model Maintainence {
   @@index([id])
 }
 
-model Subcription {
-  id         String   @id @default(uuid())
-  productId  String   @default(uuid())
-  isOffline  Boolean  @default(false)
-  lastUpdate DateTime @default(now())
+model UserBilling {
+  customerId String @id @unique @default("?")
+
+  userProfileId2 String
+  email2         String
+  userProfile UserProfile @relation(fields: [userProfileId2, email2], references: [id, email], onDelete: Cascade)
+
+  Subcription Subscription[]
+
+  @@unique([customerId, email2])
+  @@index([customerId])
+}
+
+model Subscription {
+  id        String @id @default(uuid())
+  productId String @default(uuid())
+  // product   ProductBilling @relation(fields: [productId], references: [productId], onDelete: Cascade)
+
+  isActive Boolean  @default(false)
+  until    DateTime @default(now())
 
   at DateTime @default(now())
 
-  userProfileId String
-  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+  customerId    String
+  customer      UserBilling @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
 
   @@index([id])
+}
+
+model ProductBilling {
+  productId   String @id @default(uuid())
+  productName String @default("Name")
+  // Subcription Subcription[]
 }
 
 model UserNotification {

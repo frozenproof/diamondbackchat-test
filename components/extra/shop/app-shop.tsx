@@ -13,7 +13,7 @@ export const ShopButton = () => {
 
     return ( 
         <button
-            className="w-full hover:bg-[#88828814] dark:bg-primary  dark:hover:bg-[#282828]/90 h-[72px] p-[8x] "
+            className="w-full hover:bg-[#88828814] dark:bg-primary  dark:hover:bg-[#282828]/90 h-[48px] p-[8x] "
             onClick={(MouseEvent) => {onAction(MouseEvent,`/meself/shop`)}}
         >
             <div 

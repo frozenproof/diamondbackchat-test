@@ -3,6 +3,8 @@ import next from "next";
 import { parse } from "url";
 import { Server as ServerIO } from "socket.io";
 import { PrismaClient } from '@prisma/client'  
+// Import the necessary modules
+import { DateTime } from 'luxon';
 
 const prismaServerGlobal = new PrismaClient()  
 // use `prisma` in your application to read and write data in your DB
@@ -129,29 +131,184 @@ const app2 = express();
 
 // Match the raw body to content type application/json
 // If you are using Express v4 - v4.16 you need to use body-parser, not express, to retrieve the request body
-app2.post('/webhook', express.json({type: 'application/json'}), (request, response) => {
+app2.post('/webhooks', express.json({type: 'application/json'}), async (request, response) => {
   const event = request.body;
 
   // Handle the event
   switch (event.type) {
-    case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
-      console.log("from server",paymentIntent)
-      // Then define and call a method to handle the successful payment intent.
-      // handlePaymentIntentSucceeded(paymentIntent);
+    case 'customer.subscription.deleted':
+      await handleSubscriptionDeleted(event.data.object);
       break;
-    case 'payment_method.attached':
-      const paymentMethod = event.data.object;
-      // Then define and call a method to handle the successful attachment of a PaymentMethod.
-      // handlePaymentMethodAttached(paymentMethod);
+    case 'customer.subscription.updated':
+      await handleSubscriptionUpdated(event.data.object);
       break;
-    // ... handle other event types
+    case 'checkout.session.completed':
+      await handleCheckoutSessionCompleted(event.data.object);
+      break;
+    case 'customer.deleted':
+      handleCustomerDeleted(event.data.object);
+      break;
+    case 'customer.subscription.created':
+      await handleSubscriptionCreated(event.data.object);
+      break;
+    case 'customer.created':
+      await handleCustomerUpdate(event.data.object);
+      break;
+    case 'product.created':
+    case 'product.updated':
+    case 'product.deleted':
+      handleProductEvent(event.data.object);
+      break;
+    case 'customer.updated':
+    case 'invoice.created':
+    case 'invoice.finalized':
+    case 'invoice.paid':
+    case 'invoice.payment_succeeded':
+    case 'billing_portal.session.created':
+    case 'plan.created':
+    case 'plan.updated':
+    case 'price.created':
+    case 'price.updated':
+    case 'billing_portal.configuration.updated':
+      handleIgnoredEvent(event);
+      break;
     default:
       console.log(`Unhandled event type ${event.type}`);
+      console.log("Unhandled event\n", event.data.object)
   }
 
   // Return a response to acknowledge receipt of the event
-  response.json({received: true});
+  response.json({ received: true });
 });
 
-app2.listen(8000, () => console.log('Running server stripe on port 8000'));
+async function handleSubscriptionDeleted(subscriptionDeleted) {
+  console.log("customer.subscription.deleted\n", subscriptionDeleted.customer);
+  console.log("Id subscription delete", subscriptionDeleted.id);
+}
+
+async function handleSubscriptionUpdated(subscriptionCan) {
+  console.log("customer.subscription.updated", subscriptionCan.customer);
+  console.log("Id subscription", subscriptionCan.id);
+}
+
+async function handleCheckoutSessionCompleted(customerForDatabase) {
+  const customerIdSession = customerForDatabase.customer;
+  const subscriptionIdSession = customerForDatabase.subscription;
+  const emailSubscription = customerForDatabase.customer_details.email;
+  console.log("User checkout.session.completed subscription", customerIdSession);
+  console.log("Check out session id for billing", customerForDatabase.id);
+  console.log("User email", emailSubscription);
+  console.log("User subscription id", subscriptionIdSession);
+  await prismaServerGlobal.subscription.update({
+    where: {
+      id: subscriptionIdSession,
+      customerId: customerIdSession
+    },
+    data: {
+      isActive: true,
+    }
+  });
+}
+
+function handleCustomerDeleted(customerDelete) {
+  console.log("User id for billing delete", customerDelete.id);
+  console.log("User email for deletion", customerDelete.email);
+}
+
+async function handleSubscriptionCreated(customerSubscriptionCreated) {
+  const customerBillingId = customerSubscriptionCreated.customer;
+  const subscriptionId = customerSubscriptionCreated.id;
+  const productBillingId = customerSubscriptionCreated.plan.product;
+  const subscriptionBeginDate = DateTime.fromSeconds(customerSubscriptionCreated.start_date).toISO();
+  const subscriptionEndDate = DateTime.fromSeconds(customerSubscriptionCreated.trial_end).toISO();
+  console.log("Subscription id", subscriptionId);
+  console.log("User billing id", customerBillingId);
+  console.log("Product id", productBillingId);
+  console.log("Subscription began date", subscriptionBeginDate);
+  console.log("Subscription end date", subscriptionEndDate);
+
+  try {
+    // const oldUserBilling = await prismaServerGlobal.userBilling.findMany({
+    //   where: {
+    //   }
+    // })
+    // const oldSubscription = await prismaServerGlobal.subscription.findMany({
+    //   where: {
+    //   }
+    // })
+    // const subscription = await stripe.subscriptions.cancel(
+    //   'sub_1MlPf9LkdIwHu7ixB6VIYRyX'
+    // );
+    const testing = await prismaServerGlobal.subscription.create({
+      data: {
+        id: subscriptionId,
+        customerId: customerBillingId,
+        at: subscriptionBeginDate,
+        until: subscriptionEndDate,
+        isActive: false,
+        productId: productBillingId
+      }
+    });
+
+    console.log("Created subscript record", testing);
+  }
+  catch (e) {
+    console.log("Server error\n", e);
+  }
+}
+
+async function handleCustomerUpdate(customerUser2) {
+  const customerBillingId2 = customerUser2.email;
+  const subscriptionId2 = customerUser2.id;
+  console.log("Current information", customerBillingId2, subscriptionId2);
+  await updateUserBilling(customerBillingId2, subscriptionId2);
+}
+
+function handleProductEvent(productSth) {
+  console.log("from server product did sth\n", productSth);
+}
+
+function handleIgnoredEvent(ignoredEvent) {
+  console.log("Ignored", ignoredEvent.type);
+}
+
+
+app2.listen(4242, () => console.log('Running server stripe on port 8000'));
+
+async function updateUserBilling(emailSubscription2, customerId2) {
+  console.log(emailSubscription2,"this is from user")
+  try {
+    const user2 = await prismaServerGlobal.userProfile.findFirst({
+      where: {
+        email: emailSubscription2
+      }
+    });
+
+    if (user2) {
+      console.log("User from updateUserBilling",user2)
+      try {
+        await prismaServerGlobal.userBilling.create({
+          data: {
+            customerId: customerId2,
+            userProfile: {
+              connect: {
+                id: user2.id,
+                email: user2.email
+              }
+            }
+          }
+        });
+      }
+      catch(e)  {
+        console.log("Error on server updateUserBilling",e)
+        process.exit(0);
+      }
+            // userProfileId2: user2.id,
+      
+    } else {
+      console.error(`User with email ${emailSubscription2} not found.`);
+    }
+  } catch (error) {
+    console.error("Error updating user billing:", error);
+  }
+}

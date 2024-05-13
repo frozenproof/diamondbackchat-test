@@ -1,6 +1,5 @@
 "use client"
 
-import { createCheckoutSession } from "@/lib/shop";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -32,10 +31,7 @@ type Props = {
   export const ProductItem = async({productItem}: Props) => {
     // console.log("Product item",productItem)
     const router = useRouter();
-    const handleSubscription = async (price_id: string) => {
-      const redirectUrl = await createCheckoutSession({ price_id, user_id:"" });
-      router.push(redirectUrl);
-      };
+
       return ( 
         <div className=""
           style={
@@ -58,11 +54,7 @@ type Props = {
             <form action="/create-checkout-session" method="POST">
               {/* Add a hidden field with the lookup_key of your Price */}
               <input type="hidden" name="lookup_key" value={productItem.default_price} />
-              <button id="checkout-and-portal-button" type="submit"
-                onClick={(e:any) =>handleSubscription(productItem.default_price)}
-              >
-                Checkout
-              </button>
+
             </form>
           </section>
         </div>
