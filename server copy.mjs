@@ -131,131 +131,178 @@ const app2 = express();
 
 // Match the raw body to content type application/json
 // If you are using Express v4 - v4.16 you need to use body-parser, not express, to retrieve the request body
-app2.post('/webhooks', express.json({type: 'application/json'}), async(request, response) =>{
+app2.post('/webhooks', express.json({type: 'application/json'}), async (request, response) => {
   const event = request.body;
+  // Promises to track completion of certain tasks
+  // Handle 'customer.created' case first
+  if (event.type === 'customer.created') {
+    await handleCustomerUpdate(event.data.object);
+    return response.json({ received: true });
+  }
 
   // Handle the event
   switch (event.type) {
     case 'customer.subscription.deleted':
-      const subscriptionDeleted = event.data.object;
-      // console.log("User removed subscription",subscriptionCan)
-      console.log("customer.subscription.deleted\n",subscriptionDeleted.customer)
-      console.log("Id subscription delete",subscriptionDeleted.id)
-
+      await handleSubscriptionDeleted(event.data.object);
       break;
-    case  'customer.subscription.updated':
-      const subscriptionCan = event.data.object;
-      // console.log("User removed subscription",subscriptionCan)
-      console.log("customer.subscription.updated",subscriptionCan.customer)
-      console.log("Id subscription",subscriptionCan.id)
-      break;        
-    case  'checkout.session.completed':
-        const customerForDatabase = event.data.object;
-        const customerIdSession = customerForDatabase.customer;
-        const subscriptionIdSession = customerForDatabase.subscription;
-        const emailSubscription = customerForDatabase.customer_details.email;
-        console.log("User checkout.session.completed subscription",customerIdSession)
-        console.log("User id for billing",customerForDatabase.id)      
-        console.log("User email",emailSubscription)      
-        console.log("User subscription id",subscriptionIdSession)   
-        await prismaServerGlobal.subscription.update({
-          where: {
-            id: subscriptionIdSession,
-            customerId: customerIdSession
-          },
-          data: {          
-            isActive: true,
-          }
-        })
-      break; 
-    case  'customer.deleted':
-      const customerDelete = event.data.object;
-      console.log("User id for billing delete",customerDelete.id)      
-      console.log("User email for deletion",customerDelete.email)         
-      break; 
-    case  'customer.subscription.created':
-      const customerSubscriptionCreated = event.data.object;
-      const customerBillingId = customerSubscriptionCreated.customer;
-      const subscriptionId = customerSubscriptionCreated.id;
-      const productBillingId = customerSubscriptionCreated.plan.product;
-      const subscriptionBeginDate = DateTime.fromSeconds(customerSubscriptionCreated.start_date).toISO();
-      const subscriptionEndDate = DateTime.fromSeconds(customerSubscriptionCreated.trial_end).toISO();
-      console.log("Subscription id",subscriptionId)      
-      console.log("User billing id",customerBillingId)     
-      console.log("Product id",productBillingId)     
-      console.log("Subscription began date",subscriptionBeginDate)
-      console.log("Subscription end date",subscriptionEndDate)
-
-      try{
-        const testing = await prismaServerGlobal.subscription.create({
-          data: {          
-            customerId: customerBillingId,
-            at: subscriptionBeginDate,
-            until: subscriptionEndDate,
-            isActive: false,
-            productId: productBillingId
-          }
-        })
-
-        console.log("Created subscript record",testing)
-        console.log("This is run")
-      }
-      catch(e){
-        console.log("Server error\n",e)
-      }
-      console.log("\n\n\n Something went wrong thats why you see here")
+    case 'customer.subscription.updated':
+      await handleSubscriptionUpdated(event.data.object);
+      break;
+    case 'checkout.session.completed':
+      await handleCheckoutSessionCompleted(event.data.object);
+      break;
+    case 'customer.deleted':
+      handleCustomerDeleted(event.data.object);
+      break;
+    case 'customer.subscription.created':
+      await handleSubscriptionCreated(event.data.object);
       break;
 
+    case 'product.created':
+    case 'product.updated':
+    case 'product.deleted':
+      handleProductEvent(event.data.object);
+      break;
     case 'customer.updated':
-    case  'customer.created':
-      const customerUser2 = event.data.object;
-      const customerBillingId2 = customerUser2.email;
-      const subscriptionId2 = customerUser2.id; 
-      console.log("Current information",customerBillingId2,subscriptionId2)     
-      await updateUserBilling(customerBillingId2,subscriptionId2);
+    case 'invoice.created':
+    case 'invoice.finalized':
+    case 'invoice.paid':
+    case 'invoice.payment_succeeded':
+    case 'billing_portal.session.created':
+    case 'plan.created':
+    case 'plan.updated':
+    case 'price.created':
+    case 'price.updated':
+    case 'billing_portal.configuration.updated':
+      handleIgnoredEvent(event);
       break;
-    case  'product.created':
-    case  'product.updated': 
-    case  'product.deleted': 
-      const productSth = event.data.object;
-      console.log("from server product did sth\n",productSth)
-      break;
-    case  'invoice.created': 
-    case  'invoice.finalized': 
-    case  'invoice.paid': 
-    case  'invoice.payment_succeeded': 
-    case  'billing_portal.session.created':
-    case  'plan.created': 
-    case  'plan.updated': 
-    case  'price.created':
-    case  'price.updated':
-    case  'billing_portal.configuration.updated':
-      const ignoredEvent = event.data.object;
-      console.log("Ignored",event.type);
-      break; 
     default:
       console.log(`Unhandled event type ${event.type}`);
-      console.log("Unhandled event\n",event.data.object)
+      console.log("Unhandled event\n", event.data.object)
   }
 
   // Return a response to acknowledge receipt of the event
-  response.json({received: true});
+  return response.json({ received: true });
 });
 
-app2.listen(4242, () => console.log('Running server stripe on port 8000'));
+async function handleSubscriptionDeleted(subscriptionDeleted) {
+  console.log("customer.subscription.deleted\n", subscriptionDeleted.customer);
+  console.log("Id subscription delete", subscriptionDeleted.id);
+}
 
-async function updateUserBilling(emailSubscription2,customerId2){
-  const user = await prismaServerGlobal.userProfile.findFirst(
-    {
+async function handleSubscriptionUpdated(subscriptionCan) {
+  console.log("customer.subscription.updated", subscriptionCan.customer);
+  console.log("Id subscription", subscriptionCan.id);
+}
+
+async function handleCheckoutSessionCompleted(customerForDatabase) {
+  const customerIdSession = customerForDatabase.customer;
+  const subscriptionIdSession = customerForDatabase.subscription;
+  const emailSubscription = customerForDatabase.customer_details.email;
+  console.log("User checkout.session.completed subscription", customerIdSession);
+  console.log("Check out session id for billing", customerForDatabase.id);
+  console.log("User email", emailSubscription);
+  console.log("User subscription id", subscriptionIdSession);
+  const finalUpdate = await prismaServerGlobal.subscription.update({
+    where: {
+      id: subscriptionIdSession,
+      customerId: customerIdSession
+    },
+    data: {
+      isActive: true,
+    }
+  });
+
+}
+
+function handleCustomerDeleted(customerDelete) {
+  console.log("User id for billing delete", customerDelete.id);
+  console.log("User email for deletion", customerDelete.email);
+}
+
+async function handleSubscriptionCreated(customerSubscriptionCreated) {
+  const customerBillingId = customerSubscriptionCreated.customer;
+  const subscriptionId = customerSubscriptionCreated.id;
+  const productBillingId = customerSubscriptionCreated.plan.product;
+  const subscriptionBeginDate = DateTime.fromSeconds(customerSubscriptionCreated.start_date).toISO();
+  const subscriptionEndDate = DateTime.fromSeconds(customerSubscriptionCreated.trial_end).toISO();
+  console.log("Subscription id", subscriptionId);
+  console.log("User billing id", customerBillingId);
+  console.log("Product id", productBillingId);
+  console.log("Subscription began date", subscriptionBeginDate);
+  console.log("Subscription end date", subscriptionEndDate);
+
+  try {
+    const testing = await prismaServerGlobal.subscription.create({
+      data: {
+        id: subscriptionId,
+        customerId: customerBillingId,
+        at: subscriptionBeginDate,
+        until: subscriptionEndDate,
+        isActive: false,
+        productId: productBillingId
+      }
+    });
+    console.log("Created subscript record", testing);
+    
+  }
+  catch (e) {
+    console.log("Server error\n", e);
+    process.exit(0)
+  }
+}
+
+async function handleCustomerUpdate(customerUser2) {
+  const customerBillingId2 = customerUser2.email;
+  const subscriptionId2 = customerUser2.id;
+  console.log("Current information", customerBillingId2, subscriptionId2);
+  await updateUserBilling(customerBillingId2, subscriptionId2);
+}
+
+function handleProductEvent(productSth) {
+  console.log("from server product did sth\n", productSth);
+}
+
+function handleIgnoredEvent(ignoredEvent) {
+  console.log("Ignored", ignoredEvent.type);
+}
+
+app2.listen(4242, () => console.log('Running server stripe on port 4242'));
+
+async function updateUserBilling(emailSubscription2, customerId2) {
+  // console.log(emailSubscription2,"this is from user")
+  try {
+    const user2 = await prismaServerGlobal.userProfile.findFirst({
       where: {
         email: emailSubscription2
       }
+    });
+
+    if (user2) {
+      try {
+        const newUserBilling = await prismaServerGlobal.userBilling.create({
+          data: {
+            customerId: customerId2,
+            userProfile: {
+              connect: {
+                id: user2.id,
+                email: user2.email
+              }
+            }
+          }
+        });
+        console.log("User from updateUserBilling",newUserBilling)
+      }
+      catch(e)  {
+        console.log("Error on server updateUserBilling",e)
+        process.exit(0);
+      }
+            // userProfileId2: user2.id,
+      
+    } else {
+      console.error(`User with email ${emailSubscription2} not found.`);
     }
-  )
-  await prismaServerGlobal.userBilling.create({
-    data: {          
-      userProfileId: user.id,
-      customerId: customerId2
-    }
-  })
-}         
+  } catch (error) {
+    console.error("Error updating user billing:", error);
+  }
+}

@@ -306,8 +306,8 @@ model Subscription {
 
   at DateTime @default(now())
 
-  customerId    String
-  customer      UserBilling @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
+  customerId    String?
+  customer      UserBilling? @relation(fields: [customerId], references: [customerId], onDelete: Cascade)
 
   @@index([id])
 }

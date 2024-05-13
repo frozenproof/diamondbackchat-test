@@ -1,0 +1,42 @@
+    
+    // const oldUserBilling = await prismaServerGlobal.userBilling.findFirst({
+    //   where: {
+    //     customerId: customerBillingId
+    //   }
+    // })
+    // if(!oldUserBilling)
+    // {
+    //   console.log("Something is wrong with this",customerBillingId,"\n\n")
+    // }
+    // const testUserProfileId = oldUserBilling.userProfileId2;
+    // console.log("Whatever this is testUserProfileId",testUserProfileId)
+    // const findAllUsersProfileId = await prismaServerGlobal.userBilling.findMany({
+    //   where: {
+    //     userProfileId2: testUserProfileId,
+    //     NOT: {
+    //       id: oldUserBilling.id
+    //     }
+    //   }
+    // })
+    // const findAllUsersProfileIds = findAllUsersProfileId.map(user => user.id);
+    // if(findAllUsersProfileIds.length !== 0)
+    // {
+    //   const cancelOldSubscription = await prismaServerGlobal.subscription.findFirst({
+    //     where: {
+    //       customerId: {
+    //         in: findAllUsersProfileIds
+    //       }
+    //     }
+    //   })
+    //   const subscription = await stripe.subscriptions.cancel(
+    //     cancelOldSubscription.id
+    //   );
+    //   const findUserAndDelete = await prismaServerGlobal.userBilling.deleteMany({
+    //     where: {
+    //       userProfileId2: oldUserBilling.userProfileId2,
+    //       NOT: {
+    //         id: oldUserBilling.id
+    //       }
+    //     }
+    //   })
+    // }

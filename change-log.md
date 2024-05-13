@@ -293,3 +293,11 @@
 
 # 29/4
 - updated some minor part in notification api, including a new option for clearing notifications as it's easy
+
+# 13/5
+- added stripe 
+- added webhook
+- pretty much added the subscription system
+
+# 14/5 
+- optional foreign key because the process are not waiting 

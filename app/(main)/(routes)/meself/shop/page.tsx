@@ -45,7 +45,6 @@ const AppShop = async(
                     <PricingPage 
                     />
                     
-
                 </div>
         )
     }

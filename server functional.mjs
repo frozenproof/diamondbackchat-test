@@ -136,9 +136,6 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
 
   // Handle the event
   switch (event.type) {
-    case 'customer.created':
-      await handleCustomerUpdate(event.data.object);
-      break;
     case 'customer.subscription.deleted':
       await handleSubscriptionDeleted(event.data.object);
       break;
@@ -154,7 +151,9 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
     case 'customer.subscription.created':
       await handleSubscriptionCreated(event.data.object);
       break;
-
+    case 'customer.created':
+      await handleCustomerUpdate(event.data.object);
+      break;
     case 'product.created':
     case 'product.updated':
     case 'product.deleted':
@@ -171,18 +170,15 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
     case 'price.created':
     case 'price.updated':
     case 'billing_portal.configuration.updated':
-      // response.json({ received: true });
       handleIgnoredEvent(event);
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);
-      console.log("Unhandled event\n", event.data.object);
-
+      console.log("Unhandled event\n", event.data.object)
   }
 
   // Return a response to acknowledge receipt of the event
-  // response.json({ received: true });
-
+  response.json({ received: true });
 });
 
 async function handleSubscriptionDeleted(subscriptionDeleted) {
@@ -203,49 +199,15 @@ async function handleCheckoutSessionCompleted(customerForDatabase) {
   console.log("Check out session id for billing", customerForDatabase.id);
   console.log("User email", emailSubscription);
   console.log("User subscription id", subscriptionIdSession);
-  const currentSubscription = await prismaServerGlobal.subscription.update({
+  await prismaServerGlobal.subscription.update({
     where: {
       id: subscriptionIdSession,
+      customerId: customerIdSession
     },
     data: {
-      isActive: true
+      isActive: true,
     }
   });
-  console.log("current subscription",currentSubscription);
-  // const connectDatabase = await prismaServerGlobal.userBilling.findFirst(
-  //   {
-  //     where: {
-  //       customerId: customerIdSession
-  //     }
-  //   }
-  // )
-  // while(!connectDatabase)
-  // {
-  //   connectDatabase = await prismaServerGlobal.userBilling.findFirst(
-  //     {
-  //       where: {
-  //         customerId: customerIdSession
-  //       }
-  //     }
-  //   );
-  //   await wait(2000);
-  //   if(connectDatabase)
-  //     {
-  //       const currentSubscription2 = await prismaServerGlobal.subscription.update({
-  //         where: {
-  //           id: subscriptionIdSession,
-  //         },
-  //         data: {
-  //           customer: {
-  //             connect: {
-  //               customerId: customerIdSession
-  //             }
-  //           }
-  //         }
-  //       });
-  //       break;  
-  //     }
-  // }
 }
 
 function handleCustomerDeleted(customerDelete) {
@@ -325,7 +287,7 @@ async function updateUserBilling(emailSubscription2, customerId2) {
     if (user2) {
       console.log("User from updateUserBilling",user2)
       try {
-        const createdUser = await prismaServerGlobal.userBilling.create({
+        await prismaServerGlobal.userBilling.create({
           data: {
             customerId: customerId2,
             userProfile: {
@@ -336,8 +298,6 @@ async function updateUserBilling(emailSubscription2, customerId2) {
             }
           }
         });
-        console.log("User from updateUserBilling created",createdUser)
-
       }
       catch(e)  {
         console.log("Error on server updateUserBilling",e)
@@ -351,8 +311,4 @@ async function updateUserBilling(emailSubscription2, customerId2) {
   } catch (error) {
     console.error("Error updating user billing:", error);
   }
-}
-
-async function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
