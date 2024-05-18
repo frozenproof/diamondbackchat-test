@@ -9,6 +9,7 @@ datasource db {
   provider = "postgres"
   url      = env("DATABASE_URL")
 }
+  // password        String     @default("")
 
 model UserProfile {
   id              String     @id @default(uuid())
@@ -20,7 +21,6 @@ model UserProfile {
   status          UserStatus @default(ONLINE)
   deleted         Boolean    @default(false)
   version         Int        @default(1)
-  password        String     @default("")
   userCurrentRank String     @default("None")
 
   createdAt DateTime @default(now())
@@ -312,11 +312,11 @@ model Subscription {
   @@index([id])
 }
 
-model ProductBilling {
-  productId   String @id @default(uuid())
-  productName String @default("Name")
-  // Subcription Subcription[]
-}
+// model ProductBilling {
+//   productId   String @id @default(uuid())
+//   productName String @default("Name")
+//   // Subcription Subcription[]
+// }
 
 model UserNotification {
   id         String           @id @default(uuid())

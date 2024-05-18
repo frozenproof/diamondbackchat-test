@@ -77,6 +77,12 @@ export const UserButtonDiamond = ({
                 className="w-48"
             >
                 <DropdownMenuItem
+                   className="pointer-events-none"
+                >
+                    {currentUserProfile.userCurrentRank}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
                     onClick={() => onOpen("UserProfileDisplay",{userProfilePropAPI: currentUserProfile,currentUserPropAPIID: currentUserProfile.id})}
                 >
                     My profile

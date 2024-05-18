@@ -318,7 +318,8 @@ async function updateUserBilling(emailSubscription2, customerId2) {
   try {
     const user2 = await prismaServerGlobal.userProfile.findFirst({
       where: {
-        email: emailSubscription2
+        email: emailSubscription2,
+        
       }
     });
 
@@ -336,8 +337,29 @@ async function updateUserBilling(emailSubscription2, customerId2) {
             }
           }
         });
+        // const createdUser = await prismaServerGlobal.userBilling.upsert({
+        //   where: {
+        //     customerId: customerId2,
+        //     userProfile: {
+        //       id: user2.id,
+        //       email: user2.email // Assuming email is unique
+        //     }
+        //   },
+        //   update: {
+        //     customerId: customerId2,
+        //   },
+        //   create: {
+        //     customerId: customerId2,
+        //     userProfile: {
+        //       connect: {
+        //         id: user2.id,
+        //         email: user2.email
+        //       }
+        //     }
+        //   }
+        // });
+        
         console.log("User from updateUserBilling created",createdUser)
-
       }
       catch(e)  {
         console.log("Error on server updateUserBilling",e)

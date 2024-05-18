@@ -29,9 +29,6 @@ export const NavigationSideBar = async (
         }
     })
     
-
-
-    
     if(!servers)
     {
         return redirect("/meself/friend");
@@ -44,6 +41,12 @@ export const NavigationSideBar = async (
                 userProfileId: profile.id
             }
         })
+        const userRank = await db.userBilling.findFirst({
+            where: {
+                userProfileId2: profile.id
+            }
+        })
+        
         return ( 
             <Suspense
                 fallback={
@@ -60,8 +63,6 @@ export const NavigationSideBar = async (
                 >
                     <NavigationAction/>            
                 </div>
-         
-    
                 <div
                     id="serverscroll"
                     className="h-full"
