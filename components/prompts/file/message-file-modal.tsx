@@ -71,10 +71,10 @@ export const MessageFilePrompt = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Send files {channelIdPropAPI} here
+            Send files here
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            This is a fire and I don&#39;t know how {memberIdPropAPI}
+            A great photo, album, animation. Sharing with us is bravery. 
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

@@ -94,7 +94,7 @@ export const EditServerPrompt = () => {
                             Edit your server
                         </DialogTitle>
                         <DialogDescription className="text-center">
-                            Cook some or cook a lot . Why kiss your bro when you can kiss your server .
+                            Edit your server. A best server is the one with your dedication.
                         </DialogDescription>
                     </DialogHeader>
                     <Form  {...form}>

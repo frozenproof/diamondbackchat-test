@@ -12,8 +12,7 @@ const DirectSideBarHeader = () => {
             />
             <CustomerPortal
             />
-            <AiButton
-            />
+
         </div>
      );
 }

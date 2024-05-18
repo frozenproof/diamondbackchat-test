@@ -27,7 +27,7 @@ import qs from "query-string"
 export const UserProfilePrompt = () => {
     const { isOpen,onClose,type,propData } = usePrompt();
     const router = useRouter();
-    const DATE_FORMAT = "d MMM yyyy, HH:mm";
+    const DATE_FORMAT = "d MMM yyyy";
     
     const isPromptOpen = isOpen && type === "UserProfileDisplay";
     const { userProfilePropAPI , currentUserPropAPIID }  = propData;
@@ -81,7 +81,7 @@ export const UserProfilePrompt = () => {
              />
             </Avatar>
             <div
-              className="flex ml-auto flex-col"
+              className="flex ml-auto flex-col pt-[28px]"
             >                  
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -124,18 +124,28 @@ export const UserProfilePrompt = () => {
                     Look like this user didn&#39;t add anything to their bio.
                   </div>
                 )}
+                {(userProfilePropAPI.about !== "") && (
+                  <div className={
+                    `text-sm text-zinc-600 dark:text-zinc-300 ` 
+                  }
+                  >
+                    {userProfilePropAPI.about}
+                  </div>
+                )}
                 </CardDescription>
             </CardHeader>
             <CardContent>
               <form>
                 <div className="grid w-full items-center gap-4">
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Member since {format(new Date(userProfilePropAPI.createdAt), DATE_FORMAT)}</Label>
-  
+                    <Label htmlFor="name">Joined Liltrees since {format(new Date(userProfilePropAPI.createdAt), DATE_FORMAT)}</Label>
+
                   </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="framework">Note</Label>
-                    
+                  <div className="flex flex-col space-y-1.5 pt-[28px]">
+                    <Label htmlFor="framework">Status</Label>
+                      This user is currently {userProfilePropAPI.status}.
+                      <br/>
+                      This user is also a {userProfilePropAPI.userCurrentRank}
                   </div>
                 </div>
               </form>

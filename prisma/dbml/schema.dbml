@@ -1,0 +1,357 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table UserProfile {
+  id String [pk]
+  userId String [unique, not null]
+  name String [not null, default: 'Deleted']
+  imageUrl String [not null]
+  email String [not null]
+  about String [not null, default: '']
+  status UserStatus [not null, default: 'ONLINE']
+  deleted Boolean [not null, default: false]
+  version Int [not null, default: 1]
+  userCurrentRank String [not null, default: 'Basic Member']
+  createdAt DateTime [default: `now()`, not null]
+  bannedServers BannedServerMember [not null]
+  serverInvites ServerInvite [not null]
+  Member Member [not null]
+  Server Server [not null]
+  DirectMessage DirectMessage [not null]
+  DirectChannelSend DirectChannel [not null]
+  DirectChannelRepl DirectChannel [not null]
+  FriendOne Friend [not null]
+  FriendTwo Friend [not null]
+  Blocker Block [not null]
+  Blocked Block [not null]
+  UserNotification UserNotification [not null]
+  UserBilling UserBilling [not null]
+
+  indexes {
+    (id, email) [unique]
+  }
+}
+
+Table Server {
+  id String [pk]
+  name String [not null]
+  imageUrl String [not null]
+  version Int [not null, default: 1]
+  updatedAt DateTime [not null]
+  deleted Boolean [not null, default: false]
+  userProfileId String [not null, default: 'Deleted']
+  userProfile UserProfile [not null]
+  Member Member [not null]
+  BannedServerMember BannedServerMember [not null]
+  ServerInvite ServerInvite [not null]
+  Channel Channel [not null]
+}
+
+Table Member {
+  id String [pk]
+  role OldMemberRole [not null, default: 'MEMBER']
+  deleted Boolean [not null, default: false]
+  version Int [not null, default: 1]
+  userProfileId String [not null]
+  userProfile UserProfile [not null]
+  serverId String [not null]
+  server Server [not null]
+  nickname String [not null, default: '']
+  Message Message [not null]
+
+  indexes {
+    (userProfileId, serverId) [unique]
+  }
+}
+
+Table Channel {
+  id String [pk]
+  name String [not null]
+  type OldChannelType [not null, default: 'TEXT']
+  updatedAt DateTime [not null]
+  version Int [not null, default: 1]
+  categories String [not null]
+  deleted Boolean [not null, default: false]
+  serverId String [not null]
+  server Server [not null]
+  Message Message [not null]
+  Attachment AttachmentChannel [not null]
+}
+
+Table DirectChannel {
+  id String [pk]
+  deleted Boolean [not null, default: false]
+  memberOneId String [not null]
+  memberOne UserProfile [not null]
+  memberTwoId String [not null]
+  memberTwo UserProfile [not null]
+  DirectMessage DirectMessage [not null]
+  AttachmentDirect AttachmentDirect [not null]
+
+  indexes {
+    (memberOneId, memberTwoId) [unique]
+  }
+}
+
+Table BannedServerMember {
+  userProfileId String [not null]
+  userProfile UserProfile [not null]
+  serverId String [not null]
+  server Server [not null]
+  count Int [not null]
+  description String [not null, default: 'DefaultBanned ']
+  assignedAt DateTime [default: `now()`, not null]
+  assignedBy String [not null]
+
+  indexes {
+    (userProfileId, serverId) [pk]
+  }
+}
+
+Table ServerInvite {
+  userProfileId String [not null]
+  userProfile UserProfile [not null]
+  serverId String [not null]
+  server Server [not null]
+  inviteCode String [unique, not null]
+  deleted Boolean [not null, default: false]
+  assignedAt DateTime [not null]
+
+  indexes {
+    (userProfileId, serverId) [pk]
+  }
+}
+
+Table Message {
+  id String [pk]
+  content String [not null]
+  version Int [not null, default: 1]
+  memberId String [not null]
+  member Member [not null]
+  channelId String [not null]
+  channel Channel [not null]
+  hasAttachment Boolean [not null, default: false]
+  deleted Boolean [not null, default: false]
+  isReply Boolean [not null]
+  messageParentId String
+  messageParent Message
+  children Message [not null]
+  pinned Boolean [not null, default: false]
+  edited Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  AttachmentChannel AttachmentChannel [not null]
+}
+
+Table DirectMessage {
+  id String [pk]
+  content String [not null]
+  version Int [not null, default: 1]
+  userProfileId String [not null]
+  userProfile UserProfile [not null]
+  hasAttachment Boolean [not null, default: false]
+  deleted Boolean [not null, default: false]
+  isReply Boolean [not null]
+  messageParentId String
+  messageParent DirectMessage
+  children DirectMessage [not null]
+  pinned Boolean [not null, default: false]
+  edited Boolean [not null, default: false]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  AttachmentDirect AttachmentDirect [not null]
+  DirectChannel DirectChannel [not null]
+  directChannelId String [not null]
+}
+
+Table AttachmentChannel {
+  id String [pk]
+  fileUrl String [not null]
+  name String [not null]
+  type String [not null]
+  messageId String [not null]
+  message Message [not null]
+  channelId String [not null]
+  channel Channel [not null]
+}
+
+Table AttachmentDirect {
+  id String [pk]
+  fileUrl String [not null]
+  name String [not null]
+  type String [not null]
+  directMessageId String [not null]
+  directMessage DirectMessage [not null]
+  directChannelId String [not null]
+  directChannel DirectChannel [not null]
+}
+
+Table Friend {
+  id String [pk]
+  pending Boolean [not null, default: false]
+  updatedAt DateTime [not null]
+  friendOneId String [not null]
+  friendOne UserProfile [not null]
+  friendTwoId String [not null]
+  friendTwo UserProfile [not null]
+
+  indexes {
+    (friendOneId, friendTwoId) [unique]
+  }
+}
+
+Table Block {
+  id String [pk]
+  updatedAt DateTime [not null]
+  blockerId String [not null]
+  blocker UserProfile [not null]
+  blockedId String [not null]
+  blocked UserProfile [not null]
+
+  indexes {
+    (blockerId, blockedId) [unique]
+  }
+}
+
+Table Maintainence {
+  id String [pk]
+  isOffline Boolean [not null, default: false]
+  lastUpdate DateTime [default: `now()`, not null]
+  from DateTime [default: `now()`, not null]
+  until DateTime [default: `now()`, not null]
+}
+
+Table UserBilling {
+  customerId String [pk, default: '?']
+  userProfileId2 String [not null]
+  email2 String [not null]
+  userProfile UserProfile [not null]
+  Subcription Subscription [not null]
+
+  indexes {
+    (customerId, email2) [unique]
+  }
+}
+
+Table Subscription {
+  id String [pk]
+  productId String [not null]
+  isActive Boolean [not null, default: false]
+  until DateTime [default: `now()`, not null]
+  at DateTime [default: `now()`, not null]
+  customerId String
+  customer UserBilling
+}
+
+Table UserNotification {
+  id String [pk]
+  lastUpdate DateTime [default: `now()`, not null]
+  data String [not null, default: '']
+  type NotificationType [not null, default: 'USER']
+  isRead Boolean [not null, default: false]
+  userProfileId String [not null, default: 'Deleted']
+  userProfile UserProfile [not null]
+
+  indexes {
+    (id, userProfileId) [unique]
+  }
+}
+
+Table UserOne {
+  directchannelsendId String [ref: > DirectChannel.id]
+  friendoneId String [ref: > Friend.id]
+}
+
+Table UserTwo {
+  directchannelreplId String [ref: > DirectChannel.id]
+  friendtwoId String [ref: > Friend.id]
+}
+
+Enum OldMemberRole {
+  CREATOR
+  OWNER
+  ADMIN
+  MODERATOR
+  BOT
+  MEMBER
+  GUEST
+  SPECIALGUEST
+  LILWITCH
+}
+
+Enum OldChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+  NOTIFICATION
+}
+
+Enum UserStatus {
+  ONLINE
+  OFFINE
+  INVISIBLE
+  IDLE
+  DO_NOT_DISTURB
+  DELETED
+  BANNED
+}
+
+Enum NotificationType {
+  USER
+  SYSTEM
+}
+
+Ref: Server.userProfileId > UserProfile.id [delete: Set Default]
+
+Ref: Member.userProfileId > UserProfile.id [delete: Cascade]
+
+Ref: Member.serverId > Server.id [delete: Cascade]
+
+Ref: Channel.serverId > Server.id [delete: Cascade]
+
+Ref: DirectChannel.memberOneId > UserProfile.id [delete: Cascade]
+
+Ref: DirectChannel.memberTwoId > UserProfile.id [delete: Cascade]
+
+Ref: BannedServerMember.userProfileId > UserProfile.id [delete: Cascade]
+
+Ref: BannedServerMember.serverId > Server.id [delete: Cascade]
+
+Ref: ServerInvite.userProfileId > UserProfile.id [delete: Cascade]
+
+Ref: ServerInvite.serverId > Server.id [delete: Cascade]
+
+Ref: Message.memberId > Member.id [delete: Cascade]
+
+Ref: Message.channelId > Channel.id [delete: Cascade]
+
+Ref: Message.messageParentId - Message.id
+
+Ref: DirectMessage.userProfileId > UserProfile.id [delete: Cascade]
+
+Ref: DirectMessage.messageParentId - DirectMessage.id
+
+Ref: DirectMessage.directChannelId > DirectChannel.id
+
+Ref: AttachmentChannel.messageId > Message.id [delete: Cascade]
+
+Ref: AttachmentChannel.channelId > Channel.id [delete: Cascade]
+
+Ref: AttachmentDirect.directMessageId > DirectMessage.id [delete: Cascade]
+
+Ref: AttachmentDirect.directChannelId > DirectChannel.id [delete: Cascade]
+
+Ref: Friend.friendOneId > UserProfile.id [delete: Cascade]
+
+Ref: Friend.friendTwoId > UserProfile.id [delete: Cascade]
+
+Ref: Block.blockerId > UserProfile.id [delete: Cascade]
+
+Ref: Block.blockedId > UserProfile.id [delete: Cascade]
+
+Ref: UserBilling.(userProfileId2, email2) > UserProfile.(id, email) [delete: Cascade]
+
+Ref: Subscription.customerId > UserBilling.customerId [delete: Cascade]
+
+Ref: UserNotification.userProfileId > UserProfile.id [delete: Set Default]

@@ -86,7 +86,7 @@ export const ServerSideBar = async({
     const thisMember = server2?.Member.find((member) => member.userProfileId === profile.id)
     const role = server2?.Member.find((member) => member.userProfileId === profile.id)?.role
     return (
-        <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#ffdbed]">
+        <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#15e4ffa8]">
             <ServerHeader
                 server={server2}
                 banned={banned}

@@ -73,11 +73,11 @@ export const NavigationSideBar = async (
                 </div>
                 
                 <div className="pb-3 mb-auto flex items-center flex-col gap-y-4">
-                    <ChatVideoButton 
+                    {/* <ChatVideoButton 
                         currentUser={profile}
                         directChannelId="testing"
                         otherUserIdSocket={profile.id}
-                    />
+                    /> */}
                     <NotificationButton 
                         userSocketId={userProfileIdNavigationSideBar}
                         notificationProp={notification}
