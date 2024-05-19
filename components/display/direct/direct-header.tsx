@@ -24,7 +24,7 @@ export const DirectChannelHeader = ({
     otherUserIdSocket
 }:DirectHeaderProps) => {
     return (
-    <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2">
+    <div className="text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 dark:bg-[#000000] dark:hover:bg-[rgb(121,120,120)]">
         {/* <MobileToggle serverId={serverId} /> */}
         <MobileNavigationLeftToggle 
             userProfileProp={userProfileProp}

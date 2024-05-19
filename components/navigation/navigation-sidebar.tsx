@@ -14,7 +14,6 @@ import { currentUserProfile } from "@/lib/current-profile";
 export const NavigationSideBar = async (
     {userProfileIdNavigationSideBar} : {userProfileIdNavigationSideBar: string},
 ) => {
-
     //for testing only
     const profile = await currentUserProfile();
     const servers = await db.server.findMany({
@@ -41,11 +40,7 @@ export const NavigationSideBar = async (
                 userProfileId: profile.id
             }
         })
-        const userRank = await db.userBilling.findFirst({
-            where: {
-                userProfileId2: profile.id
-            }
-        })
+
         
         return ( 
             <Suspense

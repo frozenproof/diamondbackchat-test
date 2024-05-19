@@ -13,7 +13,7 @@ export const CustomerPortal = () => {
 
     return ( 
         <button
-            className="w-full hover:bg-[#88828814] dark:bg-primary  dark:hover:bg-[#282828]/90 h-[48px] p-[8x] "
+            className="w-full hover:bg-[#c4b5c414] dark:hover:bg-[rgb(121,120,120)] h-[48px] p-[8x] dark:bg-[#000000]"
             onClick={(MouseEvent) => {onAction(MouseEvent,`https://billing.stripe.com/p/login/test_9AQ9CW2l4dk6cKIaEE`)}}
         >
             <div 

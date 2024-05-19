@@ -23,7 +23,7 @@ const MePageLayout = async ({
         return ( 
             <div className="h-full">
                 <div className="hidden md:flex h-full w-48 z-20 flex-col fixed inset-y-0
-                    bg-[#F2F3F5]
+                    bg-[#F2F3F5] dark:bg-[#000000]
                 ">
                     <DirectSideBar 
                         userProfileId={profile.id}

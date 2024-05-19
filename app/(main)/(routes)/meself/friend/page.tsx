@@ -118,7 +118,6 @@ const FriendsPage = async({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-
           <FriendProfileComponent
               pageFriendsProp={allFriends}
               profileId={profile.id}

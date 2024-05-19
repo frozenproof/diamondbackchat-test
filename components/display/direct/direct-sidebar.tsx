@@ -45,16 +45,16 @@ export const DirectSideBar = async({
     if(directChannelProp)
     return (
       <div
-        // className="bg-red-800"
+        className="dark:bg-[#000000]"
       >
         <DirectSideBarHeader 
         />
-          <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400 pt-[8px] text-center align-middle">
+          <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-[#f1f1f1] pt-[8px] text-center align-middle dark:bg-[#000000]">
             Direct Channels
           </p>       
         {!!directChannelProp?.length && (
-              <div className="mb-2">
-                <div className="space-y-[2px]">
+              <div className="mb-2 dark:bg-[#000000]">
+                <div className="space-y-[2px] dark:bg-[#000000]">
                   {directChannelProp.map((channel) => 
                   {
                     const userAuth = (channel.memberOneId === userProfileId);

@@ -39,7 +39,7 @@ export const UserButtonDiamond = ({
     }
     return (
         <div
-            className="w-full flex p-1"
+            className="w-full flex p-1 dark:bg-[#000000]"
         >
             <div
                 className="flex "
@@ -48,7 +48,7 @@ export const UserButtonDiamond = ({
                 <AvatarImage src={currentUserProfile.imageUrl} />
             </Avatar>
             <div 
-                className=" gap-x-1 gap-y-1 pl-2 flex flex-col flex-wrap h-auto overflow-hidden mt-auto"
+                className=" flex flex-col flex-wrap h-auto overflow-hidden mt-auto"
             >
                 <div
                     style={{color: "red",fontSize: "18px"}}

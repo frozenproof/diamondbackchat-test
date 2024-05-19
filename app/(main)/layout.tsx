@@ -35,22 +35,32 @@ var MainLayout = async ({
         return redirect(`/`);
     }
     if(profile)
-    return ( 
-        <Suspense
-            fallback={<LoadingMainPage />}
-        >
-            <div className="h-full mainapp">
-                <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0"> 
-                <NavigationSideBar
-                    userProfileIdNavigationSideBar={profile.id}
-                />             
+    {
+        const userRank = await db.userBilling.findFirst({
+            where: {
+                userProfileId2: profile.id
+            }
+        })
+        // switch(userRank) {
+        //     case 
+        // }
+        return ( 
+            <Suspense
+                fallback={<LoadingMainPage />}
+            >
+                <div className="h-full mainapp">
+                    <div className="hidden md:flex h-full w-[72px] z-30 flex-col fixed inset-y-0"> 
+                    <NavigationSideBar
+                        userProfileIdNavigationSideBar={profile.id}
+                    />             
+                    </div>
+                    <main className="md:pl-[72px] h-full insidemain">
+                        {children}
+                    </main>
                 </div>
-                <main className="md:pl-[72px] h-full insidemain">
-                    {children}
-                </main>
-            </div>
-       </Suspense>
-     );
+           </Suspense>
+         );
+    }
 }
  
 export default MainLayout;

@@ -316,12 +316,6 @@ model Subscription {
   @@index([id])
 }
 
-// model ProductBilling {
-//   productId   String @id @default(uuid())
-//   productName String @default("Name")
-//   // Subcription Subcription[]
-// }
-
 model UserNotification {
   id         String           @id @default(uuid())
   lastUpdate DateTime         @default(now())
@@ -368,3 +362,9 @@ enum NotificationType {
   USER
   SYSTEM
 }
+
+// model ProductBilling {
+//   productId   String @id @default(uuid())
+//   productName String @default("Name")
+//   // Subcription Subcription[]
+// }

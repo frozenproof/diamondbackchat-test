@@ -59,7 +59,7 @@ const FriendProfileComponent = (
     }
     return ( 
         <div
-              className="space-y-2 h-[280px] "
+              className="space-y-2 h-[480px] "
             >
               {pageFriendsProp.map((friendMember) => 
             {
