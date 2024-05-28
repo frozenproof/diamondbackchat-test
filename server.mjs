@@ -193,6 +193,14 @@ async function handleSubscriptionDeleted(subscriptionDeleted) {
 async function handleSubscriptionUpdated(subscriptionCan) {
   console.log("customer.subscription.updated", subscriptionCan.customer);
   console.log("Id subscription", subscriptionCan.id);
+  if(typeof(canceled_at) == Number)
+  {
+    const updatingSubscription = await prismaServerGlobal.subscription.delete({
+      where: {
+        id: subscriptionCan.id
+      }
+    })
+  }
 }
 
 async function handleCheckoutSessionCompleted(customerForDatabase) {
@@ -203,49 +211,31 @@ async function handleCheckoutSessionCompleted(customerForDatabase) {
   console.log("Check out session id for billing", customerForDatabase.id);
   console.log("User email", emailSubscription);
   console.log("User subscription id", subscriptionIdSession);
-  const currentSubscription = await prismaServerGlobal.subscription.update({
-    where: {
-      id: subscriptionIdSession,
-    },
-    data: {
-      isActive: true
+  let attempts = 0,maxAttempts = 3;
+  while (attempts < maxAttempts) {
+    try {
+      const currentSubscription = await prismaServerGlobal.subscription.update({
+        where: {
+          id: subscriptionIdSession,
+        },
+        data: {
+          isActive: true
+        }
+      });
+      console.log("current subscription", currentSubscription);
+      return currentSubscription; // Exit if successful
+    } catch (error) {
+      attempts++;
+      if (attempts < maxAttempts) {
+        console.log(`Attempt ${attempts} failed. Retrying in 3 seconds...`);
+        await delay(3000); // Wait for 3 seconds before retrying
+      } else {
+        console.log(`Attempt ${attempts} failed. No more retries left.`);
+        throw error; // Re-throw the error if all attempts fail
+      }
     }
-  });
-  console.log("current subscription",currentSubscription);
-  // const connectDatabase = await prismaServerGlobal.userBilling.findFirst(
-  //   {
-  //     where: {
-  //       customerId: customerIdSession
-  //     }
-  //   }
-  // )
-  // while(!connectDatabase)
-  // {
-  //   connectDatabase = await prismaServerGlobal.userBilling.findFirst(
-  //     {
-  //       where: {
-  //         customerId: customerIdSession
-  //       }
-  //     }
-  //   );
-  //   await wait(2000);
-  //   if(connectDatabase)
-  //     {
-  //       const currentSubscription2 = await prismaServerGlobal.subscription.update({
-  //         where: {
-  //           id: subscriptionIdSession,
-  //         },
-  //         data: {
-  //           customer: {
-  //             connect: {
-  //               customerId: customerIdSession
-  //             }
-  //           }
-  //         }
-  //       });
-  //       break;  
-  //     }
-  // }
+  }
+
 }
 
 function handleCustomerDeleted(customerDelete) {
@@ -265,7 +255,9 @@ async function handleSubscriptionCreated(customerSubscriptionCreated) {
   console.log("Subscription began date", subscriptionBeginDate);
   console.log("Subscription end date", subscriptionEndDate);
 
-  try {
+  let attempts = 0,maxAttempts = 3;
+  while (attempts < maxAttempts) {
+    try {
     // const oldUserBilling = await prismaServerGlobal.userBilling.findMany({
     //   where: {
     //   }
@@ -290,9 +282,20 @@ async function handleSubscriptionCreated(customerSubscriptionCreated) {
 
     console.log("Created subscript record", testing);
   }
-  catch (e) {
-    console.log("Server error\n", e);
+  catch (error) {
+    if(error == 'unhandledRejection')
+    break;
+    console.log(error)
+    attempts++;
+    if (attempts < maxAttempts) {
+      console.log(`Attempt ${attempts} failed. Retrying in 2 seconds...`);
+      await delay(2); // Wait for 3 seconds before retrying
+    } else {
+      console.log(`Attempt ${attempts} failed. No more retries left.`);
+      throw error; // Re-throw the error if all attempts fail
+    }
   }
+}
 }
 
 async function handleCustomerUpdate(customerUser2) {
@@ -337,27 +340,7 @@ async function updateUserBilling(emailSubscription2, customerId2) {
             }
           }
         });
-        // const createdUser = await prismaServerGlobal.userBilling.upsert({
-        //   where: {
-        //     customerId: customerId2,
-        //     userProfile: {
-        //       id: user2.id,
-        //       email: user2.email // Assuming email is unique
-        //     }
-        //   },
-        //   update: {
-        //     customerId: customerId2,
-        //   },
-        //   create: {
-        //     customerId: customerId2,
-        //     userProfile: {
-        //       connect: {
-        //         id: user2.id,
-        //         email: user2.email
-        //       }
-        //     }
-        //   }
-        // });
+
         
         console.log("User from updateUserBilling created",createdUser)
       }
@@ -365,7 +348,7 @@ async function updateUserBilling(emailSubscription2, customerId2) {
         console.log("Error on server updateUserBilling",e)
         process.exit(0);
       }
-            // userProfileId2: user2.id,
+      // userProfileId2: user2.id,
       
     } else {
       console.error(`User with email ${emailSubscription2} not found.`);
@@ -375,6 +358,6 @@ async function updateUserBilling(emailSubscription2, customerId2) {
   }
 }
 
-async function wait(ms) {
+function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }

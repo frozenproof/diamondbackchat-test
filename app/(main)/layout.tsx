@@ -39,11 +39,72 @@ var MainLayout = async ({
         const userRank = await db.userBilling.findFirst({
             where: {
                 userProfileId2: profile.id
+            },
+            include: {
+                Subcription: true
             }
         })
-        // switch(userRank) {
-        //     case 
-        // }
+        if(userRank && profile.userCurrentRank === "Basic Member"){
+            // console.log("hmmm")
+            if(userRank.Subcription.length == 0){
+                await db.userBilling.delete({
+                    where: {
+                        customerId_email2: {
+                            customerId: userRank.customerId,
+                            email2: userRank.email2
+                        }
+                    }
+                })
+            }
+            else{
+                try {
+                    switch(userRank.Subcription[0].productId) {
+                    case "prod_Q5RcVjWOzXbWVg":
+                        await db.userProfile.update(
+                            {
+                                where: {
+                                    id: profile.id
+                                },
+                                data: {
+                                    userCurrentRank: "Liltree Maniac"
+                                }
+                            }
+                        )
+                        break;
+                    case "prod_Q5RgRJAoVFYUYd":
+                        await db.userProfile.update(
+                            {
+                                where: {
+                                    id: profile.id
+                                },
+                                data: {
+                                    userCurrentRank: "Liltree Lover"
+                                }
+                            }
+                        )
+                        break;
+                    case "prod_Q5jEtILOSyfHem":
+                        await db.userProfile.update(
+                            {
+                                where: {
+                                    id: profile.id
+                                },
+                                data: {
+                                    userCurrentRank: "Liltree Supporter"
+                                }
+                            }
+                        )
+                    break;                                              
+                        default:
+                            break;   
+                    }
+                }
+                catch(error) {
+                    
+                }
+            }
+            
+        }
         return ( 
             <Suspense
                 fallback={<LoadingMainPage />}

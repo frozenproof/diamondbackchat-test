@@ -1,0 +1,21 @@
+        // const createdUser = await prismaServerGlobal.userBilling.upsert({
+        //   where: {
+        //     customerId: customerId2,
+        //     userProfile: {
+        //       id: user2.id,
+        //       email: user2.email // Assuming email is unique
+        //     }
+        //   },
+        //   update: {
+        //     customerId: customerId2,
+        //   },
+        //   create: {
+        //     customerId: customerId2,
+        //     userProfile: {
+        //       connect: {
+        //         id: user2.id,
+        //         email: user2.email
+        //       }
+        //     }
+        //   }
+        // });

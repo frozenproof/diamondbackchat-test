@@ -301,3 +301,6 @@
 
 # 14/5 
 - optional foreign key because the process are not waiting 
+
+# 27/5
+- added proper display for subscription

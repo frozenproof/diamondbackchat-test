@@ -9,7 +9,7 @@
 # testing
 /coverage
 .diamond-bacc-dev.md
-
+/backupcode
 
 # next.js
 /.next/

@@ -7,7 +7,6 @@ import { DirectChannelItem } from "@/components/display/direct/direct-item";
 
 import { db } from "@/lib/db";
 
-
 interface DirectSideBarProps {
   userProfileId?: string;
   }
