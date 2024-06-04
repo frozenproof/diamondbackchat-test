@@ -314,7 +314,7 @@ function handleIgnoredEvent(ignoredEvent) {
 }
 
 
-app2.listen(4242, () => console.log('Running server stripe on port 8000'));
+app2.listen(4242, () => console.log('Running server stripe on port 4242'));
 
 async function updateUserBilling(emailSubscription2, customerId2) {
   console.log(emailSubscription2,"this is from user")
