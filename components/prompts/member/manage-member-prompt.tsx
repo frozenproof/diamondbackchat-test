@@ -12,7 +12,7 @@ import {
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-import { Book, Cat, Check, Dog, Loader2, MagnetIcon, Minus, MoreVerticalIcon, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis } from "lucide-react";
+import { Book, Cat, Check, Crown, Dog, Hammer, Loader2, MagnetIcon, Minus, MoreVerticalIcon, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis, ShieldEllipsisIcon } from "lucide-react";
 import React, { useState } from "react";
 
 import {
@@ -31,11 +31,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ServerWithMembersWithProfiles } from "@/type";
 const roleIconMap: {[key: string]: React.ReactNode} = {
-    "GUEST": <MagnetIcon />,
-    "MEMBER": <MagnetIcon />,
+    "GUEST": <MagnetIcon className="h-4 w-4"/>,
+    "MEMBER": <MagnetIcon className="h-4 w-4"/>,
     "MODERATOR": <ShieldCheckIcon className="h-4 w-4"/>,
     "CREATOR": <Cat className="h-4 w-4"/>,
-    "OWNER": <ShieldEllipsis className="h-4 w-4"/>,
+    "OWNER": <Crown className="h-4 w-4"/>,
     "LILWITCH": <MagnetIcon className="h-4 w-4"/>
 }
 
@@ -233,13 +233,13 @@ export const ManageMemberPrompt = () => {
                                                         }
                                                     </DropdownMenuItem>
                                                     <DropdownMenuItem
-                                                        onClick={() => onRoleChange(member.id,"LILWITCH")}
+                                                        onClick={() => onRoleChange(member.id,"BOT")}
                                                     >
-                                                        <Book 
+                                                        <ShieldEllipsisIcon 
                                                             className="mr-2"
                                                         />
-                                                            LILWITCH
-                                                        {member.role === "LILWITCH" && (
+                                                            Bot
+                                                        {member.role === "BOT" && (
                                                             <Check 
                                                                 className="text-[#ff3b3b] ml-auto"
                                                             />
@@ -271,7 +271,7 @@ export const ManageMemberPrompt = () => {
                                         <DropdownMenuItem
                                             onClick={() => onBan(member.userProfileId)}
                                         >
-                                            <Minus />
+                                            <Hammer />
                                             Ban
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
