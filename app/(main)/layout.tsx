@@ -44,9 +44,10 @@ var MainLayout = async ({
                 Subcription: true
             }
         })
-        if(userRank && profile.userCurrentRank === "Basic Member"){
+        if(userRank){
             // console.log("hmmm")
-            if(userRank.Subcription.length == 0){
+            if(userRank.Subcription.length == 0 || userRank.Subcription.filter(x => x.isActive == true).length == 0){
+                console.log("User billing is empty of subscription")
                 await db.userBilling.delete({
                     where: {
                         customerId_email2: {
@@ -55,6 +56,16 @@ var MainLayout = async ({
                         }
                     }
                 })
+                await db.userProfile.update(
+                    {
+                        where: {
+                            id: profile.id
+                        },
+                        data: {
+                            userCurrentRank: "Basic Member"
+                        }
+                    }
+                )
             }
             else{
                 try {
@@ -104,6 +115,17 @@ var MainLayout = async ({
                 }
             }
             
+        } 
+        else if(!userRank)
+        {
+            await db.userProfile.update({
+                where: {
+                    id: profile.id
+                },
+                data: {
+                    userCurrentRank: "Basic Member"
+                }
+            })
         }
         return ( 
             <Suspense

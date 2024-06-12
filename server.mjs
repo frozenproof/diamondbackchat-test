@@ -138,27 +138,34 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
   switch (event.type) {
     case 'customer.created':
       await handleCustomerUpdate(event.data.object);
+      response.json({ received: true });
       break;
     case 'customer.subscription.deleted':
       await handleSubscriptionDeleted(event.data.object);
+      response.json({ received: true });
       break;
     case 'customer.subscription.updated':
       await handleSubscriptionUpdated(event.data.object);
+      response.json({ received: true });
       break;
     case 'checkout.session.completed':
       await handleCheckoutSessionCompleted(event.data.object);
+      response.json({ received: true });
       break;
     case 'customer.deleted':
       handleCustomerDeleted(event.data.object);
+      response.json({ received: true });
       break;
     case 'customer.subscription.created':
       await handleSubscriptionCreated(event.data.object);
+      response.json({ received: true });
       break;
 
     case 'product.created':
     case 'product.updated':
     case 'product.deleted':
       handleProductEvent(event.data.object);
+      response.json({ received: true });
       break;
     case 'customer.updated':
     case 'invoice.created':
@@ -173,11 +180,15 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
     case 'billing_portal.configuration.updated':
       // response.json({ received: true });
       handleIgnoredEvent(event);
+      response.json({ received: true });
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);
       console.log("Unhandled event\n", event.data.object);
+      response.json({ received: true });
 
+          // Send a 200 response to acknowledge receipt of the event
+    
   }
 
   // Return a response to acknowledge receipt of the event
@@ -188,16 +199,35 @@ app2.post('/webhooks', express.json({type: 'application/json'}), async (request,
 async function handleSubscriptionDeleted(subscriptionDeleted) {
   console.log("customer.subscription.deleted\n", subscriptionDeleted.customer);
   console.log("Id subscription delete", subscriptionDeleted.id);
+  if(subscriptionDeleted.cancellation_details.reason != "null")
+  {
+    const updatingSubscription = await prismaServerGlobal.subscription.delete({
+      where: {
+        id: subscriptionDeleted.id
+      }
+    })
+    const removeUserBilling = await prismaServerGlobal.userBilling.delete({
+      where: {
+        customerId: subscriptionDeleted.customer
+      }
+    })
+  }
 }
 
 async function handleSubscriptionUpdated(subscriptionCan) {
   console.log("customer.subscription.updated", subscriptionCan.customer);
   console.log("Id subscription", subscriptionCan.id);
-  if(typeof(canceled_at) == Number)
+  // if(subscriptionCan.cancellation_details.reason == "cancellation_requested" && subscriptionCan.cancellation_details.reason != "null")
+  if(subscriptionCan.cancellation_details.reason != "null")
   {
     const updatingSubscription = await prismaServerGlobal.subscription.delete({
       where: {
         id: subscriptionCan.id
+      }
+    })
+    const removeUserBilling = await prismaServerGlobal.userBilling.delete({
+      where: {
+        customerId: subscriptionCan.customer
       }
     })
   }
@@ -289,7 +319,7 @@ async function handleSubscriptionCreated(customerSubscriptionCreated) {
     attempts++;
     if (attempts < maxAttempts) {
       console.log(`Attempt ${attempts} failed. Retrying in 2 seconds...`);
-      await delay(2); // Wait for 3 seconds before retrying
+      await delay(2000); // Wait for 3 seconds before retrying
     } else {
       console.log(`Attempt ${attempts} failed. No more retries left.`);
       throw error; // Re-throw the error if all attempts fail
@@ -311,6 +341,7 @@ function handleProductEvent(productSth) {
 
 function handleIgnoredEvent(ignoredEvent) {
   console.log("Ignored", ignoredEvent.type);
+  return ;
 }
 
 
