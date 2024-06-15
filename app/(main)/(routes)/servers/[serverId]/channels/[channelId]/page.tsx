@@ -112,6 +112,7 @@ const ChannelIdPage = async ({
                 apiUrl="/api/messages/channel-send"
                 channelName={channel.name}
                 memberIdProp={member.id}
+                memberRank={member.userProfile.userCurrentRank}
                 query={{
                   channelId: channel.id,
                   // serverId: params.serverId,

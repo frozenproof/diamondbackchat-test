@@ -9,12 +9,10 @@ import { usePrompt } from "@/hooks/use-prompt-store";
 import { UserProfile, UserStatus } from "@prisma/client";
 import qs from "query-string"
 import axios from "axios";
-
 interface UserProfileAvatarProps {
     currentUserProfile: UserProfile;
     className?: string;
 };
-
 export const UserButtonDiamond = ({
     currentUserProfile,
     className
@@ -55,11 +53,45 @@ export const UserButtonDiamond = ({
                 >
                     {currentUserProfile.name}
                 </div>
-                <div
-                    style={{color: "green",fontSize: "8px"}}
-                >
-                    {currentUserProfile.status}
-                </div>
+                {
+                    
+                    (currentUserProfile.status == UserStatus.INVISIBLE) && (
+                        <div
+                        style={{color: "gray",fontSize: "8px"}}
+                    >
+                        {currentUserProfile.status}
+                    </div>
+                    )
+                }
+                {
+                    
+                    (currentUserProfile.status == UserStatus.ONLINE) && (
+                        <div
+                        style={{color: "green",fontSize: "8px"}}
+                    >
+                        {currentUserProfile.status}
+                    </div>
+                    )
+                }                {
+                    
+                    (currentUserProfile.status == UserStatus.IDLE) && (
+                        <div
+                        style={{color: "yellow",fontSize: "8px"}}
+                    >
+                        {currentUserProfile.status}
+                    </div>
+                    )
+                }               
+                {
+                    
+                    (currentUserProfile.status == UserStatus.DO_NOT_DISTURB) && (
+                        <div
+                        style={{color: "red",fontSize: "8px"}}
+                    >
+                        {currentUserProfile.status}
+                    </div>
+                    )
+                }                
             </div>
             </div>
         <DropdownMenu

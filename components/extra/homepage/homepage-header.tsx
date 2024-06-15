@@ -10,7 +10,7 @@ export const HomePageHeader = () => {
             </h3>
             <div className="text-base !m-0 !p-0 font-normal">
                 <span className="text-slate-500 ">
-                    Fast and simple chat, and beautiful
+                    Fast and simple chat, yet beautiful
                 </span>
             </div>
         </div>                

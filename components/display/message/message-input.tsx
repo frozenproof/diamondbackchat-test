@@ -20,12 +20,14 @@ import { EmojiPicker } from "@/components/uihelper/emoji-picker";
 import { useSocket } from "@/components/providers/socket-provider";
 import { Member } from "@prisma/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useState } from "react";
 
 interface MessageInputProps {
   apiUrl: string;
   query: Record<string, any>;
   channelName: string;
   memberIdProp: string;
+  memberRank: string;
   memberListProp: Member[];
 }
 
@@ -38,6 +40,7 @@ export const MessageInput = ({
   query,
   channelName,
   memberIdProp,
+  memberRank,
   memberListProp
 }: MessageInputProps) => {
   const { onOpen } = usePrompt();
@@ -51,6 +54,7 @@ export const MessageInput = ({
       content: "",
     }
   });
+  const [text, setText] = useState<string>('');
 
   const channelId = query.channelId;
   // console.log("Channel id is",channelId);
@@ -84,6 +88,46 @@ export const MessageInput = ({
     }
   }
 
+  if(memberRank == "Basic Member")
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div className="relative p-4 pb-6">
+                  <button
+                    type="button"
+                    onClick={() => onOpen("MessageFile", { channelIdPropAPI: channelId,memberIdPropAPI:memberIdProp,typeSend: "sentMem" })}
+                    className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
+                  >
+                    <Plus className="text-white dark:text-[#313338]" />
+                  </button>
+
+                  <Input
+                    id="input"
+                    className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200 "
+                    placeholder={`Message ${"#" + channelName}`}
+                    maxLength={2000}
+                    {...field}
+                  />
+                  <div className="absolute top-7 right-8">
+                    <EmojiPicker
+                      onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
+                    />
+                  </div>
+                </div>
+              </FormControl>
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  )
+  else
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
