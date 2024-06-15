@@ -22,7 +22,9 @@ Many improvements don't even rely on those certain breaking changes , but is bun
 # Issue
 - Postgres is required due to changes in pricing model.
 
-
+# Final words
+So long , PEACH. I'M COMING TO JAPAN AND I'M GOING TO MARRY YOU, WHETHER YOU LIKE IT OR NOT. BY THAT I MEAN I'M GOING TO KISS YOU TILL YOU DIE.
+YOU DON'T SCREW AROUND WITH A YANDERE.
 
 
 # About env file

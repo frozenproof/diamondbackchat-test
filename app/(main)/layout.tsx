@@ -20,7 +20,7 @@ var MainLayout = async ({
                 className="text-center"
             >
                 <div>
-                    This message is from developers .
+                    This message is from developers and administrators.
                 </div>
                 (　･ω･)☞	We are currently doing maintainence.       
                 <br />
