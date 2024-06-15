@@ -25,5 +25,5 @@ Many improvements don't even rely on those certain breaking changes , but is bun
 
 
 
-# Functions
-<!--@include:@/list-function.md-->
+# About env file
+It will be uploaded here after I'm done with the presentation ! Be patient.
