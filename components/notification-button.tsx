@@ -5,7 +5,7 @@ import { Popover } from "./ui/popover"
 import { Bell } from "lucide-react"
 import { Card, CardContent, CardHeader } from "./ui/card"
 import { useSocket } from "./providers/socket-provider"
-import { ElementRef, useEffect, useRef } from "react"
+import { useEffect  } from "react"
 import { UserNotification, UserProfile } from "@prisma/client"
 import { useToast } from "./ui/use-toast"
 import qs from "query-string";
@@ -43,7 +43,7 @@ export const NotificationButton = (
             console.log("Other user on ",otherUserRequest);
             console.log("Message is calling",ACK);
             toast({
-                duration: 2808,
+                duration: 8888,
                 description: otherUserRequest.name+` is calling you`,
               })
         })
