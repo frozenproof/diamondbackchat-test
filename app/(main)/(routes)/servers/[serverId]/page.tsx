@@ -64,7 +64,7 @@ const ServerIdPage = async(
                  <SocketStatusDisplay />
                 </div>
                 <div
-                    className="flex flex-col pt-8"
+                    className="flex flex-col pt-8 pb-8"
                 >
                 <MovingBorderButton
                         borderRadius="1.75rem"

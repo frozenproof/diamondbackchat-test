@@ -77,7 +77,7 @@ export const EditMemberNicknamePrompt = () => {
 
     useEffect(() => {
         if(memberPropAPI){            
-        form.setValue("content",memberPropAPI.nickname);
+        form.setValue("nickname",memberPropAPI.nickname);
         }
     },[memberPropAPI, form])
     
@@ -85,7 +85,7 @@ export const EditMemberNicknamePrompt = () => {
     {
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
-                <DialogContent className="bg-white text-black p-0 overflow-hidden">
+                <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-slate-900 dark:text-white">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
                             Edit your nickname
@@ -100,16 +100,16 @@ export const EditMemberNicknamePrompt = () => {
                             <div className="space-y-8 px-6">
                                 <FormField 
                                 control={form.control} 
-                                name = "content"
+                                name = "nickname"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70 dark:bg-slate-900 dark:text-white">
                                             Nick name
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 disabled={isLoading}
-                                                className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 dark:bg-black dark:text-white"
                                                 placeholder="Enter your nick name"
                                                 {...field}
                                             />
@@ -119,7 +119,7 @@ export const EditMemberNicknamePrompt = () => {
                                 )}
                                 />
                             </div>
-                            <div className="text-center justify-center items-center bg-gray-100 px-6 py-4">
+                            <div className="text-center justify-center items-center bg-gray-100 px-6 py-4 dark:bg-slate-900 dark:text-white">
                                 <DialogFooter>
                                         <Button className="flex" disabled={isLoading} variant={"primary"}>
                                             Save

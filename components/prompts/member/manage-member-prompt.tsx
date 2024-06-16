@@ -124,7 +124,7 @@ export const ManageMemberPrompt = () => {
         
     return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
-            <DialogContent className="bg-white text-black overflow-hidden">
+            <DialogContent className="bg-white text-black overflow-hidden dark:bg-black dark:text-white">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle 
                         className="text-center text-2xl font-bold uppercase items-center"

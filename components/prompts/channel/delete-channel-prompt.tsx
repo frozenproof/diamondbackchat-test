@@ -42,9 +42,9 @@ export const DeleteChannelPrompt = () => {
  
  return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
-            <DialogContent className="bg-white text-black p-0 overflow-hidden">
+            <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-slate-900 dark:text-white">
                 <DialogHeader className="pt-8 px-6">
-                    <DialogTitle className="text-2xl text-center font-bold">
+                    <DialogTitle className="text-2xl text-center font-bold dark:bg-slate-900 dark:text-white">
                         Deleting the channel ? 
                     </DialogTitle>
                     <DialogDescription className="text-center">
@@ -52,7 +52,7 @@ export const DeleteChannelPrompt = () => {
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter
-                    className="bg-gray-100 px-6 py-2"
+                    className="bg-gray-100 px-6 py-2 dark:bg-slate-900 dark:text-white"
                 >
                     <div
                         className="flex items-center justify-between w-full"

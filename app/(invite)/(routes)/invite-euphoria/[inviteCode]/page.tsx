@@ -76,7 +76,7 @@ const InviteCodePageDiamond = async ({
     })
     if(bannedCheck)
     {
-      return new NextResponse("banned");
+      return new NextResponse("banned from server");
     }
     
     const server2 = await db.server.update({

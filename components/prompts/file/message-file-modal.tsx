@@ -68,12 +68,12 @@ export const MessageFilePrompt = () => {
   }
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+      <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-slate-900 dark:text-white">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Send files here
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-500">
+          <DialogDescription className="text-center text-zinc-500 dark:bg-slate-900 dark:text-white">
             A great photo, album, animation. Sharing with us is bravery. 
           </DialogDescription>
         </DialogHeader>
@@ -98,7 +98,7 @@ export const MessageFilePrompt = () => {
                 />
               </div>
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
+            <DialogFooter className="bg-gray-100 px-6 py-4 dark:bg-slate-900 dark:text-white">
               <Button variant="primary" disabled={isLoading}
               onClick={onClose}
               >

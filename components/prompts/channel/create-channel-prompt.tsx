@@ -86,9 +86,9 @@ export const CreateChannelPrompt = () => {
 
     return ( 
             <Dialog open = {isPromptOpen} onOpenChange={handleClose}>
-                <DialogContent className="bg-white text-black p-0 overflow-hidden">
+                <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-slate-900 dark:text-white">
                     <DialogHeader className="pt-8 px-6">
-                        <DialogTitle className="text-2xl text-center font-bold">
+                        <DialogTitle className="text-2xl text-center font-bold dark:bg-slate-900 dark:text-white">
                             Create a channel
                         </DialogTitle>
                     </DialogHeader>
@@ -109,7 +109,7 @@ export const CreateChannelPrompt = () => {
                                         >
                                         <FormControl>
                                             <SelectTrigger
-                                            className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none"
+                                            className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none dark:bg-black dark:text-white"
                                             >
                                             <SelectValue placeholder="Select a channel type" />
                                             </SelectTrigger>
@@ -135,13 +135,13 @@ export const CreateChannelPrompt = () => {
                                 name = "name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70 dark:bg-slate-900 dark:text-white">
                                             channel name
                                         </FormLabel>
                                         <FormControl>
                                             <Input
                                                 disabled={isLoading}
-                                                className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                                                className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 dark:bg-black dark:text-white"
                                                 placeholder="general"
                                                 {...field}
                                             />
@@ -151,7 +151,7 @@ export const CreateChannelPrompt = () => {
                                 )}
                                 />
                             </div>
-                            <div className="text-center justify-center items-center bg-gray-100 px-6 py-4">
+                            <div className="text-center justify-center items-center bg-gray-100 px-6 py-4 dark:bg-slate-900 dark:text-white">
                                 <DialogFooter>
                                         <Button className="flex" disabled={isLoading} variant={"primary"}>
                                             Create

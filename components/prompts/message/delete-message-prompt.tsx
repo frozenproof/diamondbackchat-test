@@ -46,17 +46,17 @@ export const DeleteMessageModal = () => {
   // console.log("Delete message prompt",messageId);
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+      <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-black dark:text-white">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Delete Message
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-500">
+          <DialogDescription className="text-center text-zinc-500 dark:bg-black dark:text-white">
             Are you sure you want to do this? <br />
             The message will be permanently deleted.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="bg-gray-100 px-6 py-4">
+        <DialogFooter className="bg-gray-100 px-6 py-4 dark:bg-black dark:text-white">
           <div className="flex items-center justify-between w-full">
             <Button
               disabled={isLoading}

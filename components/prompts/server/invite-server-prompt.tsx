@@ -89,7 +89,7 @@ export const InviteServerPrompt = () => {
     {
         return ( 
             <Dialog open = {isPromptOpen} onOpenChange={onClose}>
-                <DialogContent className="bg-white text-black p-0 overflow-hidden">
+                <DialogContent className="bg-white text-black p-0 overflow-hidden dark:bg-slate-900 dark:text-white">
                     <DialogHeader className="pt-8 px-6">
                         <DialogTitle className="text-2xl text-center font-bold">
                             Invite anyone right now
@@ -102,7 +102,7 @@ export const InviteServerPrompt = () => {
                     <div>
                         <QRCode data={realUrl2} />
                     </div>   
-                        <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/80 items-center ">
+                        <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/80 items-center dark:text-blue-300">
                         Server invite link
                         </Label>
                         <div className="flex items-center mt-2 gap-x-2 w-full">
@@ -111,8 +111,8 @@ export const InviteServerPrompt = () => {
                             >
                                 <Input
                                     disabled={isLoading}
-                                    className="bg-zinc-200/80 border-0 
-                                    focus-visible:ring-2 text-[#db8bca]
+                                    className="bg-zinc-200/80 dark:bg-black border-0 
+                                    focus-visible:ring-2 text-[#db8bca] dark:text-white
                                     focus-visible:ring-offset-0 w-full"
                                     value={realUrl}
                                     readOnly
