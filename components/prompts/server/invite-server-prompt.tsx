@@ -35,7 +35,7 @@ export const InviteServerPrompt = () => {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ isUrlLoading, setIsUrlLoading ] = useState(false);
 
-    const [ realUrl, setRealUrl ] = useState("Click plus to get invite link!");
+    const [ realUrl, setRealUrl ] = useState("Wait for server to load!");
     const [ realUrl2, setRealUrl2 ] = useState("Click plus to get invite link!");
 
     const onCopy = () => {
@@ -129,17 +129,7 @@ export const InviteServerPrompt = () => {
                         >
                             {copied ? <Check /> : <Copy />}                    
                         </Button>
-                        <Button
-                            name="inviteUrlLoad"
-                            disabled={isUrlLoading}
-                            onClick={fetchRealUrl} 
-                            size="sm"
-                            className="ml-auto bg-[#cc8c43] hover:bg-[#cc8c48]"
-                            
-                        >
-                            {isUrlLoading ? <Check /> : <Plus />}                    
-                        </Button>
-                         
+
                         </div>
                         {/* <Input
                                 disabled={isLoading}
