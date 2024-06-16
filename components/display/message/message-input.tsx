@@ -54,36 +54,28 @@ export const MessageInput = ({
       content: "",
     }
   });
-  const [text, setText] = useState<string>('');
 
   const channelId = query.channelId;
   // console.log("Channel id is",channelId);
+  
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: apiUrl,
         query,
       });
-
       if (!socketActual) {
-        console.log("Disconnected")
+        toast({
+          description: "Your app is not connected",
+        })
         return;
       }
-      
       form.reset();
       router.refresh();
       const testSend = await axios.post(url, {...values,checkMessageReplyId: "lmaoREPLY"});
       const messageData = testSend.data ;
-
-      
-      // console.log("Input log before emitting",testSend);
       socketActual.emit("channel-input",`chat:${messageData.channelId}:messages`, messageData,"server-channel");
-      // if(messageData)
-      // toast({
-      //   description: "Sent",
-      // })
-       
-    } catch (error) {
+  } catch (error) {
       console.log(error);
     }
   }

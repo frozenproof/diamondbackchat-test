@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { ElementRef, Fragment, useRef } from "react";
 import { Loader2, ServerCrashIcon } from "lucide-react";
@@ -95,6 +95,7 @@ export const ChatMessagesList = ({
           name={name}
         />
       )}
+
       {hasNextPage && (
         <div className="flex justify-center">
           {isFetchingNextPage ? (
@@ -109,6 +110,7 @@ export const ChatMessagesList = ({
           )}
         </div>
       )}
+      
         <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           //data la snippet cua database
@@ -151,7 +153,6 @@ export const ChatMessagesList = ({
                       id={message.id}
                       currentUserMember={memberProp}
                       currentMessageMemberProp={message.member}
-                      // userProp={message.member.userProfile}
                       content={message.content}
                       hasAttachment={message.hasAttachment}
                       channelId={message.channelId}
@@ -159,7 +160,6 @@ export const ChatMessagesList = ({
                       timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
                       attachmentsList={message.AttachmentChannel} 
                       isUpdated={message.edited}
-                      // isUpdated={message.updatedAt !== message.createdAt}
                       socketUrl={socketUrl}
                       socketQuery={socketQuery}
                       isReply={message.isReply}

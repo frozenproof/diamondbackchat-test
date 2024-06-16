@@ -1,5 +1,4 @@
 import { CardBody, CardContainer, CardItem } from "@/components/effects/3d-card";
-import Link from "next/link";
 
 export const HomePageAuth = (
     {isLoggedin}:{

@@ -92,11 +92,11 @@ app.prepare().then(() => {
 
       socket.emit(arg1_channelId,arg2_identity)
       })
-  
-    socket.on("calling_user",async function(arg1_user_recipient_id,arg2_user_request){
-      // console.log(`data from server.mjs is`,arg1_user_recipient_id,"\n",arg2_user_request);
-      io.emit("calling_user_"+arg1_user_recipient_id,arg2_user_request);
+        // console.log(`data from server.mjs is`,arg1_user_recipient_id,"\n",arg2_user_request);
       // io.emit("calling_user_"+arg2_user_request.id,arg2_user_request);
+      
+    socket.on("calling_user",async function(arg1_user_recipient_id,arg2_user_request){
+      io.to(arg1_user_recipient_id).emit("calling_user_"+arg1_user_recipient_id,arg2_user_request);
       prismaServerGlobal.userNotification.create({
         data: {          
           data: arg2_user_request.name + " called you at " + new Date(),

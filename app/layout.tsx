@@ -27,13 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <ClerkProvider
-//      localization={viVN}
     >
       <html lang="en" suppressHydrationWarning>
         <body className={
           cn(
-            // font.className,
             "bg-white dark:bg-[#000000]",
             "bg-white light:bg-[#48f7f7]"
           )}>
@@ -61,5 +60,6 @@ export default function RootLayout({
       </body>
       </html>
     </ClerkProvider>
+    
   );
 }

@@ -1,3 +1,5 @@
+"use server"
+
 import { useEffect, useState } from "react";
 
 type ChatScrollProps = {

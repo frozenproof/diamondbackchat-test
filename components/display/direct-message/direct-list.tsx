@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { ElementRef, Fragment, useRef } from "react";
 import { UserProfile } from "@prisma/client";
