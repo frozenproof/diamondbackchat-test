@@ -12,7 +12,7 @@ import {
 import { usePrompt } from "@/hooks/use-prompt-store";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserProfileAvatar } from "@/components/uihelper/user-profile-avatar";
-import { Book, Cat, Check, Crown, Dog, Hammer, Loader2, MagnetIcon, Minus, MoreVerticalIcon, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis, ShieldEllipsisIcon } from "lucide-react";
+import { Book, Cat, Check, Crown, Dog, Hammer, Loader2, MagnetIcon, Minus, MoreVerticalIcon, ShieldAlert, ShieldCheck, ShieldCheckIcon, ShieldEllipsis, ShieldEllipsisIcon, TreePalm } from "lucide-react";
 import React, { useState } from "react";
 
 import {
@@ -31,8 +31,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ServerWithMembersWithProfiles } from "@/type";
 const roleIconMap: {[key: string]: React.ReactNode} = {
-    "GUEST": <MagnetIcon className="h-4 w-4"/>,
-    "MEMBER": <MagnetIcon className="h-4 w-4"/>,
+    "GUEST": <TreePalm className="h-4 w-4"/>,
+    "MEMBER": <Dog className="h-4 w-4"/>,
     "MODERATOR": <ShieldCheckIcon className="h-4 w-4"/>,
     "CREATOR": <Cat className="h-4 w-4"/>,
     "OWNER": <Crown className="h-4 w-4"/>,
@@ -196,7 +196,7 @@ export const ManageMemberPrompt = () => {
                                                     <DropdownMenuItem
                                                         onClick={() => onRoleChange(member.id,"GUEST")}
                                                     >
-                                                        <Dog 
+                                                        <TreePalm 
                                                             className="mr-2"
                                                         />
                                                         Guest
