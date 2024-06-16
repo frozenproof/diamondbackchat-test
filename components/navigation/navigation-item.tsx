@@ -38,7 +38,6 @@ export const NavigationItem = ({
             >
                 <div className={cn(
                     "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]  h-[36px]",
-                    // params?.serverId !== id && "group-hover:h-[20px]",
                     params?.serverId === id ? "bg-[#bd9d59]" : "bg-transparent"
                 )} />
                 <div className={cn(

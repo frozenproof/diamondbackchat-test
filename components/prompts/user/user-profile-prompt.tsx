@@ -80,7 +80,7 @@ export const UserProfilePrompt = () => {
               <AvatarImage   src={userProfilePropAPI.imageUrl} 
              />
             </Avatar>
-            <div
+            {!idChecker(userProfilePropAPI.id,currentUserPropAPIID) && <div
               className="flex ml-auto flex-col pt-[28px]"
             >                  
             <DropdownMenu>
@@ -109,6 +109,7 @@ export const UserProfilePrompt = () => {
               </DropdownMenuContent>
             </DropdownMenu>
             </div>
+            }
           </CardTitle>
         </CardHeader>
         <CardContent>
