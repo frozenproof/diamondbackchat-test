@@ -10,6 +10,7 @@ import { PinPerspective } from "@/components/effects/3d-pin";
 import { HomePageHeader } from "./homepage-header";
 import { HomePageAuth } from "./homepage-auth";
 import { AppHistory } from "../document/app-history";
+import { ModeToggle } from "@/components/uihelper/mode-toggle";
 
 export const InitialPage = ({
     isLoggedin   
@@ -34,10 +35,20 @@ return (
             className="flex items-center flex-col w-full h-full relative "
         >
             <HomePageHeader />
+            <div
+                // className="
+                // bg-red-800
+                // "
+            >
             <HomePageAuth 
                 isLoggedin={isLoggedin}
             />
-            
+            </div>
+            <div
+                className="pt-[8px]"
+            >
+            <ModeToggle />
+            </div>
             {/* <AppReviews /> */}
             <AppHistory />
             <div

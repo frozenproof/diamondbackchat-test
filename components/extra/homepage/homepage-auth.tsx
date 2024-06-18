@@ -6,12 +6,11 @@ export const HomePageAuth = (
     }
 ) => {
     return (
-        <a
-                className="w-full bg-transparent h-full flex flex-col justify-center"
+            <a
+                className="w-full bg-transparent flex flex-col justify-center h-auto "
                 href={`/check-auth`}                            
             >
-            
-                    <CardContainer className="inter-var">
+                    <CardContainer className="h-auto">
                         <CardBody className="bg-gray-50 relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border text-center">
                             {!isLoggedin&&(<CardItem
                             translateZ={20}
@@ -32,8 +31,6 @@ export const HomePageAuth = (
                                 <br/>
                             *where you actually do something instead of just watching 
                             </CardItem>
-                            <div className="flex justify-between items-center mt-[8px]">
-                            </div>
                         </CardBody>
                     </CardContainer>
             </a>
