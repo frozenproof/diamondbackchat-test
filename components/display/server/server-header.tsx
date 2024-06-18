@@ -82,6 +82,17 @@ export const ServerHeader = ({
                     )
                 }
                 {
+                    !isModerator && (
+                        <DropdownMenuItem
+                            onClick={() => onOpen("DisplayMember", { server: server })}
+                            className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"
+                        >
+                            Display Members 
+                            <Users className="h-4 w-4 ml-auto"/>
+                        </DropdownMenuItem>
+                    )
+                }
+                {
                     isModerator && (
                         <DropdownMenuItem
                             onClick={() => onOpen("BanManage", { banList: banned })}
