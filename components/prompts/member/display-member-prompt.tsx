@@ -25,12 +25,12 @@ const roleIconMap: {[key: string]: React.ReactNode} = {
     "LILWITCH": <MagnetIcon className="h-4 w-4"/>
 }
 
-export const ManageMemberPrompt = () => {
+export const DisplayMemberPrompt = () => {
     const { onOpen, isOpen,onClose,type,propData } = usePrompt();
 
     const isPromptOpen = isOpen && type === "DisplayMember";
     const { server } = propData as {server: ServerWithMembersWithProfiles};
-
+    console.log("bugged?")
     return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black overflow-hidden dark:bg-black dark:text-white">

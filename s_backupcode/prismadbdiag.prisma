@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+enum UserStatus {
+  ONLINE
+  OFFINE
+  INVISIBLE
+  IDLE
+  DO_NOT_DISTURB
+  DELETED
+  BANNED
+}
+enum OldMemberRole {
+  CREATOR
+  OWNER
+  ADMIN
+  MODERATOR
+  BOT
+  MEMBER
+  GUEST
+  SPECIALGUEST
+  LILWITCH
+}
+
+enum OldChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+  NOTIFICATION
+}
+
+model UserProfile {
+  id              String     @id @default(uuid())
+  userId          String     @unique
+  name            String     @default("Deleted")
+  imageUrl        String     @db.Text
+  email           String     @db.Text
+  about           String     @default("") @db.Text
+  status          UserStatus @default(ONLINE)
+  deleted         Boolean    @default(false)
+  version         Int        @default(1)
+  userCurrentRank String     @default("Basic Member")
+  createdAt DateTime @default(now())
+ 
+  serverInvites ServerInvite[]
+  // Member Member[]
+  Server            Server[] 
+  @@unique([id, email])
+  @@index([id])
+  @@index([userId])
+}
+
+model Server {
+  id       String @id @default(uuid())
+  name     String
+  imageUrl String @db.Text
+  version  Int    @default(1)
+
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
+  userProfileId String      @default("Deleted")
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: SetDefault)
+
+  // Member Member[]
+
+  ServerInvite       ServerInvite[]
+  // Channel            Channel[]
+
+  @@index([id])
+  @@index([userProfileId])
+}
+// model Channel {
+//   id        String         @id @default(uuid())
+//   name      String
+//   type      OldChannelType @default(TEXT)
+//   updatedAt DateTime       @updatedAt
+//   version   Int            @default(1)
+
+//   categories String
+//   deleted    Boolean @default(false)
+
+//   serverId String
+//   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+//   Message    Message[]
+//   Attachment AttachmentChannel[]
+// }
+model ServerInvite {
+  userProfileId String
+  userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  inviteCode String   @unique
+  deleted    Boolean  @default(false)
+  assignedAt DateTime @updatedAt
+
+  @@id(name: "inviteId", [userProfileId, serverId])
+}
+// model Message {
+//   id      String @id @default(uuid())
+//   content String @db.Text
+//   version Int    @default(1)
+
+//   memberId String
+//   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+//   channelId String
+//   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+//   hasAttachment Boolean @default(false)
+//   deleted       Boolean @default(false)
+
+//   isReply         Boolean
+//   messageParentId String?
+//   messageParent   Message?  @relation("MessageToMessage", fields: [messageParentId], references: [id])
+//   children        Message[] @relation("MessageToMessage")
+
+//   pinned    Boolean  @default(false)
+//   edited    Boolean  @default(false)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   AttachmentChannel AttachmentChannel[]
+
+//   @@index([channelId])
+//   @@index([memberId])
+// }
+// model Member {
+//   id      String        @id @default(uuid())
+//   role    OldMemberRole @default(MEMBER)
+//   deleted Boolean       @default(false)
+//   version Int           @default(1)
+
+//   userProfileId String
+//   userProfile   UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+//   serverId String
+//   server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+//   nickname String    @default("")
+//   Message  Message[]
+
+//   @@unique(name: "MemberUSID", [userProfileId, serverId])
+// }
+// model AttachmentChannel {
+//   id      String @id @default(uuid())
+//   fileUrl String @db.Text
+//   name    String @db.Text
+//   type    String
+
+//   messageId String
+//   message   Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+//   channelId String
+//   channel   Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+//   @@index([channelId])
+//   @@index([messageId])
+// }

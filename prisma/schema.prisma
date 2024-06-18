@@ -26,14 +26,10 @@ model UserProfile {
   deleted         Boolean    @default(false)
   version         Int        @default(1)
   userCurrentRank String     @default("Basic Member")
-
   createdAt DateTime @default(now())
-
   bannedServers BannedServerMember[]
   serverInvites ServerInvite[]
-
   Member Member[]
-
   Server            Server[]
   DirectMessage     DirectMessage[]
   DirectChannelSend DirectChannel[]    @relation("UserOne")
@@ -44,7 +40,6 @@ model UserProfile {
   Blocked           Block[]            @relation("UserTwo")
   UserNotification  UserNotification[]
   UserBilling       UserBilling[]
-
   @@unique([id, email])
   @@index([id])
   @@index([userId])
