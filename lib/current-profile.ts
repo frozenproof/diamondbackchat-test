@@ -15,9 +15,23 @@ export const currentUserProfile = async() =>{
 
     const profile = await db.userProfile.findUnique({
         where:{
-            userId
+            userId           
         }
     });
+    
+    if(profile)
+        if(profile.deleted == true )
+            {
+                const profile2 = await db.userProfile.update({
+                    where:{
+                        userId           
+                    },
+                    data: {
+                        deleted: false
+                    }
+                });
+                return profile2;
+            }
 
     return profile;
 }

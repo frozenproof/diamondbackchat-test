@@ -42,6 +42,7 @@ export async function PATCH(
                 return new NextResponse("Server version was updated during run time");
             }
         }
+        
         if(!serverVersion)
         {
             return new NextResponse("No server detected during run time");

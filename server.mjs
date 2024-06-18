@@ -242,6 +242,8 @@ async function handleCheckoutSessionCompleted(customerForDatabase) {
   console.log("User email", emailSubscription);
   console.log("User subscription id", subscriptionIdSession);
   let attempts = 0,maxAttempts = 3;
+
+  
   while (attempts < maxAttempts) {
     try {
       const currentSubscription = await prismaServerGlobal.subscription.update({

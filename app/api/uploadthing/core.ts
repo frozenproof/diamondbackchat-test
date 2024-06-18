@@ -30,6 +30,11 @@ export const ourUniqueFileRouter = {
             video:{maxFileCount:8,maxFileSize:"128MB"},
             "application/zip":{maxFileCount:2,maxFileSize: "32MB"},
             "image/gif":{maxFileCount:2,maxFileSize: "32MB"},
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {maxFileCount:2,maxFileSize: "32MB"},
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":{maxFileCount:2,maxFileSize: "32MB"},
+            "text/markdown":{maxFileCount:2,maxFileSize: "32MB"},
+            "text/plain":{maxFileCount:2,maxFileSize: "32MB"},
+            'text/uri-list':{maxFileCount:2,maxFileSize: "32MB"}
         })
         .middleware(() => handleAuth())
     // .middleware(async ({ req, files }) => {

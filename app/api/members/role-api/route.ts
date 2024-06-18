@@ -26,6 +26,18 @@ export async function PATCH(
             throw new Error("How did you even request this ?");
         }
 
+        const userAuthority = await db.member.findFirst({
+            where: {
+                userProfileId: profile.id,
+                role: {
+                    in: [OldMemberRole.MODERATOR,OldMemberRole.OWNER,OldMemberRole.CREATOR,OldMemberRole.LILWITCH,OldMemberRole.ADMIN]
+                }
+            }
+        })
+        if(!userAuthority)
+        {
+            throw new Error("How did you even request this ?");
+        }
         const server = await db.server.update({
             where: {
                 id:serverId,
@@ -37,9 +49,6 @@ export async function PATCH(
                           id: memberId,
                           userProfileId: {
                             not: profile.id
-                          },
-                          role: {
-                            in: [OldMemberRole.MODERATOR,OldMemberRole.OWNER,OldMemberRole.CREATOR,OldMemberRole.LILWITCH,OldMemberRole.ADMIN]
                           }
                         },
                         data: {
@@ -65,6 +74,6 @@ export async function PATCH(
     catch (error)
     {
         console.log("MEMBER_MANAGE",error);
-        return new NextResponse("Internal Error", {status: 500});
+        return new NextResponse("Internal Error : " + error, {status: 500});
     }
 }

@@ -61,7 +61,7 @@ export const ManageMemberPrompt = () => {
             const response = await axios.patch(url, {memberId});
         
             router.refresh();
-            onOpen("ManageMember", { server: response.data });
+            onClose()
         } 
         catch (error) 
         {
@@ -86,6 +86,7 @@ export const ManageMemberPrompt = () => {
             const response = await axios.patch(url, {userProfileId: userProfileId, banStatus: "yes"});
         
             router.refresh();
+            onClose()
         } 
         catch (error) 
         {
@@ -139,7 +140,7 @@ export const ManageMemberPrompt = () => {
                         <div
                             style={{fontSize: 28,color: "pink"}}
                         >
-                            {server?.Member?.length} 
+                            {server?.Member?.filter(x => !x.deleted).length} 
                         </div>
                          Members
                     </DialogDescription>

@@ -35,6 +35,21 @@ export const UserButtonDiamond = ({
             console.log(error);
         }
     }
+    const onUserDeleted = async() => {
+        try {
+            const url = qs.stringifyUrl({
+                url: `/api/user/delete-api`,
+            })
+
+            const response = await axios.patch(url, {});
+
+            signOut(() => router.push('/'))
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
     return (
         <div
             className="w-full flex p-1 dark:bg-[#000000]"
