@@ -30,9 +30,10 @@ export const DeleteServerPrompt = () => {
             setIsLoading(true);
             
             await axios.patch(`/api/servers/delete-api`,{serverId: server?.id});
-            onClose();
             router.refresh();
             router.push("/meself/friend");
+            onClose();
+
         }
         catch(error)
         {
