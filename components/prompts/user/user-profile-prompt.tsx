@@ -47,7 +47,7 @@ export const UserProfilePrompt = () => {
       try {
         const onDirectChatRequest = async() => {
             console.log("idchecker ran so why is this not working ?",userProfilePropAPI);
-            alert("Hello! I am an alert box!");
+            // alert("Hello! I am an alert box!");
             router.push(`/api/directRequest/${userProfilePropAPI.id}`);
         }
         const onBlockUser = async () => {
@@ -67,7 +67,6 @@ export const UserProfilePrompt = () => {
                 url: `/api/friend/friendRequest`,
             })
             const friendCheck = await axios.patch( url , {userProfileId: userProfilePropAPI.id})
-            alert("Hello! I am an alert box!");
   
             console.log("user profile prompt friend request",friendCheck.data);
           }
