@@ -30,7 +30,7 @@ export const DisplayMemberPrompt = () => {
 
     const isPromptOpen = isOpen && type === "DisplayMember";
     const { server } = propData as {server: ServerWithMembersWithProfiles};
-    console.log("bugged?")
+    // console.log("bugged?")
     return ( 
         <Dialog open = {isPromptOpen} onOpenChange={onClose}>
             <DialogContent className="bg-white text-black overflow-hidden dark:bg-black dark:text-white">

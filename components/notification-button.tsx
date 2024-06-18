@@ -142,7 +142,7 @@ export const NotificationButton = (
                             onClick={buttonReadAll}
                             className="button-49"                 
                             >
-                            Clear all notifications
+                            Clear all notifications !
                         </button>     
                     </CardContent>
                 </Card>

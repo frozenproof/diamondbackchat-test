@@ -82,7 +82,7 @@ export const ServerHeader = ({
                     )
                 }
                 {
-                    isModerator && (
+                    !isModerator && (
                         <DropdownMenuItem
                             onClick={() => onOpen("DisplayMember", { server: server })}
                             className="text-amber-700 dark:text-indigo-200  px-3 py-2 text-sm cursor-pointer"

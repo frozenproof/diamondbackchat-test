@@ -35,15 +35,20 @@ export const UserProfilePrompt = () => {
     const handleClose = () => {
         onClose();
     }
-
+    function idChecker(id1: string , id2: string)
+    {
+      console.log("idchecker",id1 === id2)
+      return(id1 === id2)
+    }
+    
+    
     if(userProfilePropAPI && currentUserPropAPIID)
     {        
       try {
-        const onDirectChatRequest = () => {
-          if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
-          {
-            router.push(`/api/directRequest/${userProfilePropAPI?.id}`);
-          }
+        const onDirectChatRequest = async() => {
+            console.log("idchecker ran so why is this not working ?",userProfilePropAPI);
+            alert("Hello! I am an alert box!");
+            router.push(`/api/directRequest/${userProfilePropAPI.id}`);
         }
         const onBlockUser = async () => {
           if(!idChecker(userProfilePropAPI.id,currentUserPropAPIID))
@@ -62,6 +67,7 @@ export const UserProfilePrompt = () => {
                 url: `/api/friend/friendRequest`,
             })
             const friendCheck = await axios.patch( url , {userProfileId: userProfilePropAPI.id})
+            alert("Hello! I am an alert box!");
   
             console.log("user profile prompt friend request",friendCheck.data);
           }
@@ -96,15 +102,15 @@ export const UserProfilePrompt = () => {
               >            
                 Friend Request
               </DropdownMenuItem>
-              <DropdownMenuItem>                  
-                  <div onClick={onDirectChatRequest} >
+              <DropdownMenuItem
+              onClick={onDirectChatRequest}
+              >                  
                     Message
-                  </div>
               </DropdownMenuItem>
-              <DropdownMenuItem>                  
-                  <div onClick={onBlockUser} >
-                    Block
-                  </div>
+              <DropdownMenuItem
+              onClick={onBlockUser} 
+              >                  
+                    Block 
               </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -166,9 +172,4 @@ export const UserProfilePrompt = () => {
   }
 }
 
-
-function idChecker(id1: string , id2: string)
-{
-  return(id1 === id2)
-}
 

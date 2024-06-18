@@ -26,7 +26,6 @@ const MemberIdPage = async ({
     return redirect(`/meself/friend`);
   }
 
-
   console.log("The Id",profile.id)
   console.log("Target Id",params.userProfileId)
 
