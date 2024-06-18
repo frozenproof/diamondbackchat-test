@@ -4,6 +4,9 @@ As per protocol , our app will NOT store any user password except for the one yo
 
 https://liltrees.onrender.com
 
+It got fixed so now you can get in the app instantly.
+I will be waiting for your patronage !
+
 # Can you smell what is cooking ? 
 In order to prevent frauds , we have a functions list to tell you what to expect when using the app .
 

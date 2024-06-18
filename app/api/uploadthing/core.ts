@@ -2,7 +2,6 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UTFiles } from "uploadthing/server";
 import { auth  } from "@clerk/nextjs";
 import { currentUserProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 
 const f = createUploadthing();
 
@@ -28,8 +27,9 @@ export const ourUniqueFileRouter = {
         {
             image:{maxFileCount:8,maxFileSize:"16MB"},
             pdf:{maxFileCount:8,maxFileSize:"16MB"},
-            video:{maxFileCount:8,maxFileSize:"16MB"},
-            "application/zip":{maxFileCount:2,maxFileSize: "32MB"}            
+            video:{maxFileCount:8,maxFileSize:"128MB"},
+            "application/zip":{maxFileCount:2,maxFileSize: "32MB"},
+            "image/gif":{maxFileCount:2,maxFileSize: "32MB"},
         })
         .middleware(() => handleAuth())
     // .middleware(async ({ req, files }) => {
@@ -49,3 +49,4 @@ export const ourUniqueFileRouter = {
         })
 } satisfies FileRouter;
 
+export type OurFileRouter = typeof ourUniqueFileRouter;

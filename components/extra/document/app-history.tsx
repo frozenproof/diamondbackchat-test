@@ -20,7 +20,8 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center ">
         <Image
-          src="/image/ToramOnlineScreenshot2022_01_15_02_07_06.png"
+          // src="/image/ToramOnlineScreenshot2022_01_15_02_07_06.png"
+          src="https://utfs.io/f/21243a7a-f93a-4c79-8577-0f4d62f47055-u1zhab.png"
           width={300}
           height={300}
           className="h-full w-full object-cover"
@@ -46,7 +47,8 @@ const content = [
     content: (
       <div className="h-full w-full  flex items-center justify-center ">
         <Image
-          src="/image/Untitled243-2.jpg"
+          // src="/image/Untitled243-2.jpg"
+          src="https://utfs.io/f/c6c52907-e25a-4e41-ad11-3db03c50a344-k00hu7.jpg"
           width={288}
           height={512}
           className="object-fill"
@@ -62,7 +64,8 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center ">
         <Image
-          src="/image/original.jpg"
+          // src="/image/original.jpg"
+          src="https://utfs.io/f/8366f58a-8e16-47b8-9cbb-e59e1e6dbbf0-g6yc01.gif"
           width={300}
           height={300}
           className="h-full w-full object-cover"
@@ -85,7 +88,8 @@ const content = [
     content: (
       <div className="h-full w-full flex items-center justify-center ">
         <Image
-          src="/image/430173140_727844572880579_2756004704308343656_n.jpg"
+          // src="/image/430173140_727844572880579_2756004704308343656_n.jpg"
+          src="https://utfs.io/f/ae754c12-aac1-4657-86f2-2b08ba7fab71-qffl74.jpg"
           width={428}
           height={512}
           className="object-fill"

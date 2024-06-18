@@ -77,7 +77,7 @@ const DirectChatMemberIdPage = async ({
                   }}
                 />
                 <DirectMessageInput
-                  memberIdPropInput={otherMember.id}
+                  memberIdPropInput={profile.id}
                   channelName={otherMember.name}
                   apiUrl="/api/messages/direct-channel-send"
                   query={{

@@ -15,6 +15,5 @@ export default function Custom404() {
           Click here to return 
         </a>
         </div>
-      
     )
   }

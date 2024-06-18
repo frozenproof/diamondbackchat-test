@@ -11,7 +11,12 @@ export default authMiddleware({
   afterAuth(auth, req, evt) {
     // Handle users who aren't authenticated
     if (!auth.userId && !auth.isPublicRoute) {
-      return redirectToSignIn({ returnBackUrl: req.url });
+      console.log(req.url)
+      const port = process.env.PORT
+      if(port=="10000")
+        return redirectToSignIn({ returnBackUrl: "https://liltrees.onrender.com/check-auth" });
+      else
+        return redirectToSignIn({ returnBackUrl: req.url });
     }  
     // If the user is signed in and trying to access a protected route, allow them to access route
     if (auth.userId && !auth.isPublicRoute) {
