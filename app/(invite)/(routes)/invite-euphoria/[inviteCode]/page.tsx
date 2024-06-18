@@ -31,6 +31,7 @@ const InviteCodePageDiamond = async ({
       {
         where: {
           inviteCode: params.inviteCode,
+          deleted: false
         }
       }
     )

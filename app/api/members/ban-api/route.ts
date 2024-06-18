@@ -41,6 +41,7 @@ export async function PATCH(
 
         if(server)
         {
+            const finalBan = (banStatus === "yes")
             const deleteMember = await db.member.update({
                 where: {
                     MemberUSID: {
@@ -51,11 +52,11 @@ export async function PATCH(
                     }
                 },
                 data: {
-                    deleted: (banStatus === "yes") ? true : false
+                    deleted: finalBan ? true : false
                 }
             })
 
-            if(banStatus === "yes")
+            if(finalBan)
             {
                 const banMember = await db.bannedServerMember.create(
                     {
@@ -68,7 +69,7 @@ export async function PATCH(
                     }
                 )
             }
-            else if(banStatus === "no")
+            else if(!finalBan)
             {
                 const banMember = await db.bannedServerMember.deleteMany(
                     {
@@ -80,6 +81,18 @@ export async function PATCH(
                 )
             }
 
+            const server2 = await db.serverInvite.update({
+                where: {
+                    inviteId: {
+                        serverId: serverId,
+                        userProfileId: userProfileId as string
+                    }
+                },
+                data: {
+                    deleted: finalBan
+                    }
+                });
+        
             return NextResponse.json(server);
         }
       

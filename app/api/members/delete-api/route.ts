@@ -54,7 +54,26 @@ export async function PATCH(
                 },
             },
         });
-
+        const userProfile2 = await db.member.findFirst({
+            where: {
+                id:memberId
+            }
+        })
+        if(!userProfile2) {
+            throw new Error("How did you even request this ?");
+        }
+        const server2 = await db.serverInvite.update({
+            where: {
+                inviteId: {
+                    serverId: serverId,
+                    userProfileId: userProfile2.id
+                }
+            },
+            data: {
+                deleted: true
+                }
+            });
+    
         return NextResponse.json(server);
     } 
     catch (error) 
