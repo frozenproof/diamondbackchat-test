@@ -35,21 +35,18 @@ export const ChannelSideBar = ({
   const [textChannels, setTextChannels] = useState<Channel[]>([]);
   const [audioChannels, setAudioChannels] = useState<Channel[]>([]);
   const [videoChannels, setVideoChannels] = useState<Channel[]>([]);
-
-  if (!serverProp) {
-      return redirect("/meself/friend");
-  }
-
   const channelProp = useMemo(() => serverProp.Channel.filter((channel) => !channel.deleted), [serverProp.Channel]);
-
-
   useEffect(() => {
       setTextChannels(channelProp.filter((channel) => channel.type === OldChannelType.TEXT));
       setAudioChannels(channelProp.filter((channel) => channel.type === OldChannelType.AUDIO));
       setVideoChannels(channelProp.filter((channel) => channel.type === OldChannelType.VIDEO));
   }, [channelProp]);
+
+  if (!serverProp) {
+      return redirect("/meself/friend");
+  }
+
     const role = roleProp;
-    if(channelProp)
     {
       console.log("channel prop is asking",channelProp)
       console.log("server prop is asking",serverProp)
