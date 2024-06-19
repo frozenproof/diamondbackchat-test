@@ -30,9 +30,9 @@ export const DeleteChannelPrompt = () => {
             setIsLoading(true);
             const serverId = channelProp?.serverId;
             await axios.patch(`/api/channels/delete-api`, {channelId: channelProp?.id});
-            onClose();
+            setIsLoading(false)
             router.refresh();
-            router.push(`/servers/${serverId}`);
+            onClose();
         }
         catch(error)
         {
