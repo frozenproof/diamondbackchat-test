@@ -48,8 +48,8 @@ export const ChannelSideBar = ({
 
     const role = roleProp;
     {
-      console.log("channel prop is asking",channelProp)
-      console.log("server prop is asking",serverProp)
+      // console.log("channel prop is asking",channelProp)
+      // console.log("server prop is asking",serverProp)
       return (
         <ScrollArea
                 className="flex-1 px-1"            
