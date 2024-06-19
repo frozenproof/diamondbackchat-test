@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ServerNavigation } from "../server/server-navigation";
 import { ChannelItem } from "../channel/channel-item";
 import { ServerWithChannels } from "@/type";
+import { useEffect } from "react";
 
 interface ChannelSideBarProps {
     serverProp:  ServerWithChannels;
@@ -20,20 +21,28 @@ export const ChannelSideBar = async({
 }:ChannelSideBarProps) => {
 
     const channelProp = serverProp.Channel.filter((channel) => channel.deleted === false);
-    const textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
-    const audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
-    const videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
+    let textChannels  = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
+    let audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
+    let videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
 
     if(!serverProp)
     {
         return redirect("/meself/friend");
     }
+    useEffect(() => {
+      (async () => {
+        textChannels = channelProp?.filter((channel) => channel.type === OldChannelType.TEXT)
+        audioChannels = channelProp?.filter((channel) => channel.type === OldChannelType.AUDIO)
+        videoChannels = channelProp?.filter((channel) => channel.type === OldChannelType.VIDEO)
+      })();
+    }, [channelProp,serverProp]);
     const role = roleProp;
+    if(channelProp)
     return (
 
             <ScrollArea
                     className="flex-1 px-1"            
-                >
+            >
             {!!textChannels?.length && (
               <div className="mb-2"
                 // onClick={() => {alert("WHAT THE FUCK IS GOING ON")}}

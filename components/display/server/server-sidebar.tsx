@@ -54,9 +54,6 @@ export const ServerSideBar = async({
                 }
             },
             Channel: {
-                where: {
-                    deleted: false
-                },
                 orderBy: {
                     updatedAt: "desc"
                 }
